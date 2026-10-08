@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Render index.html (self-contained: inline CSS/JS, no external requests) from data/dashboard.json.
 
-The page pre-renders every day from (build date - 1) through (build date + RANGE_DAYS) and a tiny
-inline script shows only "today .. today + schedule_days - 1" (America/Denver), so a page built
-once a week stays correct every day until the next build.
+The weekly calendar is a fixed Sunday-Saturday week starting at meta.week_start. The page is rebuilt
+Saturday night for the following week. By default week_start is the upcoming Sunday (or today if
+today is Sunday); --week-start overrides it and the value used is written back to meta.week_start.
+When the page is viewed before week_start, a small "Rest of this week" strip shows the remaining days.
+The inline script highlights today and dims past days based on the viewing date (America/Denver).
 
-Usage: python3 build.py [--json data/dashboard.json] [--out index.html] [--no-stamp] [--now ISO]
+Usage: python3 build.py [--json data/dashboard.json] [--out index.html] [--week-start YYYY-MM-DD]
+                        [--no-stamp] [--now ISO]
 """
 from __future__ import annotations
 
@@ -76,8 +79,20 @@ ICONS = {
 
 # ------------------------------------------------------------------ model
 
+def upcoming_sunday(day: dt.date) -> dt.date:
+    """Sunday -> same day; Monday..Saturday -> the next Sunday."""
+    return day + dt.timedelta(days=(6 - day.weekday()) % 7)
+
+
+def week_label(start: dt.date) -> str:
+    end = start + dt.timedelta(days=6)
+    if start.month == end.month:
+        return f"Week of {start:%b} {start.day}\u2013{end.day}"
+    return f"Week of {start:%b} {start.day} \u2013 {end:%b} {end.day}"
+
+
 class Model:
-    def __init__(self, data: dict, now: dt.datetime):
+    def __init__(self, data: dict, now: dt.datetime, week_start: dt.date | None = None):
         self.data = data
         self.now = now
         self.today = now.date()
@@ -85,8 +100,12 @@ class Model:
         self.people = data.get("people", {})
         self.kids = data.get("kids", [])
         self.events = [e for e in data.get("events", []) if e.get("date")]
-        self.first = self.today - dt.timedelta(days=1)
-        self.last = self.today + dt.timedelta(days=RANGE_DAYS)
+        self.week_start = week_start or upcoming_sunday(self.today)
+        self.week_end = self.week_start + dt.timedelta(days=6)
+        self.later_days = int(self.meta.get("later_days", 8))
+        self.first = min(self.today, self.week_start) - dt.timedelta(days=1)
+        self.last = max(self.today + dt.timedelta(days=RANGE_DAYS),
+                        self.week_end + dt.timedelta(days=self.later_days + 7))
 
     def days(self):
         day = self.first
@@ -237,8 +256,9 @@ def render_day(m: Model, day: dt.date) -> str:
             rest = re.sub(r"^(k-5 )?half day\s*(\u00b7|\u2014|-)?\s*", "", e.get("title", ""), flags=re.I)
             if not rest:
                 continue
-            e = dict(e, title=rest[:1].upper() + rest[1:], flag=None,
-                     priority="low" if re.match(r"spirit apparel", rest, re.I) else e.get("priority", "normal"))
+            if re.fullmatch(r"spirit apparel( day)?", rest, re.I):
+                continue                              # dress-code note on a half day: banner is enough
+            e = dict(e, title=rest[:1].upper() + rest[1:], flag=None)
         items.append(e)
     items += m.routine_items(day)
     items.sort(key=lambda e: (e.get("start") is not None, e.get("start") or "",
@@ -248,9 +268,10 @@ def render_day(m: Model, day: dt.date) -> str:
     body = "".join(render_item(m, e, day) for e in items)
     wk = " weekend" if day.weekday() >= 5 else ""
     # no-JS fallback: pre-mark the initial window relative to the build date
-    n_days = int(m.meta.get("schedule_days", 7))
-    if m.today <= day < m.today + dt.timedelta(days=n_days):
+    if m.week_start <= day <= m.week_end:
         wk += " show"
+    if day < m.today:
+        wk += " past"
     if day == m.today:
         wk += " is-today"
     if not body and not banners:
@@ -261,6 +282,31 @@ def render_day(m: Model, day: dt.date) -> str:
             f'<span class="ddate">{day:%b} {day.day}</span><span class="rel"></span>'
             f'<span class="trips">{trip_html}</span></header>'
             f'{"".join(banners)}<ul class="items">{body}</ul></section>')
+
+
+def render_mini_day(m: Model, day: dt.date) -> str:
+    """Compact day for the 'Rest of this week' strip (days before week_start)."""
+    flags = m.flags_on(day)
+    lines = []
+    if day.weekday() < 5:
+        for flag, label in (("no_school", "No school"), ("half_day", "Half day")):
+            kids = list(flags[flag])
+            if kids:
+                lines.append(f'<div class="ml f-{flag}"><span class="mt">{label}</span>{chips(m, kids)}</div>')
+    evs = [e for e in m.events_on(day) if e.get("kind") != "trip" and e.get("flag") != "no_school"
+           and not (e.get("flag") == "half_day" and re.match(r"^(k-5 )?half day", e.get("title", ""), re.I))]
+    evs += m.routine_items(day)
+    evs.sort(key=lambda e: (e.get("start") is not None, e.get("start") or ""))
+    for e in evs:
+        t = fmt_time(e.get("start"))
+        lines.append(f'<div class="ml pr-{esc(e.get("priority", "normal"))}">'
+                     f'{f"<span class=mtime>{esc(t)}</span>" if t else ""}<span class="mt">{esc(e.get("title"))}</span>'
+                     f'{chips(m, e.get("who", []))}</div>')
+    if not lines:
+        lines.append('<div class="ml empty">Nothing scheduled</div>')
+    show = " show" if m.today <= day < m.week_start else ""
+    return (f'<div class="rday{show}" data-date="{day.isoformat()}"><div class="rdh"><b>{DOW[day.weekday()]}</b> '
+            f'{day:%b} {day.day}<span class="rel"></span></div>{"".join(lines)}</div>')
 
 
 def render_later(m: Model, day: dt.date) -> str:
@@ -299,8 +345,9 @@ def render_glance(m: Model, kid: dict) -> str:
         f'<div class="keyd" data-date="{day.isoformat()}"><b>{esc(fmt_day(day))}</b> {esc(txt)}</div>'
         for day, txt in m.key_dates(kid))
     keys = keys or '<div class="keyd none">No key dates on the calendar</div>'
-    kin = f'<div class="kin">{esc(kid.get("in_person_summary", ""))}</div>' if kid.get("routine") else ""
-    return (f'<div class="ksch">{esc(kid.get("school_short") or kid.get("school"))} \u00b7 {esc(kid.get("division"))}</div>'
+    kin = ""
+    line = kid.get("glance_line") or f'{kid.get("school_short") or kid.get("school")} \u00b7 {kid.get("division")}'
+    return (f'<div class="ksch">{esc(line)}</div>'
             f'<div class="krow"><span class="lbl">Today</span><span class="stat today">{st}</span></div>'
             f'<div class="krow"><span class="lbl">Tmrw</span><span class="stat tmrw">{st}</span></div>'
             f'{kin}'
@@ -461,7 +508,7 @@ def render_youth(m: Model) -> str:
     note = esc(y.get("note", ""))
     return (f'<div class="yrows">{"".join(rows)}{empty}</div>'
             f'<div class="ylater"><span class="lbl">Later</span>{"".join(later)}</div>'
-            f'{f"<div class=ynote>{note}</div>" if note else ""}')
+            )
 
 
 def render_spiritual(m: Model) -> str:
@@ -523,33 +570,41 @@ def person_css(m: Model) -> str:
     return "\n".join(out)
 
 
-def build(data: dict, now: dt.datetime) -> str:
-    m = Model(data, now)
+def build(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> str:
+    m = Model(data, now, week_start)
     meta = m.meta
     last = meta.get("last_updated") or now.isoformat(timespec="seconds")
     last_dt = dt.datetime.fromisoformat(last).astimezone(ZoneInfo(meta.get("timezone", "America/Denver")))
     last_label = f"{DOW[last_dt.weekday()]}, {last_dt:%b} {last_dt.day} \u00b7 {fmt_time(last_dt.strftime('%H:%M'))} {meta.get('tz_label', 'MT')}"
     days_html = "".join(render_day(m, day) for day in m.days())
-    later_html = "".join(render_later(m, day) for day in m.days())
+    later_html = "".join(render_later(m, day) for day in m.days() if day > m.week_end)
+    rest_html = "".join(render_mini_day(m, day) for day in m.days() if day < m.week_start)
     acad_html, acad_sub = render_academics(m)
     tpl = (HERE / "template.html").read_text()
     repl = {
         "TITLE": esc(meta.get("family_name", "Family")),
         "FAMILY": esc(meta.get("family_name", "Family")),
-        "THEME": esc(meta.get("theme", "dark")),
+        "THEME": esc(meta.get("theme", "light")),
         "TZ": esc(meta.get("timezone", "America/Denver")),
         "TZLABEL": esc(meta.get("tz_label", "MT")),
         "LAST_ISO": esc(last),
         "LAST_LABEL": esc(last_label),
         "STALE_DAYS": esc(meta.get("stale_after_days", 8)),
-        "SCHED_DAYS": esc(meta.get("schedule_days", 10)),
+        "WEEK_START": m.week_start.isoformat(),
+        "WEEK_END": m.week_end.isoformat(),
+        "WEEK_LABEL": esc(week_label(m.week_start)),
+        "REST": rest_html,
+        "STATUS_BAR": "default" if meta.get("theme", "light") == "light" else "black-translucent",
+        "THEME_COLOR": "#ffffff" if meta.get("theme", "light") == "light" else "#15120f",
         "BUILD_DATE": m.today.isoformat(),
         "PERSON_CSS": person_css(m),
         "DAYS": days_html,
         "LATER": later_html,
-        "LATER_DAYS": esc(meta.get("later_days", 7)),
+        "LATER_DAYS": esc(m.later_days),
         "ACADEMICS": acad_html,
         "YOUTH": render_youth(m),
+        "YOUTH_NOTE": (f'<span class="ynote">{esc((m.data.get("youth") or {}).get("note", ""))}</span>'
+                       if (m.data.get("youth") or {}).get("note") else ""),
         "YOUTH_DAYS": esc((m.data.get("youth") or {}).get("days", 7)),
         "YOUTH_LATER": esc((m.data.get("youth") or {}).get("later_days", 14)),
         "ACAD_SUB": acad_sub,
@@ -577,18 +632,28 @@ def main() -> int:
     ap.add_argument("--out", default=str(HERE / "index.html"))
     ap.add_argument("--no-stamp", action="store_true", help="don't update meta.last_updated")
     ap.add_argument("--now", help="override build time (ISO) for testing")
+    ap.add_argument("--week-start", help="Sunday (YYYY-MM-DD) that starts the calendar week; default: upcoming Sunday")
     args = ap.parse_args()
 
     path = Path(args.json)
     data = json.loads(path.read_text())
     tz = ZoneInfo(data.get("meta", {}).get("timezone", "America/Denver"))
     now = dt.datetime.fromisoformat(args.now).astimezone(tz) if args.now else dt.datetime.now(tz)
+    if args.week_start:
+        week_start = dt.date.fromisoformat(args.week_start)
+        if week_start.weekday() != 6:
+            print(f"[build] WARNING: --week-start {week_start} is not a Sunday", file=sys.stderr)
+    else:
+        week_start = upcoming_sunday(now.date())
+    data.setdefault("meta", {})["week_start"] = week_start.isoformat()
     if not args.no_stamp:
-        data.setdefault("meta", {})["last_updated"] = now.isoformat(timespec="seconds")
+        data["meta"]["last_updated"] = now.isoformat(timespec="seconds")
+    # always persist (week_start may change even with --no-stamp)
+    if path:
         tmp = path.with_suffix(".tmp")
         tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
         tmp.replace(path)
-    Path(args.out).write_text(build(data, now))
+    Path(args.out).write_text(build(data, now, week_start))
     print(f"[build] wrote {args.out} (last_updated {data['meta'].get('last_updated')})")
     return 0
 

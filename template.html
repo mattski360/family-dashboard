@@ -7,10 +7,10 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="{{STATUS_BAR}}">
 <meta name="apple-mobile-web-app-title" content="Jensens">
 <meta name="format-detection" content="telephone=no">
-<meta name="theme-color" content="#15120f">
+<meta name="theme-color" content="{{THEME_COLOR}}">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <title>{{TITLE}}</title>
 <style>
@@ -23,12 +23,17 @@
   --radius:1.05rem;
 }
 [data-theme="light"]{
-  --bg:#f3ede4; --bg2:#ece4d8; --card:#fffcf7; --card2:#f8f2e9; --line:#e3d8c8;
-  --text:#2a221b; --muted:#5f5245; --faint:#8b7d6d;
-  --accent:#b27417; --accent-bg:rgba(214,150,50,.13);
-  --red:#c2392b; --red-bg:rgba(220,70,50,.12); --amber:#9a6a00; --amber-bg:rgba(230,170,40,.17);
-  --green:#2f8f5b; --shadow:0 .15rem .8rem rgba(80,60,30,.10);
+  --bg:#ffffff; --bg2:#ffffff; --card:#ffffff; --card2:#f7f6f3; --line:#e4e0d9;
+  --text:#1c1814; --muted:#564c41; --faint:#7d7266;
+  --accent:#a8650c; --accent-bg:rgba(232,160,40,.12);
+  --red:#c0281b; --red-bg:#fde8e5; --amber:#8f5800; --amber-bg:#fdf0d3;
+  --green:#1f7a48; --shadow:0 1px 2px rgba(30,20,10,.06),0 .2rem .9rem rgba(30,20,10,.05);
 }
+[data-theme="light"] body{background:#ffffff}
+[data-theme="light"] .day.is-today{background:#fff8ea}
+[data-theme="light"] .is-today .rel{color:#fff;background:#b8700f}
+[data-theme="light"] .b-no_school .bl{color:#b3200f}
+[data-theme="light"] .clock .time{font-weight:350}
 {{PERSON_CSS}}
 *{box-sizing:border-box;margin:0;padding:0}
 html{font-size:17px;-webkit-text-size-adjust:100%;background:var(--bg)}
@@ -41,14 +46,14 @@ svg{width:1em;height:1em;flex:none;vertical-align:-.12em}
 .lbl{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 
 /* ---------- layout (portrait-first: single stacked column) ---------- */
-#app{display:grid;gap:.55rem;grid-template-columns:minmax(0,1fr);
+#app{display:grid;gap:.45rem;grid-template-columns:minmax(0,1fr);
   grid-template-areas:"head" "spirit" "youth" "sched" "acad" "todo"}
 #app.fitted{flex:1 1 auto;min-height:0;grid-template-rows:auto auto auto minmax(0,1fr) auto auto}
 #todo{grid-area:todo}
 #todo ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.1rem}
 #todo .todo:nth-child(2){border-top:0;padding-top:.1rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:.62rem .85rem;min-width:0}
-.card-h{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:780;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:.55rem .8rem;min-width:0}
+.card-h{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:780;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem}
 .card-h .sub{margin-left:auto;color:var(--faint);font-weight:600;letter-spacing:.04em;text-transform:none;font-size:.8rem}
 /* landscape: calendar left, everything else right */
 /* ---------- header ---------- */
@@ -64,7 +69,7 @@ body.stale .brand .upd b{color:var(--amber)}
 .stale-note{display:none;font-size:.78rem;font-weight:700;color:var(--amber);background:var(--amber-bg);padding:.1rem .5rem;border-radius:1rem}
 body.stale .stale-note{display:inline-block}
 .clock{margin-left:auto;text-align:right;line-height:1}
-.clock .time{font-size:3.3rem;font-weight:300;letter-spacing:-.03em}
+.clock .time{font-size:3.1rem;font-weight:300;letter-spacing:-.03em}
 .clock .time .ap{font-size:1.25rem;font-weight:500;margin-left:.3rem;color:var(--muted);letter-spacing:0}
 .clock .date{font-size:1.1rem;color:var(--muted);margin-top:.3rem;font-weight:500}
 .tbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--muted);width:2.4rem;height:2.4rem;border-radius:50%;font-size:1.05rem;display:flex;align-items:center;justify-content:center;align-self:center}
@@ -74,7 +79,7 @@ body.stale .stale-note{display:inline-block}
 #acad{grid-area:acad}
 #youth{grid-area:youth;padding-top:.6rem;padding-bottom:.6rem}
 #youth .card-h{margin-bottom:.35rem}
-.yday{display:none;grid-template-columns:5.6rem minmax(0,1fr);gap:.6rem;align-items:baseline;padding:.22rem 0;border-top:1px solid var(--line)}
+.yday{display:none;grid-template-columns:5.6rem minmax(0,1fr);gap:.6rem;align-items:baseline;padding:.16rem 0;border-top:1px solid var(--line)}
 .yday.show{display:grid}
 .yrows .yday.show ~ .yday.show{border-top:1px solid var(--line)}
 .yrows .yday.first{border-top:0}
@@ -94,21 +99,21 @@ body.stale .stale-note{display:inline-block}
 .tent{margin-left:.4rem;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);background:var(--amber-bg);padding:.05rem .4rem;border-radius:1rem;vertical-align:.1em}
 .yempty{display:none;font-size:.85rem;color:var(--faint);font-style:italic}
 .yempty.show{display:block}
-.ylater{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .9rem;margin-top:.3rem;padding-top:.3rem;border-top:1px dashed var(--line);font-size:.8rem}
+.ylater{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .9rem;margin-top:.2rem;padding-top:.25rem;border-top:1px dashed var(--line);font-size:.8rem}
 .ylater.none{display:none}
 .yli{display:none;align-items:baseline;gap:.3rem;color:var(--muted)}
 .yli.show{display:inline-flex}
 .yli b{color:var(--text);font-weight:700}
 .yli.none{font-style:italic;color:var(--faint)}
 .yli .chip{font-size:.6rem;padding:.05rem .38rem}
-.ynote{margin-top:.25rem;font-size:.7rem;color:var(--faint);font-style:italic}
+.ynote{font-size:.68rem;color:var(--faint);font-style:italic;font-weight:500;letter-spacing:0;text-transform:none;margin-left:auto;text-align:right}
 body.scroll{height:auto;overflow:auto}
 #sched{grid-area:sched;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .days{column-count:2;column-gap:.85rem;column-fill:balance}
-.day{break-inside:avoid;-webkit-column-break-inside:avoid;display:none;background:var(--card2);border:1px solid var(--line);border-radius:.8rem;padding:.5rem .65rem .55rem;margin:0 0 .6rem}
+.day{break-inside:avoid;-webkit-column-break-inside:avoid;display:none;background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.38rem .6rem .42rem;margin:0 0 .45rem}
 .day.show{display:block}
 .day.is-today{border-color:var(--accent);background:linear-gradient(0deg,var(--accent-bg),var(--accent-bg)),var(--card2);box-shadow:0 0 0 1px var(--accent) inset}
-.dh{display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap;margin-bottom:.3rem}
+.dh{display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap;margin-bottom:.15rem}
 .dname{font-size:1.2rem;font-weight:800}
 .ddate{font-size:1.08rem;color:var(--muted);font-weight:550}
 .rel{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
@@ -119,17 +124,17 @@ body.scroll{height:auto;overflow:auto}
 .trip{--c:#C9A0FF;--cbg:rgba(201,160,255,.13)}
 [data-theme="light"] .trip{--c:#6d3fb0}
 .day.weekend .dname{color:var(--muted)}
-.banner{display:flex;align-items:center;gap:.45rem;border-radius:.55rem;padding:.25rem .5rem;margin:.25rem 0;font-size:.85rem}
+.banner{display:flex;align-items:center;gap:.45rem;border-radius:.55rem;padding:.2rem .5rem;margin:.15rem 0;font-size:.85rem}
 .banner .bl{font-weight:850;letter-spacing:.07em;text-transform:uppercase;font-size:.8rem;white-space:nowrap}
 .banner .br{color:var(--text);opacity:.9;min-width:0}
 .banner .who{margin-left:auto}
 .b-no_school{background:var(--red-bg)} .b-no_school .bl{color:var(--red)}
 .b-half_day{background:var(--amber-bg)} .b-half_day .bl{color:var(--amber)}
 .items{list-style:none}
-.item{display:grid;grid-template-columns:4.3rem minmax(0,1fr) auto;gap:.15rem .5rem;align-items:start;padding:.28rem 0;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:4.3rem minmax(0,1fr) auto;gap:.15rem .5rem;align-items:start;padding:.2rem 0;border-top:1px solid var(--line)}
 .items .item:first-child{border-top:0}
 .banner+.items .item:first-child{border-top:0}
-.when{line-height:1.15;padding-top:.1rem}
+.when{line-height:1.05;padding-top:.12rem}
 .when .t{display:block;font-size:.84rem;font-weight:700;color:var(--text);white-space:nowrap}
 .when .t2{display:block;font-size:.68rem;color:var(--faint);white-space:nowrap}
 .when .allday{color:var(--faint);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
@@ -150,11 +155,35 @@ body.scroll{height:auto;overflow:auto}
 .empty{color:var(--faint);font-size:.85rem;font-style:italic;font-weight:500}
 .day.quiet{padding:.4rem .65rem}
 .day.quiet .dh{margin-bottom:0}
-.later{margin-top:.1rem;border-top:1px solid var(--line);padding-top:.4rem;display:grid;grid-template-columns:1fr 1fr;column-gap:1rem}
-.later-h{grid-column:1/-1}
-.later-row.wide{grid-column:1/-1}
+.later{margin-top:.1rem;border-top:1px solid var(--line);padding-top:.35rem;display:grid;grid-template-columns:3.4rem 1fr 1fr;column-gap:.9rem;align-items:baseline}
+.later-h{grid-column:1;grid-row:1/span 9;align-self:start;padding-top:.2rem}
+.later-row{grid-column:auto}
+.later-row.wide{grid-column:2/-1}
 .later.none{display:none}
-.later-h{margin-bottom:.15rem}
+.wk{font-size:1rem;letter-spacing:.02em;text-transform:none;font-weight:800;color:var(--text)}
+.day.past{opacity:.5}
+.day.past.is-today{opacity:1}
+.rest{margin:-.1rem 0 .5rem;padding-bottom:.45rem;border-bottom:1px solid var(--line);display:flex;gap:.6rem;align-items:flex-start}
+.rest.none{display:none}
+.rest-h{width:4.4rem;flex:none;padding-top:.3rem;line-height:1.2}
+.rdays{flex:1;min-width:0}
+.rdays{display:flex;gap:.5rem}
+.rday{display:none;flex:1 1 0;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:.6rem;padding:.3rem .5rem .35rem}
+.rday.show{display:block}
+.rday.is-today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.rdh{font-size:.84rem;color:var(--muted);margin-bottom:.1rem}
+.rdh b{color:var(--text);font-weight:800;margin-right:.15rem}
+.rdh .rel{margin-left:.35rem;font-size:.6rem}
+.rday.is-today .rdh .rel{background:none;padding:0;color:var(--accent)}
+.ml{display:flex;flex-wrap:wrap;align-items:baseline;gap:.1rem .35rem;font-size:.8rem;line-height:1.25;margin:.06rem 0}
+.ml .mtime{font-weight:700;font-size:.72rem;color:var(--muted)}
+.ml .mt{font-weight:620}
+.ml.pr-low .mt{font-weight:500;color:var(--muted)}
+.ml .chip{font-size:.6rem;padding:.05rem .36rem}
+.ml.f-no_school .mt{color:var(--red);font-weight:800;text-transform:uppercase;font-size:.7rem;letter-spacing:.06em}
+.ml.f-half_day .mt{color:var(--amber);font-weight:800;text-transform:uppercase;font-size:.7rem;letter-spacing:.06em}
+.ml.empty{font-style:italic;color:var(--faint)}
+.later-h{margin-bottom:0}
 .later-row{display:none;gap:.6rem;align-items:baseline;padding:.14rem 0;font-size:.86rem}
 .later-row.show{display:flex}
 .later-row .ld{width:5.2rem;flex:none;color:var(--muted)}
@@ -169,7 +198,7 @@ body.scroll{height:auto;overflow:auto}
 
 /* ---------- heads-up ---------- */
 #todo ul{list-style:none}
-.todo{display:grid;grid-template-columns:1.15rem minmax(0,1fr) auto;gap:.55rem;align-items:start;padding:.3rem 0;border-top:1px solid var(--line)}
+.todo{display:grid;grid-template-columns:1.15rem minmax(0,1fr) auto;gap:.55rem;align-items:start;padding:.22rem 0;border-top:1px solid var(--line)}
 .todo:first-child{border-top:0;padding-top:.1rem}
 .todo .box{width:1.05rem;height:1.05rem;border:2px solid var(--faint);border-radius:.3rem;margin-top:.18rem}
 .todo.pr-high .box{border-color:var(--accent)}
@@ -180,7 +209,7 @@ body.scroll{height:auto;overflow:auto}
 .todo.hidden-default{display:none}
 .todo.gone{display:none}
 .sp-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:.6rem}
-.sp-block{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.55rem .7rem}
+.sp-block{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.42rem .65rem}
 .sp-k{display:flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .sp-k svg{color:var(--accent)}
 .sp-wk{margin-left:auto;font-weight:650;letter-spacing:.03em;text-transform:none;color:var(--faint)}
@@ -247,7 +276,7 @@ footer.foot{display:none}
 }
 </style>
 </head>
-<body data-ydays="{{YOUTH_DAYS}}" data-ylater="{{YOUTH_LATER}}" data-later="{{LATER_DAYS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-days="{{SCHED_DAYS}}" data-build-date="{{BUILD_DATE}}">
+<body data-ydays="{{YOUTH_DAYS}}" data-ylater="{{YOUTH_LATER}}" data-later="{{LATER_DAYS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-week-end="{{WEEK_END}}" data-build-date="{{BUILD_DATE}}">
 <div id="app">
   <header class="top">
     <div class="brand">
@@ -264,12 +293,13 @@ footer.foot{display:none}
   </section>
 
   <section class="card" id="youth">
-    <div class="card-h">{{ICON_KIDS}} Young Men this week<span class="sub">Luke · Teachers &nbsp;·&nbsp; Wyatt · Deacons</span></div>
+    <div class="card-h">{{ICON_KIDS}} Young Men this week{{YOUTH_NOTE}}</div>
     {{YOUTH}}
   </section>
 
   <section class="card" id="sched">
-    <div class="card-h">{{ICON_CAL}} This week<span class="sub" id="schedSub">Next {{SCHED_DAYS}} days · all times {{TZLABEL}}</span></div>
+    <div class="rest" id="rest"><div class="rest-h"><span class="lbl">Rest of<br>this week</span></div><div class="rdays">{{REST}}</div></div>
+    <div class="card-h">{{ICON_CAL}} <span class="wk">{{WEEK_LABEL}}</span><span class="sub" id="schedSub">Sun–Sat · all times {{TZLABEL}}</span></div>
     <div class="days" id="days">{{DAYS}}</div>
     <div class="later" id="later"><div class="later-h"><span class="lbl">Later</span></div>{{LATER}}</div>
   </section>
@@ -287,7 +317,7 @@ footer.foot{display:none}
 <script>
 (function(){
   var B=document.body, TZ=B.getAttribute('data-tz')||'America/Denver';
-  var N=parseInt(B.getAttribute('data-days')||'10',10);
+  var WS=B.getAttribute('data-week-start'), WE=B.getAttribute('data-week-end');
   var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   function parts(d){var o={};try{new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'numeric',minute:'2-digit',hour12:true,weekday:'long'}).formatToParts(d).forEach(function(p){o[p.type]=p.value});}catch(e){}return o;}
   function ymd(d){var p=parts(d);return p.year+'-'+p.month+'-'+p.day;}
@@ -305,18 +335,21 @@ footer.foot{display:none}
 
   var lastDay=null;
   function applyDay(today){
-    var end=addDays(today,N-1), tmrw=addDays(today,1), shown=0;
+    var tmrw=addDays(today,1), rc=0;
     each('.day',function(el){
-      var d=el.getAttribute('data-date'), on=d>=today&&d<=end;
-      el.classList.toggle('show',on); if(on)shown++;
-      el.classList.toggle('is-today',d===today);
+      var d=el.getAttribute('data-date');
+      el.classList.toggle('show',d>=WS&&d<=WE);
+      el.classList.toggle('is-today',d===today); el.classList.toggle('past',d<today);
       el.querySelector('.rel').textContent=d===today?'Today':(d===tmrw?'Tomorrow':'');
     });
+    each('.rday',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<WS;el.classList.toggle('show',on);if(on)rc++;
+      el.classList.toggle('is-today',d===today);el.querySelector('.rel').textContent=d===today?'Today':(d===tmrw?'Tomorrow':'');});
+    var rest=document.getElementById('rest'); if(rest)rest.classList.toggle('none',!rc);
     each('.stat.today .st',function(el){el.classList.toggle('on',el.getAttribute('data-date')===today);});
     each('.stat.tmrw .st',function(el){el.classList.toggle('on',el.getAttribute('data-date')===tmrw);});
     each('.keys',function(box){var n=0;Array.prototype.forEach.call(box.querySelectorAll('.keyd[data-date]'),function(el){var on=el.getAttribute('data-date')>tmrw&&n<1;if(on)n++;el.classList.toggle('on',on);});});
-    var L=parseInt(B.getAttribute('data-later')||'0',10), lend=addDays(today,N+L-1), lc=0;
-    each('.later-row',function(el){var d=el.getAttribute('data-date'),on=d>end&&d<=lend;el.classList.toggle('show',on);if(on)lc++;});
+    var L=parseInt(B.getAttribute('data-later')||'8',10), lend=addDays(WE,L), lc=0;
+    each('.later-row',function(el){var d=el.getAttribute('data-date'),on=d>WE&&d<=lend&&d>=today;el.classList.toggle('show',on);if(on)lc++;});
     var lat=document.getElementById('later'); if(lat)lat.classList.toggle('none',!lc);
     var YD=parseInt(B.getAttribute('data-ydays')||'7',10), YL=parseInt(B.getAttribute('data-ylater')||'14',10);
     var yend=addDays(today,YD-1), ylend=addDays(today,YD+YL-1), yc=0, ylc=0;

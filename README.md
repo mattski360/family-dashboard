@@ -5,7 +5,7 @@ To publish, put `index.html` and `assets/` on GitHub Pages.
 
 ```
 ./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → index.html
-python3 build.py         # re-render only (stamps meta.last_updated)
+python3 build.py [--week-start 2026-10-18]   # re-render only (stamps meta.last_updated, sets meta.week_start)
 python3 build.py --no-stamp
 python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
 /workspace/.venv-shot/bin/python shot.py   # preview.png (portrait) + preview-landscape.png
@@ -13,18 +13,23 @@ python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
 Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use playwright with the system Chrome.
 
 ## How it behaves
-* `build.py` pre-renders every day from (build date − 1) to (build date + 24). The inline JS shows **today + the next 6 days** (`meta.schedule_days`). It also shows a compact "Later" list of key items for the following `meta.later_days`. All of this is computed in America/Denver time, so a page built once a week stays correct every day. JS also highlights today and labels tomorrow, and hides heads-up items and tests whose dates have passed.
-* The page reloads every 30 minutes through `<meta http-equiv=refresh content=1800>`. A JS fallback reloads at about 30.3 minutes with a cache-busting `?r=` query.
-* "Last updated" comes from `meta.last_updated`. It turns amber and shows "Needs refresh" when it is older than `meta.stale_after_days` (8).
-* The page uses as large a font as still fits on one screen without scrolling.
-* Tap the moon button to switch between dark and light. The choice is saved per device. The default comes from `meta.theme`.
+* **Fixed Sunday-to-Saturday week.** The calendar shows `meta.week_start` through week_start + 6. The page is meant to be rebuilt every Saturday at 9 PM MT for the week that starts the next day.
+  * build.py works out week_start as the upcoming Sunday: Mon–Sat give the next Sunday, and a Sunday gives that same day.
+  * `--week-start YYYY-MM-DD` overrides it. Either way, the value used is written back to `meta.week_start`.
+* **"Rest of this week" strip.** When the page is viewed before week_start (an off-cycle build, like Thu Oct 8 for the week of Oct 11), a small strip above the calendar shows the remaining days of the current week.
+* **Later list.** It covers the 8 days after the week (`meta.later_days`) and shows only key items.
+* **Today.** JS highlights today, labels tomorrow and dims past days, all in America/Denver time. Heads-up items and tests hide once their dates pass.
+* **Youth card.** It rolls with the viewing date: today plus 6 days, then a Later line for the next 14.
+* **Refresh.** `<meta http-equiv=refresh content=1800>` reloads the page every 30 minutes. A JS fallback reloads with a cache-busting `?r=` query.
+* **Last updated.** "Last updated" comes from `meta.last_updated`. It turns amber with "Needs refresh" when older than `meta.stale_after_days` (8).
+* **Theme.** It defaults to a light theme on a white background (`meta.theme`: `light` or `dark`). The moon button toggles the theme, and the choice is saved per device.
 
 ## data/dashboard.json
 | key | what |
 |---|---|
-| `meta` | `family_name`, `timezone`, `tz_label`, `theme` (`dark`/`light`), `schedule_days` (7), `later_days` (8), `stale_after_days` (8), `last_updated` (set by build.py), `school_feed_synced` and `school_feed_window` (set by fetch_school.py) |
+| `meta` | `family_name`, `timezone`, `tz_label`, `theme` (`light`/`dark`), `week_start` (Sunday, written by build.py), `later_days` (8), `stale_after_days` (8), `last_updated` (set by build.py), `school_feed_synced` and `school_feed_window` (set by fetch_school.py) |
 | `people` | chip id → `{label, color}`: `luke`, `wyatt`, `tanner`, `parents`, `family` |
-| `kids[]` | `id, name, grade, school, school_short, campus, division, in_person_days, in_person_summary`. `routine` (Wyatt only): `{days:["Tue","Thu"], start, end, title, note, online_title}` adds the "In person at Lehi campus" line automatically on those days unless Wyatt has no school |
+| `kids[]` | `id, name, grade, school, school_short, campus, division, in_person_days, in_person_summary`, and optionally `glance_line`, which overrides the school line in the kids card. `routine` (Wyatt only): `{days:["Tue","Thu"], start, end, title, note, online_title}` adds the "In person at Lehi campus" line automatically on those days unless Wyatt has no school |
 | `events[]` | calendar items (see below) |
 | `youth` | Young Men card (see below). Shown only in the card, never in the weekly calendar |
 | `todos[]` | `{id, text, detail, who[], due, hide_after, priority, done}`. Items are hidden after `hide_after` or when `done: true` |
