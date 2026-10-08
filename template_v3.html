@@ -41,7 +41,7 @@ body{position:fixed;inset:0;font-family:ui-rounded,"SF Pro Rounded","Nunito",-ap
 .p-leaf{--c:#7FCB8F;--dk:#2F7D43;--bg:#E9F7EC;--mid:#CDEED5}
 
 #stage{position:fixed;left:0;right:0;top:0;bottom:var(--nav);cursor:pointer;-webkit-tap-highlight-color:transparent}
-.page{position:absolute;inset:0;display:flex;flex-direction:column;gap:1rem;overflow:hidden;
+.page{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.2rem;overflow:hidden;
   padding:max(40px,calc(env(safe-area-inset-top) + 18px)) max(28px,env(safe-area-inset-right)) 14px max(28px,env(safe-area-inset-left));
   opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s}
 .page.on{opacity:1;visibility:visible;transition:opacity .9s ease}
@@ -64,28 +64,32 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .h{display:flex;align-items:baseline;gap:.67rem;font-size:1.39rem;font-weight:800;margin-bottom:-.3rem}
 .h span{font-size:.95rem;font-weight:700;color:var(--faint)}
 .sk{display:flex;align-items:center;gap:.55rem;font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
-.bub{width:3rem;height:3rem;border-radius:1rem;background:var(--mid);color:var(--dk);display:grid;place-items:center;flex:none}
-.bub .ic{font-size:1.45rem}
+.bub{width:3.3rem;height:3.3rem;border-radius:1.1rem;background:var(--mid);color:var(--dk);display:grid;place-items:center;flex:none}
+.bub .ic{font-size:1.6rem}
 .sk .bub{width:2.33rem;height:2.33rem;border-radius:.83rem;background:#fff}
 .sk .bub .ic{font-size:1.22rem}
 
 /* page 1: kid cards */
-.kids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem;flex:1 0 auto}
-.kid{background:var(--bg);border-radius:1.9rem;padding:1.3rem 1rem 1rem;display:flex;flex-direction:column;min-width:0}
+.kids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;flex:1 0 auto}
+.kid{background:var(--bg);border-radius:1.9rem;padding:1.5rem 1.15rem 1.2rem;display:flex;flex-direction:column;min-width:0}
 .kid .top{display:flex;align-items:center;gap:.67rem}
-.av{width:3.55rem;height:3.55rem;border-radius:1.33rem;background:var(--c);color:#fff;display:grid;place-items:center;font-size:1.78rem;font-weight:800;flex:none;transform:rotate(-4deg)}
-.nm{font-size:1.6rem;font-weight:800;color:var(--dk);line-height:1}
-.gr{font-size:.83rem;font-weight:700;color:var(--muted);margin-top:.17rem}
-.items{display:none;margin:1.3rem 0 1rem;flex-direction:column;gap:.9rem}
+.av{width:3.9rem;height:3.9rem;border-radius:1.4rem;background:var(--c);color:#fff;display:grid;place-items:center;font-size:1.95rem;font-weight:800;flex:none;transform:rotate(-4deg)}
+.nm{font-size:1.78rem;font-weight:800;color:var(--dk);line-height:1}
+.gr{font-size:.95rem;font-weight:700;color:var(--muted);margin-top:.2rem}
+.items{display:none;margin:1.45rem 0 1.15rem;flex-direction:column;gap:1.1rem}
 .items.on{display:flex}
-.it{display:flex;align-items:center;gap:.67rem;font-size:1.22rem;font-weight:700;line-height:1.15;min-width:0}
+.it{display:flex;align-items:center;gap:.75rem;font-size:1.38rem;font-weight:700;line-height:1.18;min-width:0}
 .itx{min-width:0;overflow-wrap:anywhere}
-.it small{display:block;font-size:.83rem;font-weight:700;color:var(--muted);margin-top:.11rem}
+.it small{display:block;font-size:.95rem;font-weight:700;color:var(--muted);margin-top:.14rem}
 .it.st-off .itt{color:var(--red)} .it.st-off .bub{background:#FAD3D0;color:var(--red)}
 .it.st-half .itt{color:var(--amber)} .it.st-half .bub{background:#FFEBB3;color:var(--amber)}
-.it.free{color:var(--faint)} .it.free .itt{font-size:.95rem}
-.tmrw{margin-top:auto;background:rgba(255,255,255,.75);border-radius:1rem;padding:.55rem .72rem;font-size:.9rem;font-weight:700;color:var(--muted);line-height:1.25;overflow-wrap:anywhere}
-.tmrw b{display:block;font-size:.67rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dk);margin-bottom:.11rem}
+.it.free{color:var(--faint)} .it.free .itt{font-size:1.05rem}
+.ymtag{display:inline-block;font-size:.68em;font-weight:800;letter-spacing:.03em;line-height:1.15;color:var(--dk);background:var(--mid);border-radius:.45em;padding:.1em .45em;margin:0 .32em .06em 0;vertical-align:.08em}
+.e .ymtag{font-size:.74em;margin-bottom:.04em}
+.et small.ymtag{display:inline-block;font-size:.72rem;font-weight:800;margin:.16rem 0 0;padding:.06rem .42rem;letter-spacing:.02em}
+.tmrw .ymtag{font-size:.78em;vertical-align:.06em}
+.tmrw{margin-top:auto;background:rgba(255,255,255,.75);border-radius:1.1rem;padding:.72rem .85rem;font-size:1.02rem;font-weight:700;color:var(--muted);line-height:1.3;overflow-wrap:anywhere}
+.tmrw b{display:block;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dk);margin-bottom:.16rem}
 .tm{display:none} .tm.on{display:inline}
 .tmrw .no{color:var(--red)} .tmrw .hf{color:var(--amber)}
 
@@ -102,27 +106,27 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .pb.away{color:var(--parents-dk);font-weight:800}
 
 /* page 1: spiritual */
-.spirit{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:.9rem}
-.sc{border-radius:1.67rem;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.33rem;min-width:0}
+.spirit{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:1.1rem}
+.sc{border-radius:1.67rem;padding:1.4rem 1.45rem 1.35rem;display:flex;flex-direction:column;gap:.42rem;min-width:0}
 .sc.cfm{background:var(--peach)} .sc.fsy{background:var(--rose)}
 .cfm .sk{color:#B5651D} .fsy .sk{color:#B2477A}
-.stt{font-size:1.39rem;font-weight:800;line-height:1.15;margin-top:.22rem}
-.srd{font-size:.95rem;font-weight:800;color:#B5651D}
+.stt{font-size:1.55rem;font-weight:800;line-height:1.16;margin-top:.28rem}
+.srd{font-size:1.08rem;font-weight:800;color:#B5651D}
 .fsy .srd{color:#B2477A}
-.sq{font-size:1.05rem;font-weight:600;color:var(--muted);line-height:1.3}
+.sq{font-size:1.15rem;font-weight:600;color:var(--muted);line-height:1.32}
 .sq i{font-style:normal;color:var(--faint);font-size:.78rem}
 .sq b{display:inline-block;font-size:.67rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#B2477A;margin-right:.4rem}
 .sq.t-tmrw{font-size:.9rem} .sq.t-tmrw b{color:var(--faint)}
 .tip{display:none} .tip.on{display:inline}
-.tbox{background:rgba(255,255,255,.72);border-radius:1.1rem;padding:.7rem .9rem .75rem;margin-top:.4rem;display:flex;flex-direction:column;gap:.3rem}
+.tbox{background:rgba(255,255,255,.72);border-radius:1.2rem;padding:1rem 1.1rem 1.05rem;margin-top:.55rem;display:flex;flex-direction:column;gap:.4rem}
 .cfd{display:none} .cfd.on{display:flex}
 .cfd-none{display:none} .cfd-none.on{display:block}
 .tk{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#B5651D}
 .tk span{margin-left:.35rem;font-size:.9rem;letter-spacing:.01em;text-transform:none}
 .fsy .tk{color:#B2477A}
-.cq{font-size:1.3rem;font-weight:800;line-height:1.22}
-.ct{font-size:1rem;font-weight:600;color:var(--muted);line-height:1.32}
-.ft{font-size:1.3rem;font-weight:800;line-height:1.24}
+.cq{font-size:1.55rem;font-weight:800;line-height:1.24}
+.ct{font-size:1.16rem;font-weight:600;color:var(--muted);line-height:1.35}
+.ft{font-size:1.55rem;font-weight:800;line-height:1.26}
 .fsy .t-tmrw{margin-top:.3rem}
 .pending .stt{color:var(--muted);font-style:italic;font-weight:600}
 
@@ -142,6 +146,7 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .e .bub .ic{font-size:1.1rem}
 .et{min-width:0;overflow-wrap:anywhere}
 .el{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal}
+.e.yth .el{-webkit-line-clamp:5}
 .et small{display:block;font-size:.72rem;color:var(--dk);font-weight:800}
 .dots{display:flex;gap:.17rem;margin-top:.17rem}
 .dots i{width:.5rem;height:.5rem;border-radius:50%;background:var(--c)}
@@ -152,19 +157,6 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .big .ic{font-size:2.9rem}
 .quiet{flex:1;display:grid;place-items:center;color:var(--faint);font-size:.83rem;font-weight:700;padding:.5rem 0}
 
-/* page 1: young men (full width) */
-.ym{background:var(--sky);border-radius:1.67rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
-.ym .sk{color:#3D6FB8;margin-bottom:.1rem}
-.ymg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
-.yr{display:flex;align-items:center;gap:.67rem;background:#fff;border-radius:1rem;padding:.55rem .67rem;font-size:.95rem;font-weight:700;min-width:0}
-.yr.none{display:none}
-.badge{background:var(--c);color:#fff;border-radius:.67rem;padding:.28rem .55rem;font-size:.78rem;font-weight:800;white-space:nowrap;min-width:5.1rem;text-align:center;flex:none}
-.yis{display:flex;flex-wrap:wrap;gap:.1rem .8rem;min-width:0;line-height:1.25}
-.yi,.yl{display:none} .yi.on,.yl.on{display:inline}
-.yi .when,.yl .when{color:var(--dk);font-weight:800;margin-right:.1rem}
-.yi.none,.yi.ynone{color:var(--faint)}
-.yi small,.yl small{font-size:.72rem;color:var(--muted)}
-.yl .dots{display:inline-flex;margin:0 0 0 .3rem;vertical-align:.1em}
 /* page 2: grades strip */
 .gr2{background:#F7F3FF;border-radius:1.67rem;padding:.8rem 1rem;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:.5rem .9rem;min-width:0}
 .gr2 .sk{color:var(--parents-dk)}
@@ -193,7 +185,7 @@ body.paused #nav .pz{display:inline}
 body.paused #prog{background:#C9A0FF}
 </style>
 </head>
-<body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-ydays="{{YOUTH_DAYS}}" data-ylater="{{YOUTH_LATER}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
+<body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
 {{SPRITE}}
 <div id="stage">
 
@@ -206,10 +198,6 @@ body.paused #prog{background:#C9A0FF}
   </header>
   <div class="kids">{{KIDS}}</div>
   <div class="pstrip" id="pstrip"><span class="lab"><svg class="ic"><use href="#i-users"/></svg>Parents</span>{{PARENTS}}</div>
-  <div class="ym">
-    <div class="sk"><span class="bub"><svg class="ic"><use href="#i-users"/></svg></span>Young Men</div>
-    <div class="ymg">{{YOUTH}}</div>
-  </div>
   <div class="spirit">{{SPIRIT}}</div>
 </section>
 
@@ -248,7 +236,7 @@ body.paused #prog{background:#C9A0FF}
   var lastDay=null, TILES=10;
   function applyDay(today){
     var tmrw=addDays(today,1), dow=dowOf(today), dow1=dowOf(tmrw);
-    // page 1: kid cards, parents strip, Young Men, Come Follow Me daily scripture, Strength of Youth tips
+    // page 1: kid cards (youth tagged YM / All youth), parents strip, Come Follow Me, Strength of Youth
     each('[data-d0]',function(el){el.classList.toggle('on',el.getAttribute('data-d0')===today);});
     each('[data-d1]',function(el){el.classList.toggle('on',el.getAttribute('data-d1')===tmrw);});
     // parents strip: today + tomorrow; tomorrow is skipped when it would only repeat today's trip tag
@@ -268,12 +256,6 @@ body.paused #prog{background:#C9A0FF}
     each('.day',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=tend;el.classList.toggle('on',on);el.classList.toggle('today',d===today);
       var w=el.querySelector('.dw');w.textContent=d===today?'Today':w.getAttribute('data-dow');});
     document.getElementById('range').textContent=nice(today)+' \u2013 '+nice(tend);
-    var YD=parseInt(B.getAttribute('data-ydays')||'7',10), YL=parseInt(B.getAttribute('data-ylater')||'14',10);
-    var yend=addDays(today,YD-1), ylend=addDays(today,YD+YL-1);
-    each('.yr:not(.later)',function(row){var n=0;each('.yi[data-date]',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=yend;el.classList.toggle('on',on);if(on)n++;},row);
-      var no=row.querySelector('.ynone');if(no)no.classList.toggle('on',!n);row.classList.toggle('empty',!n);});
-    var lc=0;each('.yl',function(el){var d=el.getAttribute('data-date'),on=d>yend&&d<=ylend&&lc<2;el.classList.toggle('on',on);if(on)lc++;});
-    each('.yr.later',function(el){el.classList.toggle('none',!lc);});
     var gc=0;each('.gn',function(el){var d=el.getAttribute('data-date'),on=d>=today&&gc<2;el.classList.toggle('on',on);if(on)gc++;});
     var last=Date.parse(B.getAttribute('data-last')), lim=parseFloat(B.getAttribute('data-stale-days')||'8');
     B.classList.toggle('stale',!isNaN(last)&&(Date.now()-last)>lim*864e5);

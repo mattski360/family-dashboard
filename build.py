@@ -888,10 +888,12 @@ def build_v2(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
 
 # ------------------------------------------------------------------ v3 (two soft pages)
 # v3/index.html: pastel rounded cards, bigger icons, less chrome. Page 1 "Today" = a colour-coded card per kid
-# (today's items + a small Tomorrow box), parents strip, Young Men, Come Follow Me (today's scripture from
-# come_follow_me.daily) + Strength of Youth (today's tip). Page 2 "This week" = 10 large day tiles starting today
-# (up to 6 items each) and a grades strip. Everything is rendered for the whole date range and
-# the inline script picks today/tomorrow/the 10 tiles from the viewing date (America/Denver), like v2.
+# (today's items + a small Tomorrow box; youth folded in and tagged YM / All youth), parents strip,
+# Come Follow Me (today's scripture from come_follow_me.daily) + Strength of Youth (today's tip).
+# No standalone Young Men card. Page 2 "This week" = 10 large day tiles starting today
+# (up to 6 items each, youth included and tagged) and a grades strip. Everything is rendered for the
+# whole date range and the inline script picks today/tomorrow/the 10 tiles from the viewing date
+# (America/Denver), like v2.
 
 V3_ICON_RULES = [
     (r"\bno school\b|cancel", "x"), (r"\bbreak\b", "leaf"), (r"half day", "clock"),
@@ -983,10 +985,21 @@ def v3_youth_on(yacts: list[dict], day: dt.date) -> list[dict]:
     return [a for a in yacts if a["date"] == day.isoformat() and a.get("kind") != "none"]
 
 
-def v3_it(icon: str, title: str, small: str = "", cls: str = "") -> str:
+def v3_ym_label(a: dict) -> str:
+    """Short tag so a youth item reads as Young Men (or all-youth), not a school event."""
+    return "All youth" if a.get("group") == "all_youth" else "YM"
+
+
+def v3_ym_tent(a: dict) -> str:
+    title = a.get("title") or ""
+    return "?" if a.get("tentative") and not title.endswith("?") else ""
+
+
+def v3_it(icon: str, title: str, small: str = "", cls: str = "", tag: str = "") -> str:
     sm = f"<small>{esc(small)}</small>" if small else ""
+    tag_html = f'<span class="ymtag">{esc(tag)}</span> ' if tag else ""
     return (f'<div class="it{(" " + cls) if cls else ""}"><span class="bub">{ic(icon)}</span>'
-            f'<span class="itx"><span class="itt">{esc(title)}</span>{sm}</span></div>')
+            f'<span class="itx"><span class="itt">{tag_html}{esc(title)}</span>{sm}</span></div>')
 
 
 def v3_kid_today(m: Model, kid: dict, day: dt.date, yacts: list[dict]) -> str:
@@ -1033,12 +1046,9 @@ def v3_kid_today(m: Model, kid: dict, day: dt.date, yacts: list[dict]) -> str:
     for a in v3_youth_on(yacts, day):
         if kid_id not in a.get("who", []):
             continue
-        grp = "Young Men" if len(a["who"]) == 1 else "All youth"
-        when = fmt_time(a.get("start")) if a.get("start") else ("tonight" if day.weekday() < 6 else "")
-        tent = "?" if a.get("tentative") and not a.get("title", "").endswith("?") else ""
-        parts.append(v3_it(v3_icon(a.get("title"), "users"), (a.get("title") or "") + tent,
-                           f"{grp} {when}".strip() if when == "tonight" else " \u00b7 ".join(x for x in (grp, when) if x),
-                           "yth"))
+        when = fmt_time(a["start"]) if a.get("start") else ""
+        parts.append(v3_it(v3_icon(a.get("title"), "users"), (a.get("title") or "") + v3_ym_tent(a),
+                           when, "yth", v3_ym_label(a)))
     if not parts:
         parts.append(v3_it("sun", "Free day", "Nothing scheduled", "free"))
     return "".join(parts)
@@ -1062,7 +1072,7 @@ def v3_kid_tomorrow(m: Model, kid: dict, day: dt.date, yacts: list[dict]) -> str
             bits.append(esc(v3_short(e.get("title", ""))) + (f" {t}" if t else ""))
     for a in v3_youth_on(yacts, day):
         if kid_id in a.get("who", []):
-            bits.append(esc(v3_short(a.get("title", ""))))
+            bits.append(f'<span class="ymtag">{esc(v3_ym_label(a))}</span> {esc(v3_short(a.get("title") or "") + v3_ym_tent(a))}')
     if not bits:
         bits.append("School day" if cls == "school" else "Nothing scheduled")
     return " \u00b7 ".join(bits)
@@ -1233,10 +1243,13 @@ def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
     for a in v3_youth_on(yacts, day):
         who = a.get("who", [])
         pc, dots = (f"p-{who[0]}", "") if len(who) == 1 else ("p-all", v3_dots(m, who))
-        label = v3_short(a.get("title", "")) + ("?" if a.get("tentative") and not a.get("title", "").endswith("?") else "")
-        small = short_time(a.get("start")) or ("YM" if len(who) == 1 else "Youth")
-        ents.append(((1, a.get("start") or "99"), f'<div class="e {pc}"><span class="bub">{ic(v3_icon(a.get("title"), "users"))}</span>'
-                    f'<span class="et"><span class="el">{esc(label)}</span><small>{esc(small)}</small>{dots}</span></div>'))
+        label = v3_short(a.get("title") or "") + v3_ym_tent(a)
+        small = short_time(a.get("start"))
+        tag = v3_ym_label(a)
+        detail = " \u00b7 ".join(x for x in (tag, small) if x)
+        ents.append(((1, a.get("start") or "99"), f'<div class="e {pc} yth"><span class="bub">{ic(v3_icon(a.get("title"), "users"))}</span>'
+                    f'<span class="et"><span class="el">{esc(label)}</span>'
+                    f'<small class="ymtag">{esc(detail)}</small>{dots}</span></div>'))
     ents.sort(key=lambda x: x[0])
     trips = [e for e in m.events_on(day) if e.get("kind") == "trip"]
     trips.sort(key=lambda e: e["date"])
@@ -1245,7 +1258,7 @@ def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
     if big and len(ents) <= 1:
         body = f'<div class="big {"p-leaf" if "break" in big.lower() else "p-red"}">{ic("leaf" if "break" in big.lower() else "x")}{esc(big)}</div>'
     elif ents:
-        MAX = 6                                    # v3 page 2 has the full height for tiles now (Young Men moved to page 1)
+        MAX = 6                                    # v3 page 2 tiles (youth included, tagged YM / All youth)
         hs = [h for _, h in ents]
         more = f'<div class="more">+{len(hs) - MAX} more</div>' if len(hs) > MAX else ""
         body = f'<div class="ev">{"".join(hs[:MAX if len(hs) > MAX else len(hs)])}{more}</div>'
@@ -1340,9 +1353,6 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "PARENTS": render_v3_parents(m),
         "SPIRIT": render_v3_spirit(m),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
-        "YOUTH": render_v3_youth(m),
-        "YOUTH_DAYS": esc((m.data.get("youth") or {}).get("days", 7)),
-        "YOUTH_LATER": esc((m.data.get("youth") or {}).get("later_days", 14)),
         "GRADES": grades,
         "GRADE_NOTES": gnotes,
         "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
