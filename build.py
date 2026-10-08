@@ -94,6 +94,13 @@ def week_label(start: dt.date) -> str:
 class Model:
     def __init__(self, data: dict, now: dt.datetime, week_start: dt.date | None = None):
         self.data = data
+        # Private hide list (not committed): any event/todo mentioning a listed term is left off the pages.
+        _hp = Path(__file__).resolve().parent / "data" / "private_hide.txt"
+        _terms = [l.strip().lower() for l in _hp.read_text().splitlines() if l.strip() and not l.startswith("#")] if _hp.exists() else []
+        if _terms:
+            _hit = lambda o: any(t in json.dumps(o, ensure_ascii=False).lower() for t in _terms)
+            data["events"] = [e for e in data.get("events", []) if not _hit(e)]
+            data["todos"] = [t for t in data.get("todos", []) or [] if not _hit(t)]
         self.now = now
         self.today = now.date()
         self.meta = data.get("meta", {})

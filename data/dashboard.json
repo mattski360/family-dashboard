@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T10:32:51-06:00",
+    "last_updated": "2026-10-08T11:21:02-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
@@ -221,8 +221,8 @@
       "id": "fam-trip-anaheim",
       "date": "2026-10-14",
       "end_date": "2026-10-18",
-      "title": "Anaheim, CA",
-      "note": "Hotel booked (2 reservations on file)",
+      "title": "California",
+      "note": "",
       "who": [
         "parents"
       ],
@@ -333,17 +333,6 @@
       "source": "family"
     },
     {
-      "id": "fam-20261015-disneyland",
-      "date": "2026-10-15",
-      "title": "Disneyland",
-      "who": [
-        "parents"
-      ],
-      "priority": "normal",
-      "kind": "event",
-      "source": "family"
-    },
-    {
       "id": "cga-20261015-fall-break",
       "date": "2026-10-15",
       "end_date": "2026-10-16",
@@ -371,17 +360,6 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
-    },
-    {
-      "id": "fam-20261016-dca",
-      "date": "2026-10-16",
-      "title": "Disney California Adventure",
-      "who": [
-        "parents"
-      ],
-      "priority": "normal",
-      "kind": "event",
-      "source": "family"
     },
     {
       "id": "ahs-20261016-fall-break",
@@ -581,8 +559,8 @@
     },
     {
       "id": "todo-hotels",
-      "text": "Two Anaheim hotels booked for Oct 14–18",
-      "detail": "Stanford Inn & Quality Inn Placentia — keep one",
+      "text": "Two hotels booked for Oct 14–18",
+      "detail": "Keep one, cancel the other",
       "who": [
         "parents"
       ],

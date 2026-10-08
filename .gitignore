@@ -4,3 +4,4 @@ __pycache__/
 
 # raw ward youth sheet exports (contain other families' info; never publish)
 data/youth_sheet*
+data/private_hide.txt
