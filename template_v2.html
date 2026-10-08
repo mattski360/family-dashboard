@@ -383,7 +383,7 @@ body.stale .upd.stale-only{display:flex}
 #nav .dot{width:9px;height:9px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
 #nav .dot.on{background:var(--accent)}
 #nav .nl{min-width:9em;text-align:center}
-#nav .pz{color:var(--amber);display:none}
+#nav .pz{color:var(--amber);display:none;font:inherit;background:var(--accent-bg);border:1px solid var(--amber);border-radius:1rem;padding:.25rem .8rem;cursor:pointer}
 body.paused #nav .pz{display:inline}
 #prog{position:fixed;left:0;bottom:0;height:3px;width:0;background:var(--accent);opacity:.45;border-radius:0 2px 2px 0}
 body.paused #prog{background:var(--amber);opacity:.3}
@@ -451,7 +451,7 @@ body.paused #prog{background:var(--amber);opacity:.3}
 </section>
 </div>
 
-<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">1 of 2 · Today</span><span class="pz">paused</span></nav>
+<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">1 of 2 · Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button></nav>
 <div id="prog"></div>
 
 <script>
@@ -563,13 +563,14 @@ body.paused #prog{background:var(--amber);opacity:.3}
     if(pausedUntil&&now>=pausedUntil){shownAt=pausedUntil;pausedUntil=0;save();}   // full interval after a pause
     var paused=!!pausedUntil;
     B.classList.toggle('paused',paused);
-    if(paused){prog.style.width=(100*(pausedUntil-now)/PAUSE)+'%';return;}
+    if(paused){prog.style.width=(100*(pausedUntil-now)/PAUSE)+'%';var r=Math.ceil((pausedUntil-now)/1000);document.getElementById('pzt').textContent='('+Math.floor(r/60)+':'+('0'+r%60).slice(-2)+')';return;}
     if(now-shownAt>=ROT){show((cur+1)%2);now=shownAt;}
     prog.style.width=Math.min(100,100*(now-shownAt)/ROT)+'%';
   }
   function userGo(i){pausedUntil=Date.now()+PAUSE;show(i);loop();}
   document.getElementById('stage').addEventListener('click',function(){userGo((cur+1)%2);});
   each('#nav .dot',function(d){d.addEventListener('click',function(ev){ev.stopPropagation();userGo(+d.getAttribute('data-i'));});});
+  document.getElementById('resume').addEventListener('click',function(ev){ev.stopPropagation();pausedUntil=0;shownAt=Date.now();save();loop();});
   render(cur); save(); loop();
   setInterval(loop,200);
 
