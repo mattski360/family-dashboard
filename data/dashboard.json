@@ -1,0 +1,648 @@
+{
+  "meta": {
+    "family_name": "Jensen Family",
+    "timezone": "America/Denver",
+    "tz_label": "MT",
+    "theme": "dark",
+    "schedule_days": 7,
+    "stale_after_days": 8,
+    "last_updated": "2026-10-08T08:19:35-06:00",
+    "school_feed_synced": "2026-10-08T08:19:35-06:00",
+    "school_feed_window": [
+      "2026-10-07",
+      "2026-10-29"
+    ],
+    "later_days": 8
+  },
+  "people": {
+    "luke": {
+      "label": "Luke",
+      "color": "#6FA8FF"
+    },
+    "wyatt": {
+      "label": "Wyatt",
+      "color": "#5FD39A"
+    },
+    "tanner": {
+      "label": "Tanner",
+      "color": "#FFAE57"
+    },
+    "parents": {
+      "label": "Parents",
+      "color": "#C9A0FF"
+    },
+    "family": {
+      "label": "Family",
+      "color": "#FF8A80"
+    }
+  },
+  "kids": [
+    {
+      "id": "luke",
+      "name": "Luke",
+      "grade": 9,
+      "school": "American Heritage School",
+      "school_short": "American Heritage",
+      "campus": "American Fork",
+      "division": "High School",
+      "school_key": "ahs",
+      "in_person_days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri"
+      ],
+      "in_person_summary": "On campus Mon–Fri",
+      "routine": null
+    },
+    {
+      "id": "wyatt",
+      "name": "Wyatt",
+      "grade": 8,
+      "school": "Canyon Grove Academy",
+      "school_short": "Canyon Grove (Jr High Hyflex)",
+      "campus": "Lehi campus · 3046 Maple Loop Dr",
+      "division": "Junior High Hyflex",
+      "school_key": "cga",
+      "in_person_days": [
+        "Tue",
+        "Thu"
+      ],
+      "in_person_summary": "Tue & Thu in person (Lehi) · online math/LA other days",
+      "routine": {
+        "days": [
+          "Tue",
+          "Thu"
+        ],
+        "start": "09:15",
+        "end": "15:30",
+        "title": "In person at Lehi campus",
+        "note": "Packed lunch + Canyon Grove shirt",
+        "online_title": "Online math / LA"
+      }
+    },
+    {
+      "id": "tanner",
+      "name": "Tanner",
+      "grade": 5,
+      "school": "American Heritage School",
+      "school_short": "American Heritage",
+      "campus": "American Fork",
+      "division": "Elementary",
+      "school_key": "ahs",
+      "in_person_days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri"
+      ],
+      "in_person_summary": "On campus Mon–Fri",
+      "routine": null
+    }
+  ],
+  "events": [
+    {
+      "id": "ahs-20261009-no-school-teacher-in-service",
+      "date": "2026-10-09",
+      "start": null,
+      "end": null,
+      "title": "No school — teacher in-service",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261011-youth-conf",
+      "date": "2026-10-11",
+      "start": "14:30",
+      "end": "15:30",
+      "title": "Youth Conference intro",
+      "note": "Youth & parents · Stake center",
+      "who": [
+        "luke",
+        "wyatt",
+        "parents"
+      ],
+      "priority": "high",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "cga-20261012-in-session",
+      "date": "2026-10-12",
+      "title": "Canyon Grove in session (likely)",
+      "note": "Online day",
+      "who": [
+        "wyatt"
+      ],
+      "priority": "low",
+      "kind": "school",
+      "source": "canyon_grove"
+    },
+    {
+      "id": "ahsm-20261012-regular",
+      "date": "2026-10-12",
+      "title": "Regular school day",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_manual"
+    },
+    {
+      "id": "fam-trip-surprise",
+      "date": "2026-10-12",
+      "end_date": "2026-10-14",
+      "title": "Surprise, AZ",
+      "note": "Residence Inn Phoenix NW/Surprise",
+      "who": [
+        "parents"
+      ],
+      "kind": "trip",
+      "source": "family"
+    },
+    {
+      "id": "ahs-20261012-reading-challenge-closing-assembly",
+      "date": "2026-10-12",
+      "start": "09:00",
+      "end": "09:30",
+      "title": "Reading Challenge closing assembly",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261012-dl1738",
+      "date": "2026-10-12",
+      "start": "15:29",
+      "end": "17:14",
+      "title": "Flight SLC → Phoenix",
+      "note": "Delta DL 1738",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
+    },
+    {
+      "id": "ahs-20261013-monday-friday-bell-schedule",
+      "date": "2026-10-13",
+      "start": "08:30",
+      "end": "15:10",
+      "title": "Monday/Friday bell schedule",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-trip-anaheim",
+      "date": "2026-10-14",
+      "end_date": "2026-10-18",
+      "title": "Anaheim, CA",
+      "note": "Hotel booked (2 reservations on file)",
+      "who": [
+        "parents"
+      ],
+      "kind": "trip",
+      "source": "family"
+    },
+    {
+      "id": "ahs-20261014-half-day-spirit-apparel",
+      "date": "2026-10-14",
+      "start": null,
+      "end": null,
+      "title": "Half day · spirit apparel",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": "half_day",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "cga-20261014-workday",
+      "date": "2026-10-14",
+      "title": "Teacher work day",
+      "who": [
+        "wyatt"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "canyon_grove"
+    },
+    {
+      "id": "ahs-20261014-term-1-ends",
+      "date": "2026-10-14",
+      "start": null,
+      "end": null,
+      "title": "Term 1 ends",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261014-k-5-service-day-spirit-apparel",
+      "date": "2026-10-14",
+      "start": "08:30",
+      "end": "12:00",
+      "title": "K-5 Service Day · spirit apparel",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": "half_day",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261014-pre-act-grade-9",
+      "date": "2026-10-14",
+      "start": "08:30",
+      "end": "12:00",
+      "title": "Pre-ACT (grade 9)",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261014-lunch-on-the-lawn-with-parents-optional",
+      "date": "2026-10-14",
+      "start": "12:00",
+      "end": "13:30",
+      "title": "Lunch on the Lawn with parents (optional)",
+      "note": "",
+      "who": [
+        "parents",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261014-dl3894",
+      "date": "2026-10-14",
+      "start": "16:59",
+      "end": "18:31",
+      "title": "Flight Phoenix → Los Angeles",
+      "note": "Delta DL 3894",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261015-disneyland",
+      "date": "2026-10-15",
+      "title": "Disneyland",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "cga-20261015-fall-break",
+      "date": "2026-10-15",
+      "end_date": "2026-10-16",
+      "title": "Fall break",
+      "who": [
+        "wyatt"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "canyon_grove"
+    },
+    {
+      "id": "ahs-20261015-fall-break",
+      "date": "2026-10-15",
+      "start": null,
+      "end": null,
+      "title": "Fall break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261016-dca",
+      "date": "2026-10-16",
+      "title": "Disney California Adventure",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "ahs-20261016-fall-break",
+      "date": "2026-10-16",
+      "start": null,
+      "end": null,
+      "title": "Fall break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261019-fall-break",
+      "date": "2026-10-19",
+      "start": null,
+      "end": null,
+      "title": "Fall break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "cga-20261019-q2",
+      "date": "2026-10-19",
+      "title": "Quarter 2 begins",
+      "who": [
+        "wyatt"
+      ],
+      "priority": "high",
+      "kind": "school",
+      "source": "canyon_grove"
+    },
+    {
+      "id": "ahs-20261020-term-2-begins",
+      "date": "2026-10-20",
+      "start": null,
+      "end": null,
+      "title": "Term 2 begins",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahsm-20261022-pumpkin-run",
+      "date": "2026-10-22",
+      "start": "15:30",
+      "end": "16:30",
+      "title": "K-12 Pumpkin Run",
+      "note": "AHS family event",
+      "who": [
+        "family"
+      ],
+      "priority": "high",
+      "kind": "event",
+      "source": "ahs_manual"
+    },
+    {
+      "id": "ahs-20261023-term-1-grades-posted",
+      "date": "2026-10-23",
+      "start": null,
+      "end": null,
+      "title": "Term 1 grades posted",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261023-picture-retakes",
+      "date": "2026-10-23",
+      "start": "08:15",
+      "end": "12:30",
+      "title": "Picture retakes",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261029-grandparents-day-gathering-generations",
+      "date": "2026-10-29",
+      "start": null,
+      "end": null,
+      "title": "Grandparents Day (Gathering Generations)",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261029-k-5-half-day",
+      "date": "2026-10-29",
+      "start": "08:30",
+      "end": "12:00",
+      "title": "K-5 half day",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": "half_day",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    }
+  ],
+  "todos": [
+    {
+      "id": "todo-rsvp-youth-conf",
+      "text": "RSVP for Sunday's Youth Conference intro",
+      "detail": "Sun Oct 11, 2:30 PM · Stake center",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-10-11",
+      "hide_after": "2026-10-11",
+      "priority": "high",
+      "done": false
+    },
+    {
+      "id": "todo-care-boys",
+      "text": "Line up care for the boys during the trip",
+      "detail": "If they're staying home, Oct 12–18",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-10-12",
+      "hide_after": "2026-10-14",
+      "priority": "high",
+      "done": false
+    },
+    {
+      "id": "todo-preact",
+      "text": "Luke's Pre-ACT Wed 8:30 AM",
+      "detail": "Good sleep Tuesday; out at 12 PM",
+      "who": [
+        "luke"
+      ],
+      "due": "2026-10-14",
+      "hide_after": "2026-10-14",
+      "priority": "normal",
+      "done": false
+    },
+    {
+      "id": "todo-hotels",
+      "text": "Two Anaheim hotels booked for Oct 14–18",
+      "detail": "Stanford Inn & Quality Inn Placentia — keep one",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-10-13",
+      "hide_after": "2026-10-14",
+      "priority": "normal",
+      "done": false
+    },
+    {
+      "id": "todo-return-flight",
+      "text": "No return flight on the calendar",
+      "detail": "Confirm the trip home (around Oct 18)",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-10-13",
+      "hide_after": "2026-10-18",
+      "priority": "normal",
+      "done": false
+    }
+  ],
+  "spiritual": {
+    "come_follow_me": {
+      "status": "pending",
+      "week_of": null,
+      "dates_label": "",
+      "title": "Loading this week's lesson…",
+      "reading": "",
+      "summary": "",
+      "questions": [],
+      "source_url": ""
+    },
+    "strength_of_youth": {
+      "status": "pending",
+      "topic": "Loading this week's focus…",
+      "focus": "",
+      "daily_application": "",
+      "daily_by_weekday": {},
+      "source_url": ""
+    }
+  },
+  "academics": {
+    "_comment": "Per-kid grades. Leave courses empty to show 'Grades coming soon'. percent is a number (e.g. 93.4), letter a string (e.g. 'A'). upcoming_tests: {date: YYYY-MM-DD, course, title}.",
+    "updated": null,
+    "kids": {
+      "luke": {
+        "courses": [],
+        "missing_count": null,
+        "upcoming_tests": [],
+        "note": ""
+      },
+      "wyatt": {
+        "courses": [],
+        "missing_count": null,
+        "upcoming_tests": [],
+        "note": ""
+      },
+      "tanner": {
+        "courses": [],
+        "missing_count": null,
+        "upcoming_tests": [],
+        "note": ""
+      }
+    }
+  },
+  "screen_time": {
+    "_comment": "Optional. Set enabled=false to hide. Minutes as integers; leave null to show 'coming soon'.",
+    "enabled": true,
+    "updated": null,
+    "kids": {
+      "luke": {
+        "today_minutes": null,
+        "daily_avg_minutes": null,
+        "limit_minutes": null
+      },
+      "wyatt": {
+        "today_minutes": null,
+        "daily_avg_minutes": null,
+        "limit_minutes": null
+      },
+      "tanner": {
+        "today_minutes": null,
+        "daily_avg_minutes": null,
+        "limit_minutes": null
+      }
+    }
+  }
+}

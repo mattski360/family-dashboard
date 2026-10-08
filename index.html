@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="refresh" content="1800">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jensens">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#15120f">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Jensen Family</title>
+<style>
+:root{
+  --bg:#14110e; --bg2:#1b1612; --card:#211b16; --card2:#28211b; --line:#352c24;
+  --text:#f6eee4; --muted:#c3b5a4; --faint:#8f8272;
+  --accent:#f0bd6b; --accent-bg:rgba(240,189,107,.11);
+  --red:#ff8a7d; --red-bg:rgba(255,105,90,.17); --amber:#f6c75a; --amber-bg:rgba(246,199,90,.15);
+  --green:#7fd8a4; --shadow:0 .2rem 1.2rem rgba(0,0,0,.35);
+  --radius:1.05rem;
+}
+[data-theme="light"]{
+  --bg:#f3ede4; --bg2:#ece4d8; --card:#fffcf7; --card2:#f8f2e9; --line:#e3d8c8;
+  --text:#2a221b; --muted:#5f5245; --faint:#8b7d6d;
+  --accent:#b27417; --accent-bg:rgba(214,150,50,.13);
+  --red:#c2392b; --red-bg:rgba(220,70,50,.12); --amber:#9a6a00; --amber-bg:rgba(230,170,40,.17);
+  --green:#2f8f5b; --shadow:0 .15rem .8rem rgba(80,60,30,.10);
+}
+.p-luke{--c:#6FA8FF;--cbg:rgba(111,168,255,.17);--cdk:#406193;--cbgl:rgba(111,168,255,.16)}
+.p-wyatt{--c:#5FD39A;--cbg:rgba(95,211,154,.17);--cdk:#377a59;--cbgl:rgba(95,211,154,.16)}
+.p-tanner{--c:#FFAE57;--cbg:rgba(255,174,87,.17);--cdk:#936432;--cbgl:rgba(255,174,87,.16)}
+.p-parents{--c:#C9A0FF;--cbg:rgba(201,160,255,.17);--cdk:#745c93;--cbgl:rgba(201,160,255,.16)}
+.p-family{--c:#FF8A80;--cbg:rgba(255,138,128,.17);--cdk:#93504a;--cbgl:rgba(255,138,128,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;-webkit-text-size-adjust:100%;background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--text);background:radial-gradient(120% 80% at 0% 0%,var(--bg2),var(--bg) 60%);
+  height:100vh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  padding:max(.8rem,env(safe-area-inset-top)) max(.9rem,env(safe-area-inset-right)) max(.8rem,env(safe-area-inset-bottom)) max(.9rem,env(safe-area-inset-left));
+  -webkit-user-select:none;user-select:none;cursor:default}
+svg{width:1em;height:1em;flex:none;vertical-align:-.12em}
+.lbl{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* ---------- layout (portrait-first: single stacked column) ---------- */
+#app{display:grid;gap:.7rem;grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"head" "spirit" "sched" "acad" "todo"}
+#app.fitted{flex:1 1 auto;min-height:0;grid-template-rows:auto auto minmax(0,1fr) auto auto}
+#todo{grid-area:todo}
+#todo ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.1rem}
+#todo .todo:nth-child(2){border-top:0;padding-top:.1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:.75rem .9rem;min-width:0}
+.card-h{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:780;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.card-h .sub{margin-left:auto;color:var(--faint);font-weight:600;letter-spacing:.04em;text-transform:none;font-size:.8rem}
+/* landscape: calendar left, everything else right */
+/* ---------- header ---------- */
+header.top{grid-area:head;display:flex;align-items:center;gap:1.2rem;padding:.15rem .3rem .1rem}
+.brand h1{font-size:2.05rem;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.brand .upd{margin-top:.3rem;font-size:.95rem;color:var(--muted);display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.brand .upd b{color:var(--text);font-weight:650}
+.brand .upd .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--green);box-shadow:0 0 0 .2rem rgba(127,216,164,.18)}
+.brand .upd .loaded{color:var(--faint);font-size:.78rem;margin-left:.35rem}
+body.stale .brand .upd{color:var(--amber)}
+body.stale .brand .upd .dot{background:var(--amber);box-shadow:0 0 0 .2rem var(--amber-bg)}
+body.stale .brand .upd b{color:var(--amber)}
+.stale-note{display:none;font-size:.78rem;font-weight:700;color:var(--amber);background:var(--amber-bg);padding:.1rem .5rem;border-radius:1rem}
+body.stale .stale-note{display:inline-block}
+.clock{margin-left:auto;text-align:right;line-height:1}
+.clock .time{font-size:3.3rem;font-weight:300;letter-spacing:-.03em}
+.clock .time .ap{font-size:1.25rem;font-weight:500;margin-left:.3rem;color:var(--muted);letter-spacing:0}
+.clock .date{font-size:1.1rem;color:var(--muted);margin-top:.3rem;font-weight:500}
+.tbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--muted);width:2.4rem;height:2.4rem;border-radius:50%;font-size:1.05rem;display:flex;align-items:center;justify-content:center;align-self:center}
+
+/* ---------- schedule ---------- */
+#spirit{grid-area:spirit}
+#acad{grid-area:acad}
+#sched{grid-area:sched;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.days{column-count:2;column-gap:.85rem;column-fill:balance}
+.day{break-inside:avoid;-webkit-column-break-inside:avoid;display:none;background:var(--card2);border:1px solid var(--line);border-radius:.8rem;padding:.5rem .65rem .55rem;margin:0 0 .6rem}
+.day.show{display:block}
+.day.is-today{border-color:var(--accent);background:linear-gradient(0deg,var(--accent-bg),var(--accent-bg)),var(--card2);box-shadow:0 0 0 1px var(--accent) inset}
+.dh{display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap;margin-bottom:.3rem}
+.dname{font-size:1.2rem;font-weight:800}
+.ddate{font-size:1.08rem;color:var(--muted);font-weight:550}
+.rel{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.rel:empty{display:none}
+.is-today .rel{color:#1b140c;background:var(--accent);padding:.12rem .45rem;border-radius:1rem;align-self:center}
+.trips{margin-left:auto;display:flex;gap:.3rem;flex-wrap:wrap}
+.trip{display:inline-flex;align-items:center;gap:.2rem;font-size:.72rem;font-weight:650;color:var(--c,var(--muted));background:var(--cbg);border-radius:1rem;padding:.12rem .5rem .12rem .4rem}
+.trip{--c:#C9A0FF;--cbg:rgba(201,160,255,.13)}
+[data-theme="light"] .trip{--c:#6d3fb0}
+.day.weekend .dname{color:var(--muted)}
+.banner{display:flex;align-items:center;gap:.45rem;border-radius:.55rem;padding:.25rem .5rem;margin:.25rem 0;font-size:.85rem}
+.banner .bl{font-weight:850;letter-spacing:.07em;text-transform:uppercase;font-size:.8rem;white-space:nowrap}
+.banner .br{color:var(--text);opacity:.9;min-width:0}
+.banner .who{margin-left:auto}
+.b-no_school{background:var(--red-bg)} .b-no_school .bl{color:var(--red)}
+.b-half_day{background:var(--amber-bg)} .b-half_day .bl{color:var(--amber)}
+.items{list-style:none}
+.item{display:grid;grid-template-columns:4.3rem minmax(0,1fr) auto;gap:.15rem .5rem;align-items:start;padding:.28rem 0;border-top:1px solid var(--line)}
+.items .item:first-child{border-top:0}
+.banner+.items .item:first-child{border-top:0}
+.when{line-height:1.15;padding-top:.1rem}
+.when .t{display:block;font-size:.84rem;font-weight:700;color:var(--text);white-space:nowrap}
+.when .t2{display:block;font-size:.68rem;color:var(--faint);white-space:nowrap}
+.when .allday{color:var(--faint);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+.what{min-width:0;line-height:1.22}
+.title{font-size:1.04rem;font-weight:640;display:block}
+.title svg{margin-right:.3rem;color:var(--faint)}
+.note{display:block;font-size:.78rem;color:var(--muted);margin-top:.05rem}
+.pr-high .title{font-weight:720}
+.item.pr-low{padding:.14rem 0;align-items:center}
+.pr-low .title{font-weight:500;color:var(--muted);font-size:.86rem}
+.pr-low .note,.pr-low .when .t2{display:none}
+.pr-low .when .t{color:var(--muted);font-weight:600;font-size:.76rem}
+.pr-low .chip{font-size:.62rem;padding:.06rem .4rem}
+.k-routine .title{color:var(--text)}
+.who{display:flex;gap:.22rem;flex-wrap:wrap;justify-content:flex-end;padding-top:.08rem}
+.chip{display:inline-block;font-size:.7rem;font-weight:780;letter-spacing:.02em;padding:.13rem .48rem;border-radius:1rem;color:var(--c);background:var(--cbg);white-space:nowrap;line-height:1.25}
+[data-theme="light"] .chip{color:var(--cdk);background:var(--cbgl)}
+.empty{color:var(--faint);font-size:.85rem;font-style:italic;font-weight:500}
+.day.quiet{padding:.4rem .65rem}
+.day.quiet .dh{margin-bottom:0}
+.later{margin-top:.1rem;border-top:1px solid var(--line);padding-top:.45rem}
+.later.none{display:none}
+.later-h{margin-bottom:.15rem}
+.later-row{display:none;gap:.6rem;align-items:baseline;padding:.16rem 0;font-size:.86rem}
+.later-row.show{display:flex}
+.later-row .ld{width:5.2rem;flex:none;color:var(--muted)}
+.later-row .ld b{color:var(--text);font-weight:700}
+.lis{display:flex;flex-wrap:wrap;gap:.2rem .9rem;min-width:0}
+.li{display:inline-flex;align-items:center;gap:.3rem;font-weight:600}
+.li .chip{font-size:.62rem;padding:.08rem .4rem}
+.li.f-no_school{color:var(--red);font-weight:750}
+.li.f-half_day{color:var(--amber);font-weight:750}
+.legend{display:flex;gap:.3rem;margin-left:auto}
+.legend .chip{font-size:.66rem}
+
+/* ---------- heads-up ---------- */
+#todo ul{list-style:none}
+.todo{display:grid;grid-template-columns:1.15rem minmax(0,1fr) auto;gap:.55rem;align-items:start;padding:.4rem 0;border-top:1px solid var(--line)}
+.todo:first-child{border-top:0;padding-top:.1rem}
+.todo .box{width:1.05rem;height:1.05rem;border:2px solid var(--faint);border-radius:.3rem;margin-top:.18rem}
+.todo.pr-high .box{border-color:var(--accent)}
+.tt{font-size:.95rem;font-weight:650;line-height:1.22}
+.td{font-size:.78rem;color:var(--muted);margin-top:.1rem;line-height:1.25}
+.td .due{margin-left:.4rem;color:var(--accent);font-weight:650;white-space:nowrap}
+.todo.none{display:block;color:var(--faint);font-style:italic;font-size:.9rem}
+.todo.hidden-default{display:none}
+.todo.gone{display:none}
+.sp-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:.6rem}
+.sp-block{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.55rem .7rem}
+.sp-k{display:flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.sp-k svg{color:var(--accent)}
+.sp-wk{margin-left:auto;font-weight:650;letter-spacing:.03em;text-transform:none;color:var(--faint)}
+.sp-title{font-size:1.08rem;font-weight:720;margin:.2rem 0 .15rem;line-height:1.22}
+.sp-read{font-size:.88rem;margin:.15rem 0}
+.sp-read .lbl,.sp-daily .lbl{margin-right:.4rem}
+.sp-sum{font-size:.85rem;color:var(--muted);line-height:1.3}
+.sp-q{margin:.3rem 0 0 1.15rem;font-size:.86rem;line-height:1.3}
+.sp-q li{margin:.12rem 0}
+.sp-daily{font-size:.88rem;margin-top:.25rem;line-height:1.3}
+.sp-daily-d{display:none}
+.sp-daily-d.on{display:block}
+.sp-daily-d.on ~ .sp-daily-all{display:none}
+.sp-wait{font-size:.78rem;color:var(--faint);font-style:italic}
+.pending .sp-title{color:var(--muted);font-weight:600;font-style:italic}
+.pending .sp-title::before{content:"";display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent);margin-right:.45rem;vertical-align:.12em;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ---------- kids & academics ---------- */
+[data-theme="light"] .aname{color:var(--cdk)}
+.agrade{font-size:.8rem;font-weight:700;color:var(--muted)}
+.ksch{font-size:.72rem;color:var(--faint);margin:-.05rem 0 .25rem}
+.agrades{margin-top:.35rem;padding-top:.35rem;border-top:1px dashed var(--line)}
+.krow{display:flex;gap:.45rem;align-items:baseline;font-size:.86rem;margin:.08rem 0;line-height:1.25}
+.krow .lbl{width:2.5rem;flex:none}
+.stat .st{display:none;font-weight:650}
+.stat .st.on{display:inline}
+.st-off{color:var(--red)} .st-half{color:var(--amber)} .st-inperson{color:var(--c)} .st-weekend,.st-online{color:var(--muted)}
+[data-theme="light"] .st-inperson{color:var(--cdk)}
+.kin{font-size:.7rem;color:var(--faint);margin:.05rem 0 .12rem 2.95rem;line-height:1.25}
+.keys{min-width:0}
+.keyd{display:none;font-size:.82rem;line-height:1.25}
+.keyd.on{display:block}
+.keyd b{font-weight:750;margin-right:.15rem}
+.keyd.none{display:block;color:var(--faint);font-style:italic}
+/* ---------- academics ---------- */
+.acols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.acol{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.45rem .6rem .5rem;border-top:.22rem solid var(--c);min-width:0}
+.acol-h{display:flex;align-items:baseline;gap:.45rem}
+.aname{font-weight:800;font-size:1.25rem;color:var(--c)}
+.soon{font-size:.8rem;color:var(--faint);font-style:italic;display:flex;align-items:center;gap:.35rem}
+.miss{margin-left:auto;font-size:.7rem;font-weight:800;padding:.08rem .45rem;border-radius:1rem;background:var(--card)}
+.miss.bad{color:var(--red);background:var(--red-bg)} .miss.ok{color:var(--green)}
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));gap:.04rem 1rem;font-size:.84rem}
+.crs{display:flex;gap:.35rem;align-items:baseline;min-width:0}
+.cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.cp{font-weight:650}.cl{font-weight:800;width:1.6rem;text-align:right}
+.g-a{color:var(--green)} .g-b{color:var(--text)} .g-c{color:var(--amber)} .g-d{color:var(--red)}
+.tests{margin-top:.3rem;padding-top:.25rem;border-top:1px dashed var(--line)}
+.test{font-size:.76rem;line-height:1.3}
+.test.gone{display:none}
+.screen{margin-top:.25rem;font-size:.76rem;color:var(--muted)}
+.screen .lbl{margin-right:.35rem}
+.screen.muted{color:var(--faint);font-style:italic}
+footer.foot{display:none}
+/* landscape: calendar left; spiritual + heads-up right; kids & academics across the bottom */
+@media (orientation:landscape){
+  #app{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+    grid-template-areas:"head head" "sched spirit" "sched todo" "acad acad"}
+  #app.fitted{grid-template-rows:auto auto minmax(0,1fr) auto}
+  #spirit .sp-wrap{grid-template-columns:minmax(0,1fr)}
+  #todo ul{grid-template-columns:minmax(0,1fr)}
+  #todo .todo:nth-child(2){border-top:1px solid var(--line);padding-top:.4rem}
+}
+</style>
+</head>
+<body data-later="8" data-tz="America/Denver" data-last="2026-10-08T08:19:35-06:00" data-stale-days="8" data-days="7" data-build-date="2026-10-08">
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <h1>Jensen Family</h1>
+      <div class="upd"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 8:19 AM MT</b><span class="stale-note">Needs refresh</span><span class="loaded" id="loaded"></span></div>
+    </div>
+    <div class="clock"><div class="time" id="time">&nbsp;</div><div class="date" id="date">&nbsp;</div></div>
+    <button class="tbtn" id="themeBtn" aria-label="Toggle theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/></svg></button>
+  </header>
+
+  <section class="card" id="spirit">
+    <div class="card-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5a1.5 1.5 0 0 0 0 3H20v-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Spiritual focus<span class="sub">This week</span></div>
+    <div class="sp-wrap">
+<div class="sp-block pending">
+  <div class="sp-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5a1.5 1.5 0 0 0 0 3H20v-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Come, Follow Me</div>
+  <div class="sp-title">Loading this week&#x27;s lesson…</div>
+  
+  
+  <div class="sp-wait">Reading &amp; discussion questions arrive with the weekly update.</div>
+</div>
+<div class="sp-block pending">
+  <div class="sp-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="currentColor"/></svg>For the Strength of Youth</div>
+  <div class="sp-title">Loading this week&#x27;s focus…</div>
+  
+  <div class="sp-wait">Daily application arrives with the weekly update.</div>
+</div></div>
+  </section>
+
+  <section class="card" id="sched">
+    <div class="card-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zM5 9h14v10H5z" fill="currentColor"/></svg> This week<span class="sub" id="schedSub">Next 7 days · all times MT</span></div>
+    <div class="days" id="days"><section class="day quiet" data-date="2026-10-07"><header class="dh"><span class="dname">Wed</span><span class="ddate">Oct 7</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day show is-today" data-date="2026-10-08"><header class="dh"><span class="dname">Thu</span><span class="ddate">Oct 8</span><span class="rel"></span><span class="trips"></span></header><ul class="items"><li class="item k-routine pr-normal"><div class="when"><span class="t">9:15 AM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">In person at Lehi campus</span><span class=note>Packed lunch + Canyon Grove shirt</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li></ul></section><section class="day show" data-date="2026-10-09"><header class="dh"><span class="dname">Fri</span><span class="ddate">Oct 9</span><span class="rel"></span><span class="trips"></span></header><div class="banner b-no_school"><span class="bl">No school</span><span class="br">teacher in-service</span><span class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></div><ul class="items"></ul></section><section class="day weekend show quiet" data-date="2026-10-10"><header class="dh"><span class="dname">Sat</span><span class="ddate">Oct 10</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day weekend show" data-date="2026-10-11"><header class="dh"><span class="dname">Sun</span><span class="ddate">Oct 11</span><span class="rel"></span><span class="trips"></span></header><ul class="items"><li class="item k-event pr-high"><div class="when"><span class="t">2:30 PM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">Youth Conference intro</span><span class=note>Youth &amp; parents · Stake center</span></div><div class="who"><span class="chip p-luke">Luke</span><span class="chip p-wyatt">Wyatt</span><span class="chip p-parents">Parents</span></div></li></ul></section><section class="day show" data-date="2026-10-12"><header class="dh"><span class="dname">Mon</span><span class="ddate">Oct 12</span><span class="rel"></span><span class="trips"><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Surprise, AZ</span></span></header><ul class="items"><li class="item k-school pr-low"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Canyon Grove in session (likely)</span><span class=note>Online day</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li><li class="item k-school pr-low"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Regular school day</span></div><div class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></div></li><li class="item k-school pr-low"><div class="when"><span class="t">9:00 AM</span><span class="t2">–9:30 AM</span></div><div class="what"><span class="title">Reading Challenge closing assembly</span></div><div class="who"><span class="chip p-tanner">Tanner</span></div></li><li class="item k-flight pr-normal"><div class="when"><span class="t">3:29 PM</span><span class="t2">–5:14 PM</span></div><div class="what"><span class="title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5v-1.7l-8-5V3.5a1.5 1.5 0 0 0-3 0v5.3l-8 5v1.7l8-2.5v5.2l-2 1.5V21l3.5-1 3.5 1v-1.3l-2-1.5V13l8 2.5z" fill="currentColor"/></svg>Flight SLC → Phoenix</span><span class=note>Delta DL 1738</span></div><div class="who"><span class="chip p-parents">Parents</span></div></li></ul></section><section class="day show" data-date="2026-10-13"><header class="dh"><span class="dname">Tue</span><span class="ddate">Oct 13</span><span class="rel"></span><span class="trips"><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Surprise, AZ</span></span></header><ul class="items"><li class="item k-school pr-low"><div class="when"><span class="t">8:30 AM</span><span class="t2">–3:10 PM</span></div><div class="what"><span class="title">Monday/Friday bell schedule</span></div><div class="who"><span class="chip p-luke">Luke</span></div></li><li class="item k-routine pr-normal"><div class="when"><span class="t">9:15 AM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">In person at Lehi campus</span><span class=note>Packed lunch + Canyon Grove shirt</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li></ul></section><section class="day show" data-date="2026-10-14"><header class="dh"><span class="dname">Wed</span><span class="ddate">Oct 14</span><span class="rel"></span><span class="trips"><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Surprise, AZ</span><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Anaheim, CA</span></span></header><div class="banner b-no_school"><span class="bl">No school</span><span class="br">Teacher work day</span><span class="who"><span class="chip p-wyatt">Wyatt</span></span></div><div class="banner b-half_day"><span class="bl">Half day</span><span class="br">Out at 12 PM</span><span class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></div><ul class="items"><li class="item k-school pr-high"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Term 1 ends</span></div><div class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></div></li><li class="item k-school pr-low"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Spirit apparel</span></div><div class="who"><span class="chip p-luke">Luke</span></div></li><li class="item k-school pr-high"><div class="when"><span class="t">8:30 AM</span><span class="t2">–12:00 PM</span></div><div class="what"><span class="title">K-5 Service Day · spirit apparel</span></div><div class="who"><span class="chip p-tanner">Tanner</span></div></li><li class="item k-school pr-high"><div class="when"><span class="t">8:30 AM</span><span class="t2">–12:00 PM</span></div><div class="what"><span class="title">Pre-ACT (grade 9)</span></div><div class="who"><span class="chip p-luke">Luke</span></div></li><li class="item k-school pr-high"><div class="when"><span class="t">12:00 PM</span><span class="t2">–1:30 PM</span></div><div class="what"><span class="title">Lunch on the Lawn with parents (optional)</span></div><div class="who"><span class="chip p-parents">Parents</span><span class="chip p-tanner">Tanner</span></div></li><li class="item k-flight pr-normal"><div class="when"><span class="t">4:59 PM</span><span class="t2">–6:31 PM</span></div><div class="what"><span class="title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5v-1.7l-8-5V3.5a1.5 1.5 0 0 0-3 0v5.3l-8 5v1.7l8-2.5v5.2l-2 1.5V21l3.5-1 3.5 1v-1.3l-2-1.5V13l8 2.5z" fill="currentColor"/></svg>Flight Phoenix → Los Angeles</span><span class=note>Delta DL 3894</span></div><div class="who"><span class="chip p-parents">Parents</span></div></li></ul></section><section class="day" data-date="2026-10-15"><header class="dh"><span class="dname">Thu</span><span class="ddate">Oct 15</span><span class="rel"></span><span class="trips"><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Anaheim, CA</span></span></header><div class="banner b-no_school"><span class="bl">No school</span><span class="br">Fall break</span><span class="who"><span class="chip p-luke">Luke</span><span class="chip p-wyatt">Wyatt</span><span class="chip p-tanner">Tanner</span></span></div><ul class="items"><li class="item k-event pr-normal"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Disneyland</span></div><div class="who"><span class="chip p-parents">Parents</span></div></li></ul></section><section class="day" data-date="2026-10-16"><header class="dh"><span class="dname">Fri</span><span class="ddate">Oct 16</span><span class="rel"></span><span class="trips"><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Anaheim, CA</span></span></header><div class="banner b-no_school"><span class="bl">No school</span><span class="br">Fall break</span><span class="who"><span class="chip p-luke">Luke</span><span class="chip p-wyatt">Wyatt</span><span class="chip p-tanner">Tanner</span></span></div><ul class="items"><li class="item k-event pr-normal"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Disney California Adventure</span></div><div class="who"><span class="chip p-parents">Parents</span></div></li></ul></section><section class="day weekend quiet" data-date="2026-10-17"><header class="dh"><span class="dname">Sat</span><span class="ddate">Oct 17</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Anaheim, CA</span></span></header><ul class="items"></ul></section><section class="day weekend quiet" data-date="2026-10-18"><header class="dh"><span class="dname">Sun</span><span class="ddate">Oct 18</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span><span class="trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Anaheim, CA</span></span></header><ul class="items"></ul></section><section class="day" data-date="2026-10-19"><header class="dh"><span class="dname">Mon</span><span class="ddate">Oct 19</span><span class="rel"></span><span class="trips"></span></header><div class="banner b-no_school"><span class="bl">No school</span><span class="br">Fall break</span><span class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></div><ul class="items"><li class="item k-school pr-high"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Quarter 2 begins</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li></ul></section><section class="day" data-date="2026-10-20"><header class="dh"><span class="dname">Tue</span><span class="ddate">Oct 20</span><span class="rel"></span><span class="trips"></span></header><ul class="items"><li class="item k-school pr-high"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Term 2 begins</span></div><div class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></div></li><li class="item k-routine pr-normal"><div class="when"><span class="t">9:15 AM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">In person at Lehi campus</span><span class=note>Packed lunch + Canyon Grove shirt</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li></ul></section><section class="day quiet" data-date="2026-10-21"><header class="dh"><span class="dname">Wed</span><span class="ddate">Oct 21</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day" data-date="2026-10-22"><header class="dh"><span class="dname">Thu</span><span class="ddate">Oct 22</span><span class="rel"></span><span class="trips"></span></header><ul class="items"><li class="item k-routine pr-normal"><div class="when"><span class="t">9:15 AM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">In person at Lehi campus</span><span class=note>Packed lunch + Canyon Grove shirt</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li><li class="item k-event pr-high"><div class="when"><span class="t">3:30 PM</span><span class="t2">–4:30 PM</span></div><div class="what"><span class="title">K-12 Pumpkin Run</span><span class=note>AHS family event</span></div><div class="who"><span class="chip p-family">Family</span></div></li></ul></section><section class="day" data-date="2026-10-23"><header class="dh"><span class="dname">Fri</span><span class="ddate">Oct 23</span><span class="rel"></span><span class="trips"></span></header><ul class="items"><li class="item k-school pr-high"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Term 1 grades posted</span></div><div class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></div></li><li class="item k-school pr-high"><div class="when"><span class="t">8:15 AM</span><span class="t2">–12:30 PM</span></div><div class="what"><span class="title">Picture retakes</span></div><div class="who"><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></div></li></ul></section><section class="day weekend quiet" data-date="2026-10-24"><header class="dh"><span class="dname">Sat</span><span class="ddate">Oct 24</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day weekend quiet" data-date="2026-10-25"><header class="dh"><span class="dname">Sun</span><span class="ddate">Oct 25</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day quiet" data-date="2026-10-26"><header class="dh"><span class="dname">Mon</span><span class="ddate">Oct 26</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day" data-date="2026-10-27"><header class="dh"><span class="dname">Tue</span><span class="ddate">Oct 27</span><span class="rel"></span><span class="trips"></span></header><ul class="items"><li class="item k-routine pr-normal"><div class="when"><span class="t">9:15 AM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">In person at Lehi campus</span><span class=note>Packed lunch + Canyon Grove shirt</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li></ul></section><section class="day quiet" data-date="2026-10-28"><header class="dh"><span class="dname">Wed</span><span class="ddate">Oct 28</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day" data-date="2026-10-29"><header class="dh"><span class="dname">Thu</span><span class="ddate">Oct 29</span><span class="rel"></span><span class="trips"></span></header><div class="banner b-half_day"><span class="bl">Half day</span><span class="br">Out at 12 PM</span><span class="who"><span class="chip p-tanner">Tanner</span></span></div><ul class="items"><li class="item k-school pr-high"><div class="when"><span class="t allday">All day</span></div><div class="what"><span class="title">Grandparents Day (Gathering Generations)</span></div><div class="who"><span class="chip p-tanner">Tanner</span></div></li><li class="item k-routine pr-normal"><div class="when"><span class="t">9:15 AM</span><span class="t2">–3:30 PM</span></div><div class="what"><span class="title">In person at Lehi campus</span><span class=note>Packed lunch + Canyon Grove shirt</span></div><div class="who"><span class="chip p-wyatt">Wyatt</span></div></li></ul></section><section class="day quiet" data-date="2026-10-30"><header class="dh"><span class="dname">Fri</span><span class="ddate">Oct 30</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day weekend quiet" data-date="2026-10-31"><header class="dh"><span class="dname">Sat</span><span class="ddate">Oct 31</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section><section class="day weekend quiet" data-date="2026-11-01"><header class="dh"><span class="dname">Sun</span><span class="ddate">Nov 1</span><span class="rel"></span><span class="trips"><span class="empty">Nothing scheduled</span></span></header><ul class="items"></ul></section></div>
+    <div class="later" id="later"><div class="later-h"><span class="lbl">Later</span></div><div class="later-row" data-date="2026-10-09"><span class="ld">Fri <b>Oct 9</b></span><span class="lis"><span class="li f-no_school">No school · teacher in-service<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></span></div><div class="later-row" data-date="2026-10-11"><span class="ld">Sun <b>Oct 11</b></span><span class="lis"><span class="li">Youth Conference intro<span class="chip p-luke">Luke</span><span class="chip p-wyatt">Wyatt</span><span class="chip p-parents">Parents</span></span></span></div><div class="later-row" data-date="2026-10-14"><span class="ld">Wed <b>Oct 14</b></span><span class="lis"><span class="li f-no_school">No school · Teacher work day<span class="chip p-wyatt">Wyatt</span></span><span class="li f-half_day">Half day<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span><span class="li">Term 1 ends<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span><span class="li">Pre-ACT (grade 9)<span class="chip p-luke">Luke</span></span><span class="li">Lunch on the Lawn with parents (optional)<span class="chip p-parents">Parents</span><span class="chip p-tanner">Tanner</span></span></span></div><div class="later-row" data-date="2026-10-15"><span class="ld">Thu <b>Oct 15</b></span><span class="lis"><span class="li f-no_school">No school · Fall break<span class="chip p-wyatt">Wyatt</span><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></span></div><div class="later-row" data-date="2026-10-16"><span class="ld">Fri <b>Oct 16</b></span><span class="lis"><span class="li f-no_school">No school · Fall break<span class="chip p-wyatt">Wyatt</span><span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></span></div><div class="later-row" data-date="2026-10-19"><span class="ld">Mon <b>Oct 19</b></span><span class="lis"><span class="li f-no_school">No school · Fall break<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span><span class="li">Quarter 2 begins<span class="chip p-wyatt">Wyatt</span></span></span></div><div class="later-row" data-date="2026-10-20"><span class="ld">Tue <b>Oct 20</b></span><span class="lis"><span class="li">Term 2 begins<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></span></div><div class="later-row" data-date="2026-10-22"><span class="ld">Thu <b>Oct 22</b></span><span class="lis"><span class="li">K-12 Pumpkin Run<span class="chip p-family">Family</span></span></span></div><div class="later-row" data-date="2026-10-23"><span class="ld">Fri <b>Oct 23</b></span><span class="lis"><span class="li">Term 1 grades posted<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span><span class="li">Picture retakes<span class="chip p-luke">Luke</span><span class="chip p-tanner">Tanner</span></span></span></div><div class="later-row" data-date="2026-10-29"><span class="ld">Thu <b>Oct 29</b></span><span class="lis"><span class="li f-half_day">Half day<span class="chip p-tanner">Tanner</span></span><span class="li">Grandparents Day (Gathering Generations)<span class="chip p-tanner">Tanner</span></span></span></div></div>
+  </section>
+
+  <section class="card" id="acad">
+    <div class="card-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm8.5 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 13c-3.3 0-6 1.7-6 3.8V19h12v-2.2C14 14.7 11.3 13 8 13zm8.5.5c-.7 0-1.4.1-2 .3 1 .8 1.5 1.8 1.5 3V19h6v-2c0-1.9-2.5-3.5-5.5-3.5z" fill="currentColor"/></svg> Kids &amp; academics<span class="sub">grades coming soon</span></div>
+    <div class="acols nodata"><div class="acol p-luke"><div class="acol-h"><span class="aname">Luke</span><span class="agrade">Grade 9</span></div><div class="ksch">American Heritage · High School</div><div class="krow"><span class="lbl">Today</span><span class="stat today"><span class="st st-school" data-date="2026-10-07">School day</span><span class="st st-school" data-date="2026-10-08">School day</span><span class="st st-off" data-date="2026-10-09">No school · teacher in-service</span><span class="st st-weekend" data-date="2026-10-10">Weekend</span><span class="st st-weekend" data-date="2026-10-11">Weekend</span><span class="st st-school" data-date="2026-10-12">School day</span><span class="st st-school" data-date="2026-10-13">School day</span><span class="st st-half" data-date="2026-10-14">Half day · out at 12 PM</span><span class="st st-off" data-date="2026-10-15">No school · Fall break</span><span class="st st-off" data-date="2026-10-16">No school · Fall break</span><span class="st st-weekend" data-date="2026-10-17">Weekend</span><span class="st st-weekend" data-date="2026-10-18">Weekend</span><span class="st st-off" data-date="2026-10-19">No school · Fall break</span><span class="st st-school" data-date="2026-10-20">School day</span><span class="st st-school" data-date="2026-10-21">School day</span><span class="st st-school" data-date="2026-10-22">School day</span><span class="st st-school" data-date="2026-10-23">School day</span><span class="st st-weekend" data-date="2026-10-24">Weekend</span><span class="st st-weekend" data-date="2026-10-25">Weekend</span><span class="st st-school" data-date="2026-10-26">School day</span><span class="st st-school" data-date="2026-10-27">School day</span><span class="st st-school" data-date="2026-10-28">School day</span><span class="st st-school" data-date="2026-10-29">School day</span><span class="st st-school" data-date="2026-10-30">School day</span><span class="st st-weekend" data-date="2026-10-31">Weekend</span><span class="st st-weekend" data-date="2026-11-01">Weekend</span></span></div><div class="krow"><span class="lbl">Tmrw</span><span class="stat tmrw"><span class="st st-school" data-date="2026-10-07">School day</span><span class="st st-school" data-date="2026-10-08">School day</span><span class="st st-off" data-date="2026-10-09">No school · teacher in-service</span><span class="st st-weekend" data-date="2026-10-10">Weekend</span><span class="st st-weekend" data-date="2026-10-11">Weekend</span><span class="st st-school" data-date="2026-10-12">School day</span><span class="st st-school" data-date="2026-10-13">School day</span><span class="st st-half" data-date="2026-10-14">Half day · out at 12 PM</span><span class="st st-off" data-date="2026-10-15">No school · Fall break</span><span class="st st-off" data-date="2026-10-16">No school · Fall break</span><span class="st st-weekend" data-date="2026-10-17">Weekend</span><span class="st st-weekend" data-date="2026-10-18">Weekend</span><span class="st st-off" data-date="2026-10-19">No school · Fall break</span><span class="st st-school" data-date="2026-10-20">School day</span><span class="st st-school" data-date="2026-10-21">School day</span><span class="st st-school" data-date="2026-10-22">School day</span><span class="st st-school" data-date="2026-10-23">School day</span><span class="st st-weekend" data-date="2026-10-24">Weekend</span><span class="st st-weekend" data-date="2026-10-25">Weekend</span><span class="st st-school" data-date="2026-10-26">School day</span><span class="st st-school" data-date="2026-10-27">School day</span><span class="st st-school" data-date="2026-10-28">School day</span><span class="st st-school" data-date="2026-10-29">School day</span><span class="st st-school" data-date="2026-10-30">School day</span><span class="st st-weekend" data-date="2026-10-31">Weekend</span><span class="st st-weekend" data-date="2026-11-01">Weekend</span></span></div><div class="krow next"><span class="lbl">Next</span><span class="keys"><div class="keyd" data-date="2026-10-09"><b>Fri, Oct 9</b> No school — teacher in-service</div><div class="keyd" data-date="2026-10-11"><b>Sun, Oct 11</b> Youth Conference intro</div><div class="keyd" data-date="2026-10-14"><b>Wed, Oct 14</b> Half day · Term 1 ends</div><div class="keyd" data-date="2026-10-15"><b>Thu, Oct 15</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-16"><b>Fri, Oct 16</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-19"><b>Mon, Oct 19</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-20"><b>Tue, Oct 20</b> Term 2 begins</div><div class="keyd" data-date="2026-10-22"><b>Thu, Oct 22</b> K-12 Pumpkin Run</div><div class="keyd" data-date="2026-10-23"><b>Fri, Oct 23</b> Term 1 grades posted · Picture retakes</div></span></div><div class="agrades"><div class="soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg>Grades coming soon</div></div></div><div class="acol p-wyatt"><div class="acol-h"><span class="aname">Wyatt</span><span class="agrade">Grade 8</span></div><div class="ksch">Canyon Grove (Jr High Hyflex) · Junior High Hyflex</div><div class="krow"><span class="lbl">Today</span><span class="stat today"><span class="st st-online" data-date="2026-10-07">Online math / LA</span><span class="st st-inperson" data-date="2026-10-08">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-09">Online math / LA</span><span class="st st-weekend" data-date="2026-10-10">Weekend</span><span class="st st-weekend" data-date="2026-10-11">Weekend</span><span class="st st-online" data-date="2026-10-12">Online math / LA</span><span class="st st-inperson" data-date="2026-10-13">In person 9:15 AM–3:30 PM</span><span class="st st-off" data-date="2026-10-14">No school · Teacher work day</span><span class="st st-off" data-date="2026-10-15">No school · Fall break</span><span class="st st-off" data-date="2026-10-16">No school · Fall break</span><span class="st st-weekend" data-date="2026-10-17">Weekend</span><span class="st st-weekend" data-date="2026-10-18">Weekend</span><span class="st st-online" data-date="2026-10-19">Online math / LA</span><span class="st st-inperson" data-date="2026-10-20">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-21">Online math / LA</span><span class="st st-inperson" data-date="2026-10-22">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-23">Online math / LA</span><span class="st st-weekend" data-date="2026-10-24">Weekend</span><span class="st st-weekend" data-date="2026-10-25">Weekend</span><span class="st st-online" data-date="2026-10-26">Online math / LA</span><span class="st st-inperson" data-date="2026-10-27">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-28">Online math / LA</span><span class="st st-inperson" data-date="2026-10-29">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-30">Online math / LA</span><span class="st st-weekend" data-date="2026-10-31">Weekend</span><span class="st st-weekend" data-date="2026-11-01">Weekend</span></span></div><div class="krow"><span class="lbl">Tmrw</span><span class="stat tmrw"><span class="st st-online" data-date="2026-10-07">Online math / LA</span><span class="st st-inperson" data-date="2026-10-08">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-09">Online math / LA</span><span class="st st-weekend" data-date="2026-10-10">Weekend</span><span class="st st-weekend" data-date="2026-10-11">Weekend</span><span class="st st-online" data-date="2026-10-12">Online math / LA</span><span class="st st-inperson" data-date="2026-10-13">In person 9:15 AM–3:30 PM</span><span class="st st-off" data-date="2026-10-14">No school · Teacher work day</span><span class="st st-off" data-date="2026-10-15">No school · Fall break</span><span class="st st-off" data-date="2026-10-16">No school · Fall break</span><span class="st st-weekend" data-date="2026-10-17">Weekend</span><span class="st st-weekend" data-date="2026-10-18">Weekend</span><span class="st st-online" data-date="2026-10-19">Online math / LA</span><span class="st st-inperson" data-date="2026-10-20">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-21">Online math / LA</span><span class="st st-inperson" data-date="2026-10-22">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-23">Online math / LA</span><span class="st st-weekend" data-date="2026-10-24">Weekend</span><span class="st st-weekend" data-date="2026-10-25">Weekend</span><span class="st st-online" data-date="2026-10-26">Online math / LA</span><span class="st st-inperson" data-date="2026-10-27">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-28">Online math / LA</span><span class="st st-inperson" data-date="2026-10-29">In person 9:15 AM–3:30 PM</span><span class="st st-online" data-date="2026-10-30">Online math / LA</span><span class="st st-weekend" data-date="2026-10-31">Weekend</span><span class="st st-weekend" data-date="2026-11-01">Weekend</span></span></div><div class="kin">Tue &amp; Thu in person (Lehi) · online math/LA other days</div><div class="krow next"><span class="lbl">Next</span><span class="keys"><div class="keyd" data-date="2026-10-11"><b>Sun, Oct 11</b> Youth Conference intro</div><div class="keyd" data-date="2026-10-14"><b>Wed, Oct 14</b> Teacher work day (no school)</div><div class="keyd" data-date="2026-10-15"><b>Thu, Oct 15</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-19"><b>Mon, Oct 19</b> Quarter 2 begins</div><div class="keyd" data-date="2026-10-22"><b>Thu, Oct 22</b> K-12 Pumpkin Run</div></span></div><div class="agrades"><div class="soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg>Grades coming soon</div></div></div><div class="acol p-tanner"><div class="acol-h"><span class="aname">Tanner</span><span class="agrade">Grade 5</span></div><div class="ksch">American Heritage · Elementary</div><div class="krow"><span class="lbl">Today</span><span class="stat today"><span class="st st-school" data-date="2026-10-07">School day</span><span class="st st-school" data-date="2026-10-08">School day</span><span class="st st-off" data-date="2026-10-09">No school · teacher in-service</span><span class="st st-weekend" data-date="2026-10-10">Weekend</span><span class="st st-weekend" data-date="2026-10-11">Weekend</span><span class="st st-school" data-date="2026-10-12">School day</span><span class="st st-school" data-date="2026-10-13">School day</span><span class="st st-half" data-date="2026-10-14">Half day · out at 12 PM</span><span class="st st-off" data-date="2026-10-15">No school · Fall break</span><span class="st st-off" data-date="2026-10-16">No school · Fall break</span><span class="st st-weekend" data-date="2026-10-17">Weekend</span><span class="st st-weekend" data-date="2026-10-18">Weekend</span><span class="st st-off" data-date="2026-10-19">No school · Fall break</span><span class="st st-school" data-date="2026-10-20">School day</span><span class="st st-school" data-date="2026-10-21">School day</span><span class="st st-school" data-date="2026-10-22">School day</span><span class="st st-school" data-date="2026-10-23">School day</span><span class="st st-weekend" data-date="2026-10-24">Weekend</span><span class="st st-weekend" data-date="2026-10-25">Weekend</span><span class="st st-school" data-date="2026-10-26">School day</span><span class="st st-school" data-date="2026-10-27">School day</span><span class="st st-school" data-date="2026-10-28">School day</span><span class="st st-half" data-date="2026-10-29">Half day · out at 12 PM</span><span class="st st-school" data-date="2026-10-30">School day</span><span class="st st-weekend" data-date="2026-10-31">Weekend</span><span class="st st-weekend" data-date="2026-11-01">Weekend</span></span></div><div class="krow"><span class="lbl">Tmrw</span><span class="stat tmrw"><span class="st st-school" data-date="2026-10-07">School day</span><span class="st st-school" data-date="2026-10-08">School day</span><span class="st st-off" data-date="2026-10-09">No school · teacher in-service</span><span class="st st-weekend" data-date="2026-10-10">Weekend</span><span class="st st-weekend" data-date="2026-10-11">Weekend</span><span class="st st-school" data-date="2026-10-12">School day</span><span class="st st-school" data-date="2026-10-13">School day</span><span class="st st-half" data-date="2026-10-14">Half day · out at 12 PM</span><span class="st st-off" data-date="2026-10-15">No school · Fall break</span><span class="st st-off" data-date="2026-10-16">No school · Fall break</span><span class="st st-weekend" data-date="2026-10-17">Weekend</span><span class="st st-weekend" data-date="2026-10-18">Weekend</span><span class="st st-off" data-date="2026-10-19">No school · Fall break</span><span class="st st-school" data-date="2026-10-20">School day</span><span class="st st-school" data-date="2026-10-21">School day</span><span class="st st-school" data-date="2026-10-22">School day</span><span class="st st-school" data-date="2026-10-23">School day</span><span class="st st-weekend" data-date="2026-10-24">Weekend</span><span class="st st-weekend" data-date="2026-10-25">Weekend</span><span class="st st-school" data-date="2026-10-26">School day</span><span class="st st-school" data-date="2026-10-27">School day</span><span class="st st-school" data-date="2026-10-28">School day</span><span class="st st-half" data-date="2026-10-29">Half day · out at 12 PM</span><span class="st st-school" data-date="2026-10-30">School day</span><span class="st st-weekend" data-date="2026-10-31">Weekend</span><span class="st st-weekend" data-date="2026-11-01">Weekend</span></span></div><div class="krow next"><span class="lbl">Next</span><span class="keys"><div class="keyd" data-date="2026-10-09"><b>Fri, Oct 9</b> No school — teacher in-service</div><div class="keyd" data-date="2026-10-14"><b>Wed, Oct 14</b> K-5 Service Day (half day) · Term 1 ends</div><div class="keyd" data-date="2026-10-15"><b>Thu, Oct 15</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-16"><b>Fri, Oct 16</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-19"><b>Mon, Oct 19</b> Fall break (no school)</div><div class="keyd" data-date="2026-10-20"><b>Tue, Oct 20</b> Term 2 begins</div><div class="keyd" data-date="2026-10-22"><b>Thu, Oct 22</b> K-12 Pumpkin Run</div><div class="keyd" data-date="2026-10-23"><b>Fri, Oct 23</b> Term 1 grades posted · Picture retakes</div><div class="keyd" data-date="2026-10-29"><b>Thu, Oct 29</b> K-5 half day · Grandparents Day (Gathering Generations)</div></span></div><div class="agrades"><div class="soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg>Grades coming soon</div></div></div></div>
+  </section>
+
+  <section class="card" id="todo">
+    <div class="card-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a2.5 2.5 0 0 0 2.4-2h-4.8a2.5 2.5 0 0 0 2.4 2zm7-6V11a7 7 0 0 0-5.5-6.8V3.5a1.5 1.5 0 0 0-3 0v.7A7 7 0 0 0 5 11v5l-2 2v1h18v-1z" fill="currentColor"/></svg> Heads-up</div>
+    <ul><li class="todo pr-high" data-until="2026-10-11"><span class="box"></span><div class="tw"><div class="tt">RSVP for Sunday&#x27;s Youth Conference intro</div><div class="td">Sun Oct 11, 2:30 PM · Stake center<span class="due">by Sun Oct 11</span></div></div><div class="who"><span class="chip p-parents">Parents</span></div></li><li class="todo pr-high" data-until="2026-10-14"><span class="box"></span><div class="tw"><div class="tt">Line up care for the boys during the trip</div><div class="td">If they&#x27;re staying home, Oct 12–18<span class="due">by Mon Oct 12</span></div></div><div class="who"><span class="chip p-parents">Parents</span></div></li><li class="todo pr-normal" data-until="2026-10-14"><span class="box"></span><div class="tw"><div class="tt">Luke&#x27;s Pre-ACT Wed 8:30 AM</div><div class="td">Good sleep Tuesday; out at 12 PM<span class="due">by Wed Oct 14</span></div></div><div class="who"><span class="chip p-luke">Luke</span></div></li><li class="todo pr-normal" data-until="2026-10-14"><span class="box"></span><div class="tw"><div class="tt">Two Anaheim hotels booked for Oct 14–18</div><div class="td">Stanford Inn &amp; Quality Inn Placentia — keep one<span class="due">by Tue Oct 13</span></div></div><div class="who"><span class="chip p-parents">Parents</span></div></li><li class="todo pr-normal" data-until="2026-10-18"><span class="box"></span><div class="tw"><div class="tt">No return flight on the calendar</div><div class="td">Confirm the trip home (around Oct 18)<span class="due">by Tue Oct 13</span></div></div><div class="who"><span class="chip p-parents">Parents</span></div></li><li class="todo none hidden-default">All clear — nothing pending.</li></ul>
+  </section>
+</div>
+<script>
+(function(){
+  var B=document.body, TZ=B.getAttribute('data-tz')||'America/Denver';
+  var N=parseInt(B.getAttribute('data-days')||'10',10);
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function parts(d){var o={};try{new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'numeric',minute:'2-digit',hour12:true,weekday:'long'}).formatToParts(d).forEach(function(p){o[p.type]=p.value});}catch(e){}return o;}
+  function ymd(d){var p=parts(d);return p.year+'-'+p.month+'-'+p.day;}
+  function addDays(s,n){var a=s.split('-');var t=new Date(Date.UTC(+a[0],+a[1]-1,+a[2]+n,12));return t.toISOString().slice(0,10);}
+  function dowOf(s){var a=s.split('-');return DOW[new Date(Date.UTC(+a[0],+a[1]-1,+a[2],12)).getUTCDay()];}
+  function each(sel,fn){Array.prototype.forEach.call(document.querySelectorAll(sel),fn);}
+
+  // theme
+  var saved=null;try{saved=localStorage.getItem('dash-theme');}catch(e){}
+  if(saved)document.documentElement.setAttribute('data-theme',saved);
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('dash-theme',t);}catch(e){}
+  });
+
+  var lastDay=null;
+  function applyDay(today){
+    var end=addDays(today,N-1), tmrw=addDays(today,1), shown=0;
+    each('.day',function(el){
+      var d=el.getAttribute('data-date'), on=d>=today&&d<=end;
+      el.classList.toggle('show',on); if(on)shown++;
+      el.classList.toggle('is-today',d===today);
+      el.querySelector('.rel').textContent=d===today?'Today':(d===tmrw?'Tomorrow':'');
+    });
+    each('.stat.today .st',function(el){el.classList.toggle('on',el.getAttribute('data-date')===today);});
+    each('.stat.tmrw .st',function(el){el.classList.toggle('on',el.getAttribute('data-date')===tmrw);});
+    each('.keys',function(box){var n=0;Array.prototype.forEach.call(box.querySelectorAll('.keyd[data-date]'),function(el){var on=el.getAttribute('data-date')>tmrw&&n<1;if(on)n++;el.classList.toggle('on',on);});});
+    var L=parseInt(B.getAttribute('data-later')||'0',10), lend=addDays(today,N+L-1), lc=0;
+    each('.later-row',function(el){var d=el.getAttribute('data-date'),on=d>end&&d<=lend;el.classList.toggle('show',on);if(on)lc++;});
+    var lat=document.getElementById('later'); if(lat)lat.classList.toggle('none',!lc);
+    var visible=0;
+    each('[data-until]',function(el){var u=el.getAttribute('data-until');var gone=!!u&&u<today;el.classList.toggle('gone',gone);if(!gone&&el.classList.contains('todo'))visible++;});
+    each('.todo.hidden-default',function(el){el.style.display=visible?'none':'block';});
+    var dow=dowOf(today);
+    each('.sp-daily-d',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow);});
+    // stale?
+    var last=Date.parse(B.getAttribute('data-last')), lim=parseFloat(B.getAttribute('data-stale-days')||'8');
+    B.classList.toggle('stale',!isNaN(last)&&(Date.now()-last)>lim*864e5);
+    fit();
+  }
+  function tick(){
+    var now=new Date(), p=parts(now);
+    if(p.hour){document.getElementById('time').innerHTML=p.hour+':'+p.minute+'<span class="ap">'+(p.dayPeriod||p.dayperiod||'')+'</span>';
+      document.getElementById('date').textContent=p.weekday+', '+new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'long',day:'numeric'}).format(now);}
+    var t=ymd(now); if(t!==lastDay){lastDay=t;applyDay(t);}
+  }
+  // fit everything on one screen: pick the largest root font size that doesn't overflow
+  var app=document.getElementById('app');
+  function fit(){
+    var W=window.innerWidth,H=window.innerHeight,land=W>=H;
+    var base=land?Math.min(W/1180,H/820)*17:Math.min(W/820,H/1180)*18;
+    var hi=Math.max(12,Math.min(26,base*1.12)),lo=10.5,html=document.documentElement;
+    app.classList.remove('fitted');
+    for(var i=0;i<9;i++){var mid=(lo+hi)/2;html.style.fontSize=mid+'px';
+      var cs=getComputedStyle(B);if(app.scrollHeight<=H-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))lo=mid;else hi=mid;}
+    html.style.fontSize=lo+'px'; app.classList.add('fitted'); B.setAttribute('data-fs',lo.toFixed(2)+'|'+W+'x'+H);
+  }
+  window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
+  window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
+  var lp=parts(new Date());
+  document.getElementById('loaded').textContent='Page loaded '+lp.hour+':'+lp.minute+' '+(lp.dayPeriod||lp.dayperiod||'');
+  tick(); setInterval(tick,15000);
+  // fallback reload (meta refresh may be ignored in standalone web-app mode); bust caches
+  setTimeout(function(){var u=location.href.split('?')[0];location.replace(u+'?r='+Date.now());},1800*1000+20000);
+})();
+</script>
+</body>
+</html>

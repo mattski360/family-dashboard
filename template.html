@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{THEME}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="refresh" content="1800">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jensens">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#15120f">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>{{TITLE}}</title>
+<style>
+:root{
+  --bg:#14110e; --bg2:#1b1612; --card:#211b16; --card2:#28211b; --line:#352c24;
+  --text:#f6eee4; --muted:#c3b5a4; --faint:#8f8272;
+  --accent:#f0bd6b; --accent-bg:rgba(240,189,107,.11);
+  --red:#ff8a7d; --red-bg:rgba(255,105,90,.17); --amber:#f6c75a; --amber-bg:rgba(246,199,90,.15);
+  --green:#7fd8a4; --shadow:0 .2rem 1.2rem rgba(0,0,0,.35);
+  --radius:1.05rem;
+}
+[data-theme="light"]{
+  --bg:#f3ede4; --bg2:#ece4d8; --card:#fffcf7; --card2:#f8f2e9; --line:#e3d8c8;
+  --text:#2a221b; --muted:#5f5245; --faint:#8b7d6d;
+  --accent:#b27417; --accent-bg:rgba(214,150,50,.13);
+  --red:#c2392b; --red-bg:rgba(220,70,50,.12); --amber:#9a6a00; --amber-bg:rgba(230,170,40,.17);
+  --green:#2f8f5b; --shadow:0 .15rem .8rem rgba(80,60,30,.10);
+}
+{{PERSON_CSS}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;-webkit-text-size-adjust:100%;background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--text);background:radial-gradient(120% 80% at 0% 0%,var(--bg2),var(--bg) 60%);
+  height:100vh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  padding:max(.8rem,env(safe-area-inset-top)) max(.9rem,env(safe-area-inset-right)) max(.8rem,env(safe-area-inset-bottom)) max(.9rem,env(safe-area-inset-left));
+  -webkit-user-select:none;user-select:none;cursor:default}
+svg{width:1em;height:1em;flex:none;vertical-align:-.12em}
+.lbl{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* ---------- layout (portrait-first: single stacked column) ---------- */
+#app{display:grid;gap:.7rem;grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"head" "spirit" "sched" "acad" "todo"}
+#app.fitted{flex:1 1 auto;min-height:0;grid-template-rows:auto auto minmax(0,1fr) auto auto}
+#todo{grid-area:todo}
+#todo ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.1rem}
+#todo .todo:nth-child(2){border-top:0;padding-top:.1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:.75rem .9rem;min-width:0}
+.card-h{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:780;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.card-h .sub{margin-left:auto;color:var(--faint);font-weight:600;letter-spacing:.04em;text-transform:none;font-size:.8rem}
+/* landscape: calendar left, everything else right */
+/* ---------- header ---------- */
+header.top{grid-area:head;display:flex;align-items:center;gap:1.2rem;padding:.15rem .3rem .1rem}
+.brand h1{font-size:2.05rem;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.brand .upd{margin-top:.3rem;font-size:.95rem;color:var(--muted);display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.brand .upd b{color:var(--text);font-weight:650}
+.brand .upd .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--green);box-shadow:0 0 0 .2rem rgba(127,216,164,.18)}
+.brand .upd .loaded{color:var(--faint);font-size:.78rem;margin-left:.35rem}
+body.stale .brand .upd{color:var(--amber)}
+body.stale .brand .upd .dot{background:var(--amber);box-shadow:0 0 0 .2rem var(--amber-bg)}
+body.stale .brand .upd b{color:var(--amber)}
+.stale-note{display:none;font-size:.78rem;font-weight:700;color:var(--amber);background:var(--amber-bg);padding:.1rem .5rem;border-radius:1rem}
+body.stale .stale-note{display:inline-block}
+.clock{margin-left:auto;text-align:right;line-height:1}
+.clock .time{font-size:3.3rem;font-weight:300;letter-spacing:-.03em}
+.clock .time .ap{font-size:1.25rem;font-weight:500;margin-left:.3rem;color:var(--muted);letter-spacing:0}
+.clock .date{font-size:1.1rem;color:var(--muted);margin-top:.3rem;font-weight:500}
+.tbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--muted);width:2.4rem;height:2.4rem;border-radius:50%;font-size:1.05rem;display:flex;align-items:center;justify-content:center;align-self:center}
+
+/* ---------- schedule ---------- */
+#spirit{grid-area:spirit}
+#acad{grid-area:acad}
+#sched{grid-area:sched;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.days{column-count:2;column-gap:.85rem;column-fill:balance}
+.day{break-inside:avoid;-webkit-column-break-inside:avoid;display:none;background:var(--card2);border:1px solid var(--line);border-radius:.8rem;padding:.5rem .65rem .55rem;margin:0 0 .6rem}
+.day.show{display:block}
+.day.is-today{border-color:var(--accent);background:linear-gradient(0deg,var(--accent-bg),var(--accent-bg)),var(--card2);box-shadow:0 0 0 1px var(--accent) inset}
+.dh{display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap;margin-bottom:.3rem}
+.dname{font-size:1.2rem;font-weight:800}
+.ddate{font-size:1.08rem;color:var(--muted);font-weight:550}
+.rel{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.rel:empty{display:none}
+.is-today .rel{color:#1b140c;background:var(--accent);padding:.12rem .45rem;border-radius:1rem;align-self:center}
+.trips{margin-left:auto;display:flex;gap:.3rem;flex-wrap:wrap}
+.trip{display:inline-flex;align-items:center;gap:.2rem;font-size:.72rem;font-weight:650;color:var(--c,var(--muted));background:var(--cbg);border-radius:1rem;padding:.12rem .5rem .12rem .4rem}
+.trip{--c:#C9A0FF;--cbg:rgba(201,160,255,.13)}
+[data-theme="light"] .trip{--c:#6d3fb0}
+.day.weekend .dname{color:var(--muted)}
+.banner{display:flex;align-items:center;gap:.45rem;border-radius:.55rem;padding:.25rem .5rem;margin:.25rem 0;font-size:.85rem}
+.banner .bl{font-weight:850;letter-spacing:.07em;text-transform:uppercase;font-size:.8rem;white-space:nowrap}
+.banner .br{color:var(--text);opacity:.9;min-width:0}
+.banner .who{margin-left:auto}
+.b-no_school{background:var(--red-bg)} .b-no_school .bl{color:var(--red)}
+.b-half_day{background:var(--amber-bg)} .b-half_day .bl{color:var(--amber)}
+.items{list-style:none}
+.item{display:grid;grid-template-columns:4.3rem minmax(0,1fr) auto;gap:.15rem .5rem;align-items:start;padding:.28rem 0;border-top:1px solid var(--line)}
+.items .item:first-child{border-top:0}
+.banner+.items .item:first-child{border-top:0}
+.when{line-height:1.15;padding-top:.1rem}
+.when .t{display:block;font-size:.84rem;font-weight:700;color:var(--text);white-space:nowrap}
+.when .t2{display:block;font-size:.68rem;color:var(--faint);white-space:nowrap}
+.when .allday{color:var(--faint);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+.what{min-width:0;line-height:1.22}
+.title{font-size:1.04rem;font-weight:640;display:block}
+.title svg{margin-right:.3rem;color:var(--faint)}
+.note{display:block;font-size:.78rem;color:var(--muted);margin-top:.05rem}
+.pr-high .title{font-weight:720}
+.item.pr-low{padding:.14rem 0;align-items:center}
+.pr-low .title{font-weight:500;color:var(--muted);font-size:.86rem}
+.pr-low .note,.pr-low .when .t2{display:none}
+.pr-low .when .t{color:var(--muted);font-weight:600;font-size:.76rem}
+.pr-low .chip{font-size:.62rem;padding:.06rem .4rem}
+.k-routine .title{color:var(--text)}
+.who{display:flex;gap:.22rem;flex-wrap:wrap;justify-content:flex-end;padding-top:.08rem}
+.chip{display:inline-block;font-size:.7rem;font-weight:780;letter-spacing:.02em;padding:.13rem .48rem;border-radius:1rem;color:var(--c);background:var(--cbg);white-space:nowrap;line-height:1.25}
+[data-theme="light"] .chip{color:var(--cdk);background:var(--cbgl)}
+.empty{color:var(--faint);font-size:.85rem;font-style:italic;font-weight:500}
+.day.quiet{padding:.4rem .65rem}
+.day.quiet .dh{margin-bottom:0}
+.later{margin-top:.1rem;border-top:1px solid var(--line);padding-top:.45rem}
+.later.none{display:none}
+.later-h{margin-bottom:.15rem}
+.later-row{display:none;gap:.6rem;align-items:baseline;padding:.16rem 0;font-size:.86rem}
+.later-row.show{display:flex}
+.later-row .ld{width:5.2rem;flex:none;color:var(--muted)}
+.later-row .ld b{color:var(--text);font-weight:700}
+.lis{display:flex;flex-wrap:wrap;gap:.2rem .9rem;min-width:0}
+.li{display:inline-flex;align-items:center;gap:.3rem;font-weight:600}
+.li .chip{font-size:.62rem;padding:.08rem .4rem}
+.li.f-no_school{color:var(--red);font-weight:750}
+.li.f-half_day{color:var(--amber);font-weight:750}
+.legend{display:flex;gap:.3rem;margin-left:auto}
+.legend .chip{font-size:.66rem}
+
+/* ---------- heads-up ---------- */
+#todo ul{list-style:none}
+.todo{display:grid;grid-template-columns:1.15rem minmax(0,1fr) auto;gap:.55rem;align-items:start;padding:.4rem 0;border-top:1px solid var(--line)}
+.todo:first-child{border-top:0;padding-top:.1rem}
+.todo .box{width:1.05rem;height:1.05rem;border:2px solid var(--faint);border-radius:.3rem;margin-top:.18rem}
+.todo.pr-high .box{border-color:var(--accent)}
+.tt{font-size:.95rem;font-weight:650;line-height:1.22}
+.td{font-size:.78rem;color:var(--muted);margin-top:.1rem;line-height:1.25}
+.td .due{margin-left:.4rem;color:var(--accent);font-weight:650;white-space:nowrap}
+.todo.none{display:block;color:var(--faint);font-style:italic;font-size:.9rem}
+.todo.hidden-default{display:none}
+.todo.gone{display:none}
+.sp-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:.6rem}
+.sp-block{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.55rem .7rem}
+.sp-k{display:flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.sp-k svg{color:var(--accent)}
+.sp-wk{margin-left:auto;font-weight:650;letter-spacing:.03em;text-transform:none;color:var(--faint)}
+.sp-title{font-size:1.08rem;font-weight:720;margin:.2rem 0 .15rem;line-height:1.22}
+.sp-read{font-size:.88rem;margin:.15rem 0}
+.sp-read .lbl,.sp-daily .lbl{margin-right:.4rem}
+.sp-sum{font-size:.85rem;color:var(--muted);line-height:1.3}
+.sp-q{margin:.3rem 0 0 1.15rem;font-size:.86rem;line-height:1.3}
+.sp-q li{margin:.12rem 0}
+.sp-daily{font-size:.88rem;margin-top:.25rem;line-height:1.3}
+.sp-daily-d{display:none}
+.sp-daily-d.on{display:block}
+.sp-daily-d.on ~ .sp-daily-all{display:none}
+.sp-wait{font-size:.78rem;color:var(--faint);font-style:italic}
+.pending .sp-title{color:var(--muted);font-weight:600;font-style:italic}
+.pending .sp-title::before{content:"";display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent);margin-right:.45rem;vertical-align:.12em;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ---------- kids & academics ---------- */
+[data-theme="light"] .aname{color:var(--cdk)}
+.agrade{font-size:.8rem;font-weight:700;color:var(--muted)}
+.ksch{font-size:.72rem;color:var(--faint);margin:-.05rem 0 .25rem}
+.agrades{margin-top:.35rem;padding-top:.35rem;border-top:1px dashed var(--line)}
+.krow{display:flex;gap:.45rem;align-items:baseline;font-size:.86rem;margin:.08rem 0;line-height:1.25}
+.krow .lbl{width:2.5rem;flex:none}
+.stat .st{display:none;font-weight:650}
+.stat .st.on{display:inline}
+.st-off{color:var(--red)} .st-half{color:var(--amber)} .st-inperson{color:var(--c)} .st-weekend,.st-online{color:var(--muted)}
+[data-theme="light"] .st-inperson{color:var(--cdk)}
+.kin{font-size:.7rem;color:var(--faint);margin:.05rem 0 .12rem 2.95rem;line-height:1.25}
+.keys{min-width:0}
+.keyd{display:none;font-size:.82rem;line-height:1.25}
+.keyd.on{display:block}
+.keyd b{font-weight:750;margin-right:.15rem}
+.keyd.none{display:block;color:var(--faint);font-style:italic}
+/* ---------- academics ---------- */
+.acols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+.acol{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.45rem .6rem .5rem;border-top:.22rem solid var(--c);min-width:0}
+.acol-h{display:flex;align-items:baseline;gap:.45rem}
+.aname{font-weight:800;font-size:1.25rem;color:var(--c)}
+.soon{font-size:.8rem;color:var(--faint);font-style:italic;display:flex;align-items:center;gap:.35rem}
+.miss{margin-left:auto;font-size:.7rem;font-weight:800;padding:.08rem .45rem;border-radius:1rem;background:var(--card)}
+.miss.bad{color:var(--red);background:var(--red-bg)} .miss.ok{color:var(--green)}
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));gap:.04rem 1rem;font-size:.84rem}
+.crs{display:flex;gap:.35rem;align-items:baseline;min-width:0}
+.cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.cp{font-weight:650}.cl{font-weight:800;width:1.6rem;text-align:right}
+.g-a{color:var(--green)} .g-b{color:var(--text)} .g-c{color:var(--amber)} .g-d{color:var(--red)}
+.tests{margin-top:.3rem;padding-top:.25rem;border-top:1px dashed var(--line)}
+.test{font-size:.76rem;line-height:1.3}
+.test.gone{display:none}
+.screen{margin-top:.25rem;font-size:.76rem;color:var(--muted)}
+.screen .lbl{margin-right:.35rem}
+.screen.muted{color:var(--faint);font-style:italic}
+footer.foot{display:none}
+/* landscape: calendar left; spiritual + heads-up right; kids & academics across the bottom */
+@media (orientation:landscape){
+  #app{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+    grid-template-areas:"head head" "sched spirit" "sched todo" "acad acad"}
+  #app.fitted{grid-template-rows:auto auto minmax(0,1fr) auto}
+  #spirit .sp-wrap{grid-template-columns:minmax(0,1fr)}
+  #todo ul{grid-template-columns:minmax(0,1fr)}
+  #todo .todo:nth-child(2){border-top:1px solid var(--line);padding-top:.4rem}
+}
+</style>
+</head>
+<body data-later="{{LATER_DAYS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-days="{{SCHED_DAYS}}" data-build-date="{{BUILD_DATE}}">
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <h1>{{FAMILY}}</h1>
+      <div class="upd"><span class="dot"></span>Last updated <b>{{LAST_LABEL}}</b><span class="stale-note">Needs refresh</span><span class="loaded" id="loaded"></span></div>
+    </div>
+    <div class="clock"><div class="time" id="time">&nbsp;</div><div class="date" id="date">&nbsp;</div></div>
+    <button class="tbtn" id="themeBtn" aria-label="Toggle theme">{{ICON_THEME}}</button>
+  </header>
+
+  <section class="card" id="spirit">
+    <div class="card-h">{{ICON_BOOK}} Spiritual focus<span class="sub">This week</span></div>
+    <div class="sp-wrap">{{SPIRITUAL}}</div>
+  </section>
+
+  <section class="card" id="sched">
+    <div class="card-h">{{ICON_CAL}} This week<span class="sub" id="schedSub">Next {{SCHED_DAYS}} days · all times {{TZLABEL}}</span></div>
+    <div class="days" id="days">{{DAYS}}</div>
+    <div class="later" id="later"><div class="later-h"><span class="lbl">Later</span></div>{{LATER}}</div>
+  </section>
+
+  <section class="card" id="acad">
+    <div class="card-h">{{ICON_KIDS}} Kids &amp; academics<span class="sub">{{ACAD_SUB}}</span></div>
+    {{ACADEMICS}}
+  </section>
+
+  <section class="card" id="todo">
+    <div class="card-h">{{ICON_BELL}} Heads-up</div>
+    <ul>{{TODOS}}</ul>
+  </section>
+</div>
+<script>
+(function(){
+  var B=document.body, TZ=B.getAttribute('data-tz')||'America/Denver';
+  var N=parseInt(B.getAttribute('data-days')||'10',10);
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function parts(d){var o={};try{new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'numeric',minute:'2-digit',hour12:true,weekday:'long'}).formatToParts(d).forEach(function(p){o[p.type]=p.value});}catch(e){}return o;}
+  function ymd(d){var p=parts(d);return p.year+'-'+p.month+'-'+p.day;}
+  function addDays(s,n){var a=s.split('-');var t=new Date(Date.UTC(+a[0],+a[1]-1,+a[2]+n,12));return t.toISOString().slice(0,10);}
+  function dowOf(s){var a=s.split('-');return DOW[new Date(Date.UTC(+a[0],+a[1]-1,+a[2],12)).getUTCDay()];}
+  function each(sel,fn){Array.prototype.forEach.call(document.querySelectorAll(sel),fn);}
+
+  // theme
+  var saved=null;try{saved=localStorage.getItem('dash-theme');}catch(e){}
+  if(saved)document.documentElement.setAttribute('data-theme',saved);
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+    document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('dash-theme',t);}catch(e){}
+  });
+
+  var lastDay=null;
+  function applyDay(today){
+    var end=addDays(today,N-1), tmrw=addDays(today,1), shown=0;
+    each('.day',function(el){
+      var d=el.getAttribute('data-date'), on=d>=today&&d<=end;
+      el.classList.toggle('show',on); if(on)shown++;
+      el.classList.toggle('is-today',d===today);
+      el.querySelector('.rel').textContent=d===today?'Today':(d===tmrw?'Tomorrow':'');
+    });
+    each('.stat.today .st',function(el){el.classList.toggle('on',el.getAttribute('data-date')===today);});
+    each('.stat.tmrw .st',function(el){el.classList.toggle('on',el.getAttribute('data-date')===tmrw);});
+    each('.keys',function(box){var n=0;Array.prototype.forEach.call(box.querySelectorAll('.keyd[data-date]'),function(el){var on=el.getAttribute('data-date')>tmrw&&n<1;if(on)n++;el.classList.toggle('on',on);});});
+    var L=parseInt(B.getAttribute('data-later')||'0',10), lend=addDays(today,N+L-1), lc=0;
+    each('.later-row',function(el){var d=el.getAttribute('data-date'),on=d>end&&d<=lend;el.classList.toggle('show',on);if(on)lc++;});
+    var lat=document.getElementById('later'); if(lat)lat.classList.toggle('none',!lc);
+    var visible=0;
+    each('[data-until]',function(el){var u=el.getAttribute('data-until');var gone=!!u&&u<today;el.classList.toggle('gone',gone);if(!gone&&el.classList.contains('todo'))visible++;});
+    each('.todo.hidden-default',function(el){el.style.display=visible?'none':'block';});
+    var dow=dowOf(today);
+    each('.sp-daily-d',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow);});
+    // stale?
+    var last=Date.parse(B.getAttribute('data-last')), lim=parseFloat(B.getAttribute('data-stale-days')||'8');
+    B.classList.toggle('stale',!isNaN(last)&&(Date.now()-last)>lim*864e5);
+    fit();
+  }
+  function tick(){
+    var now=new Date(), p=parts(now);
+    if(p.hour){document.getElementById('time').innerHTML=p.hour+':'+p.minute+'<span class="ap">'+(p.dayPeriod||p.dayperiod||'')+'</span>';
+      document.getElementById('date').textContent=p.weekday+', '+new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'long',day:'numeric'}).format(now);}
+    var t=ymd(now); if(t!==lastDay){lastDay=t;applyDay(t);}
+  }
+  // fit everything on one screen: pick the largest root font size that doesn't overflow
+  var app=document.getElementById('app');
+  function fit(){
+    var W=window.innerWidth,H=window.innerHeight,land=W>=H;
+    var base=land?Math.min(W/1180,H/820)*17:Math.min(W/820,H/1180)*18;
+    var hi=Math.max(12,Math.min(26,base*1.12)),lo=10.5,html=document.documentElement;
+    app.classList.remove('fitted');
+    for(var i=0;i<9;i++){var mid=(lo+hi)/2;html.style.fontSize=mid+'px';
+      var cs=getComputedStyle(B);if(app.scrollHeight<=H-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))lo=mid;else hi=mid;}
+    html.style.fontSize=lo+'px'; app.classList.add('fitted'); B.setAttribute('data-fs',lo.toFixed(2)+'|'+W+'x'+H);
+  }
+  window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
+  window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
+  var lp=parts(new Date());
+  document.getElementById('loaded').textContent='Page loaded '+lp.hour+':'+lp.minute+' '+(lp.dayPeriod||lp.dayperiod||'');
+  tick(); setInterval(tick,15000);
+  // fallback reload (meta refresh may be ignored in standalone web-app mode); bust caches
+  setTimeout(function(){var u=location.href.split('?')[0];location.replace(u+'?r='+Date.now());},1800*1000+20000);
+})();
+</script>
+</body>
+</html>
