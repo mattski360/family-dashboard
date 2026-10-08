@@ -16,10 +16,14 @@ Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use play
 * **Fixed Sunday-to-Saturday week.** The calendar shows `meta.week_start` through week_start + 6. The page is meant to be rebuilt every Saturday at 9 PM MT for the week that starts the next day.
   * build.py works out week_start as the upcoming Sunday: Mon–Sat give the next Sunday, and a Sunday gives that same day.
   * `--week-start YYYY-MM-DD` overrides it. Either way, the value used is written back to `meta.week_start`.
-* **"Rest of this week" strip.** When the page is viewed before week_start (an off-cycle build, like Thu Oct 8 for the week of Oct 11), a small strip above the calendar shows the remaining days of the current week.
+* **"Rest of this week" strip.** When the page is viewed before week_start (an off-cycle build, like Thu Oct 8 for the week of Oct 11), a one-line strip above the calendar shows the remaining days of the current week (low-priority items omitted, titles shortened).
 * **Later list.** It covers the 8 days after the week (`meta.later_days`) and shows only key items.
 * **Today.** JS highlights today, labels tomorrow and dims past days, all in America/Denver time. Heads-up items and tests hide once their dates pass.
-* **Youth card.** It rolls with the viewing date: today plus 6 days, then a Later line for the next 14.
+* **Youth card.** It rolls with the viewing date: one line per boy (his quorum's items for today plus 6 days), one shared "Both" line for all-youth items, then a compact Later line for the next 14.
+* **Kids & academics.** Name, grade, school, and a single grades line ("Grades coming soon" until real data exists; never invented).
+* **Heads-up.** At most 3 items (high priority first, then soonest due), one line each; the `detail` field is kept in JSON but not rendered.
+* **Motto.** `meta.motto` renders as an italic tagline under the family name.
+* **One screen.** Auto-fit picks the largest base font that fits (floor 13px portrait / 12.4px landscape); gentle auto-scroll only kicks in if content can't fit at the floor.
 * **Refresh.** `<meta http-equiv=refresh content=1800>` reloads the page every 30 minutes. A JS fallback reloads with a cache-busting `?r=` query.
 * **Last updated.** "Last updated" comes from `meta.last_updated`. It turns amber with "Needs refresh" when older than `meta.stale_after_days` (8).
 * **Theme.** It defaults to a light theme on a white background (`meta.theme`: `light` or `dark`). The moon button toggles the theme, and the choice is saved per device.
@@ -47,7 +51,7 @@ Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use play
 * `date` / `end_date`: YYYY-MM-DD. `end_date` is inclusive and optional, for multi-day items. `start` / `end`: 24-hour `HH:MM` in MT. Leave them out for all-day items.
 * `who`: any of `luke`, `wyatt`, `tanner`, `parents`, `family`.
 * `flag`: `"no_school"` shows a red NO SCHOOL banner on that day for those kids. `"half_day"` shows an amber HALF DAY · out at 12 PM banner.
-* `priority`: `high` items appear in each kid's "Next" line and in the Later list. `low` items render small and dim.
+* `priority`: `low` items are **not rendered** (keeps the portrait view on one screen; flip `HIDE_LOW` in build.py to show them). The Later list shows only no-school/half-day flags, `high` non-feed items, feed items about terms/quarters beginning or ending, and any event with `"major": true`. A same-day "Term N ends" note is folded into the HALF DAY banner when it covers the same kids.
 * `kind`: `event`, `flight` (adds a plane icon), `trip` (adds a location pill to every day it covers), or `school`.
 * `source`: `ahs_feed` is reserved. **fetch_school.py replaces every `ahs_feed` event on each run.** Use any other source (`family`, `canyon_grove`, `ahs_manual`, …) for hand-entered items. Those are never touched.
 
@@ -64,6 +68,8 @@ Optional fields:
 * `come_follow_me.previous`: `{show_before, dates_label, title, reading}` renders a one-line "Finishing …" note for the lesson still in progress. It hides automatically on or after `show_before`.
 * `strength_of_youth.label`: for example "October chapter".
 * `strength_of_youth.quote`: a short line quoted from the guide.
+
+**Rendered (compact):** CFM shows the title, `dates_label · reading`, and ONE question (`featured_question`, a 0-based index into `questions`; default 0). FSY shows the `topic` plus today's `daily_by_weekday` tip. `summary`, the other questions, `focus`, `quote` and `previous` stay in the JSON but are not rendered.
 
 When `status` is `"pending"`, or there is no reading (CFM) or focus (FSY), the card shows the placeholder title in muted italics with a pulsing dot. `daily_by_weekday` (Mon to Sun) shows only today's entry. Without it, `daily_application` is shown.
 
