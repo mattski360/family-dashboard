@@ -248,11 +248,11 @@ footer.foot{display:none}
 html{font-size:18px;-webkit-text-size-adjust:100%;background:var(--bg)}
 :root{--fs:18px}
 body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  color:var(--text);background:var(--bg);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  color:var(--text);background:var(--bg);height:100%;position:fixed;inset:0;overflow:hidden;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
   -webkit-user-select:none;user-select:none;cursor:default}
-#stage{position:fixed;left:0;right:0;top:0;bottom:calc(30px + env(safe-area-inset-bottom));cursor:pointer;-webkit-tap-highlight-color:transparent}
+#stage{position:fixed;left:0;right:0;top:0;bottom:calc(38px + env(safe-area-inset-bottom));cursor:pointer;-webkit-tap-highlight-color:transparent}
 .page{--radius:calc(var(--fs) * 1.05);position:absolute;inset:0;display:flex;flex-direction:column;gap:calc(var(--fs) * .55);overflow:hidden;
-  padding:max(calc(var(--fs) * .7),env(safe-area-inset-top)) max(calc(var(--fs) * .85),env(safe-area-inset-right)) calc(var(--fs) * .35) max(calc(var(--fs) * .85),env(safe-area-inset-left));
+  padding:max(40px,calc(env(safe-area-inset-top) + 16px)) max(calc(var(--fs) * .85),env(safe-area-inset-right)) 12px max(calc(var(--fs) * .85),env(safe-area-inset-left));
   opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s}
 .page.on{opacity:1;visibility:visible;transition:opacity .9s ease}
 .page.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -382,7 +382,7 @@ body.stale .upd.stale-only{display:flex}
 #p2 .later{margin-top:0}
 
 /* rotation indicator */
-#nav{position:fixed;left:0;right:0;bottom:0;height:calc(30px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--bg);border-top:1px solid var(--line);height:calc(38px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
   display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;color:var(--faint);font-weight:600;letter-spacing:.03em}
 #nav .dot{width:9px;height:9px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
 #nav .dot.on{background:var(--accent)}
@@ -393,7 +393,7 @@ body.paused #nav .pz{display:inline}
 body.paused #prog{background:var(--amber);opacity:.3}
 </style>
 </head>
-<body data-rotate="30" data-ydays="7" data-ylater="14" data-later="8" data-tz="America/Denver" data-last="2026-10-08T10:27:54-06:00" data-stale-days="8" data-week-start="2026-10-11" data-week-end="2026-10-17" data-build-date="2026-10-08">
+<body data-rotate="30" data-ydays="7" data-ylater="14" data-later="8" data-tz="America/Denver" data-last="2026-10-08T10:32:51-06:00" data-stale-days="8" data-week-start="2026-10-11" data-week-end="2026-10-17" data-build-date="2026-10-08">
 <div id="stage">
 
 <!-- ====================== PAGE 1: TODAY ====================== -->
@@ -402,7 +402,7 @@ body.paused #prog{background:var(--amber);opacity:.3}
     <div class="brand">
       <h1>Jensen Family</h1>
       <div class="motto">We are Jensens, we are brave, we choose the right, and we always help others.</div>
-      <div class="upd"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:27 AM MT</b><span class="stale-note">Needs refresh</span><span class="loaded js-loaded"></span></div>
+      <div class="upd"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:32 AM MT</b><span class="stale-note">Needs refresh</span><span class="loaded js-loaded"></span></div>
     </div>
     <div class="clock"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
     <button class="tbtn js-theme" aria-label="Toggle theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/></svg></button>
@@ -431,7 +431,7 @@ body.paused #prog{background:var(--amber);opacity:.3}
     <div class="brand">
       <h1>Jensen Family</h1>
       <div class="motto">We are Jensens, we are brave, we choose the right, and we always help others.</div>
-      <div class="upd stale-only"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:27 AM MT</b><span class="stale-note">Needs refresh</span></div>
+      <div class="upd stale-only"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:32 AM MT</b><span class="stale-note">Needs refresh</span></div>
     </div>
     <div class="clock"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
   </header>
@@ -541,7 +541,7 @@ body.paused #prog{background:var(--amber);opacity:.3}
     return lo.toFixed(2);
   }
   function fit(){
-    var W=window.innerWidth,H=window.innerHeight;
+    var vv=window.visualViewport,W=vv?vv.width:window.innerWidth,H=Math.min(window.innerHeight,vv?vv.height:1e9);
     var r=pages.map(function(pg){return fitPage(pg,W,H);});
     B.setAttribute('data-fs','p1:'+r[0]+' p2:'+r[1]+' '+W+'x'+H);
   }
@@ -580,6 +580,8 @@ body.paused #prog{background:var(--amber);opacity:.3}
 
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
   window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
+  if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
+  window.addEventListener('load',fit); if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit); setTimeout(fit,800); setTimeout(fit,2500);
   var lp=parts(new Date());
   each('.js-loaded',function(el){el.textContent='Page loaded '+lp.hour+':'+lp.minute+' '+(lp.dayPeriod||lp.dayperiod||'');});
   tick(); setInterval(tick,15000);
