@@ -1,3 +1,6 @@
 preview*.png
 __pycache__/
 *.pyc
+
+# raw ward youth sheet exports (contain other families' info; never publish)
+data/youth_sheet*

@@ -4,7 +4,7 @@ A static page (`index.html`, with CSS and JS inline and no external requests) fo
 To publish, put `index.html` and `assets/` on GitHub Pages.
 
 ```
-./run.sh                 # fetch_school.py (AHS Veracross ICS → data/dashboard.json), then build.py → index.html
+./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → index.html
 python3 build.py         # re-render only (stamps meta.last_updated)
 python3 build.py --no-stamp
 python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
@@ -26,6 +26,7 @@ Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use play
 | `people` | chip id → `{label, color}`: `luke`, `wyatt`, `tanner`, `parents`, `family` |
 | `kids[]` | `id, name, grade, school, school_short, campus, division, in_person_days, in_person_summary`. `routine` (Wyatt only): `{days:["Tue","Thu"], start, end, title, note, online_title}` adds the "In person at Lehi campus" line automatically on those days unless Wyatt has no school |
 | `events[]` | calendar items (see below) |
+| `youth` | Young Men card (see below). Shown only in the card, never in the weekly calendar |
 | `todos[]` | `{id, text, detail, who[], due, hide_after, priority, done}`. Items are hidden after `hide_after` or when `done: true` |
 | `spiritual` | see below |
 | `academics` | `updated` (ISO), `kids.<id>.courses[] {name, percent, letter}`, `missing_count` (int or null), `upcoming_tests[] {date, course, title}` (hidden once past), `note`. With empty courses the page shows "Grades coming soon" |
@@ -61,3 +62,21 @@ Kept: school-wide items (no school, half days, term start/end, grades posted, pi
 Dropped: middle school, other grades, kindergarten, clubs, rehearsals, athletics, senior nights, AP/ACT/PSAT for other grades, admissions, and faculty items.
 No-school entries on weekends are skipped. When the band named in "No School K-8" or a similar phrase covers only some of the kids, the event is split into a no-school item for the kids it covers and a separate item for the others.
 The default window is **21 days**, so a weekly run still fills the 7-day view plus the Later list all week. Use `--days 14` if you want a shorter window.
+
+## Young Men this week (`youth`)
+```json
+"youth": {"updated": "2026-10-07", "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
+  "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
+  "quorums": {"luke": "teachers", "wyatt": "deacons"}, "days": 7, "later_days": 14,
+  "activities": [{"id": "yth-20261029-teachers-mtc", "date": "2026-10-29", "start": null, "end": null,
+     "title": "MTC tour?", "group": "teachers", "kind": "activity", "tentative": true,
+     "location": null, "bring": null, "note": null, "source": "sheet"}]}
+```
+* `group` is one of `all_youth`, `all_ym`, `deacons`, `teachers`, `priests` or `yw`. `all_youth` and `all_ym` tag both boys, `teachers` tags Luke and `deacons` tags Wyatt. Priests and YW items are not shown.
+* `kind: "none"` shows a muted line such as "Fall break — no activity" or "Nothing listed for Deacons". Items with no `start` show **Time TBA**.
+* The card lists today plus the next 6 days, and a "Later" line for the following 14 days. Past entries hide automatically based on the viewing date.
+* Precedence: items with `source` `sheet` or `manual` (the ward Google Sheet, refreshed separately) always win. `fetch_youth.py` parses the ward site's "<Month> Youth Activities" list for this month and next and stores the results as `source: "site"`. Each run replaces only the earlier `site` items. build.py shows a site item only on dates that have no sheet or manual items, and only if its title doesn't repeat a sheet item within 3 weeks. If the fetch fails or nothing parses, the JSON is left unchanged and the build continues.
+* Raw sheet exports (`data/youth_sheet*`) are git-ignored, so they are never published.
+
+## Fitting on screen
+The page uses the largest text size that fits on one screen. It never goes below about 13px in portrait (820×1180) or 12.4px in landscape. If the content still doesn't fit at that size, the page scrolls vertically instead of shrinking further.

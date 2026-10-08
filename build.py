@@ -283,7 +283,8 @@ def render_later(m: Model, day: dt.date) -> str:
         parts.append(f'<span class="li">{esc(e.get("title"))}{chips(m, e.get("who", []))}</span>')
     if not parts:
         return ""
-    return (f'<div class="later-row" data-date="{day.isoformat()}"><span class="ld">'
+    wide = " wide" if len(parts) > 1 else ""
+    return (f'<div class="later-row{wide}" data-date="{day.isoformat()}"><span class="ld">'
             f'{DOW[day.weekday()]} <b>{day:%b} {day.day}</b></span><span class="lis">{"".join(parts)}</span></div>')
 
 
@@ -373,7 +374,94 @@ def render_academics(m: Model) -> str:
             sub = esc(upd)
     elif not any_data:
         sub = "grades coming soon"
+    if not any_data:
+        cols = [c.replace('<div class="agrades"><div class="soon">' + ICONS["cap"] + 'Grades coming soon</div></div>', "") for c in cols]
     return f'<div class="acols{"" if any_data else " nodata"}">{"".join(cols)}</div>', sub
+
+
+YOUTH_GROUP_LABEL = {"all_youth": "All youth", "all_ym": "All YM", "deacons": "Deacons",
+                     "teachers": "Teachers", "priests": "Priests", "yw": "YW"}
+YOUTH_GROUP_ORDER = {"all_youth": 0, "all_ym": 1, "teachers": 2, "deacons": 3, "priests": 4, "yw": 5}
+
+
+def youth_activities(m: Model) -> list[dict]:
+    """Effective youth list: sheet/manual items win; ward-site items only fill dates the sheet doesn't cover
+    (and never duplicate a sheet title within 3 weeks). Each item gets a 'who' list of our boys."""
+    y = m.data.get("youth", {}) or {}
+    quorums = y.get("quorums") or {"luke": "teachers", "wyatt": "deacons"}
+    acts = [a for a in (y.get("activities") or []) if a.get("date")]
+    primary = [a for a in acts if a.get("source") != "site"]
+    site = [a for a in acts if a.get("source") == "site"]
+    pdates = {a["date"] for a in primary}
+    norm = lambda t: re.sub(r"[^a-z0-9]", "", (t or "").lower())
+    out = list(primary)
+    for a in site:
+        if a["date"] in pdates:
+            continue
+        if any(norm(a.get("title")) == norm(p.get("title")) and abs((d(a["date"]) - d(p["date"])).days) <= 21
+               for p in primary):
+            continue
+        out.append(a)
+    res = []
+    for a in out:
+        g = a.get("group", "all_youth")
+        if g in ("all_youth", "all_ym"):
+            who = [k for k in quorums]                       # both boys
+        else:
+            who = [k for k, q in quorums.items() if q == g]
+        if not who:
+            continue                                         # priests / YW: not our boys
+        res.append(dict(a, who=who))
+    res.sort(key=lambda a: (a["date"], YOUTH_GROUP_ORDER.get(a.get("group"), 9), a.get("start") or ""))
+    return res
+
+
+def render_youth(m: Model) -> str:
+    y = m.data.get("youth", {}) or {}
+    acts = youth_activities(m)
+    by_day: dict[str, list[dict]] = {}
+    for a in acts:
+        by_day.setdefault(a["date"], []).append(a)
+    rows, later = [], []
+    for day_s, items in sorted(by_day.items()):
+        day = d(day_s)
+        if not (m.first <= day <= m.last):
+            continue
+        lines = []
+        for a in items:
+            none = a.get("kind") == "none"
+            if none:
+                when = ""
+            elif a.get("start"):
+                when = fmt_time(a["start"]) + (f"\u2013{fmt_time(a['end'])}" if a.get("end") else "")
+            else:
+                when = "Time TBA"
+            extra = []
+            if a.get("location"):
+                extra.append(esc(a["location"]))
+            if a.get("bring"):
+                extra.append("Bring: " + esc(a["bring"]))
+            if a.get("note"):
+                extra.append(esc(a["note"]))
+            tent = '<span class="tent">tentative</span>' if a.get("tentative") else ""
+            grp = YOUTH_GROUP_LABEL.get(a.get("group"), "")
+            lines.append(
+                f'<div class="yl{" none" if none else ""}"><span class="yt">{esc(a.get("title"))}{tent}</span>'
+                f'<span class="yg">{esc(grp)}</span>'
+                f'{f"<span class=yw>{esc(when)}</span>" if when else ""}'
+                f'{chips(m, a["who"])}'
+                f'{f"<span class=yx>{chr(32).join(extra)}</span>" if extra else ""}</div>')
+            # later strip entry
+            short = esc(a.get("title")) + (" (tentative)" if a.get("tentative") else "")
+            later.append(f'<span class="yli{" none" if none else ""}" data-date="{day_s}"><b>{DOW[day.weekday()]} {day:%b} {day.day}</b> '
+                         f'{short}{chips(m, a["who"])}</span>')
+        rows.append(f'<div class="yday" data-date="{day_s}"><div class="yd"><span class="ydn">{DOW[day.weekday()]}</span> '
+                    f'{day:%b} {day.day}<span class="rel"></span></div><div class="yls">{"".join(lines)}</div></div>')
+    empty = '<div class="yempty">Nothing listed for the next 7 days</div>'
+    note = esc(y.get("note", ""))
+    return (f'<div class="yrows">{"".join(rows)}{empty}</div>'
+            f'<div class="ylater"><span class="lbl">Later</span>{"".join(later)}</div>'
+            f'{f"<div class=ynote>{note}</div>" if note else ""}')
 
 
 def render_spiritual(m: Model) -> str:
@@ -388,7 +476,7 @@ def render_spiritual(m: Model) -> str:
   <div class="sp-title">{esc(cfm.get("title") or "This week's lesson is on its way")}</div>
   {f'<div class="sp-read"><span class="lbl">Read</span>{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else ''}
   {f'<div class="sp-sum">{esc(cfm.get("summary"))}</div>' if cfm.get("summary") else ''}
-  {f'<ol class="sp-q">{qs}</ol>' if qs else ('<div class="sp-wait">Reading &amp; discussion questions arrive with the weekly update.</div>' if pending_cfm else '')}
+  {f'<ol class="sp-q">{qs}</ol>' if qs else ''}
 </div>'''
     pending_fsy = fsy.get("status") == "pending" or not fsy.get("focus")
     daily = fsy.get("daily_by_weekday") or {}
@@ -402,7 +490,7 @@ def render_spiritual(m: Model) -> str:
   <div class="sp-k">{ICONS["star"]}For the Strength of Youth</div>
   <div class="sp-title">{esc(fsy.get("topic") or "This week's focus is on its way")}</div>
   {f'<div class="sp-sum">{esc(fsy.get("focus"))}</div>' if fsy.get("focus") else ''}
-  {f'<div class="sp-daily">{daily_html}</div>' if daily_html else ('<div class="sp-wait">Daily application arrives with the weekly update.</div>' if pending_fsy else '')}
+  {f'<div class="sp-daily">{daily_html}</div>' if daily_html else ''}
 </div>'''
     return cfm_html + fsy_html
 
@@ -461,6 +549,9 @@ def build(data: dict, now: dt.datetime) -> str:
         "LATER": later_html,
         "LATER_DAYS": esc(meta.get("later_days", 7)),
         "ACADEMICS": acad_html,
+        "YOUTH": render_youth(m),
+        "YOUTH_DAYS": esc((m.data.get("youth") or {}).get("days", 7)),
+        "YOUTH_LATER": esc((m.data.get("youth") or {}).get("later_days", 14)),
         "ACAD_SUB": acad_sub,
         "SPIRITUAL": render_spiritual(m),
         "TODOS": render_todos(m),

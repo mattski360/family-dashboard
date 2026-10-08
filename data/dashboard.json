@@ -6,8 +6,8 @@
     "theme": "dark",
     "schedule_days": 7,
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T08:19:35-06:00",
-    "school_feed_synced": "2026-10-08T08:19:35-06:00",
+    "last_updated": "2026-10-08T08:23:37-06:00",
+    "school_feed_synced": "2026-10-08T08:23:36-06:00",
     "school_feed_window": [
       "2026-10-07",
       "2026-10-29"
@@ -61,7 +61,7 @@
       "name": "Wyatt",
       "grade": 8,
       "school": "Canyon Grove Academy",
-      "school_short": "Canyon Grove (Jr High Hyflex)",
+      "school_short": "Canyon Grove Academy",
       "campus": "Lehi campus · 3046 Maple Loop Dr",
       "division": "Junior High Hyflex",
       "school_key": "cga",
@@ -69,7 +69,7 @@
         "Tue",
         "Thu"
       ],
-      "in_person_summary": "Tue & Thu in person (Lehi) · online math/LA other days",
+      "in_person_summary": "In person Tue & Thu (Lehi); online other days",
       "routine": {
         "days": [
           "Tue",
@@ -644,5 +644,136 @@
         "limit_minutes": null
       }
     }
+  },
+  "youth": {
+    "_comment": "Young Men / youth activities. Card only -- never shown in the weekly calendar. group: all_youth | all_ym | deacons | teachers | priests | yw. kind: activity | none (muted 'no activity' line). source: sheet | manual (take precedence) | site (fetch_youth.py fallback).",
+    "updated": "2026-10-07",
+    "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
+    "source_url": "",
+    "fallback_source_url": "https://www.highland43.org/wardannouncements",
+    "site_synced": "2026-10-08T08:23:37-06:00",
+    "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
+    "youth_night": "Thu",
+    "quorums": {
+      "luke": "teachers",
+      "wyatt": "deacons"
+    },
+    "days": 7,
+    "later_days": 14,
+    "activities": [
+      {
+        "id": "yth-site-20261001-deacons-tabitha-s-way-service-project",
+        "date": "2026-10-01",
+        "title": "Tabitha's Way Service Project",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-20261008-teachers",
+        "date": "2026-10-08",
+        "title": "Bike ride to Bubba's",
+        "group": "teachers",
+        "kind": "activity",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-site-20261008-all-youth-fall-festival",
+        "date": "2026-10-08",
+        "title": "Fall Festival",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-20261008-deacons",
+        "date": "2026-10-08",
+        "title": "Nothing listed for Deacons",
+        "group": "deacons",
+        "kind": "none",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-20261011-bom-fireside",
+        "date": "2026-10-11",
+        "title": "Book of Mormon Experience kickoff fireside",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-20261015-fall-break",
+        "date": "2026-10-15",
+        "title": "Fall break — no activity",
+        "group": "all_youth",
+        "kind": "none",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-site-20261015-deacons-learn-to-make-a-meal",
+        "date": "2026-10-15",
+        "title": "Learn to Make a Meal",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261022-all-youth-fall-break-no-activity",
+        "date": "2026-10-22",
+        "title": "Fall Break — no activity",
+        "group": "all_youth",
+        "kind": "none",
+        "source": "site"
+      },
+      {
+        "id": "yth-20261022-fall-festival",
+        "date": "2026-10-22",
+        "title": "Fall Festival",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-20261025-festival-devotional",
+        "date": "2026-10-25",
+        "title": "Festival devotional",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-site-20261025-all-youth-festival-devotional",
+        "date": "2026-10-25",
+        "title": "Festival devotional",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-20261029-teachers-mtc",
+        "date": "2026-10-29",
+        "title": "MTC tour?",
+        "group": "teachers",
+        "kind": "activity",
+        "tentative": true,
+        "source": "sheet"
+      },
+      {
+        "id": "yth-20261029-deacons-mtc",
+        "date": "2026-10-29",
+        "title": "Tour the MTC",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "sheet"
+      },
+      {
+        "id": "yth-site-20261029-deacons-tour-the-mtc",
+        "date": "2026-10-29",
+        "title": "Tour the MTC",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      }
+    ]
   }
 }

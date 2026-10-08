@@ -41,13 +41,13 @@ svg{width:1em;height:1em;flex:none;vertical-align:-.12em}
 .lbl{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
 
 /* ---------- layout (portrait-first: single stacked column) ---------- */
-#app{display:grid;gap:.7rem;grid-template-columns:minmax(0,1fr);
-  grid-template-areas:"head" "spirit" "sched" "acad" "todo"}
-#app.fitted{flex:1 1 auto;min-height:0;grid-template-rows:auto auto minmax(0,1fr) auto auto}
+#app{display:grid;gap:.55rem;grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"head" "spirit" "youth" "sched" "acad" "todo"}
+#app.fitted{flex:1 1 auto;min-height:0;grid-template-rows:auto auto auto minmax(0,1fr) auto auto}
 #todo{grid-area:todo}
 #todo ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.1rem}
 #todo .todo:nth-child(2){border-top:0;padding-top:.1rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:.75rem .9rem;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:.62rem .85rem;min-width:0}
 .card-h{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:780;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
 .card-h .sub{margin-left:auto;color:var(--faint);font-weight:600;letter-spacing:.04em;text-transform:none;font-size:.8rem}
 /* landscape: calendar left, everything else right */
@@ -72,6 +72,37 @@ body.stale .stale-note{display:inline-block}
 /* ---------- schedule ---------- */
 #spirit{grid-area:spirit}
 #acad{grid-area:acad}
+#youth{grid-area:youth;padding-top:.6rem;padding-bottom:.6rem}
+#youth .card-h{margin-bottom:.35rem}
+.yday{display:none;grid-template-columns:5.6rem minmax(0,1fr);gap:.6rem;align-items:baseline;padding:.22rem 0;border-top:1px solid var(--line)}
+.yday.show{display:grid}
+.yrows .yday.show ~ .yday.show{border-top:1px solid var(--line)}
+.yrows .yday.first{border-top:0}
+.yd{font-size:.88rem;color:var(--muted);white-space:nowrap}
+.ydn{font-weight:800;color:var(--text)}
+.yd .rel{display:block;font-size:.62rem;margin-top:.05rem}
+.yday .rel,.yday.is-today .rel{background:none;padding:0;color:var(--faint)}
+.yday.is-today .rel,.yday.is-today .ydn{color:var(--accent)}
+.yls{display:flex;flex-direction:column;gap:.12rem;min-width:0}
+.yl{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .45rem;line-height:1.25}
+.yt{font-size:.98rem;font-weight:680}
+.yg{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.yw{font-size:.78rem;color:var(--muted)}
+.yx{flex-basis:100%;font-size:.76rem;color:var(--muted)}
+.yl .chip{font-size:.64rem;padding:.07rem .42rem}
+.yl.none .yt{font-weight:500;font-style:italic;color:var(--faint);font-size:.9rem}
+.tent{margin-left:.4rem;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);background:var(--amber-bg);padding:.05rem .4rem;border-radius:1rem;vertical-align:.1em}
+.yempty{display:none;font-size:.85rem;color:var(--faint);font-style:italic}
+.yempty.show{display:block}
+.ylater{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .9rem;margin-top:.3rem;padding-top:.3rem;border-top:1px dashed var(--line);font-size:.8rem}
+.ylater.none{display:none}
+.yli{display:none;align-items:baseline;gap:.3rem;color:var(--muted)}
+.yli.show{display:inline-flex}
+.yli b{color:var(--text);font-weight:700}
+.yli.none{font-style:italic;color:var(--faint)}
+.yli .chip{font-size:.6rem;padding:.05rem .38rem}
+.ynote{margin-top:.25rem;font-size:.7rem;color:var(--faint);font-style:italic}
+body.scroll{height:auto;overflow:auto}
 #sched{grid-area:sched;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .days{column-count:2;column-gap:.85rem;column-fill:balance}
 .day{break-inside:avoid;-webkit-column-break-inside:avoid;display:none;background:var(--card2);border:1px solid var(--line);border-radius:.8rem;padding:.5rem .65rem .55rem;margin:0 0 .6rem}
@@ -119,10 +150,12 @@ body.stale .stale-note{display:inline-block}
 .empty{color:var(--faint);font-size:.85rem;font-style:italic;font-weight:500}
 .day.quiet{padding:.4rem .65rem}
 .day.quiet .dh{margin-bottom:0}
-.later{margin-top:.1rem;border-top:1px solid var(--line);padding-top:.45rem}
+.later{margin-top:.1rem;border-top:1px solid var(--line);padding-top:.4rem;display:grid;grid-template-columns:1fr 1fr;column-gap:1rem}
+.later-h{grid-column:1/-1}
+.later-row.wide{grid-column:1/-1}
 .later.none{display:none}
 .later-h{margin-bottom:.15rem}
-.later-row{display:none;gap:.6rem;align-items:baseline;padding:.16rem 0;font-size:.86rem}
+.later-row{display:none;gap:.6rem;align-items:baseline;padding:.14rem 0;font-size:.86rem}
 .later-row.show{display:flex}
 .later-row .ld{width:5.2rem;flex:none;color:var(--muted)}
 .later-row .ld b{color:var(--text);font-weight:700}
@@ -136,7 +169,7 @@ body.stale .stale-note{display:inline-block}
 
 /* ---------- heads-up ---------- */
 #todo ul{list-style:none}
-.todo{display:grid;grid-template-columns:1.15rem minmax(0,1fr) auto;gap:.55rem;align-items:start;padding:.4rem 0;border-top:1px solid var(--line)}
+.todo{display:grid;grid-template-columns:1.15rem minmax(0,1fr) auto;gap:.55rem;align-items:start;padding:.3rem 0;border-top:1px solid var(--line)}
 .todo:first-child{border-top:0;padding-top:.1rem}
 .todo .box{width:1.05rem;height:1.05rem;border:2px solid var(--faint);border-radius:.3rem;margin-top:.18rem}
 .todo.pr-high .box{border-color:var(--accent)}
@@ -206,15 +239,15 @@ footer.foot{display:none}
 /* landscape: calendar left; spiritual + heads-up right; kids & academics across the bottom */
 @media (orientation:landscape){
   #app{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
-    grid-template-areas:"head head" "sched spirit" "sched todo" "acad acad"}
-  #app.fitted{grid-template-rows:auto auto minmax(0,1fr) auto}
+    grid-template-areas:"head head" "sched spirit" "sched youth" "sched todo" "acad acad"}
+  #app.fitted{grid-template-rows:auto auto auto minmax(0,1fr) auto}
   #spirit .sp-wrap{grid-template-columns:minmax(0,1fr)}
   #todo ul{grid-template-columns:minmax(0,1fr)}
   #todo .todo:nth-child(2){border-top:1px solid var(--line);padding-top:.4rem}
 }
 </style>
 </head>
-<body data-later="{{LATER_DAYS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-days="{{SCHED_DAYS}}" data-build-date="{{BUILD_DATE}}">
+<body data-ydays="{{YOUTH_DAYS}}" data-ylater="{{YOUTH_LATER}}" data-later="{{LATER_DAYS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-days="{{SCHED_DAYS}}" data-build-date="{{BUILD_DATE}}">
 <div id="app">
   <header class="top">
     <div class="brand">
@@ -228,6 +261,11 @@ footer.foot{display:none}
   <section class="card" id="spirit">
     <div class="card-h">{{ICON_BOOK}} Spiritual focus<span class="sub">This week</span></div>
     <div class="sp-wrap">{{SPIRITUAL}}</div>
+  </section>
+
+  <section class="card" id="youth">
+    <div class="card-h">{{ICON_KIDS}} Young Men this week<span class="sub">Luke · Teachers &nbsp;·&nbsp; Wyatt · Deacons</span></div>
+    {{YOUTH}}
   </section>
 
   <section class="card" id="sched">
@@ -280,6 +318,14 @@ footer.foot{display:none}
     var L=parseInt(B.getAttribute('data-later')||'0',10), lend=addDays(today,N+L-1), lc=0;
     each('.later-row',function(el){var d=el.getAttribute('data-date'),on=d>end&&d<=lend;el.classList.toggle('show',on);if(on)lc++;});
     var lat=document.getElementById('later'); if(lat)lat.classList.toggle('none',!lc);
+    var YD=parseInt(B.getAttribute('data-ydays')||'7',10), YL=parseInt(B.getAttribute('data-ylater')||'14',10);
+    var yend=addDays(today,YD-1), ylend=addDays(today,YD+YL-1), yc=0, ylc=0;
+    each('.yday',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=yend;el.classList.toggle('show',on);
+      el.classList.toggle('first',on&&yc===0);if(on)yc++;el.classList.toggle('is-today',d===today);
+      el.querySelector('.rel').textContent=d===today?'Today':(d===tmrw?'Tomorrow':'');});
+    each('.yempty',function(el){el.classList.toggle('show',!yc);});
+    each('.yli',function(el){var d=el.getAttribute('data-date'),on=d>yend&&d<=ylend;el.classList.toggle('show',on);if(on)ylc++;});
+    each('.ylater',function(el){el.classList.toggle('none',!ylc);});
     var visible=0;
     each('[data-until]',function(el){var u=el.getAttribute('data-until');var gone=!!u&&u<today;el.classList.toggle('gone',gone);if(!gone&&el.classList.contains('todo'))visible++;});
     each('.todo.hidden-default',function(el){el.style.display=visible?'none':'block';});
@@ -300,11 +346,18 @@ footer.foot{display:none}
   var app=document.getElementById('app');
   function fit(){
     var W=window.innerWidth,H=window.innerHeight,land=W>=H;
-    var base=land?Math.min(W/1180,H/820)*17:Math.min(W/820,H/1180)*18;
-    var hi=Math.max(12,Math.min(26,base*1.12)),lo=10.5,html=document.documentElement;
-    app.classList.remove('fitted');
+    var scale=land?Math.min(W/1180,H/820):Math.min(W/820,H/1180);
+    var base=scale*(land?17:18);
+    var floor=Math.max(11,scale*(land?12.4:13));            // never shrink text below this; scroll instead
+    var hi=Math.max(floor,Math.min(26,base*1.12)),lo=floor,html=document.documentElement;
+    B.classList.remove('scroll'); app.classList.remove('fitted');
+    var cs=getComputedStyle(B), avail=function(){return H-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);};
+    html.style.fontSize=floor+'px';
+    if(app.scrollHeight>avail()){                // doesn't fit even at the floor -> allow vertical scroll
+      B.classList.add('scroll'); B.setAttribute('data-fs',floor.toFixed(2)+'|scroll|'+W+'x'+H); return;
+    }
     for(var i=0;i<9;i++){var mid=(lo+hi)/2;html.style.fontSize=mid+'px';
-      var cs=getComputedStyle(B);if(app.scrollHeight<=H-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))lo=mid;else hi=mid;}
+      if(app.scrollHeight<=avail())lo=mid;else hi=mid;}
     html.style.fontSize=lo+'px'; app.classList.add('fitted'); B.setAttribute('data-fs',lo.toFixed(2)+'|'+W+'x'+H);
   }
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
