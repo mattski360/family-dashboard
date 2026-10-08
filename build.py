@@ -7,8 +7,10 @@ today is Sunday); --week-start overrides it and the value used is written back t
 When the page is viewed before week_start, a small "Rest of this week" strip shows the remaining days.
 The inline script highlights today and dims past days based on the viewing date (America/Denver).
 
+Also writes v2/index.html (template_v2.html) and v3/index.html (template_v3.html + v3_sprite.svg) from the same data.
+
 Usage: python3 build.py [--json data/dashboard.json] [--out index.html] [--week-start YYYY-MM-DD]
-                        [--no-stamp] [--now ISO]
+                        [--no-stamp] [--now ISO] [--no-v2] [--no-v3] [--out-v2 PATH] [--out-v3 PATH]
 """
 from __future__ import annotations
 
@@ -101,6 +103,9 @@ class Model:
             _hit = lambda o: any(t in json.dumps(o, ensure_ascii=False).lower() for t in _terms)
             data["events"] = [e for e in data.get("events", []) if not _hit(e)]
             data["todos"] = [t for t in data.get("todos", []) or [] if not _hit(t)]
+            _y = data.get("youth") or {}
+            if _y.get("activities"):
+                _y["activities"] = [a for a in _y["activities"] if not _hit(a)]
         self.now = now
         self.today = now.date()
         self.meta = data.get("meta", {})
@@ -881,6 +886,466 @@ def build_v2(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
     return out
 
 
+# ------------------------------------------------------------------ v3 (two soft pages)
+# v3/index.html: pastel rounded cards, bigger icons, less chrome. Page 1 "Today" = a colour-coded card per kid
+# (today's items + a small Tomorrow box), Come Follow Me + Strength of Youth, heads-up. Page 2 "This week" =
+# 10 colourful day tiles starting today, Young Men, grades. Everything is rendered for the whole date range and
+# the inline script picks today/tomorrow/the 10 tiles from the viewing date (America/Denver), like v2.
+
+V3_ICON_RULES = [
+    (r"\bno school\b|cancel", "x"), (r"\bbreak\b", "leaf"), (r"half day", "clock"),
+    (r"pre-?ride", "mtn"), (r"race|final|tournament|championship|\bgame\b|\bmeet\b", "trophy"),
+    (r"\bmtb\b|bike|cycling", "bike"), (r"\bact\b|pre-act|test|exam|quiz", "pencil"),
+    (r"service|help", "heart"), (r"flight|\bfly\b|airport", "plane"),
+    (r"lunch|dinner|breakfast|meal|treat", "food"),
+    (r"read|assembly|book|fireside|devotional|scripture|seminary|church|sacrament", "book"),
+    (r"conference|youth|festival|party|dance|activity", "users"),
+    (r"campus|in person|tour|mtc|temple|visit", "pin"), (r"term|quarter|semester|grades", "cap"),
+    (r"online", "laptop"), (r"apparel|shirt|uniform|dress", "shirt"), (r"picture|photo|retake", "spark"),
+]
+
+
+def v3_icon(text: str, default: str = "spark") -> str:
+    t = (text or "").lower()
+    for rx, name in V3_ICON_RULES:
+        if re.search(rx, t):
+            return name
+    return default
+
+
+def ic(name: str) -> str:
+    return f'<svg class="ic"><use href="#i-{name}"/></svg>'
+
+
+def v3_trip_label(title: str) -> str:
+    """Away-day tag: just the state, e.g. 'Arizona' / 'California' (keeps hotel/park names off the wall)."""
+    t = title or ""
+    if re.search(r",\s*AZ\b|arizona|phoenix", t, re.I):
+        return "Arizona"
+    if re.search(r",\s*CA\b|california", t, re.I):
+        return "California"
+    return SHORT_RE.sub("", t)
+
+
+def v3_short(title: str) -> str:
+    t = re.sub(r"\s*\u00b7\s*spirit apparel( day)?$", "", title or "", flags=re.I)
+    t = re.sub(r"^k-\d+\s+", "", t, flags=re.I)
+    t = SHORT_RE.sub("", t)
+    return t[:1].upper() + t[1:]
+
+
+def short_time(hhmm: str | None) -> str:
+    if not hhmm:
+        return ""
+    h, mi = map(int, hhmm.split(":"))
+    return f"{h % 12 or 12}:{mi:02d}"
+
+
+def ordinal(n) -> str:
+    try:
+        n = int(n)
+    except (TypeError, ValueError):
+        return str(n)
+    suf = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suf}"
+
+
+def v3_dots(m: Model, who: list[str]) -> str:
+    order = [k["id"] for k in m.kids] + ["parents", "family"]
+    who = sorted(set(who), key=lambda w: order.index(w) if w in order else 99)
+    return '<span class="dots">' + "".join(f'<i class="p-{esc(w)}"></i>' for w in who) + "</span>"
+
+
+def v3_events(m: Model, day: dt.date) -> list[dict]:
+    """Calendar items for a day (no trips, no low priority, no no-school flags); half-day flags keep only
+    their extra detail ('K-5 Service Day' -> 'Service Day'); 'Term N ends' folded into a same-day half day."""
+    half = m.flags_on(day)["half_day"]
+    out = []
+    for e in m.events_on(day):
+        if e.get("kind") == "trip" or e.get("flag") == "no_school" or e.get("priority") == "low":
+            continue
+        if e.get("flag") == "half_day":
+            rest = re.sub(r"^(k-5 )?half day\s*(\u00b7|\u2014|-)?\s*", "", e.get("title", ""), flags=re.I)
+            rest = re.sub(r"\s*\u00b7\s*spirit apparel( day)?$", "", rest, flags=re.I)
+            if not rest or re.fullmatch(r"spirit apparel( day)?", rest, re.I):
+                continue
+            e = dict(e, title=rest[:1].upper() + rest[1:], flag=None)
+        if ABSORB_RE.match(e.get("title", "")) and half and set(e.get("who", [])) <= set(half):
+            continue
+        out.append(e)
+    out.sort(key=lambda e: (e.get("start") is not None, e.get("start") or "",
+                            {"high": 0, "normal": 1, "low": 2}.get(e.get("priority", "normal"), 1)))
+    return out
+
+
+def v3_youth_on(yacts: list[dict], day: dt.date) -> list[dict]:
+    return [a for a in yacts if a["date"] == day.isoformat() and a.get("kind") != "none"]
+
+
+def v3_it(icon: str, title: str, small: str = "", cls: str = "") -> str:
+    sm = f"<small>{esc(small)}</small>" if small else ""
+    return (f'<div class="it{(" " + cls) if cls else ""}"><span class="bub">{ic(icon)}</span>'
+            f'<span class="itx"><span class="itt">{esc(title)}</span>{sm}</span></div>')
+
+
+def v3_kid_today(m: Model, kid: dict, day: dt.date, yacts: list[dict]) -> str:
+    kid_id, parts = kid["id"], []
+    cls, text = m.kid_status(kid, day)
+    r = kid.get("routine") or {}
+    if cls == "off":
+        reason = re.sub(r"^No school( \u00b7 )?", "", text)
+        parts.append(v3_it("leaf" if "break" in reason.lower() else "x", "No school", reason, "st-off"))
+    elif cls == "half":
+        absorbed = [e["title"] for e in m.events_on(day) if not e.get("flag") and ABSORB_RE.match(e.get("title", ""))
+                    and kid_id in e.get("who", [])]
+        parts.append(v3_it("clock", "Half day", " \u00b7 ".join(["Out at 12 PM"] + absorbed), "st-half"))
+    elif cls == "inperson":
+        place = "Lehi campus" if "lehi" in (r.get("title", "") + kid.get("campus", "")).lower() else "In person"
+        parts.append(v3_it("pin", place, f'{short_time(r.get("start"))} \u2013 {short_time(r.get("end"))}', "st-in"))
+        note = r.get("note") or ""
+        if note:
+            a, _, b = note.partition(" + ")
+            parts.append(v3_it(v3_icon(note, "pack"), a, f"+ {b}" if b else ""))
+    elif cls == "online":
+        parts.append(v3_it("laptop", "Online day", r.get("online_title", "")))
+    elif cls == "school":
+        parts.append(v3_it("pack", "School day"))
+    for e in v3_events(m, day):
+        who = e.get("who", [])
+        if kid_id not in who and "family" not in who:
+            continue
+        title = e.get("title", "")
+        mo = re.match(r"^(.*?)\s*\(([^()]*)\)$", title)
+        small_bits = []
+        if e.get("start"):
+            small_bits.append(fmt_time(e["start"]))
+        if mo:
+            title = mo.group(1)
+            small_bits.append(mo.group(2)[:1].upper() + mo.group(2)[1:])
+        elif e.get("note"):
+            small_bits.append(re.split(r"[;(]", e["note"])[0].strip())
+        if e.get("end_date") and e["end_date"] != e["date"]:
+            s, en = d(e["date"]), d(e["end_date"])
+            small_bits.append(f"day {(day - s).days + 1} of {(en - s).days + 1}")
+        title = re.sub(r"\s*\u00b7\s*spirit apparel( day)?$", "", title, flags=re.I)
+        parts.append(v3_it("plane" if e.get("kind") == "flight" else v3_icon(title), title, " \u00b7 ".join(small_bits)))
+    for a in v3_youth_on(yacts, day):
+        if kid_id not in a.get("who", []):
+            continue
+        grp = "Young Men" if len(a["who"]) == 1 else "All youth"
+        when = fmt_time(a.get("start")) if a.get("start") else ("tonight" if day.weekday() < 6 else "")
+        tent = "?" if a.get("tentative") and not a.get("title", "").endswith("?") else ""
+        parts.append(v3_it(v3_icon(a.get("title"), "users"), (a.get("title") or "") + tent,
+                           f"{grp} {when}".strip() if when == "tonight" else " \u00b7 ".join(x for x in (grp, when) if x),
+                           "yth"))
+    if not parts:
+        parts.append(v3_it("sun", "Free day", "Nothing scheduled", "free"))
+    return "".join(parts)
+
+
+def v3_kid_tomorrow(m: Model, kid: dict, day: dt.date, yacts: list[dict]) -> str:
+    kid_id, bits = kid["id"], []
+    cls, text = m.kid_status(kid, day)
+    if cls == "off":
+        bits.append('<span class="no">No school</span>')
+    elif cls == "half":
+        bits.append('<span class="hf">Half day</span>')
+    elif cls == "inperson":
+        bits.append("Lehi campus" if "lehi" in ((kid.get("routine") or {}).get("title", "")).lower() else "In person")
+    elif cls == "online":
+        bits.append("Online day")
+    for e in v3_events(m, day):
+        who = e.get("who", [])
+        if kid_id in who or "family" in who:
+            t = short_time(e.get("start"))
+            bits.append(esc(v3_short(e.get("title", ""))) + (f" {t}" if t else ""))
+    for a in v3_youth_on(yacts, day):
+        if kid_id in a.get("who", []):
+            bits.append(esc(v3_short(a.get("title", ""))))
+    if not bits:
+        bits.append("School day" if cls == "school" else "Nothing scheduled")
+    return " \u00b7 ".join(bits)
+
+
+def render_v3_kids(m: Model) -> str:
+    yacts = youth_activities(m)
+    y = m.data.get("youth") or {}
+    quorums = y.get("quorums") or {}
+    cards = []
+    for kid in m.kids:
+        q = quorums.get(kid["id"])
+        sub = f'{ordinal(kid.get("grade"))} \u00b7 {q.title()}' if q else f'{ordinal(kid.get("grade"))} grade'
+        today = "".join(f'<div class="items" data-d0="{day.isoformat()}">{v3_kid_today(m, kid, day, yacts)}</div>'
+                        for day in m.days())
+        tmrw = "".join(f'<span class="tm" data-d1="{day.isoformat()}">{v3_kid_tomorrow(m, kid, day, yacts)}</span>'
+                       for day in m.days())
+        cards.append(f'<div class="kid p-{esc(kid["id"])}"><div class="top"><div class="av">{esc(kid["name"][:1])}</div>'
+                     f'<div><div class="nm">{esc(kid["name"])}</div><div class="gr">{esc(sub)}</div></div></div>'
+                     f'{today}<div class="tmrw"><b>Tomorrow</b>{tmrw}</div></div>')
+    return "".join(cards)
+
+
+def render_v3_parents(m: Model) -> str:
+    """Slim lavender strip for parent/family-only items (flights, trips). Hidden by JS when today and tomorrow are empty."""
+    kid_ids = {k["id"] for k in m.kids}
+    out = []
+    for day in m.days():
+        bits, trips_key, only_trips = [], [], True
+        for e in m.events_on(day):
+            if e.get("kind") == "trip":
+                trips_key.append(v3_trip_label(e.get("title")))
+                bits.append(f'<span class="pb away">{ic("bag")}{esc(v3_trip_label(e.get("title")))}</span>')
+        for e in v3_events(m, day):
+            if set(e.get("who", [])) & kid_ids or "family" in e.get("who", []):
+                continue
+            t = fmt_time(e.get("start"))
+            only_trips = False
+            icon = "plane" if e.get("kind") == "flight" else v3_icon(e.get("title"), "cal")
+            bits.append(f'<span class="pb">{ic(icon)}{esc(v3_short(e.get("title")))}{f"<small>{esc(t)}</small>" if t else ""}</span>')
+        if bits:
+            out.append(f'<span class="pday" data-date="{day.isoformat()}" data-trips="{esc("|".join(trips_key))}"'
+                       f'{" data-only-trips" if only_trips else ""}><b class="pd"></b>{"".join(bits)}</span>')
+    return "".join(out)
+
+
+def render_v3_spirit(m: Model) -> str:
+    sp = m.data.get("spiritual", {}) or {}
+    cfm = sp.get("come_follow_me", {}) or {}
+    fsy = sp.get("strength_of_youth", {}) or {}
+    pending_cfm = cfm.get("status") == "pending" or not cfm.get("reading")
+    qs = cfm.get("questions") or []
+    fi = cfm.get("featured_question", 0)
+    q = qs[fi] if isinstance(fi, int) and 0 <= fi < len(qs) else (qs[0] if qs else "")
+    ref = ""
+    mo = re.match(r"^(.*?)\s*\(([^()]*)\)\s*$", q)
+    if mo:
+        q, ref = mo.group(1), mo.group(2)
+    dates = cfm.get("dates_label") or ""
+    dates_s = f" \u00b7 {esc(dates)}" if dates else ""
+    cfm_html = (f'<div class="sc cfm{" pending" if pending_cfm else ""}">'
+                f'<div class="sk"><span class="bub">{ic("book")}</span>Come, Follow Me{dates_s}</div>'
+                f'<div class="stt">{esc(cfm.get("title") or CFM_WAIT)}</div>'
+                + (f'<div class="srd">{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else "")
+                + (f'<div class="sq">{esc(q)}{f" <i>{esc(ref)}</i>" if ref else ""}</div>' if q else "") + "</div>")
+    pending_fsy = fsy.get("status") == "pending" or not fsy.get("topic")
+    topic = fsy.get("topic") or "This month\u2019s chapter is on its way"
+    chap = ""
+    mo = re.match(r"^(ch(?:apter)?\.?\s*\d+)\s*:\s*(.+)$", topic, re.I)
+    if mo:
+        chap, topic = mo.group(1), mo.group(2)
+    daily = fsy.get("daily_by_weekday") or {}
+    tips = ""
+    if daily:
+        t0 = "".join(f'<span class="tip" data-dow="{esc(k[:3].title())}">{esc(v)}</span>' for k, v in daily.items())
+        tips = (f'<div class="sq t-today"><b>Today</b>{t0}</div>'
+                f'<div class="sq t-tmrw"><b>Tomorrow</b>{t0}</div>')
+    elif fsy.get("daily_application"):
+        tips = f'<div class="sq"><b>Try today</b>{esc(fsy["daily_application"])}</div>'
+    lbl_s = ""
+    sub = " \u00b7 ".join(x for x in (chap, fsy.get("label")) if x)
+    fsy_html = (f'<div class="sc fsy{" pending" if pending_fsy else ""}">'
+                f'<div class="sk"><span class="bub">{ic("star")}</span>Strength of Youth{lbl_s}</div>'
+                f'<div class="stt">{esc(topic)}</div>'
+                + (f'<div class="srd">{esc(sub)}</div>' if sub else "") + f'{tips}</div>')
+    return cfm_html + fsy_html
+
+
+def render_v3_todos(m: Model) -> str:
+    todos = [t for t in (m.data.get("todos", []) or []) if not t.get("done")]
+    prio = {"high": 0, "normal": 1, "low": 2}
+    todos.sort(key=lambda t: (prio.get(t.get("priority", "normal"), 1), t.get("due") or "9999"))
+    rows = []
+    for t in todos:
+        who = [w for w in t.get("who", []) if w in m.people] or ["parents"]
+        due = ""
+        if t.get("due"):
+            dd = d(t["due"])
+            due = f'<span class="dt" data-due="{dd.isoformat()}">{DOW[dd.weekday()]}</span>'
+        rows.append(f'<div class="td p-{esc(who[0])}" data-until="{esc(t.get("hide_after") or t.get("due") or "")}">'
+                    f'{ic("box")}<span class="tdx">{esc(t.get("text"))}</span>{due}</div>')
+    rows.append('<div class="td none">All clear \u2014 nothing pending.</div>')
+    return "".join(rows)
+
+
+def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
+    kid_ids = [k["id"] for k in m.kids]
+    flags = m.flags_on(day)
+    ents = []                                      # (sort key, html)
+    big = None
+    if day.weekday() < 5:
+        groups: dict[str, list[str]] = {}
+        for k, reason in flags["no_school"].items():
+            groups.setdefault(reason, []).append(k)
+        allbrk = set(flags["no_school"]) >= set(kid_ids) and any("break" in r.lower() for r in groups)
+        for reason, kids in groups.items():
+            brk = "break" in reason.lower()
+            label = "Fall break" if brk and "fall" in reason.lower() else ("Break" if brk else "No school")
+            if allbrk:
+                big = label if brk else big
+            ents.append(((0, ""), f'<div class="e {"p-leaf" if brk else "p-red"}"><span class="bub">{ic("leaf" if brk else "x")}</span>'
+                                  f'<span class="et"><span class="el">{esc(label)}</span>{v3_dots(m, kids)}</span></div>'))
+        if allbrk and big is None:
+            big = "No school"
+        if flags["half_day"]:
+            ents.append(((0, ""), f'<div class="e p-all"><span class="bub">{ic("clock")}</span>'
+                                  f'<span class="et"><span class="el">Half day</span>{v3_dots(m, list(flags["half_day"]))}</span></div>'))
+    items = list(v3_events(m, day))
+    items += m.routine_items(day)
+    for e in items:
+        who = e.get("who", [])
+        if e.get("kind") == "routine":
+            label = "Lehi day" if "lehi" in e.get("title", "").lower() else "In person"
+            icon = "pin"
+        else:
+            label = v3_short(e.get("title", ""))
+            icon = "plane" if e.get("kind") == "flight" else v3_icon(e.get("title"))
+        small = short_time(e.get("start"))
+        if not small and e.get("priority") == "high" and e.get("source") not in ("ahs_feed",) and e.get("note"):
+            n = re.split(r"[;(,]", e["note"])[0].strip()
+            small = re.sub(r"^starts moved\s+", "", n, flags=re.I)
+        if len(who) == 1 and who[0] in kid_ids + ["parents"]:
+            pc, dots = f"p-{who[0]}", ""
+        else:
+            pc, dots = "p-all", v3_dots(m, who)
+        ents.append(((1, e.get("start") or ""), f'<div class="e {pc}"><span class="bub">{ic(icon)}</span><span class="et"><span class="el">{esc(label)}</span>'
+                    f'{f"<small>{esc(small)}</small>" if small else ""}{dots}</span></div>'))
+    for a in v3_youth_on(yacts, day):
+        who = a.get("who", [])
+        pc, dots = (f"p-{who[0]}", "") if len(who) == 1 else ("p-all", v3_dots(m, who))
+        label = v3_short(a.get("title", "")) + ("?" if a.get("tentative") and not a.get("title", "").endswith("?") else "")
+        small = short_time(a.get("start")) or ("YM" if len(who) == 1 else "Youth")
+        ents.append(((1, a.get("start") or "99"), f'<div class="e {pc}"><span class="bub">{ic(v3_icon(a.get("title"), "users"))}</span>'
+                    f'<span class="et"><span class="el">{esc(label)}</span><small>{esc(small)}</small>{dots}</span></div>'))
+    ents.sort(key=lambda x: x[0])
+    trips = [e for e in m.events_on(day) if e.get("kind") == "trip"]
+    trips.sort(key=lambda e: e["date"])
+    away = (f'<div class="away">{ic("bag")}{esc(v3_trip_label(trips[-1].get("title")))}</div>' if trips else "")
+    cls = "day"
+    if big and len(ents) <= 1:
+        body = f'<div class="big {"p-leaf" if "break" in big.lower() else "p-red"}">{ic("leaf" if "break" in big.lower() else "x")}{esc(big)}</div>'
+    elif ents:
+        MAX = 4
+        hs = [h for _, h in ents]
+        more = f'<div class="more">+{len(hs) - MAX} more</div>' if len(hs) > MAX else ""
+        body = f'<div class="ev">{"".join(hs[:MAX if len(hs) > MAX else len(hs)])}{more}</div>'
+    else:
+        body = '<div class="quiet">Nothing yet</div>'
+    if big:
+        cls += " brk"
+    if day.weekday() >= 5:
+        cls += " wkend"
+    return (f'<div class="{cls}" data-date="{day.isoformat()}"><div class="dw" data-dow="{DOW[day.weekday()]}">{DOW[day.weekday()]}</div>'
+            f'<div class="dn">{day.day}</div>{body}{away}</div>')
+
+
+def render_v3_youth(m: Model) -> str:
+    acts = [a for a in youth_activities(m) if m.first <= d(a["date"]) <= m.last]
+    y = m.data.get("youth") or {}
+    quorums = y.get("quorums") or {}
+    boys = [k for k in m.kids if k["id"] in quorums]
+    def item(a, later=False):
+        day = d(a["date"])
+        none = a.get("kind") == "none"
+        tent = "?" if a.get("tentative") and not a.get("title", "").endswith("?") else ""
+        t = short_time(a.get("start"))
+        return (f'<span class="yi{" none" if none else ""}" data-date="{a["date"]}"><span class="when">{DOW[day.weekday()]}{f" {day.day}" if later else ""}</span> '
+                f'{esc(a.get("title"))}{tent}{f" <small>{esc(t)}</small>" if t else ""}'
+                f'{v3_dots(m, a["who"]) if later and len(a.get("who", [])) == 1 else ""}</span>')
+    rows = []
+    for k in boys:
+        its = "".join(item(a) for a in acts if a.get("who") == [k["id"]])
+        rows.append(f'<div class="yr p-{esc(k["id"])}"><span class="badge">{esc(quorums[k["id"]].title())}</span>'
+                    f'<span class="yis">{its}<span class="yi ynone"><span class="when"></span>Nothing listed</span></span></div>')
+    shared = "".join(item(a) for a in acts if len(a.get("who", [])) > 1)
+    rows.append(f'<div class="yr p-all"><span class="badge">All youth</span><span class="yis">{shared}'
+                f'<span class="yi ynone">Nothing listed</span></span></div>')
+    later = "".join(item(a, True).replace('class="yi', 'class="yl', 1) for a in acts
+                    if a.get("kind") != "none" or a.get("group") == "all_youth")
+    rows.append(f'<div class="yr p-leaf later"><span class="badge">Later</span><span class="yis">{later}</span></div>')
+    return "".join(rows)
+
+
+def render_v3_grades(m: Model) -> tuple[str, str]:
+    rows = []
+    for k in m.kids:
+        gl, has = grades_line(m, k["id"])
+        txt = re.sub(r"<[^>]+>", "", gl) if has else "coming soon"
+        rows.append(f'<div class="g p-{esc(k["id"])}"><span class="av">{esc(k["name"][:1])}</span>{esc(k["name"])}'
+                    f'<span class="cs{"" if has else " soon"}">{esc(html.unescape(txt))}</span></div>')
+    notes = []
+    for e in m.events:
+        t = e.get("title", "")
+        if e.get("kind") == "trip" or not re.search(r"\b(term|quarter|semester)\s*\d*\s+ends\b|grades posted|report card", t, re.I):
+            continue
+        day = d(e["date"])
+        short = re.sub(r"^term (\d) grades posted$", r"grades post", t, flags=re.I)
+        notes.append((e["date"], f'<span class="gn" data-date="{e["date"]}">{esc(short)} {DOW[day.weekday()]} {day:%b} {day.day}</span>'))
+    notes.sort()
+    seen, uniq = set(), []
+    for dte, h in notes:
+        if h not in seen:
+            seen.add(h)
+            uniq.append(h)
+    return "".join(rows), "".join(uniq)
+
+
+CFM_WAIT = "This week\u2019s lesson is on its way"
+V3_SPRITE = HERE / "v3_sprite.svg"
+
+
+def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> str:
+    m = Model(data, now, week_start)
+    meta = m.meta
+    last = meta.get("last_updated") or now.isoformat(timespec="seconds")
+    last_dt = dt.datetime.fromisoformat(last).astimezone(ZoneInfo(meta.get("timezone", "America/Denver")))
+    last_label = f"{DOW[last_dt.weekday()]} {last_dt:%b} {last_dt.day} \u00b7 {fmt_time(last_dt.strftime('%H:%M'))}"
+    yacts = youth_activities(m)
+    grades, gnotes = render_v3_grades(m)
+    tpl = (HERE / "template_v3.html").read_text()
+    i, j = tpl.index("<style>"), tpl.index("</style>")
+    tpl = tpl[:i] + rem_to_var(tpl[i:j]) + tpl[j:]
+    repl = {
+        "TITLE": esc(f'{meta.get("family_name", "Family")} \u00b7 Dashboard'),
+        "FAMILY": esc(meta.get("family_name", "Family")),
+        "MOTTO": (f'<div class="motto">{esc(meta.get("motto"))}</div>' if meta.get("motto") else ""),
+        "TZ": esc(meta.get("timezone", "America/Denver")),
+        "LAST_ISO": esc(last_dt.isoformat()),
+        "LAST_LABEL": esc(last_label),
+        "STALE_DAYS": esc(meta.get("stale_after_days", 8)),
+        "WEEK_START": m.week_start.isoformat(),
+        "BUILD_DATE": m.today.isoformat(),
+        "SPRITE": V3_SPRITE.read_text().strip(),
+        "KIDS": render_v3_kids(m),
+        "PARENTS": render_v3_parents(m),
+        "SPIRIT": render_v3_spirit(m),
+        "TODOS": render_v3_todos(m),
+        "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
+        "YOUTH": render_v3_youth(m),
+        "YOUTH_DAYS": esc((m.data.get("youth") or {}).get("days", 7)),
+        "YOUTH_LATER": esc((m.data.get("youth") or {}).get("later_days", 14)),
+        "GRADES": grades,
+        "GRADE_NOTES": gnotes,
+        "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
+    }
+    out = tpl
+    for k, v in repl.items():
+        out = out.replace("{{" + k + "}}", str(v))
+    left = re.findall(r"\{\{[A-Z_0-9]+\}\}", out)
+    if left:
+        raise SystemExit(f"unfilled v3 template slots: {left}")
+    return out
+
+
+def private_leaks(text: str) -> list[str]:
+    """Hide-list terms (data/private_hide.txt) that appear in rendered output -- must be empty before publishing."""
+    hp = HERE / "data" / "private_hide.txt"
+    if not hp.exists():
+        return []
+    terms = [l.strip().lower() for l in hp.read_text().splitlines() if l.strip() and not l.startswith("#")]
+    low = text.lower()
+    return [t for t in terms if t in low]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", default=str(HERE / "data" / "dashboard.json"))
@@ -888,6 +1353,9 @@ def main() -> int:
     ap.add_argument("--out-v2", default=str(HERE / "v2" / "index.html"),
                     help="where to write the rotating two-page v2 dashboard")
     ap.add_argument("--no-v2", action="store_true", help="skip the v2 page")
+    ap.add_argument("--out-v3", default=str(HERE / "v3" / "index.html"),
+                    help="where to write the two soft pages v3 dashboard")
+    ap.add_argument("--no-v3", action="store_true", help="skip the v3 page")
     ap.add_argument("--no-stamp", action="store_true", help="don't update meta.last_updated")
     ap.add_argument("--now", help="override build time (ISO) for testing")
     ap.add_argument("--week-start", help="Sunday (YYYY-MM-DD) that starts the calendar week; default: upcoming Sunday")
@@ -918,6 +1386,16 @@ def main() -> int:
         out2.parent.mkdir(parents=True, exist_ok=True)
         out2.write_text(build_v2(data, now, week_start))
         print(f"[build] wrote {out2}")
+    if not args.no_v3:
+        out3 = Path(args.out_v3)
+        html3 = build_v3(data, now, week_start)
+        leaks = private_leaks(html3)
+        if leaks:
+            print(f"[build] ERROR: v3 output mentions hidden terms {leaks}; not writing {out3}", file=sys.stderr)
+            return 3
+        out3.parent.mkdir(parents=True, exist_ok=True)
+        out3.write_text(html3)
+        print(f"[build] wrote {out3}")
     return 0
 
 

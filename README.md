@@ -3,18 +3,20 @@
 A static page (`index.html`, with CSS and JS inline and no external requests) for a wall-mounted iPad. It is portrait-first (820×1180) and also works in landscape (1180×820).
 To publish, put `index.html` and `assets/` on GitHub Pages.
 
-There are two versions, both rendered by `build.py` from the same `data/dashboard.json`, so the weekly `run.sh` rebuild updates both:
+There are three versions, all rendered by `build.py` from the same `data/dashboard.json`, so the weekly `run.sh` rebuild updates all of them:
 * **v1** – `index.html` (template `template.html`): everything on one screen. Live at https://mattski360.github.io/family-dashboard/
 * **v2** – `v2/index.html` (template `template_v2.html`): two full-screen pages that crossfade every 30 seconds, with larger text. Live at https://mattski360.github.io/family-dashboard/v2/ (see "Version 2" below).
+* **v3** – `v3/index.html` (template `template_v3.html` + icon sprite `v3_sprite.svg`): "two soft pages", pastel rounded cards with big icons. Live at https://mattski360.github.io/family-dashboard/v3/ (see "Version 3" below).
 
 ```
-./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → index.html + v2/index.html
+./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → index.html + v2/index.html + v3/index.html
 python3 build.py [--week-start 2026-10-18]   # re-render only (stamps meta.last_updated, sets meta.week_start)
 python3 build.py --no-stamp
-python3 build.py --no-v2                      # v1 only (--out-v2 PATH to write v2 elsewhere)
+python3 build.py --no-v2 --no-v3              # v1 only (--out-v2 / --out-v3 PATH to write them elsewhere)
 python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
 /workspace/.venv-shot/bin/python shot.py   # preview.png (portrait) + preview-landscape.png
 /workspace/.venv-shot/bin/python shot_v2.py [--at 2026-10-14T07:00:00-06:00] [--landscape]   # preview-v2-p1.png + preview-v2-p2.png
+/workspace/.venv-shot/bin/python shot_v3.py [--at 2026-10-08T07:20:00-06:00] [--landscape]   # preview-v3-p1.png + preview-v3-p2.png
 ```
 Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use playwright with the system Chrome.
 
@@ -138,3 +140,22 @@ Portrait 820×1180 is the target. It uses the same light theme, colors and chips
 * CSS sizes are written in `rem`, and `build.py` rewrites them to `calc(var(--fs) * n)`. That lets each page auto-fit its own base size `--fs`, with a minimum of 16px in portrait (13px in landscape) and a maximum of 25px. Leftover height is spread evenly between the cards.
 * A page that can't fit at the minimum scrolls on its own.
 * `body[data-fs]` reports the result, for example `p1:18.11 p2:17.56 820x1180`.
+
+## Version 3 (`v3/index.html`, two soft pages)
+Built from mockup B. Portrait 820×1180 is the target; light white theme, rounded type (SF Pro Rounded on iPad), the motto under "Jensen Family", and a small "Updated …" line under the clock on page 1 (amber "needs refresh" when stale).
+
+**Page 1 – Today**
+* One pastel card per kid (Luke blue, Wyatt green, Tanner orange) with name, grade and quorum. Today's items each get an icon bubble: school status (school day / no school with reason / half day with "Term N ends" folded in / Wyatt's Lehi campus day with times plus his packing note / online day), the kid's own and shared events (time and note on a small line), and youth activities ("Young Men" / "All youth"). Weekends with nothing show "Free day". A small **Tomorrow** box sits at the bottom of each card.
+* A slim lavender **Parents** strip appears only when parents-only items (flights, away days) fall today or tomorrow.
+* **Come, Follow Me**: dates, title, reading, and the featured question (with its verse reference). **Strength of Youth**: chapter title, "Ch. N · label", today's tip and tomorrow's tip.
+* **Heads-up**: up to 4 open to-dos in a 2-column grid, each with a due pill (Today / Tomorrow / weekday / date); hidden after `hide_after`.
+
+**Page 2 – This week**
+* Ten colourful day tiles starting today (Thu Oct 8 → Sat Oct 17 style). Each item gets an icon and a short label: kid-coloured when it's one kid, yellow with kid-colour dots when shared. No-school and half-day show as red / yellow items with dots; a weekday when every kid is on a break becomes a big mint "Fall break" tile. Up to 4 items per tile, then "+N more". Away days carry a lavender state tag (trip titles are reduced to "Arizona" / "California").
+* **Young Men**: Teachers / Deacons / All youth rows for the next 7 days, then a "Later" row (next two items in the following 14 days).
+* **Grades**: one row per kid, "coming soon" until real data exists (never invented), plus a note with the next "Term N ends" / "grades posted" dates.
+
+**Rotation & fitting** – same behaviour as v2: crossfade every `meta.v3_rotate_seconds` (falls back to `v2_rotate_seconds`, default 30); tap switches page and pauses 2 minutes with a "Paused (m:ss) · tap to resume" pill; progress bar; state in `localStorage` (`dash-v3-rot`). Sizes are authored in rem (1rem = 1/18 of the mockup's px) and auto-fit per page between 15px and 21px (portrait); `body[data-fs]` reports the result. The top padding clears the iPad status bar and the page-dot footer is a solid white strip, so nothing sits under it.
+
+**Surprise guard** – `data/private_hide.txt` (git-ignored) filters events, to-dos and youth items for every version. v3 also checks its finished HTML for those terms and refuses to write `v3/index.html` (exit 3) if any slip through.
+

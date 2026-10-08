@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="refresh" content="1800">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Jensens">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<title>{{TITLE}}</title>
+<!-- v3 "Two soft pages": Today / This week crossfade every {{ROTATE_SECONDS}}s. Sizes are authored in rem (1rem = 1/18 of
+     the mockup's 820x1180 px); build.py rewrites them to calc(var(--fs)*n) so each page auto-fits its own base size. -->
+<style>
+:root{
+  --fs:18px;
+  --text:#283044; --muted:#69718a; --faint:#a0a7b8; --line:#EEF0F4;
+  --luke:#6FA8FF; --luke-dk:#2C62C0; --luke-bg:#EAF2FF; --luke-mid:#D3E4FF;
+  --wyatt:#5FD39A; --wyatt-dk:#1C8452; --wyatt-bg:#E6F8EF; --wyatt-mid:#C9F0DC;
+  --tanner:#FFAE57; --tanner-dk:#B4620C; --tanner-bg:#FFF1E2; --tanner-mid:#FFE0BF;
+  --parents:#C9A0FF; --parents-dk:#7646C2; --parents-bg:#F4EEFF; --parents-mid:#E6D8FF;
+  --peach:#FFF2E8; --rose:#FDEEF4; --butter:#FFF8DC; --mint:#EAF8F1; --sky:#EEF5FF; --red-bg:#FDECEC; --red:#CF4436; --amber:#9A6A06;
+  --nav:calc(46px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#fff;-webkit-text-size-adjust:100%}
+body{position:fixed;inset:0;font-family:ui-rounded,"SF Pro Rounded","Nunito",-apple-system,"Segoe UI",sans-serif;color:var(--text);
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;-webkit-user-select:none;user-select:none;cursor:default}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.p-luke{--c:var(--luke);--dk:var(--luke-dk);--bg:var(--luke-bg);--mid:var(--luke-mid)}
+.p-wyatt{--c:var(--wyatt);--dk:var(--wyatt-dk);--bg:var(--wyatt-bg);--mid:var(--wyatt-mid)}
+.p-tanner{--c:var(--tanner);--dk:var(--tanner-dk);--bg:var(--tanner-bg);--mid:var(--tanner-mid)}
+.p-parents{--c:var(--parents);--dk:var(--parents-dk);--bg:var(--parents-bg);--mid:var(--parents-mid)}
+.p-family{--c:#FF8A80;--dk:#B8443A;--bg:#FFEDEB;--mid:#FFD6D2}
+.p-all{--c:#F2B33D;--dk:#9A6A06;--bg:#FFF7E0;--mid:#FFEBB3}
+.p-red{--c:#F08A80;--dk:var(--red);--bg:var(--red-bg);--mid:#FAD3D0}
+.p-leaf{--c:#7FCB8F;--dk:#2F7D43;--bg:#E9F7EC;--mid:#CDEED5}
+
+#stage{position:fixed;left:0;right:0;top:0;bottom:var(--nav);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.page{position:absolute;inset:0;display:flex;flex-direction:column;gap:1rem;overflow:hidden;
+  padding:max(40px,calc(env(safe-area-inset-top) + 18px)) max(28px,env(safe-area-inset-right)) 14px max(28px,env(safe-area-inset-left));
+  opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s}
+.page.on{opacity:1;visibility:visible;transition:opacity .9s ease}
+.page.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.page>*{flex:none;min-width:0}
+
+/* header (both pages) */
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.fam{font-size:1.75rem;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+.motto{margin-top:.2rem;font-size:.92rem;font-weight:600;color:#C08A2E;max-width:25rem;line-height:1.3;text-wrap:balance}
+.clk{text-align:right;flex:none}
+.time{font-size:3.45rem;font-weight:300;line-height:1;letter-spacing:-.03em}
+.time small{font-size:1.22rem;font-weight:600;color:var(--muted);margin-left:.33rem;letter-spacing:0}
+.date{font-size:1.06rem;font-weight:700;color:var(--muted);margin-top:.22rem}
+.upd{margin-top:.2rem;font-size:.72rem;font-weight:700;color:var(--faint)}
+.upd .stale{display:none;color:#B4620C;background:#FFF1D6;border-radius:99px;padding:.05rem .45rem;margin-left:.3rem}
+body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
+.h{display:flex;align-items:baseline;gap:.67rem;font-size:1.39rem;font-weight:800;margin-bottom:-.3rem}
+.h span{font-size:.95rem;font-weight:700;color:var(--faint)}
+.sk{display:flex;align-items:center;gap:.55rem;font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.bub{width:3rem;height:3rem;border-radius:1rem;background:var(--mid);color:var(--dk);display:grid;place-items:center;flex:none}
+.bub .ic{font-size:1.45rem}
+.sk .bub{width:2.33rem;height:2.33rem;border-radius:.83rem;background:#fff}
+.sk .bub .ic{font-size:1.22rem}
+
+/* page 1: kid cards */
+.kids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem;flex:1 0 auto}
+.kid{background:var(--bg);border-radius:1.9rem;padding:1.3rem 1rem 1rem;display:flex;flex-direction:column;min-width:0}
+.kid .top{display:flex;align-items:center;gap:.67rem}
+.av{width:3.55rem;height:3.55rem;border-radius:1.33rem;background:var(--c);color:#fff;display:grid;place-items:center;font-size:1.78rem;font-weight:800;flex:none;transform:rotate(-4deg)}
+.nm{font-size:1.6rem;font-weight:800;color:var(--dk);line-height:1}
+.gr{font-size:.83rem;font-weight:700;color:var(--muted);margin-top:.17rem}
+.items{display:none;margin:1.3rem 0 1rem;flex-direction:column;gap:.9rem}
+.items.on{display:flex}
+.it{display:flex;align-items:center;gap:.67rem;font-size:1.22rem;font-weight:700;line-height:1.15;min-width:0}
+.itx{min-width:0;overflow-wrap:anywhere}
+.it small{display:block;font-size:.83rem;font-weight:700;color:var(--muted);margin-top:.11rem}
+.it.st-off .itt{color:var(--red)} .it.st-off .bub{background:#FAD3D0;color:var(--red)}
+.it.st-half .itt{color:var(--amber)} .it.st-half .bub{background:#FFEBB3;color:var(--amber)}
+.it.free{color:var(--faint)} .it.free .itt{font-size:.95rem}
+.tmrw{margin-top:auto;background:rgba(255,255,255,.75);border-radius:1rem;padding:.55rem .72rem;font-size:.9rem;font-weight:700;color:var(--muted);line-height:1.25;overflow-wrap:anywhere}
+.tmrw b{display:block;font-size:.67rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dk);margin-bottom:.11rem}
+.tm{display:none} .tm.on{display:inline}
+.tmrw .no{color:var(--red)} .tmrw .hf{color:var(--amber)}
+
+/* page 1: parents strip (only when there's something today/tomorrow) */
+.pstrip{display:flex;align-items:center;gap:.6rem;background:var(--parents-bg);border-radius:1.4rem;padding:.6rem .9rem;flex-wrap:wrap}
+.pstrip.none{display:none}
+.pstrip .lab{font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--parents-dk);display:flex;align-items:center;gap:.4rem}
+.pday{display:none;align-items:center;gap:.45rem;flex-wrap:wrap}
+.pday.on{display:inline-flex}
+.pday .pd{font-size:.72rem;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+.pb{display:inline-flex;align-items:center;gap:.35rem;background:#fff;border-radius:.8rem;padding:.3rem .6rem;font-size:.95rem;font-weight:700}
+.pb .ic{color:var(--parents-dk);font-size:1.05rem}
+.pb small{font-size:.78rem;color:var(--muted);font-weight:700}
+.pb.away{color:var(--parents-dk);font-weight:800}
+
+/* page 1: spiritual */
+.spirit{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:.9rem}
+.sc{border-radius:1.67rem;padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:.33rem;min-width:0}
+.sc.cfm{background:var(--peach)} .sc.fsy{background:var(--rose)}
+.cfm .sk{color:#B5651D} .fsy .sk{color:#B2477A}
+.stt{font-size:1.39rem;font-weight:800;line-height:1.15;margin-top:.22rem}
+.srd{font-size:.95rem;font-weight:800;color:#B5651D}
+.fsy .srd{color:#B2477A}
+.sq{font-size:1.05rem;font-weight:600;color:var(--muted);line-height:1.3}
+.sq i{font-style:normal;color:var(--faint);font-size:.78rem}
+.sq b{display:inline-block;font-size:.67rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#B2477A;margin-right:.4rem}
+.sq.t-tmrw{font-size:.9rem} .sq.t-tmrw b{color:var(--faint)}
+.tip{display:none} .tip.on{display:inline}
+.pending .stt{color:var(--muted);font-style:italic;font-weight:600}
+
+/* page 1: heads-up */
+.todo{background:var(--butter);border-radius:1.67rem;padding:1.1rem 1.3rem}
+.todo .sk{color:#A27508;margin-bottom:.55rem}
+.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.67rem .78rem}
+.td{display:flex;align-items:center;gap:.6rem;background:#fff;border-radius:1rem;padding:.75rem .9rem;font-size:1.05rem;font-weight:700;line-height:1.15;min-width:0}
+.td .ic{font-size:1.28rem;color:var(--dk)}
+.tdx{min-width:0;overflow-wrap:anywhere}
+.td .dt{margin-left:auto;font-size:.78rem;font-weight:800;color:var(--dk);background:var(--bg);border-radius:99px;padding:.22rem .55rem;white-space:nowrap;flex:none}
+.td.gone,.td.over{display:none}
+.td.none{display:none;color:var(--faint);grid-column:1/-1}
+.tgrid.empty .td.none{display:flex}
+
+/* page 2: day tiles */
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:1fr;gap:.67rem;flex:1.4 0 auto}
+.day{display:none;border-radius:1.45rem;background:#F6F7FA;padding:.78rem .67rem .67rem;flex-direction:column;min-width:0}
+.day.on{display:flex}
+.day.today{background:#FFF6DA;box-shadow:inset 0 0 0 3px #F4C548}
+.day.brk{background:var(--mint)}
+.dw{font-size:.83rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.today .dw{color:#A67A00}
+.dn{font-size:2.2rem;font-weight:800;line-height:1;margin-top:.11rem}
+.wkend .dn{color:#4a5270}
+.ev{display:flex;flex-direction:column;gap:.5rem;margin:.67rem 0 .4rem}
+.e{display:flex;align-items:center;gap:.45rem;font-size:.85rem;font-weight:700;line-height:1.12;min-width:0}
+.e .bub{width:2rem;height:2rem;border-radius:.72rem}
+.e .bub .ic{font-size:1.1rem}
+.et{min-width:0;overflow-wrap:anywhere}
+.el{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.et small{display:block;font-size:.72rem;color:var(--dk);font-weight:800}
+.dots{display:flex;gap:.17rem;margin-top:.17rem}
+.dots i{width:.5rem;height:.5rem;border-radius:50%;background:var(--c)}
+.more{font-size:.72rem;font-weight:800;color:var(--faint);padding-left:.2rem}
+.away{margin-top:auto;display:flex;align-items:center;gap:.33rem;background:var(--parents-bg);color:var(--parents-dk);border-radius:.67rem;padding:.33rem .45rem;font-size:.72rem;font-weight:800;min-width:0;overflow:hidden;white-space:nowrap}
+.away .ic{font-size:.85rem}
+.big{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;color:var(--dk);font-size:.95rem;font-weight:800;text-align:center;padding:.5rem 0}
+.big .ic{font-size:2.9rem}
+.quiet{flex:1;display:grid;place-items:center;color:var(--faint);font-size:.83rem;font-weight:700;padding:.5rem 0}
+
+/* page 2: young men + grades */
+.row2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:.9rem;flex:1 0 auto}
+.ym{background:var(--sky);border-radius:1.67rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.ym .sk{color:#3D6FB8;margin-bottom:.1rem}
+.yr{display:flex;align-items:center;gap:.67rem;background:#fff;border-radius:1rem;padding:.55rem .67rem;font-size:.95rem;font-weight:700;min-width:0}
+.yr.none{display:none}
+.badge{background:var(--c);color:#fff;border-radius:.67rem;padding:.28rem .55rem;font-size:.78rem;font-weight:800;white-space:nowrap;min-width:5.1rem;text-align:center;flex:none}
+.yis{display:flex;flex-wrap:wrap;gap:.1rem .8rem;min-width:0;line-height:1.25}
+.yi,.yl{display:none} .yi.on,.yl.on{display:inline}
+.yi .when,.yl .when{color:var(--dk);font-weight:800;margin-right:.1rem}
+.yi.none,.yi.ynone{color:var(--faint)}
+.yi small,.yl small{font-size:.72rem;color:var(--muted)}
+.yl .dots{display:inline-flex;margin:0 0 0 .3rem;vertical-align:.1em}
+.gr2{background:#F7F3FF;border-radius:1.67rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.gr2 .sk{color:var(--parents-dk);margin-bottom:.1rem}
+.g{display:flex;align-items:center;gap:.67rem;background:#fff;border-radius:1rem;padding:.5rem .67rem;font-size:.95rem;font-weight:800;color:var(--dk);min-width:0}
+.g .av{width:2.1rem;height:2.1rem;border-radius:.72rem;font-size:1.05rem;transform:none}
+.g .cs{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--muted);text-align:right}
+.g .cs.soon{color:var(--faint)}
+.gnote{font-size:.78rem;font-weight:700;color:var(--muted);text-align:center;margin-top:auto;line-height:1.35}
+.gn{display:none} .gn.on{display:inline}
+.gn.on~.gn.on::before{content:" \00b7  "}
+
+/* nav: solid strip so nothing sits under the home indicator */
+#nav{position:fixed;left:0;right:0;bottom:0;height:var(--nav);padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid var(--line);
+  display:flex;justify-content:center;align-items:center;gap:10px;z-index:5}
+#nav .dot{width:12px;height:12px;border-radius:99px;border:0;background:#DDE0E8;padding:0;cursor:pointer;transition:width .4s,background .4s}
+#nav .dot.on{width:34px;background:#F4C548}
+#nav .nl{font-size:14px;font-weight:700;color:var(--faint);margin-left:4px;min-width:5.5em}
+#nav .pz{display:none;margin-left:8px;border:0;background:#FFF1D6;color:#9A6A06;font:inherit;font-size:14px;font-weight:800;border-radius:99px;padding:6px 14px;cursor:pointer}
+body.paused #nav .pz{display:inline}
+#prog{position:fixed;left:0;bottom:0;height:4px;width:0;background:#F4C548;opacity:.6;border-radius:0 3px 3px 0;z-index:6}
+body.paused #prog{background:#C9A0FF}
+</style>
+</head>
+<body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-ydays="{{YOUTH_DAYS}}" data-ylater="{{YOUTH_LATER}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
+{{SPRITE}}
+<div id="stage">
+
+<!-- ====================== PAGE 1: TODAY ====================== -->
+<section class="page on" id="p1" data-name="Today">
+  <header>
+    <div><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
+    <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div>
+      <div class="upd">Updated {{LAST_LABEL}}<span class="stale">needs refresh</span></div></div>
+  </header>
+  <div class="kids">{{KIDS}}</div>
+  <div class="pstrip" id="pstrip"><span class="lab"><svg class="ic"><use href="#i-users"/></svg>Parents</span>{{PARENTS}}</div>
+  <div class="spirit">{{SPIRIT}}</div>
+  <div class="todo">
+    <div class="sk"><span class="bub"><svg class="ic"><use href="#i-bell"/></svg></span>Heads-up</div>
+    <div class="tgrid" id="tgrid">{{TODOS}}</div>
+  </div>
+</section>
+
+<!-- ====================== PAGE 2: THIS WEEK ====================== -->
+<section class="page" id="p2" data-name="This week">
+  <header>
+    <div><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
+    <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
+  </header>
+  <div class="h">This week <span id="range"></span></div>
+  <div class="days">{{TILES}}</div>
+  <div class="row2">
+    <div class="ym">
+      <div class="sk"><span class="bub"><svg class="ic"><use href="#i-users"/></svg></span>Young Men</div>
+      {{YOUTH}}
+    </div>
+    <div class="gr2">
+      <div class="sk"><span class="bub"><svg class="ic"><use href="#i-cap"/></svg></span>Grades</div>
+      {{GRADES}}
+      <div class="gnote" id="gnote">{{GRADE_NOTES}}</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button></nav>
+<div id="prog"></div>
+
+<script>
+(function(){
+  var B=document.body, TZ=B.getAttribute('data-tz')||'America/Denver';
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function parts(d){var o={};try{new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'numeric',minute:'2-digit',hour12:true,weekday:'long'}).formatToParts(d).forEach(function(p){o[p.type]=p.value});}catch(e){}return o;}
+  function ymd(d){var p=parts(d);return p.year+'-'+p.month+'-'+p.day;}
+  function addDays(s,n){var a=s.split('-');var t=new Date(Date.UTC(+a[0],+a[1]-1,+a[2]+n,12));return t.toISOString().slice(0,10);}
+  function dowOf(s){var a=s.split('-');return DOW[new Date(Date.UTC(+a[0],+a[1]-1,+a[2],12)).getUTCDay()];}
+  function nice(s){var a=s.split('-');return dowOf(s)+' '+MON[+a[1]-1]+' '+(+a[2]);}
+  function each(sel,fn,root){Array.prototype.forEach.call((root||document).querySelectorAll(sel),fn);}
+  function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+
+  var lastDay=null, TILES=10, TODO_MAX=4;
+  function applyDay(today){
+    var tmrw=addDays(today,1), dow=dowOf(today), dow1=dowOf(tmrw);
+    // page 1: kid cards, parents strip, Strength of Youth tips, heads-up
+    each('[data-d0]',function(el){el.classList.toggle('on',el.getAttribute('data-d0')===today);});
+    each('[data-d1]',function(el){el.classList.toggle('on',el.getAttribute('data-d1')===tmrw);});
+    // parents strip: today + tomorrow; tomorrow is skipped when it would only repeat today's trip tag
+    var pc=0, tTrips=null;
+    each('.pday',function(el){if(el.getAttribute('data-date')===today)tTrips=el.getAttribute('data-trips');});
+    each('.pday',function(el){var d=el.getAttribute('data-date'),on=d===today||d===tmrw;
+      if(d===tmrw&&el.hasAttribute('data-only-trips')&&el.getAttribute('data-trips')===tTrips)on=false;
+      el.classList.toggle('on',on);if(on)pc++;el.querySelector('.pd').textContent=d===today?'Today':'Tomorrow';});
+    document.getElementById('pstrip').classList.toggle('none',!pc);
+    each('.t-today .tip',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow);});
+    each('.t-tmrw .tip',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow1);});
+    var tv=0;
+    each('.td[data-until]',function(el){var u=el.getAttribute('data-until'),gone=!!u&&u<today;el.classList.toggle('gone',gone);
+      if(!gone){tv++;el.classList.toggle('over',tv>TODO_MAX);}});
+    document.getElementById('tgrid').classList.toggle('empty',!tv);
+    each('.td .dt',function(el){var d=el.getAttribute('data-due');
+      el.textContent=d<today?nice(d).slice(0,3):d===today?'Today':d===tmrw?'Tomorrow':(d<=addDays(today,6)?dowOf(d):nice(d).slice(4));});
+    // page 2: ten day tiles starting today
+    var tend=addDays(today,TILES-1);
+    each('.day',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=tend;el.classList.toggle('on',on);el.classList.toggle('today',d===today);
+      var w=el.querySelector('.dw');w.textContent=d===today?'Today':w.getAttribute('data-dow');});
+    document.getElementById('range').textContent=nice(today)+' \u2013 '+nice(tend);
+    var YD=parseInt(B.getAttribute('data-ydays')||'7',10), YL=parseInt(B.getAttribute('data-ylater')||'14',10);
+    var yend=addDays(today,YD-1), ylend=addDays(today,YD+YL-1);
+    each('.yr:not(.later)',function(row){var n=0;each('.yi[data-date]',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=yend;el.classList.toggle('on',on);if(on)n++;},row);
+      var no=row.querySelector('.ynone');if(no)no.classList.toggle('on',!n);row.classList.toggle('empty',!n);});
+    var lc=0;each('.yl',function(el){var d=el.getAttribute('data-date'),on=d>yend&&d<=ylend&&lc<2;el.classList.toggle('on',on);if(on)lc++;});
+    each('.yr.later',function(el){el.classList.toggle('none',!lc);});
+    var gc=0;each('.gn',function(el){var d=el.getAttribute('data-date'),on=d>=today&&gc<2;el.classList.toggle('on',on);if(on)gc++;});
+    var last=Date.parse(B.getAttribute('data-last')), lim=parseFloat(B.getAttribute('data-stale-days')||'8');
+    B.classList.toggle('stale',!isNaN(last)&&(Date.now()-last)>lim*864e5);
+    fit();
+  }
+  function tick(){
+    var now=new Date(), p=parts(now);
+    if(p.hour){var tm=p.hour+':'+p.minute+'<small>'+(p.dayPeriod||p.dayperiod||'')+'</small>';
+      var dt=p.weekday+', '+new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'long',day:'numeric'}).format(now);
+      each('.js-time',function(el){el.innerHTML=tm;}); each('.js-date',function(el){el.textContent=dt;});}
+    var t=ymd(now); if(t!==lastDay){lastDay=t;applyDay(t);}
+  }
+
+  // auto-fit each page: largest base size (--fs) with no overflow; scroll only below the floor
+  var pages=[document.getElementById('p1'),document.getElementById('p2')];
+  function fitPage(pg,W,H){
+    var land=W>H, scale=land?Math.min(W/1180,H/820):Math.min(W/820,H/1180);
+    var floor=Math.max(11,scale*(land?12:15)), hi=Math.max(floor,Math.min(28,scale*21)), lo=floor;
+    pg.classList.remove('scroll');
+    var over=function(){return pg.scrollHeight>pg.clientHeight+1||pg.scrollWidth>pg.clientWidth+1;};
+    pg.style.setProperty('--fs',floor+'px');
+    if(over()){pg.classList.add('scroll');return floor.toFixed(2)+'|scroll';}
+    for(var i=0;i<11;i++){var mid=(lo+hi)/2;pg.style.setProperty('--fs',mid+'px');if(over())hi=mid;else lo=mid;}
+    pg.style.setProperty('--fs',lo+'px');
+    return lo.toFixed(2);
+  }
+  function fit(){
+    var vv=window.visualViewport,W=vv?vv.width:window.innerWidth,H=Math.min(window.innerHeight,vv?vv.height:1e9);
+    var r=pages.map(function(pg){return fitPage(pg,W,H);});
+    B.setAttribute('data-fs','p1:'+r[0]+' p2:'+r[1]+' '+W+'x'+H);
+  }
+
+  // rotation: crossfade every ROT seconds; a tap switches page and pauses for 2 minutes ("Paused (m:ss) · tap to resume").
+  // State is kept in localStorage so the 30-minute reload resumes where it was.
+  var ROT=(parseFloat(B.getAttribute('data-rotate'))||30)*1000, PAUSE=120000, KEY='dash-v3-rot';
+  var st=store(KEY)||{}, now0=Date.now();
+  var cur=(st.i===0||st.i===1)?st.i:0, shownAt=(typeof st.t==='number'&&st.t<=now0)?st.t:now0, pausedUntil=st.p||0;
+  if(pausedUntil&&pausedUntil<=now0){shownAt=Math.max(shownAt,pausedUntil);pausedUntil=0;}
+  if(!pausedUntil&&now0-shownAt>=ROT){cur=(cur+1)%2;shownAt=now0;}
+  var prog=document.getElementById('prog'), navl=document.getElementById('navl');
+  function render(i){cur=i;
+    pages.forEach(function(pg,k){pg.classList.toggle('on',k===i);if(k===i)pg.scrollTop=0;});
+    each('#nav .dot',function(d,k){d.classList.toggle('on',k===i);});
+    navl.textContent=pages[i].getAttribute('data-name');}
+  function save(){store(KEY,{i:cur,t:shownAt,p:pausedUntil});}
+  function show(i){render(i);shownAt=Date.now();save();}
+  function loop(){
+    var now=Date.now();
+    if(pausedUntil&&now>=pausedUntil){shownAt=pausedUntil;pausedUntil=0;save();}
+    var paused=!!pausedUntil; B.classList.toggle('paused',paused);
+    if(paused){prog.style.width=(100*(pausedUntil-now)/PAUSE)+'%';var r=Math.ceil((pausedUntil-now)/1000);
+      document.getElementById('pzt').textContent='('+Math.floor(r/60)+':'+('0'+r%60).slice(-2)+')';return;}
+    if(now-shownAt>=ROT){show((cur+1)%2);now=shownAt;}
+    prog.style.width=Math.min(100,100*(now-shownAt)/ROT)+'%';
+  }
+  function userGo(i){pausedUntil=Date.now()+PAUSE;show(i);loop();}
+  document.getElementById('stage').addEventListener('click',function(){userGo((cur+1)%2);});
+  each('#nav .dot',function(d){d.addEventListener('click',function(ev){ev.stopPropagation();userGo(+d.getAttribute('data-i'));});});
+  document.getElementById('resume').addEventListener('click',function(ev){ev.stopPropagation();pausedUntil=0;shownAt=Date.now();save();loop();});
+  render(cur); save(); loop(); setInterval(loop,200);
+
+  window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
+  window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
+  if(window.visualViewport)visualViewport.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
+  window.addEventListener('load',fit); if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit); setTimeout(fit,800); setTimeout(fit,2500);
+  tick(); setInterval(tick,15000);
+  // fallback reload (meta refresh may be ignored in home-screen mode); bust caches
+  setTimeout(function(){var u=location.href.split('?')[0];location.replace(u+'?r='+Date.now());},1800*1000+20000);
+})();
+</script>
+</body>
+</html>
