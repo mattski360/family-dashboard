@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T11:21:02-06:00",
+    "last_updated": "2026-10-08T11:21:14-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
@@ -218,7 +218,7 @@
       "source": "ahs_feed"
     },
     {
-      "id": "fam-trip-anaheim",
+      "id": "fam-trip-california",
       "date": "2026-10-14",
       "end_date": "2026-10-18",
       "title": "California",
