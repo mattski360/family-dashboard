@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Weekly refresh: pull AHS school events + ward-site youth fallback, then render index.html.
+# Weekly refresh: pull AHS school events + ward-site youth fallback, then render index.html and v2/index.html.
 # A failed fetch keeps the previous data and the page is still rebuilt.
 set -uo pipefail
 cd "$(dirname "$0")"

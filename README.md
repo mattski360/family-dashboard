@@ -3,12 +3,18 @@
 A static page (`index.html`, with CSS and JS inline and no external requests) for a wall-mounted iPad. It is portrait-first (820×1180) and also works in landscape (1180×820).
 To publish, put `index.html` and `assets/` on GitHub Pages.
 
+There are two versions, both rendered by `build.py` from the same `data/dashboard.json`, so the weekly `run.sh` rebuild updates both:
+* **v1** – `index.html` (template `template.html`): everything on one screen. Live at https://mattski360.github.io/family-dashboard/
+* **v2** – `v2/index.html` (template `template_v2.html`): two full-screen pages that crossfade every 30 seconds, with larger text. Live at https://mattski360.github.io/family-dashboard/v2/ (see "Version 2" below).
+
 ```
-./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → index.html
+./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → index.html + v2/index.html
 python3 build.py [--week-start 2026-10-18]   # re-render only (stamps meta.last_updated, sets meta.week_start)
 python3 build.py --no-stamp
+python3 build.py --no-v2                      # v1 only (--out-v2 PATH to write v2 elsewhere)
 python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
 /workspace/.venv-shot/bin/python shot.py   # preview.png (portrait) + preview-landscape.png
+/workspace/.venv-shot/bin/python shot_v2.py [--at 2026-10-14T07:00:00-06:00] [--landscape]   # preview-v2-p1.png + preview-v2-p2.png
 ```
 Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use playwright with the system Chrome.
 
@@ -96,3 +102,39 @@ The default window is **21 days**, so a weekly run still fills the 7-day view pl
 
 ## Fitting on screen
 The page uses the largest text size that fits on one screen. It never goes below about 13px in portrait (820×1180) or 12.4px in landscape. If the content still doesn't fit at that size, the page scrolls vertically instead of shrinking further. On the wall it scrolls itself gently: it holds at the top for 40 seconds, glides down, holds for 20 seconds, then glides back. Any touch pauses this for 2 minutes.
+
+## Version 2 (`v2/index.html`, rotating pages)
+Portrait 820×1180 is the target. It uses the same light theme, colors and chips as v1, and the family motto (`meta.motto`) appears in the header of both pages.
+
+**Page 1 – Today**
+* Header: name, motto, large clock and date, last updated.
+* **Today & tomorrow** grid with one row each for Luke, Wyatt, Tanner and Family & parents, and two columns: today (highlighted) and tomorrow, computed from the viewing date in America/Denver.
+  * Kid rows show the school status on weekdays (no school / half day, with "Term N ends" folded in / in person at Lehi with times and the packing note / online / school day), then that kid's own events, each with a time and a note. A parenthetical in a title moves to the note line.
+  * Youth activities for one boy are tagged "Young Men".
+  * Anything involving two or more people (including all-youth activities), plus trips, goes in the Family row with chips.
+  * Low-priority items are hidden, the same as in v1.
+* **Spiritual focus, in full:**
+  * Come, Follow Me: title, dates · reading, summary, and all questions.
+  * Strength of Youth: chapter, focus, quote, and the daily tip for today and tomorrow.
+* **Heads-up:** up to 5 open to-dos, each with its due date and detail line.
+
+**Page 2 – This week**
+* Compact header (name, motto, clock). The last-updated line appears here only when the data is stale.
+* **Calendar:** the Sun–Sat week as an agenda, one full-width row per day with the date and trip pins in a left gutter and items in two columns.
+  * Filtering is the same as v1: low-priority items are hidden, and no-school and half-day items become banners.
+  * Chips flow right after each title.
+  * Item notes show only for high-priority items.
+  * The "Rest of this week" strip appears only before `week_start`, and the Later line is the same as v1.
+* **Young Men:** one line per boy, a shared "Both" line, and Later.
+* **Grades:** a column per kid. Until real grades exist, the card header says "Grades coming soon" (no grades are ever invented).
+
+**Rotation**
+* Pages crossfade every `meta.v2_rotate_seconds` (default 30).
+* The bottom bar shows page dots, a label such as "1 of 2 · Today", and a thin progress bar.
+* Tapping anywhere switches pages and pauses rotation for 2 minutes (the bar turns amber and the label says "paused"). Tapping a dot jumps to that page.
+* The current page, when it was shown, and the pause deadline are saved in `localStorage` (`dash-v2-rot`), so the 30-minute reload (meta refresh plus JS fallback) picks up where it left off.
+
+**Fitting**
+* CSS sizes are written in `rem`, and `build.py` rewrites them to `calc(var(--fs) * n)`. That lets each page auto-fit its own base size `--fs`, with a minimum of 16px in portrait (13px in landscape) and a maximum of 25px. Leftover height is spread evenly between the cards.
+* A page that can't fit at the minimum scrolls on its own.
+* `body[data-fs]` reports the result, for example `p1:18.11 p2:17.56 820x1180`.
