@@ -5,14 +5,15 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T08:34:35-06:00",
+    "last_updated": "2026-10-08T08:54:48-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
       "2026-10-29"
     ],
     "later_days": 8,
-    "week_start": "2026-10-11"
+    "week_start": "2026-10-11",
+    "motto": "We are Jensens, we are brave, we choose the right, and we always help others."
   },
   "people": {
     "luke": {
@@ -516,6 +517,29 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "mtb-preride-2026-10-09",
+      "date": "2026-10-09",
+      "title": "MTB pre-ride, Herriman (pre-ride plates required)",
+      "who": [
+        "luke"
+      ],
+      "kind": "event",
+      "priority": "normal",
+      "source": "family"
+    },
+    {
+      "id": "mtb-race-2026-10-10",
+      "date": "2026-10-10",
+      "title": "MTB race – Region 5 final, Herriman (Butterfield Trailhead)",
+      "who": [
+        "luke"
+      ],
+      "kind": "event",
+      "priority": "high",
+      "source": "family",
+      "note": "Starts moved 1 hr earlier (storm); carpool, parking limited"
     }
   ],
   "todos": [
@@ -602,7 +626,8 @@
         "title": "“He Hath Borne Our Griefs, and Carried Our Sorrows”",
         "reading": "Isaiah 50–57",
         "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/41?lang=eng"
-      }
+      },
+      "featured_question": 1
     },
     "strength_of_youth": {
       "status": "ready",

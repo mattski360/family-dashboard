@@ -222,12 +222,20 @@ def render_item(m: Model, e: dict, day: dt.date) -> str:
             f'<div class="who">{chips(m, e.get("who", []))}</div></li>')
 
 
+HIDE_LOW = True
+ABSORB_RE = re.compile(r"^(term|quarter|q)\s*\d+\s+ends$", re.I)
+
+
 def render_day(m: Model, day: dt.date) -> str:
     evs = m.events_on(day)
     trips = [e for e in evs if e.get("kind") == "trip"]
     flags = m.flags_on(day)
     # banners: group kids by flag + reason
     banners = []
+    # short all-kid notes (e.g. "Term 1 ends") folded into a same-day half-day banner
+    half_kids = set(flags["half_day"])
+    absorbed = [e for e in evs if not e.get("flag") and e.get("kind") != "trip" and half_kids
+                and ABSORB_RE.match(e.get("title", "")) and set(e.get("who", [])) <= half_kids]
     for flag, label in (("no_school", "No school"), ("half_day", "Half day")):
         if day.weekday() >= 5 and flag == "no_school":
             continue
@@ -240,7 +248,7 @@ def render_day(m: Model, day: dt.date) -> str:
             if r.lower() in ("no school", "half day", "k-5 half day"):
                 r = ""
             if flag == "half_day":
-                r = "Out at 12 PM"
+                r = " \u00b7 ".join(["Out at 12 PM"] + [a["title"] for a in absorbed])
             order = [k["id"] for k in m.kids]
             kids.sort(key=lambda k: order.index(k) if k in order else 99)
             banners.append(
@@ -248,8 +256,10 @@ def render_day(m: Model, day: dt.date) -> str:
                 f'<span class="br">{esc(r)}</span><span class="who">{chips(m, kids)}</span></div>')
     items = []
     for e in evs:
-        if e.get("kind") == "trip":
+        if e.get("kind") == "trip" or e in absorbed:
             continue
+        if e.get("priority") == "low" and HIDE_LOW:
+            continue                                  # dimmed/low-priority items are dropped to keep one screen
         if e.get("flag") == "no_school":
             continue                                  # fully described by the banner
         if e.get("flag") == "half_day":
@@ -285,132 +295,112 @@ def render_day(m: Model, day: dt.date) -> str:
 
 
 def render_mini_day(m: Model, day: dt.date) -> str:
-    """Compact day for the 'Rest of this week' strip (days before week_start)."""
-    flags = m.flags_on(day)
-    lines = []
-    if day.weekday() < 5:
-        for flag, label in (("no_school", "No school"), ("half_day", "Half day")):
-            kids = list(flags[flag])
-            if kids:
-                lines.append(f'<div class="ml f-{flag}"><span class="mt">{label}</span>{chips(m, kids)}</div>')
-    evs = [e for e in m.events_on(day) if e.get("kind") != "trip" and e.get("flag") != "no_school"
-           and not (e.get("flag") == "half_day" and re.match(r"^(k-5 )?half day", e.get("title", ""), re.I))]
-    evs += m.routine_items(day)
-    evs.sort(key=lambda e: (e.get("start") is not None, e.get("start") or ""))
-    for e in evs:
-        t = fmt_time(e.get("start"))
-        lines.append(f'<div class="ml pr-{esc(e.get("priority", "normal"))}">'
-                     f'{f"<span class=mtime>{esc(t)}</span>" if t else ""}<span class="mt">{esc(e.get("title"))}</span>'
-                     f'{chips(m, e.get("who", []))}</div>')
-    if not lines:
-        lines.append('<div class="ml empty">Nothing scheduled</div>')
-    show = " show" if m.today <= day < m.week_start else ""
-    return (f'<div class="rday{show}" data-date="{day.isoformat()}"><div class="rdh"><b>{DOW[day.weekday()]}</b> '
-            f'{day:%b} {day.day}<span class="rel"></span></div>{"".join(lines)}</div>')
-
-
-def render_later(m: Model, day: dt.date) -> str:
-    """One compact line per day for the 'Later' strip: only no-school/half-day + high-priority items."""
+    """One inline segment of the single-line 'Rest of this week' strip (days before week_start)."""
     flags = m.flags_on(day)
     parts = []
     if day.weekday() < 5:
         for flag, label in (("no_school", "No school"), ("half_day", "Half day")):
-            groups: dict[str, list[str]] = {}
-            for kid, reason in flags[flag].items():
-                r = re.sub(r"^(no school|k-5 half day|half day)\s*(\u2014|\u00b7)?\s*", "", reason, flags=re.I)
-                r = re.sub(r"\s*\u00b7\s*spirit apparel$", "", r)
-                groups.setdefault(r if flag == "no_school" else "", []).append(kid)
-            for r, kids in groups.items():
-                txt = label + (f" \u00b7 {r}" if r else "")
-                parts.append(f'<span class="li f-{flag}">{esc(txt)}{chips(m, kids)}</span>')
+            kids = list(flags[flag])
+            if kids:
+                parts.append(f'<span class="mi f-{flag}">{label}{chips(m, kids)}</span>')
+    evs = [e for e in m.events_on(day) if e.get("kind") != "trip" and e.get("flag") != "no_school"
+           and e.get("priority") != "low"
+           and not (e.get("flag") == "half_day" and re.match(r"^(k-5 )?half day", e.get("title", ""), re.I))]
+    evs += m.routine_items(day)
+    evs.sort(key=lambda e: (e.get("start") is not None, e.get("start") or ""))
+    for e in evs:
+        title = SHORT_RE.sub("", e.get("title") or "")
+        parts.append(f'<span class="mi pr-{esc(e.get("priority", "normal"))}">{esc(title)}{chips(m, e.get("who", []))}</span>')
+    if not parts:
+        parts.append('<span class="mi empty">Nothing scheduled</span>')
+    show = " show" if m.today <= day < m.week_start else ""
+    return (f'<span class="rday{show}" data-date="{day.isoformat()}"><b class="rdh">{DOW[day.weekday()]} {day.day}</b>'
+            f'{"".join(parts)}</span>')
+
+
+# trims for compact one-line strips (rest-of-week): drop parenthetical/after-comma detail
+SHORT_RE = re.compile(r"\s*(\(.*?\)|,.*)$")
+LATER_MAJOR_RE = re.compile(r"\b(term|quarter|q[1-4]|semester)\b.*\b(begins|starts|ends)\b|\b(begins|starts)\b", re.I)
+
+
+def render_later(m: Model, day: dt.date) -> str:
+    """Inline 'Later' entry: only no-school/half-day flags and major items (family/manual highs, term starts)."""
+    flags = m.flags_on(day)
+    parts = []
+    if day.weekday() < 5:
+        for flag, label in (("no_school", "No school"), ("half_day", "Half day")):
+            kids = list(flags[flag])
+            if kids:
+                order = [k["id"] for k in m.kids]
+                kids.sort(key=lambda k: order.index(k) if k in order else 99)
+                parts.append(f'<span class="li f-{flag}">{label}{chips(m, kids)}</span>')
     for e in m.events_on(day):
-        if e.get("flag") or e.get("kind") == "trip" or e.get("priority") != "high" or d(e["date"]) != day:
+        if e.get("flag") or e.get("kind") == "trip" or d(e["date"]) != day:
+            continue
+        major = (e.get("priority") == "high" and e.get("source") != "ahs_feed") or \
+                (e.get("source") == "ahs_feed" and LATER_MAJOR_RE.search(e.get("title", "")))
+        if e.get("major"):
+            major = True
+        if not major:
             continue
         parts.append(f'<span class="li">{esc(e.get("title"))}{chips(m, e.get("who", []))}</span>')
     if not parts:
         return ""
-    wide = " wide" if len(parts) > 1 else ""
-    return (f'<div class="later-row{wide}" data-date="{day.isoformat()}"><span class="ld">'
-            f'{DOW[day.weekday()]} <b>{day:%b} {day.day}</b></span><span class="lis">{"".join(parts)}</span></div>')
+    return (f'<span class="later-row" data-date="{day.isoformat()}"><b class="ld">'
+            f'{DOW[day.weekday()]} {day:%b} {day.day}</b>{"".join(parts)}</span>')
 
 
-def render_glance(m: Model, kid: dict) -> str:
-    """'Kids at a glance' block for one kid: school, today/tomorrow status, next key dates."""
-    statuses = []
-    for day in m.days():
-        cls, text = m.kid_status(kid, day)
-        statuses.append(f'<span class="st st-{cls}" data-date="{day.isoformat()}">{esc(text)}</span>')
-    st = "".join(statuses)
-    keys = "".join(
-        f'<div class="keyd" data-date="{day.isoformat()}"><b>{esc(fmt_day(day))}</b> {esc(txt)}</div>'
-        for day, txt in m.key_dates(kid))
-    keys = keys or '<div class="keyd none">No key dates on the calendar</div>'
-    kin = ""
-    line = kid.get("glance_line") or f'{kid.get("school_short") or kid.get("school")} \u00b7 {kid.get("division")}'
-    return (f'<div class="ksch">{esc(line)}</div>'
-            f'<div class="krow"><span class="lbl">Today</span><span class="stat today">{st}</span></div>'
-            f'<div class="krow"><span class="lbl">Tmrw</span><span class="stat tmrw">{st}</span></div>'
-            f'{kin}'
-            f'<div class="krow next"><span class="lbl">Next</span><span class="keys">{keys}</span></div>')
-
-
-def render_academics(m: Model) -> str:
-    """Per-kid grades: courses (percent/letter), missing-work count, upcoming tests, optional screen time."""
+def grades_line(m: Model, kid_id: str) -> tuple[str, bool]:
+    """Single compact grades line for a kid. Returns (html, has_data). Never invents anything."""
     acad = m.data.get("academics", {}) or {}
     screen = m.data.get("screen_time", {}) or {}
+    a = (acad.get("kids", {}) or {}).get(kid_id, {}) or {}
+    courses = a.get("courses") or []
+    miss = a.get("missing_count")
+    tests = [t for t in (a.get("upcoming_tests") or []) if t.get("date") and d(t["date"]) >= m.today]
+    bits = []
+    if courses:
+        pcts = [c["percent"] for c in courses if isinstance(c.get("percent"), (int, float))]
+        if pcts:
+            bits.append(f"avg {sum(pcts) / len(pcts):.0f}%")
+        low = None
+        for c in courses:
+            if isinstance(c.get("percent"), (int, float)) and (low is None or c["percent"] < low["percent"]):
+                low = c
+        if low is not None and len(courses) > 1:
+            bits.append(f'low: {low.get("name")} {low.get("letter") or ""}'.strip())
+        elif not pcts:
+            letters = " ".join(c.get("letter") for c in courses if c.get("letter"))
+            if letters:
+                bits.append(letters)
+    if miss is not None:
+        bits.append(f"{int(miss)} missing")
+    if tests:
+        t = sorted(tests, key=lambda t: t["date"])[0]
+        bits.append(f'test {fmt_day(d(t["date"]))}')
+    if screen.get("enabled"):
+        sdat = (screen.get("kids", {}) or {}).get(kid_id, {}) or {}
+        if sdat.get("today_minutes") is not None:
+            v = int(sdat["today_minutes"])
+            bits.append(f"screen {v // 60}h{v % 60:02d}" if v >= 60 else f"screen {v}m")
+    if not bits:
+        return f'<div class="gline soon">{ICONS["cap"]}Grades coming soon</div>', False
+    bad = " bad" if miss else ""
+    joined = esc(" \u00b7 ".join(bits))
+    return f'<div class="gline{bad}">{ICONS["cap"]}{joined}</div>', True
 
-    def mins(v):
-        v = int(v)
-        return f"{v // 60}h {v % 60:02d}m" if v >= 60 else f"{v}m"
 
+def render_academics(m: Model):
+    """Kids & academics: name, grade, school, and ONE grades line per kid (no invented data)."""
+    acad = m.data.get("academics", {}) or {}
     cols, any_data = [], False
     for kid in m.kids:
-        kid_id = kid["id"]
-        a = (acad.get("kids", {}) or {}).get(kid_id, {}) or {}
-        courses = a.get("courses") or []
-        tests = a.get("upcoming_tests") or []
-        miss = a.get("missing_count")
-        body = []
-        if courses:
-            any_data = True
-            rows = []
-            for c in courses:
-                pct = c.get("percent")
-                pct_s = f"{pct:.0f}%" if isinstance(pct, (int, float)) else ""
-                letter = c.get("letter") or ""
-                lc = "g-a" if letter[:1] == "A" else "g-b" if letter[:1] == "B" else "g-c" if letter[:1] == "C" else "g-d" if letter[:1] in "DF" and letter else ""
-                rows.append(f'<div class="crs"><span class="cn">{esc(c.get("name"))}</span>'
-                            f'<span class="cp">{esc(pct_s)}</span><span class="cl {lc}">{esc(letter)}</span></div>')
-            body.append(f'<div class="courses">{"".join(rows)}</div>')
-        else:
-            body.append('<div class="soon">' + ICONS["cap"] + 'Grades coming soon</div>')
-        if tests:
-            any_data = True
-            body.append('<div class="tests">' + "".join(
-                f'<div class="test" data-until="{esc(t.get("date", ""))}"><b>{esc(fmt_day(d(t["date"])) if t.get("date") else "")}</b> '
-                f'{esc(t.get("course", ""))}{": " if t.get("course") and t.get("title") else ""}{esc(t.get("title", ""))}</div>'
-                for t in tests) + '</div>')
-        if screen.get("enabled"):
-            sdat = (screen.get("kids", {}) or {}).get(kid_id, {}) or {}
-            parts = []
-            if sdat.get("today_minutes") is not None:
-                lim = f" / {mins(sdat['limit_minutes'])}" if sdat.get("limit_minutes") else ""
-                parts.append(f"{mins(sdat['today_minutes'])}{lim} today")
-            if sdat.get("daily_avg_minutes") is not None:
-                parts.append(f"avg {mins(sdat['daily_avg_minutes'])}/day")
-            if parts:
-                any_data = True
-                joined = esc(" \u00b7 ".join(parts))
-                body.append(f'<div class="screen"><span class="lbl">Screen</span>{joined}</div>')
-            elif courses:
-                body.append('<div class="screen muted"><span class="lbl">Screen</span>coming soon</div>')
-        miss_html = ""
-        if miss is not None:
-            any_data = True
-            miss_html = f'<span class="miss {"ok" if not miss else "bad"}">{int(miss)} missing</span>'
-        cols.append(f'<div class="acol p-{esc(kid_id)}"><div class="acol-h"><span class="aname">{esc(kid["name"])}</span>'
-                    f'<span class="agrade">Grade {esc(kid.get("grade"))}</span>{miss_html}</div>'
-                    f'{render_glance(m, kid)}<div class="agrades">{"".join(body)}</div></div>')
+        gl, has = grades_line(m, kid["id"])
+        any_data = any_data or has
+        school = kid.get("school_short") or kid.get("school") or ""
+        cols.append(f'<div class="acol p-{esc(kid["id"])}"><div class="acol-h"><span class="aname">{esc(kid["name"])}</span>'
+                    f'<span class="agrade">Grade {esc(kid.get("grade"))}</span></div>'
+                    f'<div class="ksch">{esc(school)}</div>{gl}</div>')
     upd = acad.get("updated")
     sub = ""
     if upd:
@@ -419,10 +409,6 @@ def render_academics(m: Model) -> str:
             sub = f"as of {DOW[u.weekday()]} {u:%b} {u.day}"
         except ValueError:
             sub = esc(upd)
-    elif not any_data:
-        sub = "grades coming soon"
-    if not any_data:
-        cols = [c.replace('<div class="agrades"><div class="soon">' + ICONS["cap"] + 'Grades coming soon</div></div>', "") for c in cols]
     return f'<div class="acols{"" if any_data else " nodata"}">{"".join(cols)}</div>', sub
 
 
@@ -464,106 +450,122 @@ def youth_activities(m: Model) -> list[dict]:
 
 
 def render_youth(m: Model) -> str:
-    y = m.data.get("youth", {}) or {}
-    acts = youth_activities(m)
-    by_day: dict[str, list[dict]] = {}
+    """One line per boy (his quorum + all-youth items in the next N days) plus one compact Later line."""
+    acts = [a for a in youth_activities(m) if m.first <= d(a["date"]) <= m.last]
+    acts.sort(key=lambda a: (a["date"], a.get("start") or ""))
+    order = [k["id"] for k in m.kids]
+    boys = []
     for a in acts:
-        by_day.setdefault(a["date"], []).append(a)
-    rows, later = [], []
-    for day_s, items in sorted(by_day.items()):
-        day = d(day_s)
-        if not (m.first <= day <= m.last):
-            continue
-        lines = []
-        for a in items:
+        for w in a.get("who", []):
+            if w in order and w not in boys:
+                boys.append(w)
+    boys.sort(key=lambda k: order.index(k))
+    quorum = {}
+    for a in acts:
+        if a.get("group") in ("deacons", "teachers", "priests") and len(a.get("who", [])) == 1:
+            quorum.setdefault(a["who"][0], YOUTH_GROUP_LABEL.get(a["group"], ""))
+    shared = len(boys) > 1
+    def is_shared(a):
+        return shared and set(boys) <= set(a.get("who", []))
+
+    def row_items(sel):
+        its = []
+        for a in acts:
+            if not sel(a):
+                continue
+            day = d(a["date"])
             none = a.get("kind") == "none"
             if none:
                 when = ""
             elif a.get("start"):
-                when = fmt_time(a["start"]) + (f"\u2013{fmt_time(a['end'])}" if a.get("end") else "")
+                when = fmt_time(a["start"])
             else:
-                when = "Time TBA"
-            extra = []
-            if a.get("location"):
-                extra.append(esc(a["location"]))
-            if a.get("bring"):
-                extra.append("Bring: " + esc(a["bring"]))
-            if a.get("note"):
-                extra.append(esc(a["note"]))
-            tent = '<span class="tent">tentative</span>' if a.get("tentative") else ""
-            grp = YOUTH_GROUP_LABEL.get(a.get("group"), "")
-            lines.append(
-                f'<div class="yl{" none" if none else ""}"><span class="yt">{esc(a.get("title"))}{tent}</span>'
-                f'<span class="yg">{esc(grp)}</span>'
-                f'{f"<span class=yw>{esc(when)}</span>" if when else ""}'
-                f'{chips(m, a["who"])}'
-                f'{f"<span class=yx>{chr(32).join(extra)}</span>" if extra else ""}</div>')
-            # later strip entry
-            short = esc(a.get("title")) + (" (tentative)" if a.get("tentative") else "")
-            later.append(f'<span class="yli{" none" if none else ""}" data-date="{day_s}"><b>{DOW[day.weekday()]} {day:%b} {day.day}</b> '
-                         f'{short}{chips(m, a["who"])}</span>')
-        rows.append(f'<div class="yday" data-date="{day_s}"><div class="yd"><span class="ydn">{DOW[day.weekday()]}</span> '
-                    f'{day:%b} {day.day}<span class="rel"></span></div><div class="yls">{"".join(lines)}</div></div>')
-    empty = '<div class="yempty">Nothing listed for the next 7 days</div>'
-    note = esc(y.get("note", ""))
-    return (f'<div class="yrows">{"".join(rows)}{empty}</div>'
-            f'<div class="ylater"><span class="lbl">Later</span>{"".join(later)}</div>'
-            )
+                when = "time TBA"
+            tent = " ?" if a.get("tentative") and not a.get("title", "").endswith("?") else ""
+            its.append(f'<span class="yit{" none" if none else ""}" data-date="{a["date"]}"><b>{DOW[day.weekday()]} {day.day}</b> '
+                       f'{esc(a.get("title"))}{tent}{f"<i>{esc(when)}</i>" if when else ""}</span>')
+        return "".join(its)
+
+    rows = []
+    for b in boys:
+        kid = next((k for k in m.kids if k["id"] == b), {})
+        name = kid.get("name", b.title())
+        its = row_items(lambda a, b=b: b in a.get("who", []) and not is_shared(a))
+        rows.append(f'<div class="yrow p-{esc(b)}"><span class="yname">{esc(name)}</span>'
+                    f'<span class="yq">{esc(quorum.get(b, ""))}</span><span class="yits">{its}'
+                    f'<span class="ynone">Nothing listed</span></span></div>')
+    if shared:
+        # activities for everyone (e.g. all-youth firesides) get one shared line instead of repeating per boy
+        its = row_items(is_shared)
+        rows.append(f'<div class="yrow both"><span class="yname">Both</span><span class="yq">All youth</span>'
+                    f'<span class="yits">{its}<span class="ynone">Nothing listed</span></span></div>')
+    # Later: one entry per (date, title), chips for who
+    later, seen = [], set()
+    for a in acts:
+        key = (a["date"], a.get("title"))
+        if key in seen:
+            continue
+        seen.add(key)
+        day = d(a["date"])
+        none = a.get("kind") == "none"
+        if none and a.get("group") != "all_youth":
+            continue
+        short = esc(SHORT_RE.sub("", a.get("title") or ""))
+        tent = " ?" if a.get("tentative") and not short.endswith("?") else ""
+        who = a.get("who", [])
+        later.append(f'<span class="yli{" none" if none else ""}" data-date="{a["date"]}"><b>{DOW[day.weekday()]} {day:%b} {day.day}</b> '
+                     f'{short}{tent}{chips(m, who) if len(who) < len(boys) else ""}</span>')
+    return (f'<div class="yrows">{"".join(rows)}</div>'
+            f'<div class="ylater"><span class="lbl">Later</span>{"".join(later)}</div>')
 
 
 def render_spiritual(m: Model) -> str:
+    """Compact: CFM = title, dates · reading, ONE featured question. FSY = topic + today's tip.
+    Extra JSON content (summary, other questions, focus, quote, previous lesson) is kept but not rendered."""
     sp = m.data.get("spiritual", {}) or {}
     cfm = sp.get("come_follow_me", {}) or {}
     fsy = sp.get("strength_of_youth", {}) or {}
     pending_cfm = cfm.get("status") == "pending" or not cfm.get("reading")
-    qs = "".join(f"<li>{esc(q)}</li>" for q in (cfm.get("questions") or [])[:3])
-    prev = cfm.get("previous") or {}
-    prev_html = ""
-    if prev.get("title"):
-        # one-liner for the lesson still in progress; JS hides it on/after show_before
-        prev_html = (f'<div class="sp-prev" data-before="{esc(prev.get("show_before", ""))}"><span class="lbl">Finishing</span>'
-                     f'{esc(prev.get("dates_label", ""))} \u00b7 {esc(prev.get("title"))} ({esc(prev.get("reading", ""))})</div>')
-    cfm_html = f'''
-<div class="sp-block{' pending' if pending_cfm else ''}">
-  <div class="sp-k">{ICONS["book"]}Come, Follow Me{f' <span class="sp-wk">{esc(cfm.get("dates_label"))}</span>' if cfm.get("dates_label") else ''}</div>
-  <div class="sp-title">{esc(cfm.get("title") or "This week's lesson is on its way")}</div>
-  {f'<div class="sp-read"><span class="lbl">Read</span>{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else ''}
-  {f'<div class="sp-sum">{esc(cfm.get("summary"))}</div>' if cfm.get("summary") else ''}
-  {f'<ol class="sp-q">{qs}</ol>' if qs else ''}
-  {prev_html}
-</div>'''
-    pending_fsy = fsy.get("status") == "pending" or not fsy.get("focus")
+    qs = cfm.get("questions") or []
+    fi = cfm.get("featured_question", 0)
+    q = qs[fi] if isinstance(fi, int) and 0 <= fi < len(qs) else (qs[0] if qs else "")
+    meta = " \u00b7 ".join(x for x in (cfm.get("dates_label"), cfm.get("reading")) if x)
+    cfm_html = (f'<div class="sp-block{" pending" if pending_cfm else ""}">'
+                f'<div class="sp-k">{ICONS["book"]}Come, Follow Me'
+                f'{f"<span class=sp-wk>{esc(meta)}</span>" if meta else ""}</div>'
+                f'<div class="sp-title">{esc(cfm.get("title") or "This week&#39;s lesson is on its way")}</div>'
+                f'{f"<div class=sp-q1><span class=lbl>Discuss</span>{esc(q)}</div>" if q else ""}</div>')
+    pending_fsy = fsy.get("status") == "pending" or not fsy.get("topic")
     daily = fsy.get("daily_by_weekday") or {}
     daily_html = "".join(
         f'<div class="sp-daily-d" data-dow="{esc(k[:3].title())}"><span class="lbl">Today</span>{esc(v)}</div>'
         for k, v in daily.items())
     if fsy.get("daily_application"):
         daily_html += f'<div class="sp-daily-all"><span class="lbl">Try today</span>{esc(fsy["daily_application"])}</div>'
-    fsy_html = f'''
-<div class="sp-block{' pending' if pending_fsy else ''}">
-  <div class="sp-k">{ICONS["star"]}For the Strength of Youth{f' <span class="sp-wk">{esc(fsy.get("label"))}</span>' if fsy.get("label") else ''}</div>
-  <div class="sp-title">{esc(fsy.get("topic") or "This week's focus is on its way")}</div>
-  {f'<div class="sp-focus">{esc(fsy.get("focus"))}</div>' if fsy.get("focus") else ''}
-  {f'<div class="sp-quote">{esc(fsy.get("quote"))}</div>' if fsy.get("quote") else ''}
-  {f'<div class="sp-daily">{daily_html}</div>' if daily_html else ''}
-</div>'''
+    lbl = fsy.get("label") or ""
+    fsy_html = (f'<div class="sp-block{" pending" if pending_fsy else ""}">'
+                f'<div class="sp-k">{ICONS["star"]}Strength of Youth'
+                f'{f"<span class=sp-wk>{esc(lbl)}</span>" if lbl else ""}</div>'
+                f'<div class="sp-title">{esc(fsy.get("topic") or "This month&#39;s chapter is on its way")}</div>'
+                f'{f"<div class=sp-daily>{daily_html}</div>" if daily_html else ""}</div>')
     return cfm_html + fsy_html
 
 
 def render_todos(m: Model) -> str:
+    """Heads-up: one line each, no detail; JS shows at most 3 (soonest due first)."""
+    todos = [t for t in (m.data.get("todos", []) or []) if not t.get("done")]
+    prio = {"high": 0, "normal": 1, "low": 2}
+    todos.sort(key=lambda t: (prio.get(t.get("priority", "normal"), 1), t.get("due") or "9999"))
     rows = []
-    for t in m.data.get("todos", []) or []:
-        if t.get("done"):
-            continue
+    for t in todos:
         due = ""
         if t.get("due"):
             dd = d(t["due"])
             due = f'<span class="due">by {DOW[dd.weekday()]} {dd:%b} {dd.day}</span>'
         rows.append(
             f'<li class="todo pr-{esc(t.get("priority", "normal"))}" data-until="{esc(t.get("hide_after", ""))}">'
-            f'<span class="box"></span><div class="tw"><div class="tt">{esc(t.get("text"))}</div>'
-            f'<div class="td">{esc(t.get("detail", ""))}{due}</div></div>'
-            f'<div class="who">{chips(m, t.get("who", []))}</div></li>')
+            f'<span class="box"></span><span class="tt">{esc(t.get("text"))}</span>{due}'
+            f'<span class="who">{chips(m, t.get("who", []))}</span></li>')
     if not rows:
         return '<li class="todo none">All clear \u2014 nothing pending.</li>'
     return "".join(rows) + '<li class="todo none hidden-default">All clear \u2014 nothing pending.</li>'
@@ -601,6 +603,7 @@ def build(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> st
         "WEEK_START": m.week_start.isoformat(),
         "WEEK_END": m.week_end.isoformat(),
         "WEEK_LABEL": esc(week_label(m.week_start)),
+        "MOTTO": (f'<div class="motto">{esc(meta.get("motto"))}</div>' if meta.get("motto") else ""),
         "REST": rest_html,
         "STATUS_BAR": "default" if meta.get("theme", "light") == "light" else "black-translucent",
         "THEME_COLOR": "#ffffff" if meta.get("theme", "light") == "light" else "#15120f",
