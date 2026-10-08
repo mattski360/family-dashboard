@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T11:21:14-06:00",
+    "last_updated": "2026-10-08T11:22:17-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
@@ -317,20 +317,6 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
-    },
-    {
-      "id": "fam-20261014-dl3894",
-      "date": "2026-10-14",
-      "start": "16:59",
-      "end": "18:31",
-      "title": "Flight Phoenix → Los Angeles",
-      "note": "Delta DL 3894",
-      "who": [
-        "parents"
-      ],
-      "priority": "normal",
-      "kind": "flight",
-      "source": "family"
     },
     {
       "id": "cga-20261015-fall-break",
