@@ -60,6 +60,11 @@ Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use play
     "daily_application": "…", "daily_by_weekday": {"Mon": "…", "Tue": "…"}, "source_url": "…"}
 }
 ```
+Optional fields:
+* `come_follow_me.previous`: `{show_before, dates_label, title, reading}` renders a one-line "Finishing …" note for the lesson still in progress. It hides automatically on or after `show_before`.
+* `strength_of_youth.label`: for example "October chapter".
+* `strength_of_youth.quote`: a short line quoted from the guide.
+
 When `status` is `"pending"`, or there is no reading (CFM) or focus (FSY), the card shows the placeholder title in muted italics with a pulsing dot. `daily_by_weekday` (Mon to Sun) shows only today's entry. Without it, `daily_application` is shown.
 
 ## School feed filtering (fetch_school.py)
@@ -84,4 +89,4 @@ The default window is **21 days**, so a weekly run still fills the 7-day view pl
 * Raw sheet exports (`data/youth_sheet*`) are git-ignored, so they are never published.
 
 ## Fitting on screen
-The page uses the largest text size that fits on one screen. It never goes below about 13px in portrait (820×1180) or 12.4px in landscape. If the content still doesn't fit at that size, the page scrolls vertically instead of shrinking further.
+The page uses the largest text size that fits on one screen. It never goes below about 13px in portrait (820×1180) or 12.4px in landscape. If the content still doesn't fit at that size, the page scrolls vertically instead of shrinking further. On the wall it scrolls itself gently: it holds at the top for 40 seconds, glides down, holds for 20 seconds, then glides back. Any touch pauses this for 2 minutes.

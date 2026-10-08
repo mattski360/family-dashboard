@@ -517,6 +517,12 @@ def render_spiritual(m: Model) -> str:
     fsy = sp.get("strength_of_youth", {}) or {}
     pending_cfm = cfm.get("status") == "pending" or not cfm.get("reading")
     qs = "".join(f"<li>{esc(q)}</li>" for q in (cfm.get("questions") or [])[:3])
+    prev = cfm.get("previous") or {}
+    prev_html = ""
+    if prev.get("title"):
+        # one-liner for the lesson still in progress; JS hides it on/after show_before
+        prev_html = (f'<div class="sp-prev" data-before="{esc(prev.get("show_before", ""))}"><span class="lbl">Finishing</span>'
+                     f'{esc(prev.get("dates_label", ""))} \u00b7 {esc(prev.get("title"))} ({esc(prev.get("reading", ""))})</div>')
     cfm_html = f'''
 <div class="sp-block{' pending' if pending_cfm else ''}">
   <div class="sp-k">{ICONS["book"]}Come, Follow Me{f' <span class="sp-wk">{esc(cfm.get("dates_label"))}</span>' if cfm.get("dates_label") else ''}</div>
@@ -524,6 +530,7 @@ def render_spiritual(m: Model) -> str:
   {f'<div class="sp-read"><span class="lbl">Read</span>{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else ''}
   {f'<div class="sp-sum">{esc(cfm.get("summary"))}</div>' if cfm.get("summary") else ''}
   {f'<ol class="sp-q">{qs}</ol>' if qs else ''}
+  {prev_html}
 </div>'''
     pending_fsy = fsy.get("status") == "pending" or not fsy.get("focus")
     daily = fsy.get("daily_by_weekday") or {}
@@ -534,9 +541,10 @@ def render_spiritual(m: Model) -> str:
         daily_html += f'<div class="sp-daily-all"><span class="lbl">Try today</span>{esc(fsy["daily_application"])}</div>'
     fsy_html = f'''
 <div class="sp-block{' pending' if pending_fsy else ''}">
-  <div class="sp-k">{ICONS["star"]}For the Strength of Youth</div>
+  <div class="sp-k">{ICONS["star"]}For the Strength of Youth{f' <span class="sp-wk">{esc(fsy.get("label"))}</span>' if fsy.get("label") else ''}</div>
   <div class="sp-title">{esc(fsy.get("topic") or "This week's focus is on its way")}</div>
-  {f'<div class="sp-sum">{esc(fsy.get("focus"))}</div>' if fsy.get("focus") else ''}
+  {f'<div class="sp-focus">{esc(fsy.get("focus"))}</div>' if fsy.get("focus") else ''}
+  {f'<div class="sp-quote">{esc(fsy.get("quote"))}</div>' if fsy.get("quote") else ''}
   {f'<div class="sp-daily">{daily_html}</div>' if daily_html else ''}
 </div>'''
     return cfm_html + fsy_html

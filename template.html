@@ -208,21 +208,27 @@ body.scroll{height:auto;overflow:auto}
 .todo.none{display:block;color:var(--faint);font-style:italic;font-size:.9rem}
 .todo.hidden-default{display:none}
 .todo.gone{display:none}
-.sp-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:.6rem}
+.sp-wrap{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(0,1fr);gap:.55rem}
 .sp-block{background:var(--card2);border:1px solid var(--line);border-radius:.75rem;padding:.42rem .65rem}
 .sp-k{display:flex;align-items:center;gap:.4rem;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .sp-k svg{color:var(--accent)}
 .sp-wk{margin-left:auto;font-weight:650;letter-spacing:.03em;text-transform:none;color:var(--faint)}
-.sp-title{font-size:1.08rem;font-weight:720;margin:.2rem 0 .15rem;line-height:1.22}
+.sp-title{font-size:1.08rem;font-weight:720;margin:.12rem 0 .1rem;line-height:1.22}
 .sp-read{font-size:.88rem;margin:.15rem 0}
 .sp-read .lbl,.sp-daily .lbl{margin-right:.4rem}
 .sp-sum{font-size:.85rem;color:var(--muted);line-height:1.3}
-.sp-q{margin:.3rem 0 0 1.15rem;font-size:.86rem;line-height:1.3}
-.sp-q li{margin:.12rem 0}
+.sp-q{margin:.2rem 0 0 1.1rem;font-size:.86rem;line-height:1.28}
+.sp-q li{margin:.04rem 0}
 .sp-daily{font-size:.88rem;margin-top:.25rem;line-height:1.3}
 .sp-daily-d{display:none}
 .sp-daily-d.on{display:block}
 .sp-daily-d.on ~ .sp-daily-all{display:none}
+.sp-focus{font-size:.9rem;font-weight:650;line-height:1.28}
+.sp-quote{font-size:.82rem;color:var(--muted);font-style:italic;line-height:1.28;margin-top:.1rem}
+.sp-prev{font-size:.72rem;color:var(--faint);margin-top:.2rem;padding-top:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px dashed var(--line);line-height:1.25}
+.sp-prev .lbl{margin-right:.35rem}
+.sp-prev.gone{display:none}
+.sp-daily-d .lbl{color:var(--accent)}
 .sp-wait{font-size:.78rem;color:var(--faint);font-style:italic}
 .pending .sp-title{color:var(--muted);font-weight:600;font-style:italic}
 .pending .sp-title::before{content:"";display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent);margin-right:.45rem;vertical-align:.12em;animation:pulse 2.4s ease-in-out infinite}
@@ -362,6 +368,7 @@ footer.foot{display:none}
     var visible=0;
     each('[data-until]',function(el){var u=el.getAttribute('data-until');var gone=!!u&&u<today;el.classList.toggle('gone',gone);if(!gone&&el.classList.contains('todo'))visible++;});
     each('.todo.hidden-default',function(el){el.style.display=visible?'none':'block';});
+    each('[data-before]',function(el){var b=el.getAttribute('data-before');el.classList.toggle('gone',!!b&&today>=b);});
     var dow=dowOf(today);
     each('.sp-daily-d',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow);});
     // stale?
@@ -393,6 +400,21 @@ footer.foot{display:none}
       if(app.scrollHeight<=avail())lo=mid;else hi=mid;}
     html.style.fontSize=lo+'px'; app.classList.add('fitted'); B.setAttribute('data-fs',lo.toFixed(2)+'|'+W+'x'+H);
   }
+  // gentle auto-scroll on the wall when content is taller than the screen:
+  // hold at top 40s -> glide down -> hold 20s -> glide back. Any touch pauses it for 2 minutes.
+  var paused=0, atTop=true, tAuto=null;
+  function glide(to,ms){var from=window.pageYOffset,t0=null;function step(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/ms);
+    var e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo(0,from+(to-from)*e);if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);}
+  function autoScroll(){clearTimeout(tAuto);
+    if(!B.classList.contains('scroll')){if(window.pageYOffset)window.scrollTo(0,0);atTop=true;tAuto=setTimeout(autoScroll,30000);return;}
+    if(Date.now()<paused){tAuto=setTimeout(autoScroll,10000);return;}
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    if(atTop){glide(max,6000);atTop=false;tAuto=setTimeout(autoScroll,26000);}
+    else{glide(0,4000);atTop=true;tAuto=setTimeout(autoScroll,44000);}
+  }
+  ['touchstart','mousedown','wheel'].forEach(function(ev){window.addEventListener(ev,function(){paused=Date.now()+120000;},{passive:true});});
+  tAuto=setTimeout(autoScroll,40000);
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
   window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
   var lp=parts(new Date());

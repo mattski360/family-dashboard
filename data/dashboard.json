@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T08:26:47-06:00",
+    "last_updated": "2026-10-08T08:34:35-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
@@ -582,22 +582,47 @@
   ],
   "spiritual": {
     "come_follow_me": {
-      "status": "pending",
-      "week_of": null,
-      "dates_label": "",
-      "title": "Loading this week's lesson…",
-      "reading": "",
-      "summary": "",
-      "questions": [],
-      "source_url": ""
+      "status": "ready",
+      "week_of": "2026-10-12",
+      "lesson": 42,
+      "dates_label": "Oct 12–18",
+      "title": "“The Redeemer Shall Come to Zion”",
+      "reading": "Isaiah 58–66",
+      "summary": "Fasting brings spiritual power and blesses people in need, and the Sabbath can be “a delight” (Isa. 58). Jesus read Isaiah 61 in Nazareth to declare He is the Redeemer who gives “beauty for ashes.”",
+      "questions": [
+        "Why do we fast, and who can our fast offering help? (58:6–7)",
+        "What would make Sunday more of “a delight” for us? (58:13–14)",
+        "How has Jesus given us “beauty for ashes”? (61:1–3)"
+      ],
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/42?lang=eng",
+      "previous": {
+        "show_before": "2026-10-11",
+        "lesson": 41,
+        "dates_label": "Oct 5–11",
+        "title": "“He Hath Borne Our Griefs, and Carried Our Sorrows”",
+        "reading": "Isaiah 50–57",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/41?lang=eng"
+      }
     },
     "strength_of_youth": {
-      "status": "pending",
-      "topic": "Loading this week's focus…",
-      "focus": "",
+      "status": "ready",
+      "label": "October chapter",
+      "month": "2026-10",
+      "topic": "Ch. 10: Your body is sacred",
+      "focus": "“Treat your body—and others’ bodies—with respect.”",
+      "quote": "Ask yourself, “Am I honoring my body as a sacred gift from God?”",
       "daily_application": "",
-      "daily_by_weekday": {},
-      "source_url": ""
+      "daily_by_weekday": {
+        "Sun": "Sabbath rest: recharge body and spirit; no screens at dinner.",
+        "Mon": "Phone out of the bedroom tonight; aim for 8–10 hours of sleep.",
+        "Tue": "Fuel up with water and real food; skip energy drinks.",
+        "Wed": "No vaping or harmful substances—your body is a temple.",
+        "Thu": "Choose uplifting media; scroll past anything that drags you down.",
+        "Fri": "Respect others’ bodies: no body-shaming jokes or comments.",
+        "Sat": "Get moving outside, and ask Christ for strength with a hard habit."
+      },
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/10-your-body-is-sacred?lang=eng",
+      "lesson_plan_url": "https://www.churchofjesuschrist.org/study/ftsoy/2026/10/fsy-lessons/00-intro?lang=eng"
     }
   },
   "academics": {
