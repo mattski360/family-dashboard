@@ -142,20 +142,22 @@ Portrait 820×1180 is the target. It uses the same light theme, colors and chips
 * `body[data-fs]` reports the result, for example `p1:18.11 p2:17.56 820x1180`.
 
 ## Version 3 (`v3/index.html`, two soft pages)
-Built from mockup B. Portrait 820×1180 is the target; light white theme, rounded type (SF Pro Rounded on iPad), the motto under "Jensen Family", and a small "Updated …" line under the clock on page 1 (amber "needs refresh" when stale).
+Built from mockup B. Portrait 820×1180 is the target; light white theme, rounded type (SF Pro Rounded on iPad). Both pages share the same header: "Jensen Family" + motto on the left; clock, a large date ("**Thursday**, October 8", weekday in amber) and a small "Updated …" line on the right (amber "needs refresh" when stale). The header uses the smaller of the two pages' fitted sizes so it looks identical on both.
 
 **Page 1 – Today**
 * One pastel card per kid (Luke blue, Wyatt green, Tanner orange) with name, grade and quorum. Today's items each get an icon bubble: school status (school day / no school with reason / half day with "Term N ends" folded in / Wyatt's Lehi campus day with times plus his packing note / online day), the kid's own and shared events (time and note on a small line), and youth activities ("Young Men" / "All youth"). Weekends with nothing show "Free day". A small **Tomorrow** box sits at the bottom of each card.
 * A slim lavender **Parents** strip appears only when parents-only items (flights, away days) fall today or tomorrow.
-* **Come, Follow Me**: dates, title, reading, and the featured question (with its verse reference). **Strength of Youth**: chapter title, "Ch. N · label", today's tip and tomorrow's tip.
-* **Heads-up**: up to 4 open to-dos in a 2-column grid, each with a due pill (Today / Tomorrow / weekday / date); hidden after `hide_after`.
+* **Young Men** (2-column grid): Teachers / Deacons / All youth for the next 7 days, then a "Later" row (next two items in the following 14 days).
+* **Come, Follow Me**: dates, lesson title and reading, then a white **Today** box with today's scripture reference, a short quote and a thought from `come_follow_me.daily`. **Strength of Youth**: chapter title, "Ch. N · label", today's tip large in a white box, tomorrow's tip small underneath.
+* (No Heads-up section in v3; to-dos still show in v1 and v2.)
+
+**Daily spiritual items** – `spiritual.come_follow_me.daily` is a Mon–Sun list (`{"dow": "Mon", "scripture": "Isaiah 58:6–7", "quote": "…", "thought": "…"}`) for the CFM week in `week_of`; `strength_of_youth.daily_by_weekday` has one tip per weekday. All seven of each are rendered with `data-dow` and the page's `applyDay()` shows the one matching the iPad's date (America/Denver), so they advance each morning without a rebuild. If no CFM item matches today, the featured question is shown instead. **Replace `daily` on every Saturday refresh** with the next lesson's queue (and `daily_by_weekday` when the FSY chapter changes monthly).
 
 **Page 2 – This week**
-* Ten colourful day tiles starting today (Thu Oct 8 → Sat Oct 17 style). Each item gets an icon and a short label: kid-coloured when it's one kid, yellow with kid-colour dots when shared. No-school and half-day show as red / yellow items with dots; a weekday when every kid is on a break becomes a big mint "Fall break" tile. Up to 4 items per tile, then "+N more". Away days carry a lavender state tag (trip titles are reduced to "Arizona" / "California").
-* **Young Men**: Teachers / Deacons / All youth rows for the next 7 days, then a "Later" row (next two items in the following 14 days).
-* **Grades**: one row per kid, "coming soon" until real data exists (never invented), plus a note with the next "Term N ends" / "grades posted" dates.
+* Ten colourful day tiles starting today (Thu Oct 8 → Sat Oct 17 style), now using the full page height. Each item gets an icon and a short label: kid-coloured when it's one kid, yellow with kid-colour dots when shared. No-school and half-day show as red / yellow items with dots; a weekday when every kid is on a break becomes a big mint "Fall break" tile. Up to 6 items per tile, then "+N more". Away days carry a lavender state tag (trip titles are reduced to "Arizona" / "California").
+* **Grades** strip: one pill per kid, "coming soon" until real data exists (never invented), plus a note with the next "Term N ends" / "grades posted" dates.
 
-**Rotation & fitting** – same behaviour as v2: crossfade every `meta.v3_rotate_seconds` (falls back to `v2_rotate_seconds`, default 30); tap switches page and pauses 2 minutes with a "Paused (m:ss) · tap to resume" pill; progress bar; state in `localStorage` (`dash-v3-rot`). Sizes are authored in rem (1rem = 1/18 of the mockup's px) and auto-fit per page between 15px and 21px (portrait); `body[data-fs]` reports the result. The top padding clears the iPad status bar and the page-dot footer is a solid white strip, so nothing sits under it.
+**Rotation & fitting** – same behaviour as v2: crossfade every `meta.v3_rotate_seconds` (falls back to `v2_rotate_seconds`, default 30); tap switches page and pauses 2 minutes with a "Paused (m:ss) · tap to resume" pill; progress bar; state in `localStorage` (`dash-v3-rot`). Sizes are authored in rem (1rem = 1/18 of the mockup's px) and auto-fit per page between 15px and 21px (portrait), and page 2 also stops growing before a tile label's longest word would be wider than its tile; `body[data-fs]` reports the result. The top padding clears the iPad status bar and the page-dot footer is a solid white strip, so nothing sits under it.
 
 **Surprise guard** – `data/private_hide.txt` (git-ignored) filters events, to-dos and youth items for every version. v3 also checks its finished HTML for those terms and refuses to write `v3/index.html` (exit 3) if any slip through.
 

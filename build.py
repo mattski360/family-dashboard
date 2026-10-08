@@ -888,8 +888,9 @@ def build_v2(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
 
 # ------------------------------------------------------------------ v3 (two soft pages)
 # v3/index.html: pastel rounded cards, bigger icons, less chrome. Page 1 "Today" = a colour-coded card per kid
-# (today's items + a small Tomorrow box), Come Follow Me + Strength of Youth, heads-up. Page 2 "This week" =
-# 10 colourful day tiles starting today, Young Men, grades. Everything is rendered for the whole date range and
+# (today's items + a small Tomorrow box), parents strip, Young Men, Come Follow Me (today's scripture from
+# come_follow_me.daily) + Strength of Youth (today's tip). Page 2 "This week" = 10 large day tiles starting today
+# (up to 6 items each) and a grades strip. Everything is rendered for the whole date range and
 # the inline script picks today/tomorrow/the 10 tiles from the viewing date (America/Denver), like v2.
 
 V3_ICON_RULES = [
@@ -1108,7 +1109,14 @@ def render_v3_parents(m: Model) -> str:
     return "".join(out)
 
 
+def v3_dow(k) -> str:
+    return str(k or "")[:3].title()
+
+
 def render_v3_spirit(m: Model) -> str:
+    """CFM: week's lesson title + reading, then TODAY's scripture/thought from come_follow_me.daily (one element per
+    weekday with data-dow; JS shows the one matching the iPad's date). Falls back to the featured question when no
+    daily queue is loaded. FSY: chapter + today's tip (large) and tomorrow's tip from daily_by_weekday."""
     sp = m.data.get("spiritual", {}) or {}
     cfm = sp.get("come_follow_me", {}) or {}
     fsy = sp.get("strength_of_youth", {}) or {}
@@ -1122,29 +1130,42 @@ def render_v3_spirit(m: Model) -> str:
         q, ref = mo.group(1), mo.group(2)
     dates = cfm.get("dates_label") or ""
     dates_s = f" \u00b7 {esc(dates)}" if dates else ""
+    daily = [x for x in (cfm.get("daily") or []) if isinstance(x, dict) and x.get("dow")] if not pending_cfm else []
+    fallback = (f'<div class="sq">{esc(q)}{f" <i>{esc(ref)}</i>" if ref else ""}</div>' if q else "")
+    cfd = ""
+    if daily:
+        boxes = []
+        for x in daily:
+            quote = (x.get("quote") or "").strip()
+            body = (f'<div class="cq">\u201c{esc(quote)}\u201d</div>' if quote else "") + \
+                   (f'<div class="ct">{esc(x.get("thought"))}</div>' if x.get("thought") else "")
+            sref = esc(x.get("scripture") or "")
+            boxes.append(f'<div class="tbox cfd" data-dow="{esc(v3_dow(x["dow"]))}"><div class="tk">Today'
+                         f'{f" <span>{sref}</span>" if sref else ""}</div>{body}</div>')
+        # no item for today's weekday -> show the featured question instead
+        cfd = "".join(boxes) + (f'<div class="cfd-none">{fallback}</div>' if fallback else "")
     cfm_html = (f'<div class="sc cfm{" pending" if pending_cfm else ""}">'
                 f'<div class="sk"><span class="bub">{ic("book")}</span>Come, Follow Me{dates_s}</div>'
                 f'<div class="stt">{esc(cfm.get("title") or CFM_WAIT)}</div>'
                 + (f'<div class="srd">{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else "")
-                + (f'<div class="sq">{esc(q)}{f" <i>{esc(ref)}</i>" if ref else ""}</div>' if q else "") + "</div>")
+                + (cfd or fallback) + "</div>")
     pending_fsy = fsy.get("status") == "pending" or not fsy.get("topic")
     topic = fsy.get("topic") or "This month\u2019s chapter is on its way"
     chap = ""
     mo = re.match(r"^(ch(?:apter)?\.?\s*\d+)\s*:\s*(.+)$", topic, re.I)
     if mo:
         chap, topic = mo.group(1), mo.group(2)
-    daily = fsy.get("daily_by_weekday") or {}
+    tipmap = fsy.get("daily_by_weekday") or {}
     tips = ""
-    if daily:
-        t0 = "".join(f'<span class="tip" data-dow="{esc(k[:3].title())}">{esc(v)}</span>' for k, v in daily.items())
-        tips = (f'<div class="sq t-today"><b>Today</b>{t0}</div>'
+    if tipmap and not pending_fsy:
+        t0 = "".join(f'<span class="tip" data-dow="{esc(v3_dow(k))}">{esc(v)}</span>' for k, v in tipmap.items())
+        tips = (f'<div class="tbox t-today"><div class="tk">Try today</div><div class="ft">{t0}</div></div>'
                 f'<div class="sq t-tmrw"><b>Tomorrow</b>{t0}</div>')
     elif fsy.get("daily_application"):
-        tips = f'<div class="sq"><b>Try today</b>{esc(fsy["daily_application"])}</div>'
-    lbl_s = ""
+        tips = f'<div class="tbox"><div class="tk">Try today</div><div class="ft">{esc(fsy["daily_application"])}</div></div>'
     sub = " \u00b7 ".join(x for x in (chap, fsy.get("label")) if x)
     fsy_html = (f'<div class="sc fsy{" pending" if pending_fsy else ""}">'
-                f'<div class="sk"><span class="bub">{ic("star")}</span>Strength of Youth{lbl_s}</div>'
+                f'<div class="sk"><span class="bub">{ic("star")}</span>Strength of Youth</div>'
                 f'<div class="stt">{esc(topic)}</div>'
                 + (f'<div class="srd">{esc(sub)}</div>' if sub else "") + f'{tips}</div>')
     return cfm_html + fsy_html
@@ -1224,7 +1245,7 @@ def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
     if big and len(ents) <= 1:
         body = f'<div class="big {"p-leaf" if "break" in big.lower() else "p-red"}">{ic("leaf" if "break" in big.lower() else "x")}{esc(big)}</div>'
     elif ents:
-        MAX = 4
+        MAX = 6                                    # v3 page 2 has the full height for tiles now (Young Men moved to page 1)
         hs = [h for _, h in ents]
         more = f'<div class="more">+{len(hs) - MAX} more</div>' if len(hs) > MAX else ""
         body = f'<div class="ev">{"".join(hs[:MAX if len(hs) > MAX else len(hs)])}{more}</div>'
@@ -1318,7 +1339,6 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "KIDS": render_v3_kids(m),
         "PARENTS": render_v3_parents(m),
         "SPIRIT": render_v3_spirit(m),
-        "TODOS": render_v3_todos(m),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
         "YOUTH": render_v3_youth(m),
         "YOUTH_DAYS": esc((m.data.get("youth") or {}).get("days", 7)),

@@ -50,13 +50,15 @@ body{position:fixed;inset:0;font-family:ui-rounded,"SF Pro Rounded","Nunito",-ap
 
 /* header (both pages) */
 header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+header .hl{flex:1 1 auto;min-width:0}
 .fam{font-size:1.75rem;font-weight:800;letter-spacing:-.01em;line-height:1.1}
-.motto{margin-top:.2rem;font-size:.92rem;font-weight:600;color:#C08A2E;max-width:25rem;line-height:1.3;text-wrap:balance}
+.motto{margin-top:.2rem;font-size:.92rem;font-weight:600;color:#C08A2E;max-width:24rem;line-height:1.3;text-wrap:balance}
 .clk{text-align:right;flex:none}
 .time{font-size:3.45rem;font-weight:300;line-height:1;letter-spacing:-.03em}
 .time small{font-size:1.22rem;font-weight:600;color:var(--muted);margin-left:.33rem;letter-spacing:0}
-.date{font-size:1.06rem;font-weight:700;color:var(--muted);margin-top:.22rem}
-.upd{margin-top:.2rem;font-size:.72rem;font-weight:700;color:var(--faint)}
+.date{font-size:1.85rem;font-weight:800;color:var(--text);margin-top:.3rem;line-height:1.1;letter-spacing:-.01em;white-space:nowrap}
+.date b{font-weight:800;color:#C08A2E}
+.upd{margin-top:.3rem;font-size:.72rem;font-weight:700;color:var(--faint)}
 .upd .stale{display:none;color:#B4620C;background:#FFF1D6;border-radius:99px;padding:.05rem .45rem;margin-left:.3rem}
 body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .h{display:flex;align-items:baseline;gap:.67rem;font-size:1.39rem;font-weight:800;margin-bottom:-.3rem}
@@ -112,22 +114,20 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .sq b{display:inline-block;font-size:.67rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#B2477A;margin-right:.4rem}
 .sq.t-tmrw{font-size:.9rem} .sq.t-tmrw b{color:var(--faint)}
 .tip{display:none} .tip.on{display:inline}
+.tbox{background:rgba(255,255,255,.72);border-radius:1.1rem;padding:.7rem .9rem .75rem;margin-top:.4rem;display:flex;flex-direction:column;gap:.3rem}
+.cfd{display:none} .cfd.on{display:flex}
+.cfd-none{display:none} .cfd-none.on{display:block}
+.tk{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#B5651D}
+.tk span{margin-left:.35rem;font-size:.9rem;letter-spacing:.01em;text-transform:none}
+.fsy .tk{color:#B2477A}
+.cq{font-size:1.3rem;font-weight:800;line-height:1.22}
+.ct{font-size:1rem;font-weight:600;color:var(--muted);line-height:1.32}
+.ft{font-size:1.3rem;font-weight:800;line-height:1.24}
+.fsy .t-tmrw{margin-top:.3rem}
 .pending .stt{color:var(--muted);font-style:italic;font-weight:600}
 
-/* page 1: heads-up */
-.todo{background:var(--butter);border-radius:1.67rem;padding:1.1rem 1.3rem}
-.todo .sk{color:#A27508;margin-bottom:.55rem}
-.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.67rem .78rem}
-.td{display:flex;align-items:center;gap:.6rem;background:#fff;border-radius:1rem;padding:.75rem .9rem;font-size:1.05rem;font-weight:700;line-height:1.15;min-width:0}
-.td .ic{font-size:1.28rem;color:var(--dk)}
-.tdx{min-width:0;overflow-wrap:anywhere}
-.td .dt{margin-left:auto;font-size:.78rem;font-weight:800;color:var(--dk);background:var(--bg);border-radius:99px;padding:.22rem .55rem;white-space:nowrap;flex:none}
-.td.gone,.td.over{display:none}
-.td.none{display:none;color:var(--faint);grid-column:1/-1}
-.tgrid.empty .td.none{display:flex}
-
 /* page 2: day tiles */
-.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:1fr;gap:.67rem;flex:1.4 0 auto}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:1fr;gap:.67rem;flex:1 0 auto}
 .day{display:none;border-radius:1.45rem;background:#F6F7FA;padding:.78rem .67rem .67rem;flex-direction:column;min-width:0}
 .day.on{display:flex}
 .day.today{background:#FFF6DA;box-shadow:inset 0 0 0 3px #F4C548}
@@ -141,7 +141,7 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .e .bub{width:2rem;height:2rem;border-radius:.72rem}
 .e .bub .ic{font-size:1.1rem}
 .et{min-width:0;overflow-wrap:anywhere}
-.el{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.el{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal}
 .et small{display:block;font-size:.72rem;color:var(--dk);font-weight:800}
 .dots{display:flex;gap:.17rem;margin-top:.17rem}
 .dots i{width:.5rem;height:.5rem;border-radius:50%;background:var(--c)}
@@ -152,10 +152,10 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .big .ic{font-size:2.9rem}
 .quiet{flex:1;display:grid;place-items:center;color:var(--faint);font-size:.83rem;font-weight:700;padding:.5rem 0}
 
-/* page 2: young men + grades */
-.row2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:.9rem;flex:1 0 auto}
+/* page 1: young men (full width) */
 .ym{background:var(--sky);border-radius:1.67rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
 .ym .sk{color:#3D6FB8;margin-bottom:.1rem}
+.ymg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
 .yr{display:flex;align-items:center;gap:.67rem;background:#fff;border-radius:1rem;padding:.55rem .67rem;font-size:.95rem;font-weight:700;min-width:0}
 .yr.none{display:none}
 .badge{background:var(--c);color:#fff;border-radius:.67rem;padding:.28rem .55rem;font-size:.78rem;font-weight:800;white-space:nowrap;min-width:5.1rem;text-align:center;flex:none}
@@ -165,13 +165,19 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .yi.none,.yi.ynone{color:var(--faint)}
 .yi small,.yl small{font-size:.72rem;color:var(--muted)}
 .yl .dots{display:inline-flex;margin:0 0 0 .3rem;vertical-align:.1em}
-.gr2{background:#F7F3FF;border-radius:1.67rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
-.gr2 .sk{color:var(--parents-dk);margin-bottom:.1rem}
+/* page 2: grades strip */
+.gr2{background:#F7F3FF;border-radius:1.67rem;padding:.8rem 1rem;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:.5rem .9rem;min-width:0}
+.gr2 .sk{color:var(--parents-dk)}
+.gs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;min-width:0}
 .g{display:flex;align-items:center;gap:.67rem;background:#fff;border-radius:1rem;padding:.5rem .67rem;font-size:.95rem;font-weight:800;color:var(--dk);min-width:0}
 .g .av{width:2.1rem;height:2.1rem;border-radius:.72rem;font-size:1.05rem;transform:none}
+.gs .g{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.6rem;row-gap:0;line-height:1.15}
+.gs .g .av{grid-row:span 2}
 .g .cs{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--muted);text-align:right}
+.gs .g .cs{margin-left:0;text-align:left;overflow-wrap:anywhere}
 .g .cs.soon{color:var(--faint)}
-.gnote{font-size:.78rem;font-weight:700;color:var(--muted);text-align:center;margin-top:auto;line-height:1.35}
+.gnote{grid-column:1/-1;font-size:.78rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.35}
+.gnote:empty{display:none}
 .gn{display:none} .gn.on{display:inline}
 .gn.on~.gn.on::before{content:" \00b7  "}
 
@@ -194,37 +200,32 @@ body.paused #prog{background:#C9A0FF}
 <!-- ====================== PAGE 1: TODAY ====================== -->
 <section class="page on" id="p1" data-name="Today">
   <header>
-    <div><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
+    <div class="hl"><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
     <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div>
       <div class="upd">Updated {{LAST_LABEL}}<span class="stale">needs refresh</span></div></div>
   </header>
   <div class="kids">{{KIDS}}</div>
   <div class="pstrip" id="pstrip"><span class="lab"><svg class="ic"><use href="#i-users"/></svg>Parents</span>{{PARENTS}}</div>
-  <div class="spirit">{{SPIRIT}}</div>
-  <div class="todo">
-    <div class="sk"><span class="bub"><svg class="ic"><use href="#i-bell"/></svg></span>Heads-up</div>
-    <div class="tgrid" id="tgrid">{{TODOS}}</div>
+  <div class="ym">
+    <div class="sk"><span class="bub"><svg class="ic"><use href="#i-users"/></svg></span>Young Men</div>
+    <div class="ymg">{{YOUTH}}</div>
   </div>
+  <div class="spirit">{{SPIRIT}}</div>
 </section>
 
 <!-- ====================== PAGE 2: THIS WEEK ====================== -->
 <section class="page" id="p2" data-name="This week">
   <header>
-    <div><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
-    <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
+    <div class="hl"><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
+    <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div>
+      <div class="upd">Updated {{LAST_LABEL}}<span class="stale">needs refresh</span></div></div>
   </header>
   <div class="h">This week <span id="range"></span></div>
   <div class="days">{{TILES}}</div>
-  <div class="row2">
-    <div class="ym">
-      <div class="sk"><span class="bub"><svg class="ic"><use href="#i-users"/></svg></span>Young Men</div>
-      {{YOUTH}}
-    </div>
-    <div class="gr2">
-      <div class="sk"><span class="bub"><svg class="ic"><use href="#i-cap"/></svg></span>Grades</div>
-      {{GRADES}}
-      <div class="gnote" id="gnote">{{GRADE_NOTES}}</div>
-    </div>
+  <div class="gr2">
+    <div class="sk"><span class="bub"><svg class="ic"><use href="#i-cap"/></svg></span>Grades</div>
+    <div class="gs">{{GRADES}}</div>
+    <div class="gnote" id="gnote">{{GRADE_NOTES}}</div>
   </div>
 </section>
 </div>
@@ -244,10 +245,10 @@ body.paused #prog{background:#C9A0FF}
   function each(sel,fn,root){Array.prototype.forEach.call((root||document).querySelectorAll(sel),fn);}
   function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
 
-  var lastDay=null, TILES=10, TODO_MAX=4;
+  var lastDay=null, TILES=10;
   function applyDay(today){
     var tmrw=addDays(today,1), dow=dowOf(today), dow1=dowOf(tmrw);
-    // page 1: kid cards, parents strip, Strength of Youth tips, heads-up
+    // page 1: kid cards, parents strip, Young Men, Come Follow Me daily scripture, Strength of Youth tips
     each('[data-d0]',function(el){el.classList.toggle('on',el.getAttribute('data-d0')===today);});
     each('[data-d1]',function(el){el.classList.toggle('on',el.getAttribute('data-d1')===tmrw);});
     // parents strip: today + tomorrow; tomorrow is skipped when it would only repeat today's trip tag
@@ -259,12 +260,9 @@ body.paused #prog{background:#C9A0FF}
     document.getElementById('pstrip').classList.toggle('none',!pc);
     each('.t-today .tip',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow);});
     each('.t-tmrw .tip',function(el){el.classList.toggle('on',el.getAttribute('data-dow')===dow1);});
-    var tv=0;
-    each('.td[data-until]',function(el){var u=el.getAttribute('data-until'),gone=!!u&&u<today;el.classList.toggle('gone',gone);
-      if(!gone){tv++;el.classList.toggle('over',tv>TODO_MAX);}});
-    document.getElementById('tgrid').classList.toggle('empty',!tv);
-    each('.td .dt',function(el){var d=el.getAttribute('data-due');
-      el.textContent=d<today?nice(d).slice(0,3):d===today?'Today':d===tmrw?'Tomorrow':(d<=addDays(today,6)?dowOf(d):nice(d).slice(4));});
+    // Come Follow Me: the week's queue (come_follow_me.daily) has one box per weekday; show today's, else the featured question
+    var cn=0; each('.cfd',function(el){var on=el.getAttribute('data-dow')===dow;el.classList.toggle('on',on);if(on)cn++;});
+    each('.cfd-none',function(el){el.classList.toggle('on',!cn);});
     // page 2: ten day tiles starting today
     var tend=addDays(today,TILES-1);
     each('.day',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=tend;el.classList.toggle('on',on);el.classList.toggle('today',d===today);
@@ -284,8 +282,8 @@ body.paused #prog{background:#C9A0FF}
   function tick(){
     var now=new Date(), p=parts(now);
     if(p.hour){var tm=p.hour+':'+p.minute+'<small>'+(p.dayPeriod||p.dayperiod||'')+'</small>';
-      var dt=p.weekday+', '+new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'long',day:'numeric'}).format(now);
-      each('.js-time',function(el){el.innerHTML=tm;}); each('.js-date',function(el){el.textContent=dt;});}
+      var dt='<b>'+p.weekday+'</b>, '+new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'long',day:'numeric'}).format(now);
+      each('.js-time',function(el){el.innerHTML=tm;}); each('.js-date',function(el){el.innerHTML=dt;});}
     var t=ymd(now); if(t!==lastDay){lastDay=t;applyDay(t);}
   }
 
@@ -294,17 +292,22 @@ body.paused #prog{background:#C9A0FF}
   function fitPage(pg,W,H){
     var land=W>H, scale=land?Math.min(W/1180,H/820):Math.min(W/820,H/1180);
     var floor=Math.max(11,scale*(land?12:15)), hi=Math.max(floor,Math.min(28,scale*21)), lo=floor;
-    pg.classList.remove('scroll');
+    pg.classList.remove('scroll'); pg.querySelector('header').style.removeProperty('--fs');
     var over=function(){return pg.scrollHeight>pg.clientHeight+1||pg.scrollWidth>pg.clientWidth+1;};
+    // while growing, also stop before a calendar label's longest word gets wider than its tile (no mid-word breaks)
+    var cramped=function(){var c=false;each('.day.on .el',function(el){if(el.scrollWidth>el.clientWidth+1)c=true;},pg);return c;};
     pg.style.setProperty('--fs',floor+'px');
     if(over()){pg.classList.add('scroll');return floor.toFixed(2)+'|scroll';}
-    for(var i=0;i<11;i++){var mid=(lo+hi)/2;pg.style.setProperty('--fs',mid+'px');if(over())hi=mid;else lo=mid;}
+    for(var i=0;i<11;i++){var mid=(lo+hi)/2;pg.style.setProperty('--fs',mid+'px');if(over()||(mid>floor+.5&&cramped()))hi=mid;else lo=mid;}
     pg.style.setProperty('--fs',lo+'px');
     return lo.toFixed(2);
   }
   function fit(){
     var vv=window.visualViewport,W=vv?vv.width:window.innerWidth,H=Math.min(window.innerHeight,vv?vv.height:1e9);
     var r=pages.map(function(pg){return fitPage(pg,W,H);});
+    // identical header on both pages: use the smaller page's base size for both (shrinking a header never overflows)
+    var hs=Math.min.apply(null,r.map(function(x){return parseFloat(x);}));
+    pages.forEach(function(pg){pg.querySelector('header').style.setProperty('--fs',hs+'px');});
     B.setAttribute('data-fs','p1:'+r[0]+' p2:'+r[1]+' '+W+'x'+H);
   }
 

@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T11:22:17-06:00",
+    "last_updated": "2026-10-08T16:54:39-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
@@ -591,7 +591,52 @@
         "reading": "Isaiah 50–57",
         "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/41?lang=eng"
       },
-      "featured_question": 1
+      "featured_question": 1,
+      "daily": [
+        {
+          "dow": "Mon",
+          "scripture": "Isaiah 58:6–7",
+          "quote": "Is not this the fast that I have chosen? … to deal thy bread to the hungry",
+          "thought": "Fasting isn’t just going without — it lifts heavy burdens and feeds people in need. Who can we help this week?"
+        },
+        {
+          "dow": "Tue",
+          "scripture": "Isaiah 58:8–9",
+          "quote": "Then shall thy light break forth as the morning … thou shalt cry, and he shall say, Here I am.",
+          "thought": "When we fast and serve, the Lord promises to answer. Where have you felt Him say “Here I am”?"
+        },
+        {
+          "dow": "Wed",
+          "scripture": "Isaiah 59:16, 20",
+          "quote": "And the Redeemer shall come to Zion",
+          "thought": "Jesus is the Intercessor who steps in when we can’t save ourselves. Thank Him for one way He has helped you."
+        },
+        {
+          "dow": "Thu",
+          "scripture": "Isaiah 60:1",
+          "quote": "Arise, shine; for thy light is come",
+          "thought": "Jesus and His gospel are a light that helps us find our way home. How can you shine it for someone today?"
+        },
+        {
+          "dow": "Fri",
+          "scripture": "Isaiah 61:1–3",
+          "quote": "to give unto them beauty for ashes, the oil of joy for mourning",
+          "thought": "Jesus read these words in Nazareth to say He is the Messiah (Luke 4:16–21). How has He given you beauty for ashes?"
+        },
+        {
+          "dow": "Sat",
+          "scripture": "Isaiah 65:17–18",
+          "quote": "be ye glad and rejoice for ever in that which I create",
+          "thought": "When the Savior comes again there will be peace and joy. What can we do today to get ready for Him?"
+        },
+        {
+          "dow": "Sun",
+          "scripture": "Isaiah 58:13–14",
+          "quote": "call the sabbath a delight",
+          "thought": "What would make today more of a delight for our family? Share one idea at dinner."
+        }
+      ],
+      "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh."
     },
     "strength_of_youth": {
       "status": "ready",
