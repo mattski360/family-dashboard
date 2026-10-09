@@ -210,12 +210,14 @@ body.paused #prog{background:#C9A0FF}
 .ghd{display:flex;align-items:center;justify-content:space-between}
 .ght{font-size:26px;font-weight:800;letter-spacing:-.01em}
 .gx{width:40px;height:40px;border-radius:50%;border:0;background:#F1F3F7;color:var(--muted);font:inherit;font-size:22px;font-weight:700;line-height:1;cursor:pointer}
-.gcols{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;min-height:0}
+.gcols{display:flex;gap:12px;min-height:0}
+.gcols>.gcol{flex:1.45 1 0}
+.gcols>.gcol.gempty{flex:.8 1 0}
 .gcol{background:var(--bg);border-radius:20px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .gk{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800;color:var(--dk)}
 .gk .av{width:32px;height:32px;border-radius:11px;font-size:16px;transform:rotate(-4deg)}
-.glist{display:flex;flex-direction:column;gap:6px}
-.grow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:rgba(255,255,255,.8);border-radius:12px;padding:7px 10px;font-size:16px;font-weight:700}
+.glist{display:flex;flex-direction:column;gap:5px}
+.grow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:rgba(255,255,255,.8);border-radius:12px;padding:6px 10px;font-size:16px;font-weight:700}
 .gn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .gp{flex:none;font-weight:800;border-radius:8px;padding:2px 7px;font-size:15px}
 .gp.ga{color:#1C7A47;background:#DDF5E7} .gp.gb{color:#9A6A06;background:#FFF0C7} .gp.gc{color:#C23A2E;background:#FDE1DE}
@@ -224,7 +226,7 @@ body.paused #prog{background:#C9A0FF}
 .gbar{position:absolute;left:0;bottom:0;height:5px;width:100%;background:#C9A0FF;transform-origin:left;border-radius:0 3px 3px 0}
 #grades.show .gbar{animation:gbar 30s linear forwards}
 @keyframes gbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
-@media (max-width:640px){.gcols{grid-template-columns:1fr}}
+@media (max-width:640px){.gcols{flex-direction:column}}
 </style>
 </head>
 <body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">

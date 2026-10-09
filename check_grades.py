@@ -46,6 +46,7 @@ with sync_playwright() as p:
             pg.mouse.click(x, y)
             if i < 2:
                 pg.wait_for_timeout(150)
+        t_open = pg.evaluate("Date.now()")          # the card opened within the last ~350 ms (fake clock flows in real time)
         pg.wait_for_timeout(350)
         check(pg.evaluate(OPEN), f"{tag}: triple-tap opens the card")
         check(pg.evaluate(STATE) == before, f"{tag}: rotation state unchanged by the taps {pg.evaluate(STATE)}")
@@ -57,7 +58,8 @@ with sync_playwright() as p:
         if w < h:
             pg.screenshot(path=a.shot)
             print(f"saved {a.shot}")
-        pg.clock.run_for(29000)
+        # the screenshot above takes real (= fake-clock) time, so measure where we are before jumping to 29 s
+        pg.clock.run_for(max(0, 29000 - (pg.evaluate("Date.now()") - t_open)))
         check(pg.evaluate(OPEN), f"{tag}: still open at 29 s")
         pg.clock.run_for(1500)
         pg.wait_for_timeout(400)

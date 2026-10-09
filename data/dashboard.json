@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-09T11:41:32-06:00",
+    "last_updated": "2026-10-09T12:15:56-06:00",
     "school_feed_synced": "2026-10-09T08:49:23-06:00",
     "school_feed_window": [
       "2026-10-08",
@@ -1502,7 +1502,60 @@
       "connected": false
     },
     "tanner": {
-      "connected": false
+      "connected": true,
+      "source": "veracross",
+      "as_of": "2026-10-09",
+      "courses": [
+        {
+          "name": "Composition",
+          "short": "Composition",
+          "pct": 100.0
+        },
+        {
+          "name": "Language",
+          "short": "Language",
+          "pct": 99.0
+        },
+        {
+          "name": "History",
+          "short": "History",
+          "pct": 98.2
+        },
+        {
+          "name": "Art",
+          "short": "Art",
+          "pct": 98.0
+        },
+        {
+          "name": "Math",
+          "short": "Math",
+          "pct": 97.71
+        },
+        {
+          "name": "Literature",
+          "short": "Literature",
+          "pct": 97.18
+        },
+        {
+          "name": "Exercise Science",
+          "short": "Exercise Science",
+          "pct": 95.0
+        },
+        {
+          "name": "Spelling",
+          "short": "Spelling",
+          "pct": 94.1
+        },
+        {
+          "name": "Geography",
+          "short": "Geography",
+          "pct": 93.18
+        }
+      ],
+      "previous": {
+        "as_of": null,
+        "courses": []
+      }
     }
   }
 }

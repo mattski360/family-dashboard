@@ -648,26 +648,32 @@ def grade_cls(pct: float) -> str:
     return "ga" if pct >= 90 else ("gb" if pct >= 80 else "gc")
 
 
+def pct_txt(pct: float) -> str:
+    """As the school shows it: 100, 98.2, 97.71 (no padded zeros)."""
+    return f"{pct:.2f}".rstrip("0").rstrip(".")
+
+
 def render_v3_grades(m: Model) -> str:
     g = m.data.get("grades") or {}
     cols = []
     for kid in m.kids:
         k = g.get(kid["id"]) or {}
         courses = [c for c in (k.get("courses") or []) if isinstance(c.get("pct"), (int, float))]
-        if k.get("connected") is False or not courses:
+        empty = k.get("connected") is False or not courses
+        if empty:
             body = '<div class="gnone">Not connected yet</div>'
         else:
             courses.sort(key=lambda c: -c["pct"])
             rows = "".join(f'<div class="grow"><span class="gn">{esc(c.get("short") or c.get("name"))}</span>'
-                           f'<span class="gp {grade_cls(c["pct"])}">{c["pct"]:.2f}%</span></div>' for c in courses)
-            src = {"canvas": "Canvas"}.get(k.get("source"), k.get("source") or "")
+                           f'<span class="gp {grade_cls(c["pct"])}">{pct_txt(c["pct"])}%</span></div>' for c in courses)
+            src = {"canvas": "Canvas", "veracross": "Veracross"}.get(k.get("source"), k.get("source") or "")
             asof = ""
             if k.get("as_of"):
                 a = d(k["as_of"])
                 asof = f"as of {a:%b} {a.day}"
             foot = " \u00b7 ".join(x for x in (src, asof) if x)
             body = f'<div class="glist">{rows}</div>' + (f'<div class="gsrc">{esc(foot)}</div>' if foot else "")
-        cols.append(f'<div class="gcol p-{esc(kid["id"])}"><div class="gk"><span class="av">{esc(kid["name"][:1])}</span>'
+        cols.append(f'<div class="gcol{" gempty" if empty else ""} p-{esc(kid["id"])}"><div class="gk"><span class="av">{esc(kid["name"][:1])}</span>'
                     f'{esc(kid["name"])}</div>{body}</div>')
     return "".join(cols)
 
