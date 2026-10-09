@@ -481,6 +481,9 @@ body.paused #prog{background:#C9A0FF}
       eWin=document.getElementById('eggwin'), eToast=document.getElementById('etoast'), eBusy=false, eFired=0, eToastT=0;
   function eGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
   function eSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  // Reset epoch: bump EGG_EPOCH to clear a past win/lock on every device at next load.
+  var EGG_EPOCH='2026-10-09b';
+  if(eGet('egg20-epoch')!==EGG_EPOCH){try{localStorage.removeItem('egg20-won');localStorage.removeItem('egg20-lock');}catch(e){} eSet('egg20-epoch',EGG_EPOCH);}
   function eNice(iso){var d=new Date(iso);if(isNaN(d))return iso;
     return new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',month:'short',day:'numeric'}).format(d)+' \u00b7 '+
       new Intl.DateTimeFormat('en-US',{timeZone:TZ,hour:'numeric',minute:'2-digit'}).format(d);}
