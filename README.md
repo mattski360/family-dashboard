@@ -28,7 +28,7 @@ Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use play
 * **Later list.** It covers the 8 days after the week (`meta.later_days`) and shows only key items.
 * **Today.** JS highlights today, labels tomorrow and dims past days, all in America/Denver time. Heads-up items and tests hide once their dates pass.
 * **Youth card.** It rolls with the viewing date: one line per boy (his quorum's items for today plus 6 days), one shared "Both" line for all-youth items, then a compact Later line for the next 14.
-* **Kids & academics.** Name, grade, school, and a single grades line ("Grades coming soon" until real data exists; never invented).
+* **No grades section** (removed Oct 8, 2026 at Matt's request); the calendar and other cards use the space.
 * **Heads-up.** At most 3 items (high priority first, then soonest due), one line each; the `detail` field is kept in JSON but not rendered.
 * **Motto.** `meta.motto` renders as an italic tagline under the family name.
 * **One screen.** Auto-fit picks the largest base font that fits (floor 13px portrait / 12.4px landscape); gentle auto-scroll only kicks in if content can't fit at the floor.
@@ -46,7 +46,7 @@ Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use play
 | `youth` | Young Men activities (see below). v1/v2 show them only in the Young Men card, never in the weekly calendar. v3 tags them YM / All youth on the boy's Today and Tomorrow lines and on the week-tile for that day |
 | `todos[]` | `{id, text, detail, who[], due, hide_after, priority, done}`. Items are hidden after `hide_after` or when `done: true` |
 | `spiritual` | see below |
-| `academics` | `updated` (ISO), `kids.<id>.courses[] {name, percent, letter}`, `missing_count` (int or null), `upcoming_tests[] {date, course, title}` (hidden once past), `note`. With empty courses the page shows "Grades coming soon" |
+| `academics` | `updated` (ISO), `kids.<id>.courses[] {name, percent, letter}`, `missing_count` (int or null), `upcoming_tests[] {date, course, title}` (hidden once past), `note`. Not rendered on any page (grades section removed) |
 | `screen_time` | `enabled` (bool), `updated`, `kids.<id> {today_minutes, daily_avg_minutes, limit_minutes}`. Null values show "coming soon" |
 
 ### Adding a calendar event
@@ -128,7 +128,6 @@ Portrait 820×1180 is the target. It uses the same light theme, colors and chips
   * Item notes show only for high-priority items.
   * The "Rest of this week" strip appears only before `week_start`, and the Later line is the same as v1.
 * **Young Men:** one line per boy, a shared "Both" line, and Later.
-* **Grades:** a column per kid. Until real grades exist, the card header says "Grades coming soon" (no grades are ever invented).
 
 **Rotation**
 * Pages crossfade every `meta.v2_rotate_seconds` (default 30).
@@ -154,7 +153,6 @@ Built from mockup B. Portrait 820×1180 is the target; light white theme, rounde
 
 **Page 2 – This week**
 * Ten colourful day tiles starting today (Thu Oct 8 → Sat Oct 17 style), now using the full page height. Youth activities are calendar items on their day, tagged **YM** (one boy) or **All youth** (shared), kid-coloured or yellow with dots. Each item gets an icon and a short label: kid-coloured when it's one kid, yellow with kid-colour dots when shared. No-school and half-day show as red / yellow items with dots; a weekday when every kid is on a break becomes a big mint "Fall break" tile. Up to 6 items per tile, then "+N more". Away days carry a lavender state tag (trip titles are reduced to "Arizona" / "California").
-* **Grades** strip: one pill per kid, "coming soon" until real data exists (never invented), plus a note with the next "Term N ends" / "grades posted" dates.
 
 **Rotation & fitting** – same behaviour as v2: crossfade every `meta.v3_rotate_seconds` (falls back to `v2_rotate_seconds`, default 30); tap switches page and pauses 2 minutes with a "Paused (m:ss) · tap to resume" pill; progress bar; state in `localStorage` (`dash-v3-rot`). Sizes are authored in rem (1rem = 1/18 of the mockup's px) and auto-fit per page between 15px and 21px (portrait), and page 2 also stops growing before a tile label's longest word would be wider than its tile; `body[data-fs]` reports the result. The top padding clears the iPad status bar and the page-dot footer is a solid white strip, so nothing sits under it.
 

@@ -368,68 +368,6 @@ def render_later(m: Model, day: dt.date) -> str:
             f'{DOW[day.weekday()]} {day:%b} {day.day}</b>{"".join(parts)}</span>')
 
 
-def grades_line(m: Model, kid_id: str) -> tuple[str, bool]:
-    """Single compact grades line for a kid. Returns (html, has_data). Never invents anything."""
-    acad = m.data.get("academics", {}) or {}
-    screen = m.data.get("screen_time", {}) or {}
-    a = (acad.get("kids", {}) or {}).get(kid_id, {}) or {}
-    courses = a.get("courses") or []
-    miss = a.get("missing_count")
-    tests = [t for t in (a.get("upcoming_tests") or []) if t.get("date") and d(t["date"]) >= m.today]
-    bits = []
-    if courses:
-        pcts = [c["percent"] for c in courses if isinstance(c.get("percent"), (int, float))]
-        if pcts:
-            bits.append(f"avg {sum(pcts) / len(pcts):.0f}%")
-        low = None
-        for c in courses:
-            if isinstance(c.get("percent"), (int, float)) and (low is None or c["percent"] < low["percent"]):
-                low = c
-        if low is not None and len(courses) > 1:
-            bits.append(f'low: {low.get("name")} {low.get("letter") or ""}'.strip())
-        elif not pcts:
-            letters = " ".join(c.get("letter") for c in courses if c.get("letter"))
-            if letters:
-                bits.append(letters)
-    if miss is not None:
-        bits.append(f"{int(miss)} missing")
-    if tests:
-        t = sorted(tests, key=lambda t: t["date"])[0]
-        bits.append(f'test {fmt_day(d(t["date"]))}')
-    if screen.get("enabled"):
-        sdat = (screen.get("kids", {}) or {}).get(kid_id, {}) or {}
-        if sdat.get("today_minutes") is not None:
-            v = int(sdat["today_minutes"])
-            bits.append(f"screen {v // 60}h{v % 60:02d}" if v >= 60 else f"screen {v}m")
-    if not bits:
-        return f'<div class="gline soon">{ICONS["cap"]}Grades coming soon</div>', False
-    bad = " bad" if miss else ""
-    joined = esc(" \u00b7 ".join(bits))
-    return f'<div class="gline{bad}">{ICONS["cap"]}{joined}</div>', True
-
-
-def render_academics(m: Model):
-    """Kids & academics: name, grade, school, and ONE grades line per kid (no invented data)."""
-    acad = m.data.get("academics", {}) or {}
-    cols, any_data = [], False
-    for kid in m.kids:
-        gl, has = grades_line(m, kid["id"])
-        any_data = any_data or has
-        school = kid.get("school_short") or kid.get("school") or ""
-        cols.append(f'<div class="acol p-{esc(kid["id"])}"><div class="acol-h"><span class="aname">{esc(kid["name"])}</span>'
-                    f'<span class="agrade">Grade {esc(kid.get("grade"))}</span></div>'
-                    f'<div class="ksch">{esc(school)}</div>{gl}</div>')
-    upd = acad.get("updated")
-    sub = ""
-    if upd:
-        try:
-            u = dt.datetime.fromisoformat(upd)
-            sub = f"as of {DOW[u.weekday()]} {u:%b} {u.day}"
-        except ValueError:
-            sub = esc(upd)
-    return f'<div class="acols{"" if any_data else " nodata"}">{"".join(cols)}</div>', sub
-
-
 YOUTH_GROUP_LABEL = {"all_youth": "All youth", "all_ym": "All YM", "deacons": "Deacons",
                      "teachers": "Teachers", "priests": "Priests", "yw": "YW"}
 YOUTH_GROUP_ORDER = {"all_youth": 0, "all_ym": 1, "teachers": 2, "deacons": 3, "priests": 4, "yw": 5}
@@ -607,7 +545,6 @@ def build(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> st
     days_html = "".join(render_day(m, day) for day in m.days())
     later_html = "".join(render_later(m, day) for day in m.days() if day > m.week_end)
     rest_html = "".join(render_mini_day(m, day) for day in m.days() if day < m.week_start)
-    acad_html, acad_sub = render_academics(m)
     tpl = (HERE / "template.html").read_text()
     repl = {
         "TITLE": esc(meta.get("family_name", "Family")),
@@ -630,19 +567,16 @@ def build(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> st
         "DAYS": days_html,
         "LATER": later_html,
         "LATER_DAYS": esc(m.later_days),
-        "ACADEMICS": acad_html,
         "YOUTH": render_youth(m),
         "YOUTH_NOTE": (f'<span class="ynote">{esc((m.data.get("youth") or {}).get("note", ""))}</span>'
                        if (m.data.get("youth") or {}).get("note") else ""),
         "YOUTH_DAYS": esc((m.data.get("youth") or {}).get("days", 7)),
         "YOUTH_LATER": esc((m.data.get("youth") or {}).get("later_days", 14)),
-        "ACAD_SUB": acad_sub,
         "SPIRITUAL": render_spiritual(m),
         "TODOS": render_todos(m),
         "ICON_THEME": ICONS["theme"],
         "ICON_BELL": ICONS["bell"],
         "ICON_BOOK": ICONS["book"],
-        "ICON_CAP": ICONS["cap"],
         "ICON_CAL": ICONS["cal"],
         "ICON_KIDS": ICONS["kids"],
     }
@@ -832,9 +766,6 @@ def build_v2(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
     last = meta.get("last_updated") or now.isoformat(timespec="seconds")
     last_dt = dt.datetime.fromisoformat(last).astimezone(ZoneInfo(meta.get("timezone", "America/Denver")))
     last_label = f"{DOW[last_dt.weekday()]}, {last_dt:%b} {last_dt.day} \u00b7 {fmt_time(last_dt.strftime('%H:%M'))} {meta.get('tz_label', 'MT')}"
-    acad_html, acad_sub = render_academics(m)
-    if 'acols nodata' in acad_html and not acad_sub:
-        acad_sub = "Grades coming soon"                # v2 shows this once in the card header
     tpl = (HERE / "template_v2.html").read_text()
     i, j = tpl.index("<style>"), tpl.index("</style>")
     tpl = tpl[:i] + rem_to_var(tpl[i:j]) + tpl[j:]
@@ -867,13 +798,10 @@ def build_v2(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "YOUTH_NOTE": (f'<span class="ynote">{esc(y.get("note", ""))}</span>' if y.get("note") else ""),
         "YOUTH_DAYS": esc(y.get("days", 7)),
         "YOUTH_LATER": esc(y.get("later_days", 14)),
-        "ACADEMICS": acad_html,
-        "ACAD_SUB": acad_sub,
         "ROTATE_SECONDS": esc(meta.get("v2_rotate_seconds", 30)),
         "ICON_THEME": ICONS["theme"],
         "ICON_BELL": ICONS["bell"],
         "ICON_BOOK": ICONS["book"],
-        "ICON_CAP": ICONS["cap"],
         "ICON_CAL": ICONS["cal"],
         "ICON_KIDS": ICONS["kids"],
     }
@@ -1312,30 +1240,6 @@ def render_v3_youth(m: Model) -> str:
     return "".join(rows)
 
 
-def render_v3_grades(m: Model) -> tuple[str, str]:
-    rows = []
-    for k in m.kids:
-        gl, has = grades_line(m, k["id"])
-        txt = re.sub(r"<[^>]+>", "", gl) if has else "coming soon"
-        rows.append(f'<div class="g p-{esc(k["id"])}"><span class="av">{esc(k["name"][:1])}</span>{esc(k["name"])}'
-                    f'<span class="cs{"" if has else " soon"}">{esc(html.unescape(txt))}</span></div>')
-    notes = []
-    for e in m.events:
-        t = e.get("title", "")
-        if e.get("kind") == "trip" or not re.search(r"\b(term|quarter|semester)\s*\d*\s+ends\b|grades posted|report card", t, re.I):
-            continue
-        day = d(e["date"])
-        short = re.sub(r"^term (\d) grades posted$", r"grades post", t, flags=re.I)
-        notes.append((e["date"], f'<span class="gn" data-date="{e["date"]}">{esc(short)} {DOW[day.weekday()]} {day:%b} {day.day}</span>'))
-    notes.sort()
-    seen, uniq = set(), []
-    for dte, h in notes:
-        if h not in seen:
-            seen.add(h)
-            uniq.append(h)
-    return "".join(rows), "".join(uniq)
-
-
 CFM_WAIT = "This week\u2019s lesson is on its way"
 V3_SPRITE = HERE / "v3_sprite.svg"
 
@@ -1347,7 +1251,6 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
     last_dt = dt.datetime.fromisoformat(last).astimezone(ZoneInfo(meta.get("timezone", "America/Denver")))
     last_label = f"{DOW[last_dt.weekday()]} {last_dt:%b} {last_dt.day} \u00b7 {fmt_time(last_dt.strftime('%H:%M'))}"
     yacts = youth_activities(m)
-    grades, gnotes = render_v3_grades(m)
     tpl = (HERE / "template_v3.html").read_text()
     i, j = tpl.index("<style>"), tpl.index("</style>")
     tpl = tpl[:i] + rem_to_var(tpl[i:j]) + tpl[j:]
@@ -1366,8 +1269,6 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "PARENTS": render_v3_parents(m),
         "SPIRIT": render_v3_spirit(m),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
-        "GRADES": grades,
-        "GRADE_NOTES": gnotes,
         "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
     }
     out = tpl

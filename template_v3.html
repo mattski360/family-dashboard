@@ -160,22 +160,6 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .big .ic{font-size:2.9rem}
 .quiet{flex:1;display:grid;place-items:center;color:var(--faint);font-size:.83rem;font-weight:700;padding:.5rem 0}
 
-/* page 2: grades strip */
-.gr2{background:#F7F3FF;border-radius:1.67rem;padding:.8rem 1rem;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:.5rem .9rem;min-width:0}
-.gr2 .sk{color:var(--parents-dk)}
-.gs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;min-width:0}
-.g{display:flex;align-items:center;gap:.67rem;background:#fff;border-radius:1rem;padding:.5rem .67rem;font-size:.95rem;font-weight:800;color:var(--dk);min-width:0}
-.g .av{width:2.1rem;height:2.1rem;border-radius:.72rem;font-size:1.05rem;transform:none}
-.gs .g{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.6rem;row-gap:0;line-height:1.15}
-.gs .g .av{grid-row:span 2}
-.g .cs{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--muted);text-align:right}
-.gs .g .cs{margin-left:0;text-align:left;overflow-wrap:anywhere}
-.g .cs.soon{color:var(--faint)}
-.gnote{grid-column:1/-1;font-size:.78rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.35}
-.gnote:empty{display:none}
-.gn{display:none} .gn.on{display:inline}
-.gn.on~.gn.on::before{content:" \00b7  "}
-
 /* nav: solid strip so nothing sits under the home indicator */
 #nav{position:fixed;left:0;right:0;bottom:0;height:var(--nav);padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid var(--line);
   display:flex;justify-content:center;align-items:center;gap:10px;z-index:5}
@@ -213,11 +197,6 @@ body.paused #prog{background:#C9A0FF}
   </header>
   <div class="h">This week <span id="range"></span></div>
   <div class="days">{{TILES}}</div>
-  <div class="gr2">
-    <div class="sk"><span class="bub"><svg class="ic"><use href="#i-cap"/></svg></span>Grades</div>
-    <div class="gs">{{GRADES}}</div>
-    <div class="gnote" id="gnote">{{GRADE_NOTES}}</div>
-  </div>
 </section>
 </div>
 
@@ -263,7 +242,6 @@ body.paused #prog{background:#C9A0FF}
     each('.day',function(el){var d=el.getAttribute('data-date'),on=d>=today&&d<=tend;el.classList.toggle('on',on);el.classList.toggle('today',d===today);
       var w=el.querySelector('.dw');w.textContent=d===today?'Today':w.getAttribute('data-dow');});
     document.getElementById('range').textContent=nice(today)+' \u2013 '+nice(tend);
-    var gc=0;each('.gn',function(el){var d=el.getAttribute('data-date'),on=d>=today&&gc<2;el.classList.toggle('on',on);if(on)gc++;});
     var last=Date.parse(B.getAttribute('data-last')), lim=parseFloat(B.getAttribute('data-stale-days')||'8');
     B.classList.toggle('stale',!isNaN(last)&&(Date.now()-last)>lim*864e5);
     fit();

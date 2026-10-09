@@ -73,7 +73,6 @@ body.stale .stale-note{display:inline-block}
 
 /* ---------- schedule ---------- */
 #spirit{grid-area:spirit}
-#acad{grid-area:acad}
 #youth{grid-area:youth;padding-top:calc(var(--fs) * .6);padding-bottom:calc(var(--fs) * .6)}
 #youth .card-h{margin-bottom:calc(var(--fs) * .35)}
 .yrow{display:grid;grid-template-columns:calc(var(--fs) * 4.1) calc(var(--fs) * 4.6) minmax(0,1fr);gap:calc(var(--fs) * .5);align-items:baseline;padding:calc(var(--fs) * .2) 0;border-top:1px solid var(--line)}
@@ -217,20 +216,6 @@ body.stale .stale-note{display:inline-block}
 .pending .sp-title::before{content:"";display:inline-block;width:calc(var(--fs) * .5);height:calc(var(--fs) * .5);border-radius:50%;background:var(--accent);margin-right:calc(var(--fs) * .45);vertical-align:.12em;animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
 
-/* ---------- kids & academics ---------- */
-[data-theme="light"] .aname{color:var(--cdk)}
-.agrade{font-size:calc(var(--fs) * .8);font-weight:700;color:var(--muted)}
-.ksch{font-size:calc(var(--fs) * .8);color:var(--muted);margin:calc(var(--fs) * .02) 0 calc(var(--fs) * .12);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gline{font-size:calc(var(--fs) * .84);font-weight:620;display:flex;align-items:center;gap:calc(var(--fs) * .35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gline.soon{color:var(--faint);font-style:italic;font-weight:500}
-.gline.bad{color:var(--red)}
-.acols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--fs) * .6)}
-.acol{background:var(--card2);border:1px solid var(--line);border-radius:calc(var(--fs) * .75);padding:calc(var(--fs) * .35) calc(var(--fs) * .6) calc(var(--fs) * .4);border-top:calc(var(--fs) * .22) solid var(--c);min-width:0}
-.acol-h{display:flex;align-items:baseline;gap:calc(var(--fs) * .45)}
-.aname{font-weight:800;font-size:calc(var(--fs) * 1.15);color:var(--c)}
-.soon{font-size:calc(var(--fs) * .8);color:var(--faint);font-style:italic;display:flex;align-items:center;gap:calc(var(--fs) * .35)}
-.miss{margin-left:auto;font-size:calc(var(--fs) * .7);font-weight:800;padding:calc(var(--fs) * .08) calc(var(--fs) * .45);border-radius:calc(var(--fs) * 1);background:var(--card)}
-.miss.bad{color:var(--red);background:var(--red-bg)} .miss.ok{color:var(--green)}
 .courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(calc(var(--fs) * 10.5),1fr));gap:calc(var(--fs) * .04) calc(var(--fs) * 1);font-size:calc(var(--fs) * .84)}
 .crs{display:flex;gap:calc(var(--fs) * .35);align-items:baseline;min-width:0}
 .cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
@@ -354,8 +339,6 @@ body.stale .upd.stale-only{display:flex}
 #p2 .who.in{display:inline-flex;flex-wrap:wrap;gap:calc(var(--fs) * .2);margin-left:calc(var(--fs) * .45);vertical-align:.12em;padding:0;justify-content:flex-start}
 #p2 .who.in .chip{font-size:calc(var(--fs) * .62);padding:calc(var(--fs) * .06) calc(var(--fs) * .4)}
 #p2 .banner .who{flex-wrap:nowrap}
-#p2 .acols.nodata .gline{display:none}
-#p2 .acols.nodata .acol{padding:calc(var(--fs) * .3) calc(var(--fs) * .6) calc(var(--fs) * .35)}
 #p2 .day{padding:calc(var(--fs) * .32) calc(var(--fs) * .6) calc(var(--fs) * .36);margin-bottom:calc(var(--fs) * .4)}
 #p2 .day.quiet .dh{flex-wrap:nowrap}
 #p2 .day.quiet .trips{flex-wrap:nowrap}
@@ -393,7 +376,7 @@ body.paused #nav .pz{display:inline}
 body.paused #prog{background:var(--amber);opacity:.3}
 </style>
 </head>
-<body data-rotate="30" data-ydays="7" data-ylater="14" data-later="8" data-tz="America/Denver" data-last="2026-10-08T22:14:02-06:00" data-stale-days="8" data-week-start="2026-10-11" data-week-end="2026-10-17" data-build-date="2026-10-08">
+<body data-rotate="30" data-ydays="7" data-ylater="14" data-later="8" data-tz="America/Denver" data-last="2026-10-08T22:29:47-06:00" data-stale-days="8" data-week-start="2026-10-11" data-week-end="2026-10-17" data-build-date="2026-10-08">
 <div id="stage">
 
 <!-- ====================== PAGE 1: TODAY ====================== -->
@@ -402,7 +385,7 @@ body.paused #prog{background:var(--amber);opacity:.3}
     <div class="brand">
       <h1>Jensen Family</h1>
       <div class="motto">We are Jensens, we are brave, we choose the right, and we always help others.</div>
-      <div class="upd"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:14 PM MT</b><span class="stale-note">Needs refresh</span><span class="loaded js-loaded"></span></div>
+      <div class="upd"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:29 PM MT</b><span class="stale-note">Needs refresh</span><span class="loaded js-loaded"></span></div>
     </div>
     <div class="clock"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
     <button class="tbtn js-theme" aria-label="Toggle theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/></svg></button>
@@ -431,7 +414,7 @@ body.paused #prog{background:var(--amber);opacity:.3}
     <div class="brand">
       <h1>Jensen Family</h1>
       <div class="motto">We are Jensens, we are brave, we choose the right, and we always help others.</div>
-      <div class="upd stale-only"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:14 PM MT</b><span class="stale-note">Needs refresh</span></div>
+      <div class="upd stale-only"><span class="dot"></span>Last updated <b>Thu, Oct 8 · 10:29 PM MT</b><span class="stale-note">Needs refresh</span></div>
     </div>
     <div class="clock"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
   </header>
@@ -446,11 +429,6 @@ body.paused #prog{background:var(--amber);opacity:.3}
   <section class="card" id="youth">
     <div class="card-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm8.5 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 13c-3.3 0-6 1.7-6 3.8V19h12v-2.2C14 14.7 11.3 13 8 13zm8.5.5c-.7 0-1.4.1-2 .3 1 .8 1.5 1.8 1.5 3V19h6v-2c0-1.9-2.5-3.5-5.5-3.5z" fill="currentColor"/></svg> Young Men<span class="ynote">From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.</span></div>
     <div class="yrows"><div class="yrow p-luke"><span class="yname">Luke</span><span class="yq">Teachers</span><span class="yits"><span class="yit" data-date="2026-10-08"><b>Thu 8</b> Bike ride to Bubba&#x27;s<i>time TBA</i></span><span class="yit" data-date="2026-10-29"><b>Thu 29</b> MTC tour?<i>time TBA</i></span><span class="ynone">Nothing listed</span></span></div><div class="yrow p-wyatt"><span class="yname">Wyatt</span><span class="yq">Deacons</span><span class="yits"><span class="yit none" data-date="2026-10-08"><b>Thu 8</b> Nothing listed for Deacons</span><span class="yit" data-date="2026-10-29"><b>Thu 29</b> Tour the MTC<i>time TBA</i></span><span class="ynone">Nothing listed</span></span></div><div class="yrow both"><span class="yname">Both</span><span class="yq">All youth</span><span class="yits"><span class="yit" data-date="2026-10-11"><b>Sun 11</b> Book of Mormon Experience kickoff fireside<i>time TBA</i></span><span class="yit none" data-date="2026-10-15"><b>Thu 15</b> Fall break — no activity</span><span class="yit" data-date="2026-10-22"><b>Thu 22</b> Fall Festival<i>time TBA</i></span><span class="yit" data-date="2026-10-25"><b>Sun 25</b> Festival devotional<i>time TBA</i></span><span class="ynone">Nothing listed</span></span></div></div><div class="ylater"><span class="lbl">Later</span><span class="yli" data-date="2026-10-08"><b>Thu Oct 8</b> Bike ride to Bubba&#x27;s<span class="chip p-luke">Luke</span></span><span class="yli" data-date="2026-10-11"><b>Sun Oct 11</b> Book of Mormon Experience kickoff fireside</span><span class="yli none" data-date="2026-10-15"><b>Thu Oct 15</b> Fall break — no activity</span><span class="yli" data-date="2026-10-22"><b>Thu Oct 22</b> Fall Festival</span><span class="yli" data-date="2026-10-25"><b>Sun Oct 25</b> Festival devotional</span><span class="yli" data-date="2026-10-29"><b>Thu Oct 29</b> MTC tour?<span class="chip p-luke">Luke</span></span><span class="yli" data-date="2026-10-29"><b>Thu Oct 29</b> Tour the MTC<span class="chip p-wyatt">Wyatt</span></span></div>
-  </section>
-
-  <section class="card" id="acad">
-    <div class="card-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg> Grades<span class="sub">Grades coming soon</span></div>
-    <div class="acols nodata"><div class="acol p-luke"><div class="acol-h"><span class="aname">Luke</span><span class="agrade">Grade 9</span></div><div class="ksch">American Heritage</div><div class="gline soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg>Grades coming soon</div></div><div class="acol p-wyatt"><div class="acol-h"><span class="aname">Wyatt</span><span class="agrade">Grade 8</span></div><div class="ksch">Canyon Grove Academy</div><div class="gline soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg>Grades coming soon</div></div><div class="acol p-tanner"><div class="acol-h"><span class="aname">Tanner</span><span class="agrade">Grade 5</span></div><div class="ksch">American Heritage</div><div class="gline soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z" fill="currentColor"/></svg>Grades coming soon</div></div></div>
   </section>
 </section>
 </div>
