@@ -726,7 +726,8 @@ def private_leaks(text: str) -> list[str]:
     if not hp.exists():
         return []
     terms = [l.strip().lower() for l in hp.read_text().splitlines() if l.strip() and not l.startswith("#")]
-    low = text.lower()
+    import html as _html
+    low = text.lower() + "\n" + _html.unescape(text).lower()
     return [t for t in terms if t in low]
 
 
