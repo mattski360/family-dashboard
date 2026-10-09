@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Weekly refresh: pull AHS school events + ward-site youth fallback, then render index.html, v2/index.html and v3/index.html.
+# Weekly refresh: pull AHS school events + ward-site youth fallback, then render v3/index.html.
+# (index.html and v2/index.html are static redirects to v3/ and are not rebuilt.)
 # A failed fetch keeps the previous data and the page is still rebuilt.
+# build.py exits 3 (and writes nothing) if a term from data/private_hide.txt would appear on the page; run.sh then exits 2.
 set -uo pipefail
 cd "$(dirname "$0")"
 PY=${PYTHON:-python3}

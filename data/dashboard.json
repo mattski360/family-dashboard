@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T22:29:47-06:00",
-    "school_feed_synced": "2026-10-08T08:26:46-06:00",
+    "last_updated": "2026-10-09T08:43:38-06:00",
+    "school_feed_synced": "2026-10-09T08:43:37-06:00",
     "school_feed_window": [
-      "2026-10-07",
-      "2026-10-29"
+      "2026-10-08",
+      "2026-10-30"
     ],
     "later_days": 8,
     "week_start": "2026-10-11",
@@ -114,6 +114,17 @@
   ],
   "events": [
     {
+      "id": "mtb-preride-2026-10-09",
+      "date": "2026-10-09",
+      "title": "MTB pre-ride, Herriman (pre-ride plates required)",
+      "who": [
+        "luke"
+      ],
+      "kind": "event",
+      "priority": "normal",
+      "source": "family"
+    },
+    {
       "id": "ahs-20261009-no-school-teacher-in-service",
       "date": "2026-10-09",
       "start": null,
@@ -128,6 +139,18 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "mtb-race-2026-10-10",
+      "date": "2026-10-10",
+      "title": "MTB race – Region 5 final, Herriman (Butterfield Trailhead)",
+      "who": [
+        "luke"
+      ],
+      "kind": "event",
+      "priority": "high",
+      "source": "family",
+      "note": "Starts moved 1 hr earlier (storm); carpool, parking limited"
     },
     {
       "id": "fam-20261011-youth-conf",
@@ -491,27 +514,34 @@
       "source": "ahs_feed"
     },
     {
-      "id": "mtb-preride-2026-10-09",
-      "date": "2026-10-09",
-      "title": "MTB pre-ride, Herriman (pre-ride plates required)",
+      "id": "ahs-20261030-no-school-k-5-in-service",
+      "date": "2026-10-30",
+      "start": null,
+      "end": null,
+      "title": "No school — K-5 in-service",
+      "note": "",
       "who": [
-        "luke"
+        "tanner"
       ],
-      "kind": "event",
-      "priority": "normal",
-      "source": "family"
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
     },
     {
-      "id": "mtb-race-2026-10-10",
-      "date": "2026-10-10",
-      "title": "MTB race – Region 5 final, Herriman (Butterfield Trailhead)",
+      "id": "ahs-20261030-spirit-apparel-day",
+      "date": "2026-10-30",
+      "start": null,
+      "end": null,
+      "title": "Spirit apparel day",
+      "note": "",
       "who": [
         "luke"
       ],
-      "kind": "event",
-      "priority": "high",
-      "source": "family",
-      "note": "Starts moved 1 hr earlier (storm); carpool, parking limited"
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
     }
   ],
   "todos": [
@@ -719,7 +749,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-08T08:26:47-06:00",
+    "site_synced": "2026-10-09T08:43:38-06:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
