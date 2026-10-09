@@ -641,6 +641,37 @@ def render_v3_byu_line(m: Model) -> str:
     return "".join(out)
 
 
+# ------------------------------------------------------------------ hidden grades card (data.grades)
+# Not shown on the normal page: a display:none overlay opened by a quick triple-tap on the motto (see template JS).
+
+def grade_cls(pct: float) -> str:
+    return "ga" if pct >= 90 else ("gb" if pct >= 80 else "gc")
+
+
+def render_v3_grades(m: Model) -> str:
+    g = m.data.get("grades") or {}
+    cols = []
+    for kid in m.kids:
+        k = g.get(kid["id"]) or {}
+        courses = [c for c in (k.get("courses") or []) if isinstance(c.get("pct"), (int, float))]
+        if k.get("connected") is False or not courses:
+            body = '<div class="gnone">Not connected yet</div>'
+        else:
+            courses.sort(key=lambda c: -c["pct"])
+            rows = "".join(f'<div class="grow"><span class="gn">{esc(c.get("short") or c.get("name"))}</span>'
+                           f'<span class="gp {grade_cls(c["pct"])}">{c["pct"]:.2f}%</span></div>' for c in courses)
+            src = {"canvas": "Canvas"}.get(k.get("source"), k.get("source") or "")
+            asof = ""
+            if k.get("as_of"):
+                a = d(k["as_of"])
+                asof = f"as of {a:%b} {a.day}"
+            foot = " \u00b7 ".join(x for x in (src, asof) if x)
+            body = f'<div class="glist">{rows}</div>' + (f'<div class="gsrc">{esc(foot)}</div>' if foot else "")
+        cols.append(f'<div class="gcol p-{esc(kid["id"])}"><div class="gk"><span class="av">{esc(kid["name"][:1])}</span>'
+                    f'{esc(kid["name"])}</div>{body}</div>')
+    return "".join(cols)
+
+
 CFM_WAIT = "This week\u2019s lesson is on its way"
 V3_SPRITE = HERE / "v3_sprite.svg"
 
@@ -671,6 +702,7 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "SPIRIT": render_v3_spirit(m),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
         "BYU_TODAY": render_v3_byu_line(m),
+        "GRADES": render_v3_grades(m),
         "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
     }
     out = tpl

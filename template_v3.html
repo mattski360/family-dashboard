@@ -198,6 +198,33 @@ body.paused #prog{background:#C9A0FF}
 @keyframes cougs{0%{opacity:0;transform:translateY(16px) scale(.8)}12%{opacity:1;transform:translateY(0) scale(1.08)}20%{transform:translateY(0) scale(1)}80%{opacity:1;transform:translateY(-6px) scale(1)}100%{opacity:0;transform:translateY(-26px) scale(.95)}}
 .yfly{position:fixed;z-index:7;pointer-events:none;width:22px;height:22px;animation:yfly 1.6s ease-out forwards}
 @keyframes yfly{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r)) scale(1.1)}}
+/* hidden grades card (motto triple-tap). px sizes: it lives outside the auto-fitted pages */
+.motto{touch-action:manipulation}
+#grades{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(40,48,68,.42);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .25s}
+#grades.on{display:flex}
+#grades.show{opacity:1}
+.gcard{position:relative;width:min(760px,100%);max-height:100%;overflow:hidden;background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(40,48,68,.25);
+  padding:22px 22px 26px;display:flex;flex-direction:column;gap:16px;transform:scale(.96);transition:transform .25s}
+#grades.show .gcard{transform:none}
+.ghd{display:flex;align-items:center;justify-content:space-between}
+.ght{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.gx{width:40px;height:40px;border-radius:50%;border:0;background:#F1F3F7;color:var(--muted);font:inherit;font-size:22px;font-weight:700;line-height:1;cursor:pointer}
+.gcols{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;min-height:0}
+.gcol{background:var(--bg);border-radius:20px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.gk{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800;color:var(--dk)}
+.gk .av{width:32px;height:32px;border-radius:11px;font-size:16px;transform:rotate(-4deg)}
+.glist{display:flex;flex-direction:column;gap:6px}
+.grow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:rgba(255,255,255,.8);border-radius:12px;padding:7px 10px;font-size:16px;font-weight:700}
+.gn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gp{flex:none;font-weight:800;border-radius:8px;padding:2px 7px;font-size:15px}
+.gp.ga{color:#1C7A47;background:#DDF5E7} .gp.gb{color:#9A6A06;background:#FFF0C7} .gp.gc{color:#C23A2E;background:#FDE1DE}
+.gsrc{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:auto}
+.gnone{flex:1;display:grid;place-items:center;text-align:center;color:var(--faint);font-size:15px;font-weight:700;padding:18px 4px;font-style:italic}
+.gbar{position:absolute;left:0;bottom:0;height:5px;width:100%;background:#C9A0FF;transform-origin:left;border-radius:0 3px 3px 0}
+#grades.show .gbar{animation:gbar 30s linear forwards}
+@keyframes gbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (max-width:640px){.gcols{grid-template-columns:1fr}}
 </style>
 </head>
 <body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
@@ -230,6 +257,8 @@ body.paused #prog{background:#C9A0FF}
 
 <nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
 <div id="cougs" aria-hidden="true">Go Cougs!</div>
+<div id="grades" aria-hidden="true"><div class="gcard" role="dialog" aria-label="Grades"><div class="ghd"><div class="ght">Grades</div><button class="gx" id="gx" type="button" aria-label="Close">&times;</button></div>
+  <div class="gcols">{{GRADES}}</div><div class="gbar"></div></div></div>
 <div id="prog"></div>
 
 <script>
@@ -363,6 +392,24 @@ body.paused #prog{background:#C9A0FF}
       document.body.appendChild(f);setTimeout(function(x){return function(){x.remove();};}(f),2000);}
     setTimeout(function(){yegg.classList.remove('go');cougs.classList.remove('go');},2700);
   });
+
+
+  // hidden grades card: three quick taps on the motto (each <400 ms apart, all within 700 ms) open it for 30 s.
+  // Motto taps never reach #stage; a lone tap (or two) still flips the page like any other tap, once the
+  // 400 ms triple-tap window has passed. The card sits outside #stage, so its taps never rotate/pause either.
+  var gEl=document.getElementById('grades'), gTimer=0, gTaps=[], gSingle=0, G_GAP=400, G_TOTAL=700, G_OPEN=30000;
+  function gClose(){clearTimeout(gTimer);gEl.classList.remove('show');setTimeout(function(){if(!gEl.classList.contains('show'))gEl.classList.remove('on');},260);gEl.setAttribute('aria-hidden','true');}
+  function gOpen(){clearTimeout(gTimer);gEl.classList.remove('show');gEl.classList.add('on');void gEl.offsetWidth;gEl.classList.add('show');
+    gEl.setAttribute('aria-hidden','false');gTimer=setTimeout(gClose,G_OPEN);}
+  each('.motto',function(mo){mo.addEventListener('click',function(ev){ev.stopPropagation();
+    var now=Date.now(); clearTimeout(gSingle);
+    if(gTaps.length&&now-gTaps[gTaps.length-1]>G_GAP)gTaps=[];
+    gTaps.push(now);
+    if(gTaps.length>=3&&now-gTaps[gTaps.length-3]<=G_TOTAL){gTaps=[];gOpen();return;}
+    gSingle=setTimeout(function(){gTaps=[];userGo((cur+1)%2);},G_GAP+20);});});
+  gEl.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===gEl)gClose();});
+  document.getElementById('gx').addEventListener('click',function(ev){ev.stopPropagation();gClose();});
+  window.__grades={open:gOpen,close:gClose};
 
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
   window.addEventListener('orientationchange',function(){setTimeout(fit,300);});

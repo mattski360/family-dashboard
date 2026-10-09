@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-09T08:54:41-06:00",
+    "last_updated": "2026-10-09T11:41:32-06:00",
     "school_feed_synced": "2026-10-09T08:49:23-06:00",
     "school_feed_window": [
       "2026-10-08",
@@ -1453,6 +1453,56 @@
         }
       ],
       "updated": "2026-10-09T08:49:26-06:00"
+    }
+  },
+  "grades": {
+    "_comment": "Hidden overlay only (triple-tap the motto). pct = Canvas percent. 'previous' keeps the last snapshot (as_of + courses) for future drop detection.",
+    "luke": {
+      "connected": true,
+      "source": "canvas",
+      "as_of": "2026-10-08",
+      "courses": [
+        {
+          "name": "Patriot Chorale (Washburn)",
+          "short": "Chorale",
+          "pct": 97.78
+        },
+        {
+          "name": "Geometry (Lam)",
+          "short": "Geometry",
+          "pct": 97.05
+        },
+        {
+          "name": "D.E.A.R.",
+          "short": "D.E.A.R.",
+          "pct": 97.09
+        },
+        {
+          "name": "Biology (Anderson)",
+          "short": "Biology",
+          "pct": 96.38
+        },
+        {
+          "name": "U.S. History (Chancellor)",
+          "short": "U.S. History",
+          "pct": 95.14
+        },
+        {
+          "name": "English 9 (Coleman)",
+          "short": "English 9",
+          "pct": 93.58
+        }
+      ],
+      "previous": {
+        "as_of": null,
+        "courses": []
+      }
+    },
+    "wyatt": {
+      "connected": false
+    },
+    "tanner": {
+      "connected": false
     }
   }
 }
