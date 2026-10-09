@@ -227,6 +227,49 @@ body.paused #prog{background:#C9A0FF}
 #grades.show .gbar{animation:gbar 30s linear forwards}
 @keyframes gbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 @media (max-width:640px){.gcols{flex-direction:column}}
+/* hidden $20 riddle egg (press-and-hold "Prayer:" for 3 s). px sizes: overlays live outside the auto-fitted pages */
+.prayer{touch-action:manipulation;-webkit-touch-callout:none}
+#egg{position:fixed;inset:0;z-index:21;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(40,48,68,.5);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+#egg.on{display:flex}
+.ecard{position:relative;width:min(600px,100%);max-height:100%;overflow:auto;background:linear-gradient(160deg,#FFF6DA 0%,#FDEEF4 55%,#EEF5FF 100%);
+  border-radius:30px;box-shadow:0 18px 50px rgba(40,48,68,.3);padding:24px 26px 26px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+  animation:epop .35s cubic-bezier(.3,1.5,.5,1)}
+@keyframes epop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.ex{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--muted);font:inherit;font-size:26px;font-weight:700;line-height:1;cursor:pointer}
+.et1{font-size:30px;font-weight:900;color:#B4620C;letter-spacing:-.01em;padding:0 40px}
+.erid{font-size:21px;font-weight:800;line-height:1.4;color:var(--text);max-width:30em}
+.estage{font-size:15px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#C9A0FF;border-radius:99px;padding:4px 14px}
+.emsg.ok{color:#1C8452}
+.eintro,.eplay{display:none;flex-direction:column;align-items:center;gap:12px;width:100%}
+.ecard.intro .eintro,.ecard.play .eplay{display:flex}
+.etxt{font-size:21px;font-weight:700;line-height:1.45;color:var(--text);max-width:28em}
+.eshh{font-size:17px;font-weight:700;line-height:1.4;color:#7646C2;background:rgba(255,255,255,.7);border-radius:16px;padding:10px 16px;max-width:30em}
+.estart{margin-top:6px;border:0;border-radius:20px;background:#5FD39A;color:#fff;font:inherit;font-size:28px;font-weight:900;padding:14px 56px;cursor:pointer;box-shadow:0 3px 0 #1C8452}
+.estart:active{transform:translateY(2px);box-shadow:0 1px 0 #1C8452}
+.edisp{width:220px;height:64px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 3px #F4C548;display:grid;place-items:center;font-size:40px;font-weight:900;letter-spacing:.12em;color:var(--text)}
+.edisp:empty::before{content:"?";color:#D9DCE4}
+.ekeys{display:grid;grid-template-columns:repeat(3,84px);gap:10px}
+.ekeys button{height:64px;border:0;border-radius:18px;background:#fff;color:var(--text);font:inherit;font-size:30px;font-weight:800;cursor:pointer;box-shadow:0 2px 0 rgba(40,48,68,.08)}
+.ekeys button:active{transform:scale(.96);background:#FFF6DA}
+.ekeys .ek-c{font-size:18px;color:var(--muted)}
+.ekeys .ek-e{font-size:18px;background:#5FD39A;color:#fff}
+.ekeys button:disabled{opacity:.45}
+.emsg{min-height:28px;font-size:22px;font-weight:900;color:var(--red)}
+#eggwin{position:fixed;inset:0;z-index:22;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;overflow:hidden;cursor:pointer;
+  background:radial-gradient(circle at 50% 40%,#FFF6DA 0%,#FFE9C7 40%,#FDEEF4 100%)}
+#eggwin.on{display:flex}
+.ew1{font-size:34px;font-weight:900;color:#B4620C;position:relative;z-index:1;max-width:16em;line-height:1.2}
+.ew2{font-size:170px;font-weight:900;line-height:1;color:#1C8452;text-shadow:0 6px 0 #C9F0DC;position:relative;z-index:1;animation:ebig 1.4s ease-in-out infinite alternate}
+@keyframes ebig{from{transform:scale(1) rotate(-2deg)}to{transform:scale(1.06) rotate(2deg)}}
+.ew3{font-size:28px;font-weight:800;color:var(--text);position:relative;z-index:1}
+.ew4{font-size:17px;font-weight:700;color:var(--muted);position:relative;z-index:1}
+.ew5{font-size:14px;font-weight:700;color:var(--faint);position:relative;z-index:1;margin-top:10px}
+.cf{position:absolute;top:-20px;width:12px;height:18px;border-radius:3px;opacity:.9;animation:cf linear infinite}
+@keyframes cf{0%{transform:translate(0,-20px) rotate(0)}100%{transform:translate(var(--dx),110vh) rotate(var(--r))}}
+#etoast{position:fixed;left:50%;bottom:calc(var(--nav) + 18px);z-index:23;transform:translateX(-50%);background:rgba(40,48,68,.88);color:#fff;font-size:16px;font-weight:700;
+  border-radius:99px;padding:10px 18px;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap}
+#etoast.on{opacity:1}
 </style>
 </head>
 <body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
@@ -259,6 +302,19 @@ body.paused #prog{background:#C9A0FF}
 
 <nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
 <div id="cougs" aria-hidden="true">Go Cougs!</div>
+<div id="egg" aria-hidden="true"><div class="ecard" role="dialog" aria-label="Secret challenge"><button class="ex" id="ex" type="button" aria-label="Close">&times;</button>
+  <div class="eintro" id="eintro"><div class="et1">You found the secret $20 challenge!</div>
+    <div class="etxt">Solve 3 riddles in a row. Type each answer on the keypad and press Enter. You get one try per riddle. One wrong answer locks the challenge for 24 hours. Solve all 3 to win $20!</div>
+    <div class="eshh">Shh, don&rsquo;t tell your brothers or anyone else where this is. Keeping it secret gives you the best chance to win.</div>
+    <button class="estart" id="estart" type="button">Start</button></div>
+  <div class="eplay" id="eplay"><div class="estage" id="estage"></div>
+    <div class="erid" id="erid"></div>
+    <div class="edisp" id="edisp"></div>
+    <div class="ekeys" id="ekeys"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button class="ek-c" data-k="c">Clear</button><button>0</button><button class="ek-e" data-k="e">Enter</button></div>
+    <div class="emsg" id="emsg"></div></div></div></div>
+<div id="eggwin" aria-hidden="true"><div class="ew1">You found the Jensen Easter Egg!</div><div class="ew2">$20</div><div class="ew3">You won $20! Show this to Mom or Dad.</div>
+  <div class="ew4" id="ewhen"></div><div class="ew5">Tap anywhere to close</div></div>
+<div id="etoast"></div>
 <div id="grades" aria-hidden="true"><div class="gcard" role="dialog" aria-label="Grades"><div class="ghd"><div class="ght">Grades</div><button class="gx" id="gx" type="button" aria-label="Close">&times;</button></div>
   <div class="gcols">{{GRADES}}</div><div class="gbar"></div></div></div>
 <div id="prog"></div>
@@ -412,6 +468,89 @@ body.paused #prog{background:#C9A0FF}
   gEl.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===gEl)gClose();});
   document.getElementById('gx').addEventListener('click',function(ev){ev.stopPropagation();gClose();});
   window.__grades={open:gOpen,close:gClose};
+  // hidden $20 riddle egg: press-and-hold "Prayer:" (.prayer, page 1) for 3 s. Nothing shows before that.
+  // Three stages; only a salted SHA-256 per stage is in the page (checked with crypto.subtle). A wrong answer at any
+  // stage ends the attempt and locks it for 24 h (egg20-lock; long-press then does nothing). Closing with x (any time) gives
+  // up and resets to the intro without a lock. Passing all three shows the $20 win screen; the win is stored in egg20-won.
+  // three stages; each has its own salt and only the SHA-256 of salt+answer
+  var EGG_STAGES=[{"q": "Brave and true, we say me through and through. Count every word I hold — that number is your clue.", "salt": "jensen-egg-2026:s1:", "hash": "9f27e8331e02bc13fc98ec6b1d185c7400821b1bc09c7a162b88ca6233a67b0a"}, {"q": "Mom and Dad said ‘I do’ in the year when the Olympic torch had left Salt Lake two winters behind, and the world met again in the city where the Games were born. What year was it?", "salt": "jensen-egg-2026:s2:", "hash": "0c876c83098a2fe82dfc883491cbed00b883ae57d43a7af324f1ca84072891d5"}, {"q": "Utah joined the Union in 1896. Count how many states had joined before it, then add one. That’s Utah’s number.", "salt": "jensen-egg-2026:s3:", "hash": "a40158de4877ff0d9d98b8352f81fe488ea3785503f83a151092f673f4ae8094"}], EGG_HOLD=3000, eStage=0;
+  var eEl=document.getElementById('egg'), eDisp=document.getElementById('edisp'), eMsg=document.getElementById('emsg'),
+      eWin=document.getElementById('eggwin'), eToast=document.getElementById('etoast'), eBusy=false, eHold=0, eStart=null, eFired=0, eToastT=0;
+  function eGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function eSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  function eNice(iso){var d=new Date(iso);if(isNaN(d))return iso;
+    return new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',month:'short',day:'numeric'}).format(d)+' \u00b7 '+
+      new Intl.DateTimeFormat('en-US',{timeZone:TZ,hour:'numeric',minute:'2-digit'}).format(d);}
+  function eToastShow(t){eToast.textContent=t;eToast.classList.add('on');clearTimeout(eToastT);eToastT=setTimeout(function(){eToast.classList.remove('on');},3500);}
+  function eKeys(on){each('#ekeys button',function(b){b.disabled=!on;});}
+  function eOpen(){
+    var won=eGet('egg20-won');
+    if(won){eToastShow('Already claimed on '+eNice(won));return;}
+    var lock=parseInt(eGet('egg20-lock')||'0',10);
+    if(lock&&Date.now()<lock)return;                       // locked: fully silent
+    eIntro();
+    eEl.classList.add('on');eEl.setAttribute('aria-hidden','false');
+  }
+  var eCard=document.querySelector('#egg .ecard');
+  function eIntro(){eStage=0;eBusy=false;eCard.className='ecard intro';}
+  function eShowStage(i){eCard.className='ecard play';eStage=i;eBusy=false;eDisp.textContent='';eMsg.textContent='';eMsg.className='emsg';eKeys(true);
+    document.getElementById('estage').textContent='Stage '+(i+1)+' of '+EGG_STAGES.length;
+    document.getElementById('erid').textContent=EGG_STAGES[i].q;}
+  function eClose(){eEl.classList.remove('on');eEl.setAttribute('aria-hidden','true');eStage=0;}
+  function eHex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return ('0'+b.toString(16)).slice(-2);}).join('');}
+  function eCheck(){
+    var v=eDisp.textContent; if(!v||eBusy)return;
+    if(!(window.crypto&&crypto.subtle&&window.TextEncoder)){eMsg.textContent='Try again later';return;}   // no secure context: no try used
+    eBusy=true;
+    var st=EGG_STAGES[eStage];
+    crypto.subtle.digest('SHA-256',new TextEncoder().encode(st.salt+v)).then(function(h){
+      if(!eEl.classList.contains('on'))return;              // closed while checking
+      if(eHex(h)===st.hash){
+        if(eStage+1<EGG_STAGES.length){
+          eKeys(false);eMsg.className='emsg ok';eMsg.textContent='Correct! Next one\u2026';
+          var next=eStage+1;setTimeout(function(){if(eEl.classList.contains('on')&&eStage===next-1)eShowStage(next);},1200);
+          return;
+        }
+        var iso=new Date().toISOString(); eSet('egg20-won',iso); eSet('egg20-lock','');
+        eClose(); eWinShow(iso);
+      }else{
+        eSet('egg20-lock',String(Date.now()+24*3600*1000));
+        eKeys(false); eMsg.className='emsg'; eMsg.textContent='Not quite! The challenge is locked. Try again tomorrow.';
+        setTimeout(eClose,4000);
+      }
+    },function(){eBusy=false;eMsg.textContent='Try again later';});
+  }
+  function eWinShow(iso){
+    document.getElementById('ewhen').textContent='Won '+eNice(iso);
+    each('.cf',function(c){c.remove();},eWin);
+    var cols=['#F4C548','#5FD39A','#6FA8FF','#FFAE57','#C9A0FF','#FF8A80','#002E5D'];
+    for(var i=0;i<90;i++){var c=document.createElement('i');c.className='cf';
+      c.style.left=(Math.random()*100)+'%';c.style.background=cols[i%cols.length];
+      c.style.setProperty('--dx',((Math.random()-.5)*160).toFixed(0)+'px');c.style.setProperty('--r',((Math.random()-.5)*1080).toFixed(0)+'deg');
+      c.style.animationDuration=(2.6+Math.random()*2.6).toFixed(2)+'s';c.style.animationDelay=(-Math.random()*5).toFixed(2)+'s';
+      if(i%3===0){c.style.width='10px';c.style.height='10px';c.style.borderRadius='50%';}
+      eWin.appendChild(c);}
+    eWin.classList.add('on');eWin.setAttribute('aria-hidden','false');
+  }
+  eWin.addEventListener('click',function(ev){ev.stopPropagation();eWin.classList.remove('on');eWin.setAttribute('aria-hidden','true');each('.cf',function(c){c.remove();},eWin);});
+  document.getElementById('ekeys').addEventListener('click',function(ev){ev.stopPropagation();
+    var b=ev.target.closest('button'); if(!b||b.disabled)return;
+    var k=b.getAttribute('data-k');
+    if(k==='c'){eDisp.textContent='';}else if(k==='e'){eCheck();}else if(eDisp.textContent.length<4){eDisp.textContent+=b.textContent;}});
+  eEl.addEventListener('click',function(ev){ev.stopPropagation();});   // taps inside the dialog/backdrop never reach the page
+  document.getElementById('estart').addEventListener('click',function(ev){ev.stopPropagation();eShowStage(0);});
+  document.getElementById('ex').addEventListener('click',function(ev){ev.stopPropagation();eClose();});   // giving up: next time starts at the intro, no lock
+  function eCancel(){clearTimeout(eHold);eHold=0;eStart=null;}
+  each('.prayer',function(pr){
+    pr.addEventListener('pointerdown',function(ev){if(ev.button>0)return;eCancel();eStart=[ev.clientX,ev.clientY];
+      eHold=setTimeout(function(){eHold=0;eStart=null;eFired=Date.now();if(pr.closest('.page.on'))eOpen();},EGG_HOLD);});
+    pr.addEventListener('pointermove',function(ev){if(eStart&&Math.abs(ev.clientX-eStart[0])+Math.abs(ev.clientY-eStart[1])>12)eCancel();});
+    ['pointerup','pointercancel','pointerleave'].forEach(function(t){pr.addEventListener(t,eCancel);});
+    pr.addEventListener('contextmenu',function(ev){ev.preventDefault();});
+    // the click that ends a long press must not flip/pause the pages; ordinary short taps behave as before
+    pr.addEventListener('click',function(ev){if(eFired&&Date.now()-eFired<1500){ev.stopPropagation();ev.preventDefault();eFired=0;}});
+  });
+
 
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
   window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
