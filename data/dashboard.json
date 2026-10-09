@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-09T08:49:26-06:00",
+    "last_updated": "2026-10-09T08:54:41-06:00",
     "school_feed_synced": "2026-10-09T08:49:23-06:00",
     "school_feed_window": [
       "2026-10-08",
@@ -247,18 +247,6 @@
       "priority": "low",
       "kind": "school",
       "source": "ahs_feed"
-    },
-    {
-      "id": "fam-trip-california",
-      "date": "2026-10-14",
-      "end_date": "2026-10-18",
-      "title": "California",
-      "note": "",
-      "who": [
-        "parents"
-      ],
-      "kind": "trip",
-      "source": "family"
     },
     {
       "id": "ahs-20261014-half-day-spirit-apparel",

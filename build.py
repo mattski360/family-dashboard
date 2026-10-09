@@ -76,7 +76,7 @@ class Model:
                 _y["activities"] = [a for a in _y["activities"] if not _hit(a)]
             _b = (data.get("sports") or {}).get("byu") or {}
             if _b.get("games"):
-                _b["games"] = [g for g in _b["games"] if not _hit(g)]
+                _b["games"] = [g for g in _b["games"] if not _hit({k: v for k, v in g.items() if k != "venue"})]  # venue is never shown
         self.now = now
         self.today = now.date()
         self.meta = data.get("meta", {})
