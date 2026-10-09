@@ -74,6 +74,9 @@ class Model:
             _y = data.get("youth") or {}
             if _y.get("activities"):
                 _y["activities"] = [a for a in _y["activities"] if not _hit(a)]
+            _b = (data.get("sports") or {}).get("byu") or {}
+            if _b.get("games"):
+                _b["games"] = [g for g in _b["games"] if not _hit(g)]
         self.now = now
         self.today = now.date()
         self.meta = data.get("meta", {})
@@ -559,13 +562,17 @@ def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
                     f'<span class="et"><span class="el">{esc(label)}</span>'
                     f'<small class="ymtag">{esc(detail)}</small>{dots}</span></div>'))
     ents.sort(key=lambda x: x[0])
+    byu = v3_byu_tile_items(m, day)                # lowest priority: listed last, first to fall under "+N more"
     trips = [e for e in m.events_on(day) if e.get("kind") == "trip"]
     trips.sort(key=lambda e: e["date"])
     away = (f'<div class="away">{ic("bag")}{esc(v3_trip_label(trips[-1].get("title")))}</div>' if trips else "")
     cls = "day"
     if big and len(ents) <= 1:
         body = f'<div class="big {"p-leaf" if "break" in big.lower() else "p-red"}">{ic("leaf" if "break" in big.lower() else "x")}{esc(big)}</div>'
-    elif ents:
+        if byu:
+            body += f'<div class="ev byu-only">{"".join(h for _, h in byu)}</div>'
+    elif ents or byu:
+        ents += byu
         MAX = 6                                    # v3 page 2 tiles (youth included, tagged YM / All youth)
         hs = [h for _, h in ents]
         more = f'<div class="more">+{len(hs) - MAX} more</div>' if len(hs) > MAX else ""
@@ -578,6 +585,60 @@ def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
         cls += " wkend"
     return (f'<div class="{cls}" data-date="{day.isoformat()}"><div class="dw" data-dow="{DOW[day.weekday()]}">{DOW[day.weekday()]}</div>'
             f'<div class="dn">{day.day}</div>{body}{away}</div>')
+
+
+# ------------------------------------------------------------------ BYU games (sports.byu.games, from fetch_byu.py)
+# Low-key: a navy "BYU" pill + ball icon. Page 2 tiles list them after every family/school/YM item, so the
+# "+N more" cap drops them first; page 1 shows today's/tomorrow's in a slim line under the motto.
+
+BYU_ICON = {"football": "fball", "mbb": "bball"}
+
+
+def byu_games_on(m: Model, day: dt.date) -> list[dict]:
+    games = ((m.data.get("sports") or {}).get("byu") or {}).get("games") or []
+    out = [g for g in games if g.get("date") == day.isoformat() and g.get("opponent")]
+    return sorted(out, key=lambda g: g.get("start") or "99")
+
+
+def byu_matchup(g: dict) -> str:
+    return f'{"@" if g.get("home_away") == "away" else "vs"} {g["opponent"]}'
+
+
+def byu_when(g: dict) -> str:
+    bits = [fmt_time(g.get("start")) if g.get("start") else "TBA"]
+    if g.get("tv"):
+        bits.append(g["tv"])
+    if g.get("note"):
+        bits.append("Exh." if g["note"].lower().startswith("exhib") else g["note"])
+    return " \u00b7 ".join(bits)
+
+
+def v3_byu_tile_items(m: Model, day: dt.date) -> list[tuple]:
+    out = []
+    for g in byu_games_on(m, day):
+        out.append(((2, g.get("start") or "99"),
+                    f'<div class="e byu"><span class="bub">{ic(BYU_ICON.get(g.get("sport"), "trophy"))}</span><span class="et">'
+                    f'<span class="el"><span class="byutag">BYU</span>{esc(byu_matchup(g))}</span>'
+                    f'<small>{esc(byu_when(g))}</small></span></div>'))
+    return out
+
+
+def render_v3_byu_line(m: Model) -> str:
+    """One chip per game for every rendered day; JS shows only today's and tomorrow's (label filled in by JS)."""
+    tz = ZoneInfo(m.meta.get("timezone", "America/Denver"))
+    out = []
+    for day in m.days():
+        for g in byu_games_on(m, day):
+            attrs = f' data-date="{day.isoformat()}"'
+            if g.get("start"):
+                h, mi = map(int, g["start"].split(":"))
+                st = dt.datetime.combine(day, dt.time(h, mi), tz)
+                attrs += f' data-end="{(st + dt.timedelta(hours=3, minutes=30)).isoformat()}"'
+                if h >= 17:
+                    attrs += " data-night"
+            out.append(f'<span class="bg"{attrs}>{ic(BYU_ICON.get(g.get("sport"), "trophy"))}<b class="bd"></b>'
+                       f'<span class="byutag">BYU</span>{esc(byu_matchup(g))} <small>{esc(byu_when(g))}</small></span>')
+    return "".join(out)
 
 
 CFM_WAIT = "This week\u2019s lesson is on its way"
@@ -609,6 +670,7 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "PARENTS": render_v3_parents(m),
         "SPIRIT": render_v3_spirit(m),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
+        "BYU_TODAY": render_v3_byu_line(m),
         "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
     }
     out = tpl

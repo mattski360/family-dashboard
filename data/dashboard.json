@@ -5,8 +5,8 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-09T08:43:38-06:00",
-    "school_feed_synced": "2026-10-09T08:43:37-06:00",
+    "last_updated": "2026-10-09T08:49:26-06:00",
+    "school_feed_synced": "2026-10-09T08:49:23-06:00",
     "school_feed_window": [
       "2026-10-08",
       "2026-10-30"
@@ -749,7 +749,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-09T08:43:38-06:00",
+    "site_synced": "2026-10-09T08:49:24-06:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -873,5 +873,598 @@
         "source": "site"
       }
     ]
+  },
+  "sports": {
+    "byu": {
+      "team": "BYU Cougars",
+      "source": {
+        "football": "byucougars.com schedule page",
+        "mbb": "byucougars.com schedule page"
+      },
+      "seasons": {
+        "football": "2026",
+        "mbb": "2026-27"
+      },
+      "games": [
+        {
+          "id": "byu-football-2026-09-05-utah-tech",
+          "sport": "football",
+          "date": "2026-09-05",
+          "start": "18:00",
+          "opponent": "Utah Tech",
+          "home_away": "home",
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null,
+          "result": "W 63-7"
+        },
+        {
+          "id": "byu-football-2026-09-12-arizona",
+          "sport": "football",
+          "date": "2026-09-12",
+          "start": "13:30",
+          "opponent": "Arizona",
+          "home_away": "home",
+          "tv": "FOX",
+          "tv_all": [
+            "FOX"
+          ],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null,
+          "result": "W 28-17"
+        },
+        {
+          "id": "byu-football-2026-09-19-colorado-state",
+          "sport": "football",
+          "date": "2026-09-19",
+          "start": "17:30",
+          "opponent": "Colorado State",
+          "home_away": "away",
+          "tv": "CBS",
+          "tv_all": [
+            "CBS"
+          ],
+          "venue": "Fort Collins, Colorado / Canvas Stadium",
+          "note": null,
+          "result": "W 41-23"
+        },
+        {
+          "id": "byu-football-2026-10-03-tcu",
+          "sport": "football",
+          "date": "2026-10-03",
+          "start": "17:00",
+          "opponent": "TCU",
+          "home_away": "away",
+          "tv": "ESPN",
+          "tv_all": [
+            "ESPN",
+            "Disney+"
+          ],
+          "venue": "Fort Worth, Texas / Amon G. Carter Stadium",
+          "note": null,
+          "result": "W 17-10"
+        },
+        {
+          "id": "byu-football-2026-10-09-iowa-state",
+          "sport": "football",
+          "date": "2026-10-09",
+          "start": "20:15",
+          "opponent": "Iowa State",
+          "home_away": "home",
+          "tv": "ESPN",
+          "tv_all": [
+            "ESPN"
+          ],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-10-16-nebraska",
+          "sport": "mbb",
+          "date": "2026-10-16",
+          "start": null,
+          "opponent": "Nebraska",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": "Exhibition"
+        },
+        {
+          "id": "byu-football-2026-10-17-notre-dame",
+          "sport": "football",
+          "date": "2026-10-17",
+          "start": "17:30",
+          "opponent": "Notre Dame",
+          "home_away": "home",
+          "tv": "ABC",
+          "tv_all": [
+            "ABC"
+          ],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-10-24-unlv",
+          "sport": "mbb",
+          "date": "2026-10-24",
+          "start": "14:00",
+          "opponent": "UNLV",
+          "home_away": "away",
+          "tv": "MW+",
+          "tv_all": [
+            "MW+"
+          ],
+          "venue": "Las Vegas, Nevada / Thomas & Mack Center",
+          "note": "Exhibition"
+        },
+        {
+          "id": "byu-football-2026-10-24-ucf",
+          "sport": "football",
+          "date": "2026-10-24",
+          "start": null,
+          "opponent": "UCF",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Orlando, Florida / Acrisure Bounce House",
+          "note": null
+        },
+        {
+          "id": "byu-football-2026-10-31-arizona-state",
+          "sport": "football",
+          "date": "2026-10-31",
+          "start": null,
+          "opponent": "Arizona State",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-02-ohio-state",
+          "sport": "mbb",
+          "date": "2026-11-02",
+          "start": null,
+          "opponent": "Ohio State",
+          "home_away": "neutral",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Salt Lake City, Utah / Delta Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-06-omaha",
+          "sport": "mbb",
+          "date": "2026-11-06",
+          "start": null,
+          "opponent": "Omaha",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-football-2026-11-07-utah",
+          "sport": "football",
+          "date": "2026-11-07",
+          "start": null,
+          "opponent": "Utah",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Salt Lake City, Utah / Rice-Eccles Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-10-queens",
+          "sport": "mbb",
+          "date": "2026-11-10",
+          "start": null,
+          "opponent": "Queens",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-12-montana-state",
+          "sport": "mbb",
+          "date": "2026-11-12",
+          "start": null,
+          "opponent": "Montana State",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-football-2026-11-14-baylor",
+          "sport": "football",
+          "date": "2026-11-14",
+          "start": null,
+          "opponent": "Baylor",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-18-northern-colorado",
+          "sport": "mbb",
+          "date": "2026-11-18",
+          "start": null,
+          "opponent": "Northern Colorado",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-football-2026-11-21-kansas",
+          "sport": "football",
+          "date": "2026-11-21",
+          "start": null,
+          "opponent": "Kansas",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Lawrence, Kansas / David Booth Kansas Memorial Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-23-washington",
+          "sport": "mbb",
+          "date": "2026-11-23",
+          "start": "15:00",
+          "opponent": "Washington",
+          "home_away": "neutral",
+          "tv": "ESPN2",
+          "tv_all": [
+            "ESPN2"
+          ],
+          "venue": "Lahiana, Hawaii / Lahaina Civic Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-24-clemson-ole-miss",
+          "sport": "mbb",
+          "date": "2026-11-24",
+          "start": null,
+          "opponent": "Clemson/Ole Miss",
+          "home_away": "neutral",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Lahaina, Hawaii / Lahaina Civic Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-11-25-tbd",
+          "sport": "mbb",
+          "date": "2026-11-25",
+          "start": null,
+          "opponent": "TBD",
+          "home_away": "neutral",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Lahaina, Hawaii / Lahaina Civic Center",
+          "note": null
+        },
+        {
+          "id": "byu-football-2026-11-28-cincinnati",
+          "sport": "football",
+          "date": "2026-11-28",
+          "start": null,
+          "opponent": "Cincinnati",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-12-05-northwestern",
+          "sport": "mbb",
+          "date": "2026-12-05",
+          "start": null,
+          "opponent": "Northwestern",
+          "home_away": "neutral",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Salt Lake City, Utah / Delta Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-12-09-utah-state",
+          "sport": "mbb",
+          "date": "2026-12-09",
+          "start": null,
+          "opponent": "Utah State",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-12-12-cal-state-fullerton",
+          "sport": "mbb",
+          "date": "2026-12-12",
+          "start": null,
+          "opponent": "Cal State Fullerton",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-12-15-weber-state",
+          "sport": "mbb",
+          "date": "2026-12-15",
+          "start": null,
+          "opponent": "Weber State",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-12-19-san-diego-state",
+          "sport": "mbb",
+          "date": "2026-12-19",
+          "start": "20:00",
+          "opponent": "San Diego State",
+          "home_away": "neutral",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Palm Springs, California / Acrisure Arena",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2026-12-22-la-salle",
+          "sport": "mbb",
+          "date": "2026-12-22",
+          "start": null,
+          "opponent": "La Salle",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-02-arizona-state",
+          "sport": "mbb",
+          "date": "2027-01-02",
+          "start": null,
+          "opponent": "Arizona State",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Tempe, Arizona / Deseret Financial Arena",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-06-cincinnati",
+          "sport": "mbb",
+          "date": "2027-01-06",
+          "start": null,
+          "opponent": "Cincinnati",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-09-kansas",
+          "sport": "mbb",
+          "date": "2027-01-09",
+          "start": null,
+          "opponent": "Kansas",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-12-arizona",
+          "sport": "mbb",
+          "date": "2027-01-12",
+          "start": null,
+          "opponent": "Arizona",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Tuscon, Arizona / McKale Center at ALKEME Arena",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-16-utah",
+          "sport": "mbb",
+          "date": "2027-01-16",
+          "start": "20:00",
+          "opponent": "Utah",
+          "home_away": "home",
+          "tv": "TNT",
+          "tv_all": [
+            "TNT"
+          ],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-20-iowa-state",
+          "sport": "mbb",
+          "date": "2027-01-20",
+          "start": null,
+          "opponent": "Iowa State",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Ames, Iowa / Hilton Coliseum",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-23-west-virginia",
+          "sport": "mbb",
+          "date": "2027-01-23",
+          "start": null,
+          "opponent": "West Virginia",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-27-tcu",
+          "sport": "mbb",
+          "date": "2027-01-27",
+          "start": null,
+          "opponent": "TCU",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Fort Worth, Texas / Ed and Rae Schollmaier Arena",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-01-30-houston",
+          "sport": "mbb",
+          "date": "2027-01-30",
+          "start": null,
+          "opponent": "Houston",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Houston, Texas / Fertitta Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-02-baylor",
+          "sport": "mbb",
+          "date": "2027-02-02",
+          "start": null,
+          "opponent": "Baylor",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-06-utah",
+          "sport": "mbb",
+          "date": "2027-02-06",
+          "start": null,
+          "opponent": "Utah",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Salt Lake City, Utah / Huntsman Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-13-kansas-state",
+          "sport": "mbb",
+          "date": "2027-02-13",
+          "start": null,
+          "opponent": "Kansas State",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-17-colorado",
+          "sport": "mbb",
+          "date": "2027-02-17",
+          "start": null,
+          "opponent": "Colorado",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Boulder, Colorado / CU Events Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-20-tcu",
+          "sport": "mbb",
+          "date": "2027-02-20",
+          "start": null,
+          "opponent": "TCU",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-22-arizona",
+          "sport": "mbb",
+          "date": "2027-02-22",
+          "start": "19:00",
+          "opponent": "Arizona",
+          "home_away": "home",
+          "tv": "ESPN",
+          "tv_all": [
+            "ESPN"
+          ],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-02-27-ucf",
+          "sport": "mbb",
+          "date": "2027-02-27",
+          "start": null,
+          "opponent": "UCF",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Orlando, Florida / Addition Financial Arena",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-03-02-oklahoma-state",
+          "sport": "mbb",
+          "date": "2027-03-02",
+          "start": null,
+          "opponent": "Oklahoma State",
+          "home_away": "home",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Provo, Utah / Marriott Center",
+          "note": null
+        },
+        {
+          "id": "byu-mbb-2027-03-05-texas-tech",
+          "sport": "mbb",
+          "date": "2027-03-05",
+          "start": null,
+          "opponent": "Texas Tech",
+          "home_away": "away",
+          "tv": null,
+          "tv_all": [],
+          "venue": "Lubbock, Texas / United Supermarkets Arena",
+          "note": null
+        }
+      ],
+      "updated": "2026-10-09T08:49:26-06:00"
+    }
   }
 }

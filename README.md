@@ -8,10 +8,11 @@ The root URL (`index.html`) and the old `/v2/` URL (`v2/index.html`) are small s
 `build.py` renders `v3/index.html` from `data/dashboard.json` using `template_v3.html` + the icon sprite `v3_sprite.svg`.
 
 ```
-./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) → data/dashboard.json, then build.py → v3/index.html
+./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) + fetch_byu.py (BYU games) → data/dashboard.json, then build.py → v3/index.html
 python3 build.py [--week-start 2026-10-18]   # re-render only (stamps meta.last_updated, sets meta.week_start)
 python3 build.py --no-stamp [--out PATH]
 python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
+python3 fetch_byu.py --dry-run [--source official|espn]   # list BYU football + men's basketball games without saving
 /workspace/.venv-shot/bin/python shot_v3.py [--at 2026-10-08T07:20:00-06:00] [--landscape]   # preview-v3-p1.png + preview-v3-p2.png
 ```
 Requirements: Python 3.9+ standard library only (zoneinfo). Screenshots use playwright with the system Chrome.
@@ -37,6 +38,10 @@ Portrait 820×1180 is the target; light white theme, rounded type (SF Pro Rounde
 
 **Rotation & fitting** – crossfade every `meta.v3_rotate_seconds` (falls back to `v2_rotate_seconds`, default 30); tap switches page and pauses 2 minutes with a "Paused (m:ss) · tap to resume" pill; progress bar; state in `localStorage` (`dash-v3-rot`). Sizes are authored in rem (1rem = 1/18 of the mockup's px) and auto-fit per page between 15px and 21px (portrait), and page 2 also stops growing before a tile label's longest word would be wider than its tile; `body[data-fs]` reports the result. The top padding clears the iPad status bar and the page-dot footer is a solid white strip, so nothing sits under it.
 
+**BYU games** – BYU football and men's basketball games (`sports.byu.games`) are low-key items with a navy **BYU** pill and a ball icon, e.g. "BYU vs Iowa State · 8:15 PM · ESPN" ("@" for away games, "TBA" when no time is set, "Exh." for exhibitions). On page 2 they are listed after every family/school/YM item in a tile, so the 6-item cap drops them first; on a full-break tile they sit under the big "Fall break" mark. On page 1 a slim line under the motto shows today's ("Today"/"Tonight") and tomorrow's games; today's game drops off about 3½ hours after its start time.
+
+**Easter egg** – a faded BYU-navy "Y" (a self-drawn SVG, not the official logo file) sits in the bottom-right corner of the page-dot bar. Tapping it spins the Y, pops a "Go Cougs!" bubble and sends a few little Ys flying for ~2.5 s. It lives outside the page area and stops the tap, so it never flips pages or pauses rotation.
+
 **Surprise guard** – `data/private_hide.txt` (git-ignored, never commit it) filters events, to-dos and youth items. build.py also checks the finished HTML for those terms and refuses to write `v3/index.html` (exit 3) if any slip through.
 
 **Refresh & staleness** – `<meta http-equiv=refresh content=1800>` reloads every 30 minutes. "Updated …" comes from `meta.last_updated` and turns amber ("needs refresh") when older than `meta.stale_after_days` (8).
@@ -52,6 +57,7 @@ Portrait 820×1180 is the target; light white theme, rounded type (SF Pro Rounde
 | `todos[]` | `{id, text, detail, who[], due, hide_after, priority, done}`. Kept in the JSON but not rendered (v3 has no Heads-up section) |
 | `spiritual` | see below |
 | `academics` | `updated` (ISO), `kids.<id>.courses[] {name, percent, letter}`, `missing_count` (int or null), `upcoming_tests[] {date, course, title}` (hidden once past), `note`. Not rendered (grades section removed) |
+| `sports.byu` | Written by `fetch_byu.py`: `team`, `source` (per sport), `seasons`, `updated`, `games[] {id, sport (football/mbb), date, start (HH:MM MT or null = TBA), opponent, home_away (home/away/neutral), tv (first network or null), tv_all[], venue, note ("Exhibition"/null), result ("W 63-7", past games)}` |
 | `screen_time` | `enabled` (bool), `updated`, `kids.<id> {today_minutes, daily_avg_minutes, limit_minutes}`. Null values show "coming soon" |
 
 ### Adding a calendar event
@@ -91,6 +97,12 @@ Kept: school-wide items (no school, half days, term start/end, grades posted, pi
 Dropped: middle school, other grades, kindergarten, clubs, rehearsals, athletics, senior nights, AP/ACT/PSAT for other grades, admissions, and faculty items.
 No-school entries on weekends are skipped. When the band named in "No School K-8" or a similar phrase covers only some of the kids, the event is split into a no-school item for the kids it covers and a separate item for the others.
 The default window is **21 days**, so a weekly run still fills the ten day tiles all week. Use `--days 14` if you want a shorter window.
+
+## BYU games (fetch_byu.py)
+* **Source:** the official byucougars.com schedule pages (`/sports/football/schedule`, `/sports/mens-basketball/schedule`), read from the server-rendered HTML: date and time (with UTC offset, converted to America/Denver), TBA flag, vs./at, opponent, exhibition flag, location and the TV link. If a page can't be read, ESPN's public site API team schedule JSON (BYU = team 252, regular season + postseason) is used for that sport instead.
+* Runs on every `run.sh`, so the Saturday refresh picks up new kickoff/tipoff times, TV networks and added games (bowl games, tournament opponents) automatically. Nothing is invented: unset times are stored as `null` (TBA) and "TV (TBA)" as no network.
+* **Fail soft:** if both sources fail for a sport, its previous games are kept and the script exits 2; run.sh logs it and still builds.
+* The official pages show the current season, so the dashboard rolls into the next football / basketball season on its own.
 
 ## Young Men this week (`youth`)
 ```json
