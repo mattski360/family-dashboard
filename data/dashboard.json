@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-08T16:54:39-06:00",
+    "last_updated": "2026-10-08T22:14:02-06:00",
     "school_feed_synced": "2026-10-08T08:26:46-06:00",
     "school_feed_window": [
       "2026-10-07",
@@ -13,7 +13,15 @@
     ],
     "later_days": 8,
     "week_start": "2026-10-11",
-    "motto": "We are Jensens, we are brave, we choose the right, and we always help others."
+    "motto": "We are Jensens, we are brave, we choose the right, and we always help others.",
+    "prayer_rotation": {
+      "anchor_sunday": "2026-10-04",
+      "order": [
+        "tanner",
+        "luke",
+        "wyatt"
+      ]
+    }
   },
   "people": {
     "luke": {

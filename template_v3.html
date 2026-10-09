@@ -110,6 +110,9 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .sc{border-radius:1.67rem;padding:1.4rem 1.45rem 1.35rem;display:flex;flex-direction:column;gap:.42rem;min-width:0}
 .sc.cfm{background:var(--peach)} .sc.fsy{background:var(--rose)}
 .cfm .sk{color:#B5651D} .fsy .sk{color:#B2477A}
+.prayer{margin:.35em 0 .1em;font-size:1.12rem;font-weight:700;color:#8a5a2b;display:flex;align-items:center;gap:.4em}
+.prayer .pr-n{display:none;padding:.1em .7em;border-radius:1em;background:var(--bg);color:var(--dk);border:2px solid var(--c)}
+.prayer .pr-n.on{display:inline-block}
 .stt{font-size:1.55rem;font-weight:800;line-height:1.16;margin-top:.28rem}
 .srd{font-size:1.08rem;font-weight:800;color:#B5651D}
 .fsy .srd{color:#B2477A}
@@ -236,6 +239,10 @@ body.paused #prog{background:#C9A0FF}
   var lastDay=null, TILES=10;
   function applyDay(today){
     var tmrw=addDays(today,1), dow=dowOf(today), dow1=dowOf(tmrw);
+    // weekly prayer rotation (Sunday start) from the anchor week
+    each('.prayer',function(pr){var a=pr.getAttribute('data-anchor'),n=+pr.getAttribute('data-n')||3;
+      var d=Math.floor((Date.parse(today+'T12:00:00Z')-Date.parse(a+'T12:00:00Z'))/864e5), w=Math.floor(d/7), i=((w%n)+n)%n;
+      each('.pr-n',function(el){el.classList.toggle('on',+el.getAttribute('data-i')===i);},pr);});
     // page 1: kid cards (youth tagged YM / All youth), parents strip, Come Follow Me, Strength of Youth
     each('[data-d0]',function(el){el.classList.toggle('on',el.getAttribute('data-d0')===today);});
     each('[data-d1]',function(el){el.classList.toggle('on',el.getAttribute('data-d1')===tmrw);});

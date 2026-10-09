@@ -1123,6 +1123,18 @@ def v3_dow(k) -> str:
     return str(k or "")[:3].title()
 
 
+def _v3_prayer(m) -> str:
+    """'Prayer: <boy>' line. Rotates weekly (Sunday start) through meta.prayer_rotation.order from anchor_sunday;
+    the iPad works out the current week client-side so it advances without a rebuild."""
+    pr = (m.meta.get("prayer_rotation") or {})
+    order = [k for k in (pr.get("order") or []) if k]
+    if not order or not pr.get("anchor_sunday"):
+        return ""
+    names = {k.get("id"): k.get("name") for k in m.kids if isinstance(k, dict)}
+    spans = "".join(f'<b class="pr-n p-{esc(k)}" data-i="{i}">{esc(names.get(k) or k.title())}</b>' for i, k in enumerate(order))
+    return (f'<div class="prayer" data-anchor="{esc(pr["anchor_sunday"])}" data-n="{len(order)}">'
+            f'<span class="pr-l">Prayer:</span> {spans}</div>')
+
 def render_v3_spirit(m: Model) -> str:
     """CFM: week's lesson title + reading, then TODAY's scripture/thought from come_follow_me.daily (one element per
     weekday with data-dow; JS shows the one matching the iPad's date). Falls back to the featured question when no
@@ -1158,6 +1170,7 @@ def render_v3_spirit(m: Model) -> str:
                 f'<div class="sk"><span class="bub">{ic("book")}</span>Come, Follow Me{dates_s}</div>'
                 f'<div class="stt">{esc(cfm.get("title") or CFM_WAIT)}</div>'
                 + (f'<div class="srd">{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else "")
+                + _v3_prayer(m)
                 + (cfd or fallback) + "</div>")
     pending_fsy = fsy.get("status") == "pending" or not fsy.get("topic")
     topic = fsy.get("topic") or "This month\u2019s chapter is on its way"
