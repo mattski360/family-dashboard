@@ -228,7 +228,10 @@ body.paused #prog{background:#C9A0FF}
 @keyframes gbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 @media (max-width:640px){.gcols{flex-direction:column}}
 /* hidden $20 riddle egg (press-and-hold "Prayer:" for 3 s). px sizes: overlays live outside the auto-fitted pages */
-.prayer{touch-action:manipulation;-webkit-touch-callout:none}
+.prayer{position:relative;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.prayer *{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+/* bigger hold target (>= 44 px tall, whole line) without changing the layout */
+.prayer::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:max(48px,100%);transform:translateY(-50%)}
 #egg{position:fixed;inset:0;z-index:21;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(40,48,68,.5);
   -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 #egg.on{display:flex}
@@ -272,7 +275,7 @@ body.paused #prog{background:#C9A0FF}
 #etoast.on{opacity:1}
 </style>
 </head>
-<body data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
+<body data-ver="{{VERSION}}" data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
 {{SPRITE}}
 <div id="stage">
 
@@ -475,7 +478,7 @@ body.paused #prog{background:#C9A0FF}
   // three stages; each has its own salt and only the SHA-256 of salt+answer
   var EGG_STAGES=[{"q": "Brave and true, we say me through and through. Count every word I hold — that number is your clue.", "salt": "jensen-egg-2026:s1:", "hash": "9f27e8331e02bc13fc98ec6b1d185c7400821b1bc09c7a162b88ca6233a67b0a"}, {"q": "Mom and Dad said ‘I do’ in the year when the Olympic torch had left Salt Lake two winters behind, and the world met again in the city where the Games were born. What year was it?", "salt": "jensen-egg-2026:s2:", "hash": "0c876c83098a2fe82dfc883491cbed00b883ae57d43a7af324f1ca84072891d5"}, {"q": "Utah joined the Union in 1896. Count how many states had joined before it, then add one. That’s Utah’s number.", "salt": "jensen-egg-2026:s3:", "hash": "a40158de4877ff0d9d98b8352f81fe488ea3785503f83a151092f673f4ae8094"}], EGG_HOLD=3000, eStage=0;
   var eEl=document.getElementById('egg'), eDisp=document.getElementById('edisp'), eMsg=document.getElementById('emsg'),
-      eWin=document.getElementById('eggwin'), eToast=document.getElementById('etoast'), eBusy=false, eHold=0, eStart=null, eFired=0, eToastT=0;
+      eWin=document.getElementById('eggwin'), eToast=document.getElementById('etoast'), eBusy=false, eFired=0, eToastT=0;
   function eGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
   function eSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
   function eNice(iso){var d=new Date(iso);if(isNaN(d))return iso;
@@ -540,17 +543,40 @@ body.paused #prog{background:#C9A0FF}
   eEl.addEventListener('click',function(ev){ev.stopPropagation();});   // taps inside the dialog/backdrop never reach the page
   document.getElementById('estart').addEventListener('click',function(ev){ev.stopPropagation();eShowStage(0);});
   document.getElementById('ex').addEventListener('click',function(ev){ev.stopPropagation();eClose();});   // giving up: next time starts at the intro, no lock
-  function eCancel(){clearTimeout(eHold);eHold=0;eStart=null;}
-  each('.prayer',function(pr){
-    pr.addEventListener('pointerdown',function(ev){if(ev.button>0)return;eCancel();eStart=[ev.clientX,ev.clientY];
-      eHold=setTimeout(function(){eHold=0;eStart=null;eFired=Date.now();if(pr.closest('.page.on'))eOpen();},EGG_HOLD);});
-    pr.addEventListener('pointermove',function(ev){if(eStart&&Math.abs(ev.clientX-eStart[0])+Math.abs(ev.clientY-eStart[1])>12)eCancel();});
-    ['pointerup','pointercancel','pointerleave'].forEach(function(t){pr.addEventListener(t,eCancel);});
-    pr.addEventListener('contextmenu',function(ev){ev.preventDefault();});
-    // the click that ends a long press must not flip/pause the pages; ordinary short taps behave as before
-    pr.addEventListener('click',function(ev){if(eFired&&Date.now()-eFired<1500){ev.stopPropagation();ev.preventDefault();eFired=0;}});
-  });
+  // Long press, delegated from document so it survives any re-render. iOS Safari: touch events are the primary path
+  // (touchstart is preventDefault'ed so no text selection / callout / pointercancel can steal the gesture); pointer
+  // events are only the mouse/pen fallback. Because touchstart is prevented iOS sends no click, so a short tap is
+  // replayed as an ordinary page tap; a moved finger does nothing.
+  var lp={t:0,x:0,y:0,moved:false,touch:false};
+  function lpPrayer(el){return el&&el.closest?el.closest('.prayer'):null;}
+  function eCancel(){clearTimeout(lp.t);lp.t=0;}
+  function lpStart(x,y,pr){eCancel();lp.x=x;lp.y=y;lp.moved=false;
+    lp.t=setTimeout(function(){lp.t=0;eFired=Date.now();if(pr.closest('.page.on'))eOpen();},EGG_HOLD);}
+  function lpMove(x,y){if((lp.t||!lp.moved)&&Math.abs(x-lp.x)+Math.abs(y-lp.y)>10){lp.moved=true;eCancel();}}
+  document.addEventListener('touchstart',function(ev){var pr=lpPrayer(ev.target);if(!pr)return;
+    ev.preventDefault();lp.touch=true;
+    if(ev.touches.length>1){eCancel();lp.moved=true;return;}
+    var t=ev.changedTouches[0];lpStart(t.clientX,t.clientY,pr);},{passive:false,capture:true});
+  document.addEventListener('touchmove',function(ev){if(!lp.touch)return;var t=ev.changedTouches[0];if(t)lpMove(t.clientX,t.clientY);},{passive:true,capture:true});
+  document.addEventListener('touchend',function(ev){if(!lp.touch)return;
+    if(ev.touches.length)return;                         // other fingers still down
+    var pending=!!lp.t;eCancel();lp.touch=false;
+    if(pending&&!lp.moved)userGo((cur+1)%2);             // released early = ordinary tap
+  },{capture:true});
+  document.addEventListener('touchcancel',function(ev){if(!lp.touch)return;if(ev.touches.length)return;eCancel();lp.touch=false;},{capture:true});
+  document.addEventListener('pointerdown',function(ev){if(ev.pointerType==='touch'||lp.touch||ev.button>0)return;
+    var pr=lpPrayer(ev.target);if(pr)lpStart(ev.clientX,ev.clientY,pr);},true);
+  document.addEventListener('pointermove',function(ev){if(ev.pointerType!=='touch'&&!lp.touch)lpMove(ev.clientX,ev.clientY);},true);
+  ['pointerup','pointercancel'].forEach(function(t){document.addEventListener(t,function(ev){if(ev.pointerType!=='touch'&&!lp.touch)eCancel();},true);});
+  ['contextmenu','selectstart','dragstart'].forEach(function(t){document.addEventListener(t,function(ev){if(lpPrayer(ev.target))ev.preventDefault();},true);});
+  // the click that ends a (mouse) long press must not flip/pause the pages; ordinary short clicks behave as before
+  document.addEventListener('click',function(ev){if(eFired&&Date.now()-eFired<1500&&lpPrayer(ev.target)){ev.stopPropagation();ev.preventDefault();eFired=0;}},true);
 
+  // pick up a new build without waiting for the 30-minute reload: compare data-ver with the published page
+  setInterval(function(){if(!window.fetch||document.getElementById('egg').classList.contains('on')||eWin.classList.contains('on'))return;
+    fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
+      var m=/data-ver="([0-9a-f]+)"/.exec(t||'');if(m&&m[1]!==B.getAttribute('data-ver'))location.replace(location.pathname+'?r='+Date.now());
+    }).catch(function(){});},10*60*1000);
 
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
   window.addEventListener('orientationchange',function(){setTimeout(fit,300);});

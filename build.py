@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import html
 import json
 import re
@@ -714,6 +715,8 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
     out = tpl
     for k, v in repl.items():
         out = out.replace("{{" + k + "}}", str(v))
+    # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads
+    out = out.replace("{{VERSION}}", hashlib.sha256(out.encode()).hexdigest()[:12])
     left = re.findall(r"\{\{[A-Z_0-9]+\}\}", out)
     if left:
         raise SystemExit(f"unfilled v3 template slots: {left}")
