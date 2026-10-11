@@ -96,6 +96,14 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 /* page 1: parents strip (only when there's something today/tomorrow) */
 .pstrip{display:flex;align-items:center;gap:.6rem;background:var(--parents-bg);border-radius:1.4rem;padding:.6rem .9rem;flex-wrap:wrap}
 .pstrip.none{display:none}
+/* page 2 (bottom): this week's adventure picks (plain content; a tap is an ordinary page tap) */
+.adv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6rem}
+.ap{display:flex;align-items:center;gap:.4rem;min-width:0;border-radius:1.2rem;padding:.5rem .8rem;font-size:.95rem;font-weight:700;white-space:nowrap}
+.ap.weekend{background:var(--sky);color:#245A9E} .ap.evening{background:#FFEFE0;color:#B0541A}
+.ap .ae{font-size:1.15rem;line-height:1}
+.ap b{font-weight:800}
+.ap .an{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--dk)}
+.ap small{flex:none;font-size:.85rem;font-weight:700;opacity:.85}
 .pstrip .lab{font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--parents-dk);display:flex;align-items:center;gap:.4rem}
 .pday{display:none;align-items:center;gap:.45rem;flex-wrap:wrap}
 .pday.on{display:inline-flex}
@@ -300,6 +308,7 @@ body.paused #prog{background:#C9A0FF}
   </header>
   <div class="h">This week <span id="range"></span></div>
   <div class="days">{{TILES}}</div>
+  {{ADVENTURES}}
 </section>
 </div>
 

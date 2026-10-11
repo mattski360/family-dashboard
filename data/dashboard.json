@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-10T20:56:51-06:00",
+    "last_updated": "2026-10-11T08:15:50-06:00",
     "school_feed_synced": "2026-10-10T20:56:27-06:00",
     "school_feed_window": [
       "2026-10-09",
@@ -20,6 +20,14 @@
         "tanner",
         "luke",
         "wyatt"
+      ]
+    },
+    "adventure_history": {
+      "weekend": [
+        "Lake Blanche"
+      ],
+      "evening": [
+        "Peaks Ice Arena Public Skate"
       ]
     }
   },
@@ -1622,6 +1630,33 @@
       "previous": {
         "as_of": null,
         "courses": []
+      }
+    }
+  },
+  "adventures": {
+    "this_week": {
+      "week_start": "2026-10-11",
+      "weekend": {
+        "#": "3",
+        "Name": "Lake Blanche",
+        "Description": "7-mi RT, 2,700 ft gain to a turquoise lake under Sundial Peak",
+        "Location": "Big Cottonwood Canyon",
+        "Drive Time from Highland": "45 min",
+        "Best Season(s)": "Jun-Oct",
+        "Cost Tier": "Free",
+        "Category": "Hike",
+        "Reservation / Fee / Notes": "Watershed: no dogs, no swimming; park early"
+      },
+      "evening": {
+        "#": "38",
+        "Name": "Peaks Ice Arena Public Skate",
+        "Description": "Skate on a 2002 Olympic ice sheet",
+        "Location": "Provo",
+        "Drive Time from Highland": "25 min",
+        "Best Season(s)": "Year-round",
+        "Cost Tier": "$",
+        "Category": "Indoor Fun",
+        "Reservation / Fee / Notes": "Check public session times"
       }
     }
   }

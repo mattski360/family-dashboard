@@ -1,0 +1,151 @@
+#,Name,Description,Location,Drive Time from Highland,Best Season(s),Cost Tier,Category,Reservation / Fee / Notes
+1,Stewart Falls via Aspen Grove,3.4-mi RT through aspens to a 200-ft two-tier waterfall,Sundance / Aspen Grove TH,40 min,Jun-Oct,$,Hike,Alpine Loop recreation fee (America the Beautiful pass accepted)
+2,Silver Lake (AF Canyon),Steep 4-mi RT from Silver Lake Flat Reservoir to a cirque lake,American Fork Canyon,40 min,Jul-Oct,$,Hike,AF Canyon fee; rough last mile of road
+3,Lake Blanche,"7-mi RT, 2,700 ft gain to a turquoise lake under Sundial Peak",Big Cottonwood Canyon,45 min,Jun-Oct,Free,Hike,"Watershed: no dogs, no swimming; park early"
+4,Donut Falls,3.5-mi RT easy hike to a waterfall pouring through a rock hole,Big Cottonwood Canyon (Mill D),55 min,Jun-Oct,Free,Hike,Watershed rules; slick rock at the falls
+5,Brighton Lakes Trail,"Lake-hop Lake Mary, Lake Martha and Lake Catherine from Brighton",Brighton,1 hr,Jul-Sep,Free,Hike,Great with a picnic; watershed rules
+6,"Cecret Lake, Albion Basin",1.8-mi RT to a wildflower-ringed lake with frequent moose,Alta,55 min,Jul-Aug,$,Hike,Albion Basin road/day-use fee; lot fills early on weekends
+7,Red Pine Lake,6.8-mi RT to a granite-rimmed alpine lake,Little Cottonwood Canyon (White Pine TH),45 min,Jul-Sep,Free,Hike,Watershed rules
+8,Bells Canyon Falls & Reservoir,Reservoir loop plus a steep push to the lower waterfall,Sandy,30 min,Apr-Nov,Free,Hike,Early start in summer heat
+9,Grotto Falls,0.6-mi RT shaded walk to a cascade grotto - easy win for all ages,Payson Canyon (Nebo Loop),55 min,May-Oct,Free,Hike,Combine with Payson Lakes
+10,Devil's Kitchen Geologic Area,Short paved walk to red sandstone hoodoos - Utah County's 'mini Bryce',Nebo Loop,1 hr 10 min,Jun-Oct,Free,Hike,Nebo Loop closed in winter
+11,Waterfall Canyon,2.4-mi RT steep climb to a 200-ft waterfall above Ogden,Ogden,1 hr 15 min,Apr-Nov,Free,Hike,Rocky; good shoes
+12,Adams Canyon,4-mi RT up sandy switchbacks to a 40-ft waterfall,Layton,1 hr,Apr-Nov,Free,Hike,Sandy and hot - go early
+13,Lofty Lake Loop,4-mi loop past Kamas Lake and Lofty Lake in the high Uintas,Mirror Lake Hwy (Pass Lake TH),1 hr 45 min,Jul-Sep,$,Hike,Mirror Lake Hwy recreation pass required
+14,Bald Mountain,"4-mi RT to an 11,943-ft summit; mountain goats common",Mirror Lake Hwy,1 hr 45 min,Jul-Sep,$,Hike,Start early - afternoon lightning
+15,Living Room Lookout,2.4-mi RT to sandstone slab 'furniture' overlooking Salt Lake,Salt Lake City (U of U foothills),45 min,Mar-Nov,Free,Hike,Great sunset option
+16,Scout Falls,3-mi RT easy waterfall hike from Timpooneke trailhead,American Fork Canyon,35 min,Jun-Oct,$,Hike,AF Canyon fee
+17,Cascade Springs Boardwalk,Boardwalk loops over terraced spring-fed pools,Alpine Loop / Midway side,45 min,May-Oct,$,Hike,Wheelchair-friendly; Sunday-friendly stroll
+18,"Frary Peak, Antelope Island",7-mi RT to the island's high point - bison and lake views,Antelope Island State Park,1 hr 15 min,"Apr-Jun, Sep-Oct",$,Hike,State park entry fee; gnats in late May-June
+19,Big Springs Hollow,Easy creekside trail to springs and meadows,South Fork Provo Canyon,35 min,May-Oct,Free,Hike,Good snowshoe in winter too
+20,Round Valley Trails,Rolling beginner/intermediate singletrack - perfect all-boys ride,Park City,50 min,May-Oct (groomed fat bike in winter),Free,Mountain Bike,Huge network; easy to split by ability
+21,Wasatch Crest Trail,Iconic high ridge ride with jaw-dropping views (Luke's bucket list),Guardsman Pass to Park City/Mill Creek,1 hr,Jul-Oct,Free,Mountain Bike,Shuttle needed; Mill Creek even-day bike rule
+22,Mid Mountain Trail,Long flowy contour trail across the Park City ridgeline,Park City,55 min,Jun-Oct,Free,Mountain Bike,Use Silver Lake/PC Mountain access
+23,Deer Valley Bike Park,Lift-served flow and downhill trails,Park City (Deer Valley),50 min,Jun-Sep,$$$,Mountain Bike,Lift ticket; rentals and full-face helmets available
+24,Sundance Bike Park,Lift-served trails on Mt. Timpanogos' back side,Sundance,40 min,Jun-Sep,$$$,Mountain Bike,Lift ticket; Fri afternoons + weekends
+25,Brighton Bike Park,Lift-access mountain biking in Big Cottonwood,Brighton,1 hr,Jul-Sep,$$$,Mountain Bike,Lift ticket
+26,Woodward Park City Bike Park,"Pump tracks, jump lines and lift-served trails",Park City (Kimball Jct),45 min,May-Oct,$$$,Mountain Bike,Great skill progression for Tanner & Wyatt
+27,Snowbasin Summer Trails,Big mountain cross-country and gondola-served riding,Huntsville (Snowbasin),1 hr 20 min,Jun-Oct,$$,Mountain Bike,Trails free; gondola ticket extra
+28,Soldier Hollow Trails,Ride the Olympic venue that hosts NICA high school races,Midway (Wasatch Mountain SP),40 min,May-Oct,$,Mountain Bike,State park day-use fee; pre-ride the race course
+29,"White Rock Bay Loop, Antelope Island",Desert singletrack with bison and lake views,Antelope Island State Park,1 hr 15 min,"Apr-May, Sep-Oct",$,Mountain Bike,Park fee; avoid gnat season
+30,Ridge Trail 157,Advanced high-alpine ridge ride along the Alpine Loop,American Fork Canyon,40 min,Jul-Sep,$,Mountain Bike,Expert terrain - Luke + Dad
+31,Historic Union Pacific Rail Trail,28-mi gravel rail-trail; pick any segment,Park City to Echo,50 min,May-Oct,Free,Mountain Bike,Car shuttle for one-way ride
+32,Provo River Parkway Full Ride,15-mi paved ride from Vivian Park to Utah Lake,Provo Canyon to Provo,30 min,Apr-Oct,Free,Mountain Bike,Downhill direction is kid-friendly
+33,Timpanogos Cave National Monument,1.5-mi steep paved climb then a ranger-led tour through 3 caves,American Fork Canyon,15 min,May-Sep,$$,Cave & Hot Springs,Timed tickets on recreation.gov - book ahead
+34,Fifth Water Hot Springs,4.5-mi RT along Diamond Fork to milky-blue hot pools,Spanish Fork Canyon (Diamond Fork),55 min,Year-round (snowshoe in winter),Free,Cave & Hot Springs,Go early/weekday - crowds and occasional non-family-friendly visitors
+35,Homestead Crater,Swim or snorkel in 96F water inside a limestone dome,Midway,40 min,Year-round,$$,Cave & Hot Springs,Reservation needed (~$30/person); closed Apr-May 2027 for renovation
+36,Crystal Hot Springs,Historic hot and cold mineral pools and water slide,Honeyville,1 hr 35 min,Year-round,$$,Cave & Hot Springs,Near Bear River Bird Refuge - combine
+37,Deer Creek State Park,"Paddleboard, swim and picnic under Timp",Heber / Provo Canyon,35 min,Jun-Sep,$,Water & Lakes,Day-use fee; afternoon winds
+38,Jordanelle State Park (Hailstone),"Beach day, boating and swimming",Heber / Kamas,45 min,Jun-Sep,$,Water & Lakes,Day-use fee; boat rentals available
+39,Utah Lake State Park,Kayak and play on Utah's largest freshwater lake,Provo,30 min,May-Sep,$,Water & Lakes,Check algal bloom advisories
+40,Pineview Reservoir,Swim beaches and paddling in Ogden Valley,Huntsville,1 hr 20 min,Jun-Sep,$,Water & Lakes,Rec fee at beaches
+41,Float in the Great Salt Lake at Bridger Bay,Float effortlessly in salty water - a true Utah rite,Antelope Island State Park,1 hr 10 min,Jun-Sep,$,Water & Lakes,Bring fresh water to rinse; check lake levels
+42,Payson Lakes,"Small mountain lakes for swimming, fishing and paddling",Nebo Loop,1 hr,Jun-Sep,$,Water & Lakes,Campground on site
+43,Yuba State Park,Warm reservoir with sandy beaches and Painted Rocks petroglyphs,Yuba Lake (Juab/Sanpete),1 hr 20 min,Jun-Sep,$,Water & Lakes,Painted Rocks reached by boat/kayak
+44,Rockport State Park,Lake day plus easy trails along the Weber River,Wanship,55 min,Jun-Sep,$,Water & Lakes,Day-use fee
+45,Palisade State Park,Swim/paddle a small lake; mini golf and canoes nearby,Sterling (Sanpete),1 hr 35 min,Jun-Sep,$,Water & Lakes,Pair with Manti Temple visit
+46,Silver Lake Flat Reservoir,Quiet high mountain reservoir for paddling and picnics,American Fork Canyon,35 min,Jun-Sep,$,Water & Lakes,AF Canyon fee
+47,East Canyon State Park Yurts,Heated yurts and Conestoga wagons on a mountain reservoir,Morgan County,1 hr 5 min,Year-round,$$$,Camping & Yurts,~$150/night; reserve on ReserveAmerica; bring bedding
+48,Rockport State Park Yurt,Yurt camping by the reservoir - great winter overnight,Wanship,55 min,Year-round,$$$,Camping & Yurts,Reserve via Utah State Parks
+49,Granite Flat Campground,Classic pine-forest campground near Tibble Fork,American Fork Canyon,30 min,Jun-Sep,$$,Camping & Yurts,recreation.gov reservations
+50,Wasatch Mountain State Park Camping,Campground near Soldier Hollow and Midway trails,Midway,40 min,May-Oct,$$,Camping & Yurts,Reserve via Utah State Parks
+51,Mirror Lake Campground,"High Uinta lake camping at 10,000 ft",Mirror Lake Hwy,1 hr 50 min,Jul-Sep,$$,Camping & Yurts,recreation.gov; cold nights even in July
+52,Jordanelle Rock Cliff Walk-in Sites,Walk-in tent sites along the Provo River,Francis,50 min,May-Oct,$$,Camping & Yurts,Reserve; great beginner camp
+53,Little Sahara Camping (White Sands),Camp on the edge of the dunes under dark skies,Little Sahara Recreation Area,1 hr 25 min,"Mar-May, Sep-Nov",$,Camping & Yurts,BLM fee; Easter/holiday weekends are extremely crowded
+54,Middle Provo River Fly Fishing,Blue-ribbon trout water - learn to fly fish together,Midway / Charleston,40 min,Year-round,$,Fishing,Utah fishing license required age 12+
+55,Strawberry Reservoir,Utah's premier trout lake; rent a boat at the marina,Strawberry (Wasatch County),1 hr 15 min,Year-round (ice fishing in winter),$$,Fishing,Cutthroat slot limits - check DWR regs
+56,Trial Lake,Kid-friendly Uinta lake fishing from shore,Mirror Lake Hwy,1 hr 40 min,Jul-Sep,$,Fishing,Rec pass + licenses
+57,Ice Fishing at Deer Creek,"Drill holes, jig for perch and trout on the ice",Deer Creek State Park,35 min,Jan-Feb,$,Fishing,Check ice thickness; licenses 12+
+58,Sundance Ski Day (or Night Skiing),Ski under Timpanogos; night skiing select evenings,Sundance,40 min,Dec-Mar,$$$,Winter,Night skiing Mon/Wed/Fri/Sat (check)
+59,Brighton Night Skiing,Big-lift night riding after a day of rest,Brighton,1 hr,Dec-Apr,$$$,Winter,Night riding Wed-Mon 4-9 pm (2026-27)
+60,Solitude Mountain Resort,Less-crowded big-mountain ski day,Big Cottonwood Canyon,55 min,Dec-Apr,$$$,Winter,Canyon traction laws apply
+61,Snowbird,"Steep, deep, legendary - tram laps for strong skiers",Little Cottonwood Canyon,50 min,Nov-May,$$$,Winter,Canyon traffic: go early or take UTA ski bus
+62,Park City Mountain,Huge terrain plus historic Main Street,Park City,50 min,Nov-Apr,$$$,Winter,Epic Pass; Utah 5th/6th grade passport discounts
+63,Snowbasin,2002 Olympic downhill venue with stunning lodges,Huntsville,1 hr 20 min,Dec-Apr,$$$,Winter,Often less crowded than Cottonwoods
+64,Soldier Hollow Tubing,Long lift-served tubing lanes at the Olympic venue,Midway,40 min,Dec-Mar,$$,Winter,Book timed sessions online
+65,Woodward Park City Tubing,Tubing hill plus indoor trampolines/skate park,Park City (Kimball Jct),45 min,Dec-Mar,$$,Winter,Book ahead on weekends
+66,Utah Olympic Oval Public Skate,Skate the 'fastest ice on earth' from 2002,Kearns,35 min,Year-round,$,Winter,Check public session times
+67,Snowshoe Silver Lake Loop,Snowy boardwalk loop around Silver Lake,Brighton,1 hr,Dec-Mar,Free,Winter,Bring/rent snowshoes
+68,Sundance Nordic Center,Cross-country ski and snowshoe groomed trails,Sundance,45 min,Dec-Mar,$$,Winter,Rentals and lessons available
+69,Soldier Hollow Cross-Country Skiing,Ski the 2002 Olympic Nordic and biathlon trails,Midway,40 min,Dec-Mar,$$,Winter,Great NICA off-season fitness
+70,Daniels Summit Snowmobile Tour,Guided snowmobile ride through high country,Daniels Summit (Wasatch County),1 hr 10 min,Dec-Mar,$$$,Winter,Book ahead; age/driver rules
+71,Sugar House Park Sledding,"Wide, classic city sledding hill",Salt Lake City,35 min,Dec-Feb,Free,Winter,Bring cocoa
+72,Natural History Museum of Utah,"Dinosaurs, gems and Native cultures in the Rio Tinto Center",Salt Lake City,45 min,Year-round,$$,Museum & Science,Sunday open hours vary - check
+73,Hill Aerospace Museum,"100+ military aircraft, free admission",Roy (Hill AFB),1 hr,Year-round,Free,Museum & Science,Closed Sundays/Mondays (check)
+74,Clark Planetarium,Free exhibits plus IMAX and dome shows,Salt Lake City (Gateway),40 min,Year-round,$,Museum & Science,Exhibits free; shows ticketed
+75,BYU Museums Day,Bean Life Science + Museum of Paleontology in one trip,Provo,30 min,Year-round,Free,Museum & Science,Add BYU Creamery
+76,Utah's Hogle Zoo,"Rocky Shores, African Savanna and more",Salt Lake City,45 min,Year-round,$$,Museum & Science,Discount days in winter
+77,George S. Eccles Dinosaur Park,Life-size dinosaur trail and museum,Ogden,1 hr 15 min,Mar-Oct,$,Museum & Science,Best for Tanner
+78,Ogden Union Station Museums,Utah State Railroad Museum and Browning firearms collection,Ogden,1 hr 10 min,Year-round,$,Museum & Science,Combine with Waterfall Canyon
+79,Bingham Canyon Mine Visitor Experience,Shuttle to the rim of one of the world's largest open-pit mines,Herriman,35 min,Apr-Oct,$,Museum & Science,$6 tickets; book online (sells out)
+80,USU Eastern Prehistoric Museum,Dinosaur skeletons and Fremont artifacts,Price,1 hr 30 min,Year-round,$,Museum & Science,Pair with Scofield or Price Canyon drive
+81,Alf Engen Ski Museum & Olympic Exhibits,Free 2002 Olympics and ski history museum,"Utah Olympic Park, Park City",50 min,Year-round,Free,Museum & Science,Watch aerialists train in summer
+82,Utah State Capitol Tour,Free guided tour of the marble capitol,Salt Lake City,40 min,Year-round,Free,Museum & Science,Weekday tours; self-guided weekends
+83,Temple Square & Church History Museum,"Walk the grounds, Tabernacle and Church History Museum",Salt Lake City,40 min,Year-round,Free,Church History,Sunday-friendly; check temple renovation status
+84,Temple Square Christmas Lights,"Christmas lights, nativities and music",Salt Lake City,40 min,Late Nov-Dec,Free,Church History,Sunday-friendly; TRAX avoids parking
+85,This Is The Place Heritage Park,"Pioneer village, handcarts, crafts and Brigham Young's farmhouse",Salt Lake City,45 min,Apr-Dec,$$,Church History,"Seasonal events (Pioneer Day, Christmas)"
+86,Ensign Peak,Short climb where Brigham Young viewed the valley in 1847,Salt Lake City,40 min,Year-round,Free,Church History,Sunday-friendly 1-mi RT
+87,Beehive House & Lion House,Free missionary-led tour of Brigham Young's home,Salt Lake City,40 min,Year-round,Free,Church History,Pair with Temple Square
+88,Pioneer Memorial Museum (DUP),Huge collection of pioneer artifacts and stories,Salt Lake City,40 min,Year-round,Free,Church History,Look for your own pioneer ancestors
+89,FamilySearch Library,Find ancestors with free help from volunteers,Salt Lake City,40 min,Year-round,Free,Church History,Bring family tree login
+90,Iosepa Settlement & Cemetery,Site of Polynesian Latter-day Saint pioneer colony,Skull Valley (Tooele County),1 hr 30 min,Apr-Oct,Free,Church History,Memorial Day weekend celebration; dirt road
+91,Mormon Pioneer Trail: Mormon Flat to Big Mountain,Hike the actual 1847 pioneer wagon route,East Canyon,1 hr,Jun-Oct,Free,Church History,4-mi one-way climb - mini 'trek'
+92,Manti Temple & Sanpete Heritage,See the hilltop pioneer temple and historic Manti,Manti,1 hr 30 min,Year-round,Free,Church History,Sunday-friendly grounds walk
+93,Provo City Center Temple Grounds,Temple rebuilt from the burned Provo Tabernacle - a story of resilience,Provo,30 min,Year-round,Free,Church History,Sunday-friendly
+94,Welfare Square Tour,"See the grain elevator, cannery and Bishops' Storehouse",Salt Lake City,40 min,Year-round,Free,Church History,Ask about volunteer shifts
+95,Golden Spike National Historical Park,See replica steam engines where the rails met in 1869,Promontory,1 hr 55 min,May-Oct,$,History & Ghost Towns,NPS fee; engine demos in season
+96,Camp Floyd & Stagecoach Inn State Park,1858 Army post and historic Pony Express-era inn,Fairfield,40 min,Year-round,$,History & Ghost Towns,Small fee; Sunday hours vary
+97,Topaz Museum & Internment Site,WWII Japanese American internment history,Delta,1 hr 45 min,Year-round,$,History & Ghost Towns,Powerful lesson in standing up for others
+98,Thistle Ghost Town,Town swallowed by the 1983 landslide and lake,Spanish Fork Canyon,40 min,Year-round,Free,History & Ghost Towns,Pair with Fifth Water
+99,Tintic Mining Museum & Eureka,Mining-era museum and headframes of the Tintic district,Eureka,55 min,Apr-Oct,$,History & Ghost Towns,Limited hours - call ahead
+100,Benson Grist Mill,Restored 1854 pioneer grist mill and grounds,Stansbury Park,50 min,May-Oct,Free,History & Ghost Towns,Seasonal hours
+101,Spring City Historic District,Entire pioneer town on the National Register,Spring City (Sanpete),1 hr 20 min,May-Oct,Free,History & Ghost Towns,Heritage Day in May
+102,Provo Pioneer Village,Hands-on pioneer cabins and shops,Provo (North Park),30 min,Summer,Free,History & Ghost Towns,Summer evenings/Saturdays
+103,Wheeler Historic Farm,1890s working farm with wagon rides and animals,Murray,30 min,Year-round,$,History & Ghost Towns,Great for Tanner
+104,Pony Express Trail Drive to Simpson Springs,Dirt-road drive to a restored Pony Express station,West Desert (Tooele County),1 hr 30 min,"Apr-Jun, Sep-Oct",Free,History & Ghost Towns,Carry water/spare tire; no services
+105,Antelope Island Bison & Fielding Garr Ranch,"Bison herds, pronghorn and Utah's oldest Anglo-built home",Antelope Island State Park,1 hr 10 min,Year-round (Oct bison roundup),$,State Parks & Wildlife,Day-use fee
+106,Bear River Migratory Bird Refuge,"12-mi auto tour among pelicans, avocets and swans",Brigham City,1 hr 35 min,"Mar-May, Sep-Nov",Free,State Parks & Wildlife,Sunday-friendly drive
+107,Farmington Bay Bald Eagles,Watch wintering bald eagles on the marsh,Farmington,50 min,Jan-Feb,Free,State Parks & Wildlife,Bring binoculars
+108,Antelope Island Dark-Sky Stargazing,Certified Dark Sky Park - Milky Way over the lake,Antelope Island State Park,1 hr 10 min,Year-round (new moon),$,State Parks & Wildlife,Check gate hours/campground
+109,Swaner Preserve & EcoCenter,Nature center and wetland trails in Kimball Junction,Park City,45 min,Year-round,$,State Parks & Wildlife,Free trails
+110,Mount Timpanogos Summit (Timpooneke),"14-mi RT, 11,752-ft summit of Utah County's icon",American Fork Canyon,35 min,Jul-Sep,$,Brave Challenge,AF Canyon fee; alpine start; option to camp at Emerald Lake
+111,Lone Peak via Jacob's Ladder,"Brutal climb to an 11,253-ft granite summit seen from home",Draper (Orson Smith TH),20 min,Jul-Sep,Free,Brave Challenge,"12+ mi, scrambling - Luke/Wyatt + Dad"
+112,Pfeifferhorn,"Exposed class-3 ridge scramble to an 11,326-ft peak",Little Cottonwood Canyon,50 min,Jul-Sep,Free,Brave Challenge,Helmets recommended
+113,Mount Nebo Summit,"Utah County's highest point at 11,928 ft",Nebo Loop (Mona/North Peak TH),1 hr 15 min,Jul-Sep,Free,Brave Challenge,Long day; carry plenty of water
+114,Naturalist Basin Backpack,First family backpacking trip to a basin of Uinta lakes,"Highline TH, Mirror Lake Hwy",1 hr 55 min,Jul-Sep,$,Brave Challenge,Rec pass; ~12-mi RT; bear-safe food storage
+115,Waterfall Canyon Via Ferrata,Guided iron-rung climbing route above Ogden,Ogden (Utah Adventure Center),1 hr 15 min,May-Oct,$$$,Brave Challenge,"Guide required, gear included; ~$140/person group rate"
+116,Utah Olympic Park Adventure Course & Zip Line,Ropes course and extreme zip line at the Olympic jumps,Park City,50 min,Jun-Sep,$$$,Brave Challenge,Age/height limits
+117,Tandem Paragliding at Point of the Mountain,Soar the famous ridge with a certified tandem pilot,Draper/Lehi (Flight Park),15 min,Spring/Fall mornings & evenings,$$$,Brave Challenge,Minors need parent consent; weight limits
+118,iFLY Ogden Indoor Skydiving,Freefall in a vertical wind tunnel,Ogden,1 hr 10 min,Year-round,$$$,Brave Challenge,Ages 3+; book flights online
+119,Road Bike the Alpine Loop,"Climb ~2,500 ft from Tibble Fork to the Alpine Loop summit",American Fork Canyon,25 min,Jun-Oct,$,Brave Challenge,Narrow road - early morning; AF Canyon fee
+120,Rock Canyon Climbing & Hike,Top-rope quartzite crags and a canyon hike,Provo,30 min,Apr-Oct,$,Climbing,Hire a guide unless experienced
+121,Little Cottonwood Granite Bouldering,Classic granite boulders near the canyon mouth,Little Cottonwood Canyon,45 min,"Apr-Jun, Sep-Oct",Free,Climbing,Bring crash pads
+122,American Fork Canyon Guided Sport Climb,Guided limestone sport climbing day,American Fork Canyon,20 min,May-Oct,$$$,Climbing,Book a licensed guide; AF Canyon fee
+123,Little Sahara Recreation Area,Ride and climb huge sand dunes including Sand Mountain,Jericho / Nephi area,1 hr 25 min,"Mar-May, Sep-Nov",$$,ATV & Dunes,BLM fee; whip flags required; Sand Mountain is no place for beginners
+124,Five Mile Pass OHV Area,Open desert OHV trails close to home,Cedar Valley (Utah County),45 min,Mar-Nov,Free,ATV & Dunes,OHV registration and youth OHV education required
+125,Knolls OHV Area,Sand dunes and flats in the west desert,Tooele County (I-80),1 hr 30 min,"Mar-May, Sep-Nov",Free,ATV & Dunes,Remote - travel with another vehicle
+126,Weber River Float,Mild whitewater float through a scenic canyon,Henefer to Taggart,1 hr 5 min,Jun-Aug,$$,Rafting & Tubing,Outfitters rent tubes/rafts & shuttle; life jackets
+127,Lower Provo River Float,Splashy float near Vivian Park,Provo Canyon,30 min,Jun-Aug,$$,Rafting & Tubing,Outfitter shuttle; cold water
+128,Middle Provo River Tubing,Lazy tubing through Heber Valley pastures,Midway to Charleston,40 min,Jul-Aug,$$,Rafting & Tubing,Outfitter rentals
+129,Jordanelle Boat Rental & Wakeboarding,Rent a boat for tubing and wakeboarding,Jordanelle State Park,45 min,Jun-Sep,$$$,Rafting & Tubing,Boater education for youth operators
+130,Alpine Loop Fall Colors,Gold aspens and red maples around Timpanogos,American Fork Canyon to Sundance,20 min,Late Sep-Oct,$,Scenic Drive,Closed in winter; AF Canyon fee
+131,Nebo Loop National Scenic Byway,38-mi byway with Devil's Kitchen and Nebo views,Payson to Nephi,50 min,Jun-Oct,Free,Scenic Drive,Sunday-friendly drive
+132,Mirror Lake Scenic Byway,"Climb to 10,715-ft Bald Mountain Pass",Kamas to Mirror Lake,1 hr,Jun-Oct,$,Scenic Drive,Rec pass for stops
+133,Guardsman Pass & Big Cottonwood,Mountain pass linking Park City and Brighton,Midway/Park City to Brighton,50 min,Jun-Oct,Free,Scenic Drive,Great fall color loop
+134,Trappers Loop & Ogden Valley,Scenic loop past Pineview and Ogden Canyon,Ogden Valley,1 hr 15 min,Year-round (best fall),Free,Scenic Drive,Sunday-friendly
+135,Wolf Creek Pass,Remote high-country pass from Kamas to Hanna,Francis to Hanna,1 hr 15 min,Jun-Oct,Free,Scenic Drive,Moose and aspens
+136,Snowbird Aerial Tram,"Ride to 11,000-ft Hidden Peak; hike or ride down",Snowbird,50 min,Jun-Oct,$$$,Scenic Drive,Summer activity pass options
+137,Church Humanitarian Center Volunteer Shift,Sort and pack relief supplies sent worldwide,Salt Lake City,45 min,Year-round,Free,Service,Schedule ahead; check youth age minimums
+138,Utah Food Bank Warehouse Volunteer,Pack food boxes for Utah families,Salt Lake City,40 min,Year-round,Free,Service,Sign up online; age minimums apply
+139,Park City Trail Work Day,Build and repair the trails you ride (Mountain Trails Foundation),Park City,50 min,Jun-Oct,Free,Service,Great for a NICA rider to give back
+140,Jordan River Cleanup,Pull trash and invasive weeds along the river,Jordan River Parkway,30 min,Apr-Oct,Free,Service,Find events on JustServe.org
+141,Ronald McDonald House Meal,Cook and serve dinner for families with sick kids,Salt Lake City,45 min,Year-round,$$,Service,Reserve a meal slot
+142,TreeUtah Tree Planting,Plant trees with a community crew,Wasatch Front (varies),30-50 min,"Apr-May, Sep-Oct",Free,Service,Register for events
+143,Primary Children's Hospital Donation Drop,Collect toys/blankets then deliver together,Salt Lake City,40 min,Year-round (esp. Dec),$,Service,Check current wish list
+144,Special Olympics Utah Event Volunteer,"Cheer, time and assist athletes at a games",Wasatch Front (varies),Varies,Year-round,Free,Service,Register via Special Olympics Utah
+145,Heber Valley Railroad,Vintage train through Provo Canyon (North Pole Express in Dec),Heber City,35 min,Year-round (themed seasons),$$$,Seasonal Events & Farms,Book early for holiday trains
+146,Soldier Hollow Classic Sheepdog Championship,World-class herding dogs on Labor Day weekend,Midway,40 min,Labor Day weekend,$$,Seasonal Events & Farms,Combine with Swiss Days
+147,Midway Swiss Days,"Huge Swiss heritage festival, food and crafts",Midway,40 min,Fri-Sat before Labor Day,$,Seasonal Events & Farms,Closed Sunday - very LDS-friendly
+148,Rowley's Red Barn,"Fruit stand, cider slushes and pumpkins",Santaquin,45 min,Jul-Oct,$,Seasonal Events & Farms,Pair with Nebo Loop
+149,Lagoon Amusement Park,Classic Utah roller coasters and Pioneer Village,Farmington,50 min,Apr-Oct,$$$,Seasonal Events & Farms,Season passes for multiple visits
+150,America's Freedom Festival,"Patriotic parade, balloons and Stadium of Fire",Provo,30 min,Late Jun-Jul 4,$$,Seasonal Events & Farms,Balloon fest is free

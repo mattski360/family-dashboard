@@ -683,6 +683,114 @@ CFM_WAIT = "This week\u2019s lesson is on its way"
 V3_SPRITE = HERE / "v3_sprite.svg"
 
 
+# ---------------------------------------------------------------- weekly adventure picks
+ADV_DIR = HERE / "data" / "adventures"
+ADV_LISTS = {"weekend": "weekend_adventures.csv", "evening": "evening_adventures.csv"}
+ADV_HISTORY = 20
+_MON = {m: i + 1 for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
+_SEASON = {"spring": (3, 5), "summer": (6, 8), "fall": (9, 11), "autumn": (9, 11), "winter": (12, 2),
+           "school year": (8, 5), "labor day": (8, 9)}
+
+
+def hide_terms() -> list[str]:
+    hp = HERE / "data" / "private_hide.txt"
+    if not hp.exists():
+        return []
+    return [l.strip().lower() for l in hp.read_text().splitlines() if l.strip() and not l.startswith("#")]
+
+
+def _mrange(a: int, b: int) -> set[int]:
+    return {(a - 1 + k) % 12 + 1 for k in range((b - a) % 12 + 1)}
+
+
+def season_months(text: str) -> set[int]:
+    """'Jun-Oct', 'Nov-Mar' (wraps), 'Apr-Jun, Sep-Oct', 'Year-round', 'Summer', 'Fall-Spring', 'July', ...
+    Parenthetical notes are ignored. Anything unparseable counts as year-round."""
+    allm = set(range(1, 13))
+    t = re.sub(r"\([^)]*\)", " ", (text or "").lower())
+    if not t.strip() or "year-round" in t or "year round" in t:
+        return allm
+    out: set[int] = set()
+    for part in re.split(r"[,/;&]| and ", t):
+        toks = []  # (start, end) per recognised word, in order
+        for mo in re.finditer(r"school year|labor day|spring|summer|fall|autumn|winter|[a-z]+", part):
+            w = mo.group(0)
+            if w in _SEASON:
+                toks.append(_SEASON[w])
+            elif w[:3] in _MON and (len(w) == 3 or w.startswith(("june", "july", "sept")) or w in (
+                    "january", "february", "march", "april", "august", "september", "october", "november", "december")):
+                toks.append((_MON[w[:3]], _MON[w[:3]]))
+        if not toks:
+            continue
+        if len(toks) >= 2 and "-" in part:
+            out |= _mrange(toks[0][0], toks[-1][1])
+        else:
+            for a, b in toks:
+                out |= _mrange(a, b)
+    return out or allm
+
+
+def pick_adventures(data: dict, week_start: dt.date) -> dict | None:
+    """One weekend + one evening adventure for the Sun-Sat week, in season, not on the hide list, not among the
+    last ADV_HISTORY picks. Deterministic per week (seeded by week_start); re-running the same week keeps the picks.
+    Stored in data['adventures']['this_week']; history in data['meta']['adventure_history']."""
+    import csv, random
+    terms = hide_terms()
+    hidden = lambda row: any(t in json.dumps(row, ensure_ascii=False).lower() for t in terms)
+    adv = data.setdefault("adventures", {})
+    cur = adv.get("this_week") or {}
+    hist = data.setdefault("meta", {}).setdefault("adventure_history", {})
+    ws = week_start.isoformat()
+    month_for = {"weekend": (week_start + dt.timedelta(days=6)).month,  # the Saturday
+                 "evening": (week_start + dt.timedelta(days=3)).month}  # mid-week
+    new = {"week_start": ws}
+    for kind, fn in ADV_LISTS.items():
+        f = ADV_DIR / fn
+        if not f.exists():
+            continue
+        rows = [{k.strip(): (v or "").strip() for k, v in r.items() if k} for r in csv.DictReader(f.open(newline=""))]
+        keep = cur.get(kind) if cur.get("week_start") == ws else None
+        if keep and not hidden(keep):
+            new[kind] = keep
+            continue
+        h = hist.setdefault(kind, [])
+        ok = [r for r in rows if r.get("Name") and not hidden(r)
+              and month_for[kind] in season_months(r.get("Best Season(s)", ""))]
+        cand = [r for r in ok if r["Name"] not in h] or ok
+        if not cand:
+            continue
+        r = random.Random(f"{ws}:{kind}").choice(cand)
+        new[kind] = r
+        h.append(r["Name"])
+        del h[:-ADV_HISTORY]
+    adv["this_week"] = new
+    return new
+
+
+def _short_drive(s: str) -> str:
+    s = (s or "").strip()
+    s = re.sub(r"\bminutes?\b", "min", s)
+    s = re.sub(r"\bhours?\b|\bhrs?\b", "hr", s)
+    return s
+
+
+def render_v3_adventures(m: Model) -> str:
+    tw = (m.data.get("adventures") or {}).get("this_week") or {}
+    terms = hide_terms()
+    pills = []
+    for kind, emo, lab in (("weekend", "\U0001F3D4\uFE0F", "Weekend"), ("evening", "\U0001F305", "Evening")):
+        r = tw.get(kind)
+        if not r or any(t in json.dumps(r, ensure_ascii=False).lower() for t in terms):
+            continue
+        bits = [b for b in (_short_drive(r.get("Drive Time from Highland")), r.get("Cost Tier")) if b]
+        meta = "".join(f'<small>\u00b7 {esc(b)}</small>' for b in bits)
+        pills.append(f'<div class="ap {kind}"><span class="ae">{emo}</span><b>{lab}:</b>'
+                     f'<span class="an">{esc(r.get("Name"))}</span>{meta}</div>')
+    if not pills:
+        return ""
+    return '<div class="adv" id="adv">' + "".join(pills) + "</div>"
+
+
 def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> str:
     m = Model(data, now, week_start)
     meta = m.meta
@@ -710,6 +818,7 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) ->
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
         "BYU_TODAY": render_v3_byu_line(m),
         "GRADES": render_v3_grades(m),
+        "ADVENTURES": render_v3_adventures(m),
         "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
     }
     out = tpl
@@ -755,6 +864,11 @@ def main() -> int:
     else:
         week_start = upcoming_sunday(now.date())
     data.setdefault("meta", {})["week_start"] = week_start.isoformat()
+    try:
+        tw = pick_adventures(data, week_start)
+        print(f"[build] adventures {week_start}: " + " | ".join(f"{k}={(tw or {}).get(k, {}).get('Name')}" for k in ADV_LISTS))
+    except Exception as e:  # fail soft: keep last week's strip rather than breaking the build
+        print(f"[build] WARNING: adventure picker failed: {e}", file=sys.stderr)
     if not args.no_stamp:
         data["meta"]["last_updated"] = now.isoformat(timespec="seconds")
     # always persist (week_start may change even with --no-stamp)
