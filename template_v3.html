@@ -98,12 +98,10 @@ body.stale .upd{color:#B4620C} body.stale .upd .stale{display:inline}
 .pstrip.none{display:none}
 /* page 2 (bottom): this week's adventure picks (plain content; a tap is an ordinary page tap) */
 .adv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.6rem}
-.ap{display:flex;align-items:center;gap:.4rem;min-width:0;border-radius:1.2rem;padding:.5rem .8rem;font-size:.95rem;font-weight:700;white-space:nowrap}
-.ap.weekend{background:var(--sky);color:#245A9E} .ap.evening{background:#FFEFE0;color:#B0541A}
-.ap .ae{font-size:1.15rem;line-height:1}
-.ap b{font-weight:800}
-.ap .an{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--dk)}
-.ap small{flex:none;font-size:.85rem;font-weight:700;opacity:.85}
+.ab{display:flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;border:0;border-radius:1.2rem;padding:.4rem .8rem;font:inherit;font-size:1rem;font-weight:800;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.ab.evening{background:#FFEFE0;color:#B0541A} .ab.weekend{background:var(--sky);color:#245A9E}
+.ab:active{filter:brightness(.94)}
+.ab .ae{font-size:1.2rem;line-height:1}
 .pstrip .lab{font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--parents-dk);display:flex;align-items:center;gap:.4rem}
 .pday{display:none;align-items:center;gap:.45rem;flex-wrap:wrap}
 .pday.on{display:inline-flex}
@@ -206,6 +204,21 @@ body.paused #prog{background:#C9A0FF}
 @keyframes cougs{0%{opacity:0;transform:translateY(16px) scale(.8)}12%{opacity:1;transform:translateY(0) scale(1.08)}20%{transform:translateY(0) scale(1)}80%{opacity:1;transform:translateY(-6px) scale(1)}100%{opacity:0;transform:translateY(-26px) scale(.95)}}
 .yfly{position:fixed;z-index:7;pointer-events:none;width:22px;height:22px;animation:yfly 1.6s ease-out forwards}
 @keyframes yfly{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r)) scale(1.1)}}
+/* random adventure popup (page-2 buttons). px sizes: it lives outside the auto-fitted pages */
+#advpop{position:fixed;inset:0;z-index:19;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(40,48,68,.42);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+#advpop.on{display:flex}
+.acard{position:relative;width:min(620px,100%);max-height:100%;overflow:auto;background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(40,48,68,.25);padding:26px 28px 24px;display:flex;flex-direction:column;gap:12px}
+.acard.evening{border-top:10px solid #F6A563} .acard.weekend{border-top:10px solid #7FB0EE}
+.ak{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-right:52px}
+.an2{font-size:30px;font-weight:800;line-height:1.15;padding-right:40px}
+.ad{font-size:19px;font-weight:600;color:var(--muted);line-height:1.35}
+.achips{display:flex;flex-wrap:wrap;gap:8px}
+.achips span{background:#F3F5F9;border-radius:12px;padding:7px 12px;font-size:16px;font-weight:700}
+.anote{font-size:16px;font-weight:600;color:var(--muted);background:var(--butter);border-radius:14px;padding:10px 14px}
+.anote:empty{display:none}
+.aagain{align-self:flex-start;min-height:52px;border:0;border-radius:16px;padding:0 22px;font:inherit;font-size:19px;font-weight:800;background:#EEF5FF;color:#245A9E;cursor:pointer}
+.acard.evening .aagain{background:#FFEFE0;color:#B0541A}
 /* hidden grades card (motto triple-tap). px sizes: it lives outside the auto-fitted pages */
 .motto{touch-action:manipulation}
 #grades{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(40,48,68,.42);
@@ -313,6 +326,10 @@ body.paused #prog{background:#C9A0FF}
 </div>
 
 <nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
+<div id="advpop" aria-hidden="true"><div class="acard" role="dialog" aria-label="Adventure idea"><button class="ex" id="advx" type="button" aria-label="Close">&times;</button>
+  <div class="ak" id="advk"></div><div class="an2" id="advn"></div><div class="ad" id="advd"></div>
+  <div class="achips" id="advc"></div><div class="anote" id="advx2"></div>
+  <button class="aagain" id="advagain" type="button">&#127922; Pick again</button></div></div>
 <div id="cougs" aria-hidden="true">Go Cougs!</div>
 <div id="egg" aria-hidden="true"><div class="ecard" role="dialog" aria-label="Secret challenge"><button class="ex" id="ex" type="button" aria-label="Close">&times;</button>
   <div class="eintro" id="eintro"><div class="et1">You found the secret $20 challenge!</div>
@@ -431,7 +448,12 @@ body.paused #prog{background:#C9A0FF}
     navl.textContent=pages[i].getAttribute('data-name');}
   function save(){store(KEY,{i:cur,t:shownAt,p:pausedUntil});}
   function show(i){render(i);shownAt=Date.now();save();}
+  var holdAt=0; // rotation frozen (adventure popup open): no page change, timer resumes where it was on release
+  function rotHold(on){var now=Date.now();
+    if(on){if(!holdAt)holdAt=now;return;}
+    if(!holdAt)return; var d=now-holdAt; holdAt=0; if(pausedUntil)pausedUntil+=d; else shownAt+=d; save(); loop();}
   function loop(){
+    if(holdAt)return;
     var now=Date.now();
     if(pausedUntil&&now>=pausedUntil){shownAt=pausedUntil;pausedUntil=0;save();}
     var paused=!!pausedUntil; B.classList.toggle('paused',paused);
@@ -584,8 +606,38 @@ body.paused #prog{background:#C9A0FF}
   // the click that ends a (mouse) long press must not flip/pause the pages; ordinary short clicks behave as before
   document.addEventListener('click',function(ev){if(eFired&&Date.now()-eFired<1500&&lpPrayer(ev.target)){ev.stopPropagation();ev.preventDefault();eFired=0;}},true);
 
+  // random adventure ideas: '🎲 Evening idea' / '🎲 Weekend idea' buttons at the bottom of page 2. Rows come from
+  // #advdata (built from data/adventures/*.csv, hide-filtered). Prefer ideas in season for the iPad's current month,
+  // skip the last 8 shown per list (localStorage adv-recent-<kind>). Taps never reach #stage (no page flip, no pause);
+  // rotation is frozen while the popup is open and resumes when it closes (x, backdrop tap, or after 60 s).
+  var ADV={}; try{ADV=JSON.parse(document.getElementById('advdata').textContent)||{};}catch(e){}
+  var aEl=document.getElementById('advpop'), aCard=aEl.querySelector('.acard'), aKind='', aTimer=0, A_OPEN=60000, A_RECENT=8;
+  function aMonth(){var m=+new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'numeric'}).format(new Date());return m||new Date().getMonth()+1;}
+  function aRecent(k){try{return JSON.parse(localStorage.getItem('adv-recent-'+k))||[];}catch(e){return [];}}
+  function aPick(k){var rows=ADV[k]||[]; if(!rows.length)return null; var mo=aMonth(), rec=aRecent(k);
+    var inS=rows.filter(function(r){return !r.m||r.m.indexOf(mo)>=0;}), pool=inS.length?inS:rows;
+    var fresh=pool.filter(function(r){return rec.indexOf(r.n)<0;}); if(!fresh.length)fresh=pool.filter(function(r){return r.n!==rec[rec.length-1];});
+    if(!fresh.length)fresh=pool; var r=fresh[Math.floor(Math.random()*fresh.length)];
+    rec=rec.filter(function(n){return n!==r.n;}); rec.push(r.n); try{localStorage.setItem('adv-recent-'+k,JSON.stringify(rec.slice(-A_RECENT)));}catch(e){}
+    return r;}
+  function aShow(k){var r=aPick(k); if(!r)return; aKind=k;
+    aCard.className='acard '+k; document.getElementById('advk').textContent=(k==='evening'?'\uD83C\uDF05 Evening idea':'\uD83C\uDFD4\uFE0F Weekend idea');
+    document.getElementById('advn').textContent=r.n; document.getElementById('advd').textContent=r.d||'';
+    var c=document.getElementById('advc'); c.innerHTML='';
+    [['\uD83D\uDCCD',r.l],['\uD83D\uDE97',r.t],['\uD83D\uDCB2',r.c],['\uD83D\uDCC5',r.s]].forEach(function(p){if(!p[1])return;
+      var s=document.createElement('span'); s.textContent=p[0]+' '+p[1]; c.appendChild(s);});
+    document.getElementById('advx2').textContent=r.x||'';
+    aEl.classList.add('on'); aEl.setAttribute('aria-hidden','false'); rotHold(true);
+    clearTimeout(aTimer); aTimer=setTimeout(aClose,A_OPEN);}
+  function aClose(){clearTimeout(aTimer); if(!aEl.classList.contains('on'))return; aEl.classList.remove('on'); aEl.setAttribute('aria-hidden','true'); rotHold(false);}
+  each('#adv .ab',function(b){b.addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();aShow(b.getAttribute('data-kind'));});});
+  aEl.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===aEl)aClose();});
+  document.getElementById('advx').addEventListener('click',function(ev){ev.stopPropagation();aClose();});
+  document.getElementById('advagain').addEventListener('click',function(ev){ev.stopPropagation();aShow(aKind);});
+  window.__adv={open:aShow,close:aClose};
+
   // pick up a new build without waiting for the 30-minute reload: compare data-ver with the published page
-  setInterval(function(){if(!window.fetch||document.getElementById('egg').classList.contains('on')||eWin.classList.contains('on'))return;
+  setInterval(function(){if(!window.fetch||document.getElementById('egg').classList.contains('on')||eWin.classList.contains('on')||aEl.classList.contains('on'))return;
     fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=/data-ver="([0-9a-f]+)"/.exec(t||'');if(m&&m[1]!==B.getAttribute('data-ver'))location.replace(location.pathname+'?r='+Date.now());
     }).catch(function(){});},10*60*1000);

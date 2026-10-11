@@ -774,21 +774,37 @@ def _short_drive(s: str) -> str:
     return s
 
 
-def render_v3_adventures(m: Model) -> str:
-    tw = (m.data.get("adventures") or {}).get("this_week") or {}
+def adventure_candidates() -> dict:
+    """Rows for the on-page '🎲 idea' buttons: hide-filtered, minimal fields, months pre-parsed (m)."""
+    import csv
     terms = hide_terms()
-    pills = []
-    for kind, emo, lab in (("weekend", "\U0001F3D4\uFE0F", "Weekend"), ("evening", "\U0001F305", "Evening")):
-        r = tw.get(kind)
-        if not r or any(t in json.dumps(r, ensure_ascii=False).lower() for t in terms):
-            continue
-        bits = [b for b in (_short_drive(r.get("Drive Time from Highland")), r.get("Cost Tier")) if b]
-        meta = "".join(f'<small>\u00b7 {esc(b)}</small>' for b in bits)
-        pills.append(f'<div class="ap {kind}"><span class="ae">{emo}</span><b>{lab}:</b>'
-                     f'<span class="an">{esc(r.get("Name"))}</span>{meta}</div>')
-    if not pills:
+    out = {}
+    for kind, fn in ADV_LISTS.items():
+        f = ADV_DIR / fn
+        rows = []
+        if f.exists():
+            for r in csv.DictReader(f.open(newline="")):
+                r = {k.strip(): (v or "").strip() for k, v in r.items() if k}
+                if not r.get("Name") or any(t in json.dumps(r, ensure_ascii=False).lower() for t in terms):
+                    continue
+                rows.append({"n": r["Name"], "d": r.get("Description", ""), "l": r.get("Location", ""),
+                             "t": _short_drive(r.get("Drive Time from Highland", "")), "c": r.get("Cost Tier", ""),
+                             "s": r.get("Best Season(s)", ""), "x": r.get("Reservation / Fee / Notes", ""),
+                             "m": sorted(season_months(r.get("Best Season(s)", "")))})
+        out[kind] = rows
+    return out
+
+
+def render_v3_adventures(m: Model) -> str:
+    """Two buttons at the bottom of page 2; tapping one shows a random in-season idea in a popup (JS)."""
+    data = adventure_candidates()
+    if not any(data.values()):
         return ""
-    return '<div class="adv" id="adv">' + "".join(pills) + "</div>"
+    js = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    btn = lambda kind, lab: (f'<button class="ab {kind}" type="button" data-kind="{kind}"'
+                             f'{"" if data.get(kind) else " disabled"}><span class="ae">\U0001F3B2</span>{lab}</button>')
+    return ('<div class="adv" id="adv">' + btn("evening", "Evening idea") + btn("weekend", "Weekend idea") + "</div>"
+            f'<script type="application/json" id="advdata">{js}</script>')
 
 
 def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> str:
