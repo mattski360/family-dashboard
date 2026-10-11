@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-09T13:38:20-06:00",
-    "school_feed_synced": "2026-10-09T08:49:23-06:00",
+    "last_updated": "2026-10-10T20:56:51-06:00",
+    "school_feed_synced": "2026-10-10T20:56:27-06:00",
     "school_feed_window": [
-      "2026-10-08",
-      "2026-10-30"
+      "2026-10-09",
+      "2026-10-31"
     ],
     "later_days": 8,
     "week_start": "2026-10-11",
@@ -737,7 +737,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-09T08:49:24-06:00",
+    "site_synced": "2026-10-10T20:56:28-06:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -947,17 +947,20 @@
             "ESPN"
           ],
           "venue": "Provo, Utah / LaVell Edwards Stadium",
-          "note": null
+          "note": null,
+          "result": "W 24-10"
         },
         {
           "id": "byu-mbb-2026-10-16-nebraska",
           "sport": "mbb",
           "date": "2026-10-16",
-          "start": null,
+          "start": "19:00",
           "opponent": "Nebraska",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": "Exhibition"
         },
@@ -1452,7 +1455,7 @@
           "note": null
         }
       ],
-      "updated": "2026-10-09T08:49:26-06:00"
+      "updated": "2026-10-10T20:56:30-06:00"
     }
   },
   "grades": {
@@ -1460,7 +1463,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-08",
+      "as_of": "2026-10-10",
       "courses": [
         {
           "name": "Patriot Chorale (Washburn)",
@@ -1470,7 +1473,7 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 97.05
+          "pct": 97.22
         },
         {
           "name": "D.E.A.R.",
@@ -1494,8 +1497,39 @@
         }
       ],
       "previous": {
-        "as_of": null,
-        "courses": []
+        "as_of": "2026-10-08",
+        "courses": [
+          {
+            "name": "Patriot Chorale (Washburn)",
+            "short": "Chorale",
+            "pct": 97.78
+          },
+          {
+            "name": "Geometry (Lam)",
+            "short": "Geometry",
+            "pct": 97.05
+          },
+          {
+            "name": "D.E.A.R.",
+            "short": "D.E.A.R.",
+            "pct": 97.09
+          },
+          {
+            "name": "Biology (Anderson)",
+            "short": "Biology",
+            "pct": 96.38
+          },
+          {
+            "name": "U.S. History (Chancellor)",
+            "short": "U.S. History",
+            "pct": 95.14
+          },
+          {
+            "name": "English 9 (Coleman)",
+            "short": "English 9",
+            "pct": 93.58
+          }
+        ]
       }
     },
     "wyatt": {
