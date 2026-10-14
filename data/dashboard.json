@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-12T20:07:56-06:00",
+    "last_updated": "2026-10-13T20:08:23-06:00",
     "school_feed_synced": "2026-10-10T20:56:27-06:00",
     "school_feed_window": [
       "2026-10-09",
@@ -1473,17 +1473,17 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-12",
+      "as_of": "2026-10-13",
       "courses": [
+        {
+          "name": "Geometry (Lam)",
+          "short": "Geometry",
+          "pct": 98.04
+        },
         {
           "name": "Patriot Chorale (Washburn)",
           "short": "Chorale",
           "pct": 97.78
-        },
-        {
-          "name": "Geometry (Lam)",
-          "short": "Geometry",
-          "pct": 97.22
         },
         {
           "name": "D.E.A.R.",
@@ -1503,11 +1503,11 @@
         {
           "name": "English 9 (Coleman)",
           "short": "English 9",
-          "pct": 93.58
+          "pct": 93.61
         }
       ],
       "previous": {
-        "as_of": "2026-10-10",
+        "as_of": "2026-10-12",
         "courses": [
           {
             "name": "Patriot Chorale (Washburn)",
@@ -1532,7 +1532,7 @@
           {
             "name": "U.S. History (Chancellor)",
             "short": "U.S. History",
-            "pct": 95.14
+            "pct": 95.44
           },
           {
             "name": "English 9 (Coleman)",
@@ -1545,7 +1545,7 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-12",
+      "as_of": "2026-10-13",
       "courses": [
         {
           "name": "Food & Nutrition",
@@ -1555,7 +1555,7 @@
         {
           "name": "Language Arts 8",
           "short": "Language Arts 8",
-          "pct": 96.04
+          "pct": 99.81
         },
         {
           "name": "Science 8",
@@ -1563,18 +1563,18 @@
           "pct": 95.7
         },
         {
+          "name": "Math 8",
+          "short": "Math 8",
+          "pct": 94.28
+        },
+        {
           "name": "Utah History",
           "short": "Utah History",
           "pct": 91.02
-        },
-        {
-          "name": "Math 8",
-          "short": "Math 8",
-          "pct": 85.71
         }
       ],
       "previous": {
-        "as_of": "2026-10-09",
+        "as_of": "2026-10-12",
         "courses": [
           {
             "name": "Food & Nutrition",
@@ -1584,12 +1584,12 @@
           {
             "name": "Language Arts 8",
             "short": "Language Arts 8",
-            "pct": 99.39
+            "pct": 96.04
           },
           {
             "name": "Science 8",
             "short": "Science 8",
-            "pct": 97.05
+            "pct": 95.7
           },
           {
             "name": "Utah History",
@@ -1599,7 +1599,7 @@
           {
             "name": "Math 8",
             "short": "Math 8",
-            "pct": 83.67
+            "pct": 85.71
           }
         ]
       }
@@ -1607,7 +1607,7 @@
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-10-12",
+      "as_of": "2026-10-13",
       "courses": [
         {
           "name": "Composition",
@@ -1617,12 +1617,12 @@
         {
           "name": "Language",
           "short": "Language",
-          "pct": 99.0
+          "pct": 99.17
         },
         {
           "name": "History",
           "short": "History",
-          "pct": 98.2
+          "pct": 98.35
         },
         {
           "name": "Art",
@@ -1656,7 +1656,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-09",
+        "as_of": "2026-10-12",
         "courses": [
           {
             "name": "Composition",
@@ -1681,7 +1681,7 @@
           {
             "name": "Math",
             "short": "Math",
-            "pct": 97.71
+            "pct": 97.55
           },
           {
             "name": "Literature",
