@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-15T20:18:54-06:00",
-    "school_feed_synced": "2026-10-10T20:56:27-06:00",
+    "last_updated": "2026-10-17T20:58:59-06:00",
+    "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
-      "2026-10-09",
-      "2026-10-31"
+      "2026-10-16",
+      "2026-11-07"
     ],
     "later_days": 8,
     "week_start": "2026-10-18",
@@ -135,22 +135,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261009-no-school-teacher-in-service",
-      "date": "2026-10-09",
-      "start": null,
-      "end": null,
-      "title": "No school — teacher in-service",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": "no_school",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "mtb-race-2026-10-10",
       "date": "2026-10-10",
       "title": "MTB race – Region 5 final, Herriman (Butterfield Trailhead)",
@@ -215,21 +199,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261012-reading-challenge-closing-assembly",
-      "date": "2026-10-12",
-      "start": "09:00",
-      "end": "09:30",
-      "title": "Reading Challenge closing assembly",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "low",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "fam-20261012-dl1738",
       "date": "2026-10-12",
       "start": "15:29",
@@ -244,36 +213,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261013-monday-friday-bell-schedule",
-      "date": "2026-10-13",
-      "start": "08:30",
-      "end": "15:10",
-      "title": "Monday/Friday bell schedule",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": null,
-      "priority": "low",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261014-half-day-spirit-apparel",
-      "date": "2026-10-14",
-      "start": null,
-      "end": null,
-      "title": "Half day · spirit apparel",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": "half_day",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "cga-20261014-workday",
       "date": "2026-10-14",
       "title": "Teacher work day",
@@ -284,68 +223,6 @@
       "priority": "high",
       "kind": "school",
       "source": "canyon_grove"
-    },
-    {
-      "id": "ahs-20261014-term-1-ends",
-      "date": "2026-10-14",
-      "start": null,
-      "end": null,
-      "title": "Term 1 ends",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261014-k-5-service-day-spirit-apparel",
-      "date": "2026-10-14",
-      "start": "08:30",
-      "end": "12:00",
-      "title": "K-5 Service Day · spirit apparel",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": "half_day",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261014-pre-act-grade-9",
-      "date": "2026-10-14",
-      "start": "08:30",
-      "end": "12:00",
-      "title": "Pre-ACT (grade 9)",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261014-lunch-on-the-lawn-with-parents-optional",
-      "date": "2026-10-14",
-      "start": "12:00",
-      "end": "13:30",
-      "title": "Lunch on the Lawn with parents (optional)",
-      "note": "",
-      "who": [
-        "parents",
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "cga-20261015-fall-break",
@@ -359,22 +236,6 @@
       "priority": "high",
       "kind": "school",
       "source": "canyon_grove"
-    },
-    {
-      "id": "ahs-20261015-fall-break",
-      "date": "2026-10-15",
-      "start": null,
-      "end": null,
-      "title": "Fall break",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": "no_school",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "ahs-20261016-fall-break",
@@ -450,6 +311,21 @@
       "source": "ahs_manual"
     },
     {
+      "id": "fam-20261022-ward-fall-festival",
+      "date": "2026-10-22",
+      "end_date": null,
+      "start": "17:30",
+      "end": null,
+      "title": "Ward Fall Festival",
+      "note": "Cul-de-sac behind the Patricks' home near Manor Circle · soup, chili, desserts, games · costumes welcome",
+      "who": [
+        "family"
+      ],
+      "priority": "high",
+      "kind": "event",
+      "source": "family"
+    },
+    {
       "id": "ahs-20261023-term-1-grades-posted",
       "date": "2026-10-23",
       "start": null,
@@ -480,6 +356,36 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "fam-trip-20261026-abq",
+      "date": "2026-10-26",
+      "end_date": "2026-10-29",
+      "start": null,
+      "end": null,
+      "title": "Albuquerque",
+      "note": "Dad's work trip",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "trip",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261026-dl4084",
+      "date": "2026-10-26",
+      "end_date": null,
+      "start": "09:35",
+      "end": "11:22",
+      "title": "Dad's flight SLC → Albuquerque",
+      "note": "Delta 4084",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
     },
     {
       "id": "ahs-20261029-grandparents-day-gathering-generations",
@@ -538,6 +444,36 @@
       ],
       "flag": null,
       "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261106-k-5-spirit-apparel-day",
+      "date": "2026-11-06",
+      "start": null,
+      "end": null,
+      "title": "K-5 Spirit Apparel Day",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261106-dance-festival-performance",
+      "date": "2026-11-06",
+      "start": "13:45",
+      "end": "15:10",
+      "title": "Dance Festival Performance",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "normal",
       "kind": "school",
       "source": "ahs_feed"
     }
@@ -607,69 +543,69 @@
   "spiritual": {
     "come_follow_me": {
       "status": "ready",
-      "week_of": "2026-10-12",
-      "lesson": 42,
-      "dates_label": "Oct 12–18",
-      "title": "“The Redeemer Shall Come to Zion”",
-      "reading": "Isaiah 58–66",
-      "summary": "Fasting brings spiritual power and blesses people in need, and the Sabbath can be “a delight” (Isa. 58). Jesus read Isaiah 61 in Nazareth to declare He is the Redeemer who gives “beauty for ashes.”",
+      "week_of": "2026-10-19",
+      "lesson": 43,
+      "dates_label": "Oct 19–25",
+      "title": "“Before I Formed Thee in the Belly I Knew Thee”",
+      "reading": "Jeremiah 1–3; 7; 16–18; 20",
+      "summary": "Jeremiah felt too young to be a prophet, but the Lord had known and ordained him before he was born and promised, “I am with thee.” Jesus is “the fountain of living waters,” and the Lord will gather His people “one of a city, and two of a family.”",
       "questions": [
-        "Why do we fast, and who can our fast offering help? (58:6–7)",
-        "What would make Sunday more of “a delight” for us? (58:13–14)",
-        "How has Jesus given us “beauty for ashes”? (61:1–3)"
+        "What did Jeremiah learn about himself in Jeremiah 1:5, and how is it true for you too?",
+        "What might the “broken cisterns” and the “fountain of living waters” stand for? (2:13)",
+        "How can we help gather Heavenly Father’s children, like the fishers and hunters? (16:14–16)"
       ],
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/42?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/43?lang=eng",
       "previous": {
-        "show_before": "2026-10-11",
-        "lesson": 41,
-        "dates_label": "Oct 5–11",
-        "title": "“He Hath Borne Our Griefs, and Carried Our Sorrows”",
-        "reading": "Isaiah 50–57",
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/41?lang=eng"
+        "show_before": "2026-10-19",
+        "lesson": 42,
+        "dates_label": "Oct 12–18",
+        "title": "“The Redeemer Shall Come to Zion”",
+        "reading": "Isaiah 58–66",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/42?lang=eng"
       },
-      "featured_question": 1,
+      "featured_question": 0,
       "daily": [
         {
           "dow": "Mon",
-          "scripture": "Isaiah 58:6–7",
-          "quote": "Is not this the fast that I have chosen? … to deal thy bread to the hungry",
-          "thought": "Fasting isn’t just going without — it lifts heavy burdens and feeds people in need. Who can we help this week?"
+          "scripture": "Jeremiah 1:5",
+          "quote": "Before I formed thee in the belly I knew thee",
+          "thought": "Heavenly Father knew each of us before we were born and has work for us to do. What strength has He given you?"
         },
         {
           "dow": "Tue",
-          "scripture": "Isaiah 58:8–9",
-          "quote": "Then shall thy light break forth as the morning … thou shalt cry, and he shall say, Here I am.",
-          "thought": "When we fast and serve, the Lord promises to answer. Where have you felt Him say “Here I am”?"
+          "scripture": "Jeremiah 1:6–8",
+          "quote": "Be not afraid of their faces: for I am with thee",
+          "thought": "Jeremiah felt too young, but the Lord promised to be with him. What hard thing can you try today with His help?"
         },
         {
           "dow": "Wed",
-          "scripture": "Isaiah 59:16, 20",
-          "quote": "And the Redeemer shall come to Zion",
-          "thought": "Jesus is the Intercessor who steps in when we can’t save ourselves. Thank Him for one way He has helped you."
+          "scripture": "Jeremiah 2:13",
+          "quote": "they have forsaken me the fountain of living waters",
+          "thought": "Jesus is a fountain that never runs dry. How can we drink from His living water today?"
         },
         {
           "dow": "Thu",
-          "scripture": "Isaiah 60:1",
-          "quote": "Arise, shine; for thy light is come",
-          "thought": "Jesus and His gospel are a light that helps us find our way home. How can you shine it for someone today?"
+          "scripture": "Jeremiah 3:14–15",
+          "quote": "I will take you one of a city, and two of a family, and I will bring you to Zion",
+          "thought": "The Lord gathers His children one by one. Who can we include or invite this week?"
         },
         {
           "dow": "Fri",
-          "scripture": "Isaiah 61:1–3",
-          "quote": "to give unto them beauty for ashes, the oil of joy for mourning",
-          "thought": "Jesus read these words in Nazareth to say He is the Messiah (Luke 4:16–21). How has He given you beauty for ashes?"
+          "scripture": "Jeremiah 16:16",
+          "quote": "Behold, I will send for many fishers, saith the Lord",
+          "thought": "President Nelson compared these fishers and hunters to missionaries. How can we help gather Israel?"
         },
         {
           "dow": "Sat",
-          "scripture": "Isaiah 65:17–18",
-          "quote": "be ye glad and rejoice for ever in that which I create",
-          "thought": "When the Savior comes again there will be peace and joy. What can we do today to get ready for Him?"
+          "scripture": "Jeremiah 18:6",
+          "quote": "as the clay is in the potter’s hand, so are ye in mine hand",
+          "thought": "The Lord shapes us like a potter shapes clay. What can we let Him help us change?"
         },
         {
           "dow": "Sun",
-          "scripture": "Isaiah 58:13–14",
-          "quote": "call the sabbath a delight",
-          "thought": "What would make today more of a delight for our family? Share one idea at dinner."
+          "scripture": "Jeremiah 1:9",
+          "quote": "Behold, I have put my words in thy mouth",
+          "thought": "Prophets speak the Lord’s words. Share one thing you remember from the prophet at general conference."
         }
       ],
       "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh."
@@ -747,7 +683,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-10T20:56:28-06:00",
+    "site_synced": "2026-10-17T20:58:57-06:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -826,8 +762,9 @@
         "date": "2026-10-22",
         "title": "Fall Festival",
         "group": "all_youth",
-        "kind": "activity",
-        "source": "sheet"
+        "kind": "none",
+        "source": "sheet",
+        "note": "Same night as the ward Fall Festival (family calendar item, 5:30 PM)"
       },
       {
         "id": "yth-20261025-festival-devotional",
@@ -876,7 +813,7 @@
     "byu": {
       "team": "BYU Cougars",
       "source": {
-        "football": "byucougars.com schedule page",
+        "football": "ESPN site API team schedule (team 252)",
         "mbb": "byucougars.com schedule page"
       },
       "seasons": {
@@ -885,7 +822,7 @@
       },
       "games": [
         {
-          "id": "byu-football-2026-09-05-utah-tech",
+          "id": "byu-football-401856775",
           "sport": "football",
           "date": "2026-09-05",
           "start": "18:00",
@@ -895,42 +832,51 @@
           "tv_all": [
             "ESPN+"
           ],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "venue": "LaVell Edwards Stadium",
           "note": null,
+          "postseason": false,
+          "status": "STATUS_FINAL",
+          "espn_utc": "2026-09-06T00:00Z",
           "result": "W 63-7"
         },
         {
-          "id": "byu-football-2026-09-12-arizona",
+          "id": "byu-football-401856810",
           "sport": "football",
           "date": "2026-09-12",
           "start": "13:30",
           "opponent": "Arizona",
           "home_away": "home",
-          "tv": "FOX",
+          "tv": "Fox",
           "tv_all": [
-            "FOX"
+            "Fox"
           ],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "venue": "LaVell Edwards Stadium",
           "note": null,
+          "postseason": false,
+          "status": "STATUS_FINAL",
+          "espn_utc": "2026-09-12T19:30Z",
           "result": "W 28-17"
         },
         {
-          "id": "byu-football-2026-09-19-colorado-state",
+          "id": "byu-football-401856795",
           "sport": "football",
           "date": "2026-09-19",
-          "start": "17:30",
+          "start": "18:15",
           "opponent": "Colorado State",
           "home_away": "away",
           "tv": "CBS",
           "tv_all": [
             "CBS"
           ],
-          "venue": "Fort Collins, Colorado / Canvas Stadium",
+          "venue": "Canvas Stadium",
           "note": null,
+          "postseason": false,
+          "status": "STATUS_FINAL",
+          "espn_utc": "2026-09-20T00:15Z",
           "result": "W 41-23"
         },
         {
-          "id": "byu-football-2026-10-03-tcu",
+          "id": "byu-football-401856818",
           "sport": "football",
           "date": "2026-10-03",
           "start": "17:00",
@@ -941,23 +887,29 @@
             "ESPN",
             "Disney+"
           ],
-          "venue": "Fort Worth, Texas / Amon G. Carter Stadium",
+          "venue": "Amon G. Carter Stadium",
           "note": null,
+          "postseason": false,
+          "status": "STATUS_FINAL",
+          "espn_utc": "2026-10-03T23:00Z",
           "result": "W 17-10"
         },
         {
-          "id": "byu-football-2026-10-09-iowa-state",
+          "id": "byu-football-401856826",
           "sport": "football",
           "date": "2026-10-09",
-          "start": "20:15",
+          "start": "20:30",
           "opponent": "Iowa State",
           "home_away": "home",
           "tv": "ESPN",
           "tv_all": [
             "ESPN"
           ],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
+          "venue": "LaVell Edwards Stadium",
           "note": null,
+          "postseason": false,
+          "status": "STATUS_FINAL",
+          "espn_utc": "2026-10-10T02:30Z",
           "result": "W 24-10"
         },
         {
@@ -967,15 +919,14 @@
           "start": "19:00",
           "opponent": "Nebraska",
           "home_away": "home",
-          "tv": "ESPN+",
-          "tv_all": [
-            "ESPN+"
-          ],
+          "tv": null,
+          "tv_all": [],
           "venue": "Provo, Utah / Marriott Center",
-          "note": "Exhibition"
+          "note": "Exhibition",
+          "result": "W 72-61"
         },
         {
-          "id": "byu-football-2026-10-17-notre-dame",
+          "id": "byu-football-401856809",
           "sport": "football",
           "date": "2026-10-17",
           "start": "17:30",
@@ -985,8 +936,11 @@
           "tv_all": [
             "ABC"
           ],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
-          "note": null
+          "venue": "LaVell Edwards Stadium",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_IN_PROGRESS",
+          "espn_utc": "2026-10-17T23:30Z"
         },
         {
           "id": "byu-mbb-2026-10-24-unlv",
@@ -1003,7 +957,7 @@
           "note": "Exhibition"
         },
         {
-          "id": "byu-football-2026-10-24-ucf",
+          "id": "byu-football-401856835",
           "sport": "football",
           "date": "2026-10-24",
           "start": null,
@@ -1011,11 +965,14 @@
           "home_away": "away",
           "tv": null,
           "tv_all": [],
-          "venue": "Orlando, Florida / Acrisure Bounce House",
-          "note": null
+          "venue": "Acrisure Bounce House",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_SCHEDULED",
+          "espn_utc": "2026-10-24T04:00Z"
         },
         {
-          "id": "byu-football-2026-10-31-arizona-state",
+          "id": "byu-football-401856843",
           "sport": "football",
           "date": "2026-10-31",
           "start": null,
@@ -1023,18 +980,23 @@
           "home_away": "home",
           "tv": null,
           "tv_all": [],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
-          "note": null
+          "venue": "LaVell Edwards Stadium",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_SCHEDULED",
+          "espn_utc": "2026-10-31T04:00Z"
         },
         {
           "id": "byu-mbb-2026-11-02-ohio-state",
           "sport": "mbb",
           "date": "2026-11-02",
-          "start": null,
+          "start": "19:00",
           "opponent": "Ohio State",
           "home_away": "neutral",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FS1",
+          "tv_all": [
+            "FS1"
+          ],
           "venue": "Salt Lake City, Utah / Delta Center",
           "note": null
         },
@@ -1042,16 +1004,18 @@
           "id": "byu-mbb-2026-11-06-omaha",
           "sport": "mbb",
           "date": "2026-11-06",
-          "start": null,
+          "start": "19:00",
           "opponent": "Omaha",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
         {
-          "id": "byu-football-2026-11-07-utah",
+          "id": "byu-football-401856849",
           "sport": "football",
           "date": "2026-11-07",
           "start": null,
@@ -1059,18 +1023,23 @@
           "home_away": "away",
           "tv": null,
           "tv_all": [],
-          "venue": "Salt Lake City, Utah / Rice-Eccles Stadium",
-          "note": null
+          "venue": "Rice-Eccles Stadium",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_SCHEDULED",
+          "espn_utc": "2026-11-07T05:00Z"
         },
         {
           "id": "byu-mbb-2026-11-10-queens",
           "sport": "mbb",
           "date": "2026-11-10",
-          "start": null,
+          "start": "19:00",
           "opponent": "Queens",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1078,16 +1047,18 @@
           "id": "byu-mbb-2026-11-12-montana-state",
           "sport": "mbb",
           "date": "2026-11-12",
-          "start": null,
+          "start": "19:00",
           "opponent": "Montana State",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
         {
-          "id": "byu-football-2026-11-14-baylor",
+          "id": "byu-football-401856858",
           "sport": "football",
           "date": "2026-11-14",
           "start": null,
@@ -1095,23 +1066,28 @@
           "home_away": "home",
           "tv": null,
           "tv_all": [],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
-          "note": null
+          "venue": "LaVell Edwards Stadium",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_SCHEDULED",
+          "espn_utc": "2026-11-14T05:00Z"
         },
         {
           "id": "byu-mbb-2026-11-18-northern-colorado",
           "sport": "mbb",
           "date": "2026-11-18",
-          "start": null,
+          "start": "19:00",
           "opponent": "Northern Colorado",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
         {
-          "id": "byu-football-2026-11-21-kansas",
+          "id": "byu-football-401856866",
           "sport": "football",
           "date": "2026-11-21",
           "start": null,
@@ -1119,8 +1095,11 @@
           "home_away": "away",
           "tv": null,
           "tv_all": [],
-          "venue": "Lawrence, Kansas / David Booth Kansas Memorial Stadium",
-          "note": null
+          "venue": "David Booth Kansas Memorial Stadium",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_SCHEDULED",
+          "espn_utc": "2026-11-21T05:00Z"
         },
         {
           "id": "byu-mbb-2026-11-23-washington",
@@ -1161,7 +1140,7 @@
           "note": null
         },
         {
-          "id": "byu-football-2026-11-28-cincinnati",
+          "id": "byu-football-401856876",
           "sport": "football",
           "date": "2026-11-28",
           "start": null,
@@ -1169,18 +1148,23 @@
           "home_away": "home",
           "tv": null,
           "tv_all": [],
-          "venue": "Provo, Utah / LaVell Edwards Stadium",
-          "note": null
+          "venue": "LaVell Edwards Stadium",
+          "note": null,
+          "postseason": false,
+          "status": "STATUS_SCHEDULED",
+          "espn_utc": "2026-11-28T05:00Z"
         },
         {
           "id": "byu-mbb-2026-12-05-northwestern",
           "sport": "mbb",
           "date": "2026-12-05",
-          "start": null,
+          "start": "14:00",
           "opponent": "Northwestern",
           "home_away": "neutral",
-          "tv": null,
-          "tv_all": [],
+          "tv": "Peacock",
+          "tv_all": [
+            "Peacock"
+          ],
           "venue": "Salt Lake City, Utah / Delta Center",
           "note": null
         },
@@ -1188,11 +1172,13 @@
           "id": "byu-mbb-2026-12-09-utah-state",
           "sport": "mbb",
           "date": "2026-12-09",
-          "start": null,
+          "start": "20:00",
           "opponent": "Utah State",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FS1",
+          "tv_all": [
+            "FS1"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1200,11 +1186,13 @@
           "id": "byu-mbb-2026-12-12-cal-state-fullerton",
           "sport": "mbb",
           "date": "2026-12-12",
-          "start": null,
+          "start": "14:30",
           "opponent": "Cal State Fullerton",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "CBS Sports Network",
+          "tv_all": [
+            "CBS Sports Network"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1212,11 +1200,13 @@
           "id": "byu-mbb-2026-12-15-weber-state",
           "sport": "mbb",
           "date": "2026-12-15",
-          "start": null,
+          "start": "19:00",
           "opponent": "Weber State",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1236,11 +1226,13 @@
           "id": "byu-mbb-2026-12-22-la-salle",
           "sport": "mbb",
           "date": "2026-12-22",
-          "start": null,
+          "start": "19:00",
           "opponent": "La Salle",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN+",
+          "tv_all": [
+            "ESPN+"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1248,11 +1240,13 @@
           "id": "byu-mbb-2027-01-02-arizona-state",
           "sport": "mbb",
           "date": "2027-01-02",
-          "start": null,
+          "start": "20:00",
           "opponent": "Arizona State",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN2",
+          "tv_all": [
+            "ESPN2"
+          ],
           "venue": "Tempe, Arizona / Deseret Financial Arena",
           "note": null
         },
@@ -1260,11 +1254,13 @@
           "id": "byu-mbb-2027-01-06-cincinnati",
           "sport": "mbb",
           "date": "2027-01-06",
-          "start": null,
+          "start": "20:30",
           "opponent": "Cincinnati",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FS1",
+          "tv_all": [
+            "FS1"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1272,11 +1268,13 @@
           "id": "byu-mbb-2027-01-09-kansas",
           "sport": "mbb",
           "date": "2027-01-09",
-          "start": null,
+          "start": "11:00",
           "opponent": "Kansas",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN",
+          "tv_all": [
+            "ESPN"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1284,11 +1282,13 @@
           "id": "byu-mbb-2027-01-12-arizona",
           "sport": "mbb",
           "date": "2027-01-12",
-          "start": null,
+          "start": "21:00",
           "opponent": "Arizona",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN",
+          "tv_all": [
+            "ESPN"
+          ],
           "venue": "Tuscon, Arizona / McKale Center at ALKEME Arena",
           "note": null
         },
@@ -1310,11 +1310,13 @@
           "id": "byu-mbb-2027-01-20-iowa-state",
           "sport": "mbb",
           "date": "2027-01-20",
-          "start": null,
+          "start": "19:00",
           "opponent": "Iowa State",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FS1",
+          "tv_all": [
+            "FS1"
+          ],
           "venue": "Ames, Iowa / Hilton Coliseum",
           "note": null
         },
@@ -1322,7 +1324,7 @@
           "id": "byu-mbb-2027-01-23-west-virginia",
           "sport": "mbb",
           "date": "2027-01-23",
-          "start": null,
+          "start": "12:00",
           "opponent": "West Virginia",
           "home_away": "home",
           "tv": null,
@@ -1334,7 +1336,7 @@
           "id": "byu-mbb-2027-01-27-tcu",
           "sport": "mbb",
           "date": "2027-01-27",
-          "start": null,
+          "start": "17:00",
           "opponent": "TCU",
           "home_away": "away",
           "tv": null,
@@ -1346,7 +1348,7 @@
           "id": "byu-mbb-2027-01-30-houston",
           "sport": "mbb",
           "date": "2027-01-30",
-          "start": null,
+          "start": "12:00",
           "opponent": "Houston",
           "home_away": "away",
           "tv": null,
@@ -1358,11 +1360,13 @@
           "id": "byu-mbb-2027-02-02-baylor",
           "sport": "mbb",
           "date": "2027-02-02",
-          "start": null,
+          "start": "18:00",
           "opponent": "Baylor",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FS1",
+          "tv_all": [
+            "FS1"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1370,11 +1374,13 @@
           "id": "byu-mbb-2027-02-06-utah",
           "sport": "mbb",
           "date": "2027-02-06",
-          "start": null,
+          "start": "19:30",
           "opponent": "Utah",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN2",
+          "tv_all": [
+            "ESPN2"
+          ],
           "venue": "Salt Lake City, Utah / Huntsman Center",
           "note": null
         },
@@ -1382,11 +1388,13 @@
           "id": "byu-mbb-2027-02-13-kansas-state",
           "sport": "mbb",
           "date": "2027-02-13",
-          "start": null,
+          "start": "13:30",
           "opponent": "Kansas State",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FOX",
+          "tv_all": [
+            "FOX"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1394,11 +1402,13 @@
           "id": "byu-mbb-2027-02-17-colorado",
           "sport": "mbb",
           "date": "2027-02-17",
-          "start": null,
+          "start": "19:00",
           "opponent": "Colorado",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "Peacock",
+          "tv_all": [
+            "Peacock"
+          ],
           "venue": "Boulder, Colorado / CU Events Center",
           "note": null
         },
@@ -1406,11 +1416,13 @@
           "id": "byu-mbb-2027-02-20-tcu",
           "sport": "mbb",
           "date": "2027-02-20",
-          "start": null,
+          "start": "12:00",
           "opponent": "TCU",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN2",
+          "tv_all": [
+            "ESPN2"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1432,11 +1444,13 @@
           "id": "byu-mbb-2027-02-27-ucf",
           "sport": "mbb",
           "date": "2027-02-27",
-          "start": null,
+          "start": "10:00",
           "opponent": "UCF",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN2",
+          "tv_all": [
+            "ESPN2"
+          ],
           "venue": "Orlando, Florida / Addition Financial Arena",
           "note": null
         },
@@ -1444,11 +1458,13 @@
           "id": "byu-mbb-2027-03-02-oklahoma-state",
           "sport": "mbb",
           "date": "2027-03-02",
-          "start": null,
+          "start": "19:00",
           "opponent": "Oklahoma State",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ESPN2",
+          "tv_all": [
+            "ESPN2"
+          ],
           "venue": "Provo, Utah / Marriott Center",
           "note": null
         },
@@ -1456,16 +1472,18 @@
           "id": "byu-mbb-2027-03-05-texas-tech",
           "sport": "mbb",
           "date": "2027-03-05",
-          "start": null,
+          "start": "19:00",
           "opponent": "Texas Tech",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FS1",
+          "tv_all": [
+            "FS1"
+          ],
           "venue": "Lubbock, Texas / United Supermarkets Arena",
           "note": null
         }
       ],
-      "updated": "2026-10-10T20:56:30-06:00"
+      "updated": "2026-10-17T20:58:58-06:00"
     }
   },
   "grades": {
