@@ -5,14 +5,14 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-18T20:07:31-06:00",
+    "last_updated": "2026-10-19T20:13:32-06:00",
     "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
       "2026-10-16",
       "2026-11-07"
     ],
     "later_days": 8,
-    "week_start": "2026-10-18",
+    "week_start": "2026-10-25",
     "motto": "We are Jensens, we are brave, we choose the right, and we always help others.",
     "prayer_rotation": {
       "anchor_sunday": "2026-10-04",
@@ -25,11 +25,13 @@
     "adventure_history": {
       "weekend": [
         "Lake Blanche",
-        "Welfare Square Tour"
+        "Welfare Square Tour",
+        "Waterfall Canyon Via Ferrata"
       ],
       "evening": [
         "Peaks Ice Arena Public Skate",
-        "Beacon Hill Park Disc Golf"
+        "Beacon Hill Park Disc Golf",
+        "Super Chix Custard Run"
       ]
     }
   },
@@ -1558,17 +1560,17 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-15",
+      "as_of": "2026-10-19",
       "courses": [
-        {
-          "name": "Food & Nutrition",
-          "short": "Food & Nutrition",
-          "pct": 100
-        },
         {
           "name": "Language Arts 8",
           "short": "Language Arts 8",
           "pct": 99.81
+        },
+        {
+          "name": "Food & Nutrition",
+          "short": "Food & Nutrition",
+          "pct": 99.36
         },
         {
           "name": "Science 8",
@@ -1583,11 +1585,11 @@
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 91.02
+          "pct": 91.24
         }
       ],
       "previous": {
-        "as_of": "2026-10-13",
+        "as_of": "2026-10-15",
         "courses": [
           {
             "name": "Food & Nutrition",
@@ -1607,7 +1609,7 @@
           {
             "name": "Math 8",
             "short": "Math 8",
-            "pct": 94.28
+            "pct": 93.65
           },
           {
             "name": "Utah History",
@@ -1732,28 +1734,28 @@
   },
   "adventures": {
     "this_week": {
-      "week_start": "2026-10-18",
+      "week_start": "2026-10-25",
       "weekend": {
-        "#": "94",
-        "Name": "Welfare Square Tour",
-        "Description": "See the grain elevator, cannery and Bishops' Storehouse",
-        "Location": "Salt Lake City",
-        "Drive Time from Highland": "40 min",
-        "Best Season(s)": "Year-round",
-        "Cost Tier": "Free",
-        "Category": "Church History",
-        "Reservation / Fee / Notes": "Ask about volunteer shifts"
+        "#": "115",
+        "Name": "Waterfall Canyon Via Ferrata",
+        "Description": "Guided iron-rung climbing route above Ogden",
+        "Location": "Ogden (Utah Adventure Center)",
+        "Drive Time from Highland": "1 hr 15 min",
+        "Best Season(s)": "May-Oct",
+        "Cost Tier": "$$$",
+        "Category": "Brave Challenge",
+        "Reservation / Fee / Notes": "Guide required, gear included; ~$140/person group rate"
       },
       "evening": {
-        "#": "27",
-        "Name": "Beacon Hill Park Disc Golf",
-        "Description": "27-hole easy-to-moderate course in Highland",
-        "Location": "Highland",
-        "Drive Time from Highland": "5 min",
-        "Best Season(s)": "Mar-Nov",
-        "Cost Tier": "Free",
-        "Category": "Parks & Games",
-        "Reservation / Fee / Notes": "Loser does dishes"
+        "#": "26",
+        "Name": "Super Chix Custard Run",
+        "Description": "Frozen custard and chicken sandwiches",
+        "Location": "American Fork",
+        "Drive Time from Highland": "10 min",
+        "Best Season(s)": "Year-round",
+        "Cost Tier": "$",
+        "Category": "Treats & Food Runs",
+        "Reservation / Fee / Notes": "Combine with Art Dye disc golf"
       }
     }
   }
