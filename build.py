@@ -17,6 +17,7 @@ Usage: python3 build.py [--json data/dashboard.json] [--out v3/index.html] [--we
 from __future__ import annotations
 
 import argparse
+import copy
 import datetime as dt
 import hashlib
 import html
@@ -807,14 +808,14 @@ def render_v3_adventures(m: Model) -> str:
             f'<script type="application/json" id="advdata">{js}</script>')
 
 
-def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None) -> str:
+def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, template: str = "template_v3.html") -> str:
     m = Model(data, now, week_start)
     meta = m.meta
     last = meta.get("last_updated") or now.isoformat(timespec="seconds")
     last_dt = dt.datetime.fromisoformat(last).astimezone(ZoneInfo(meta.get("timezone", "America/Denver")))
     last_label = f"{DOW[last_dt.weekday()]} {last_dt:%b} {last_dt.day} \u00b7 {fmt_time(last_dt.strftime('%H:%M'))}"
     yacts = youth_activities(m)
-    tpl = (HERE / "template_v3.html").read_text()
+    tpl = (HERE / template).read_text()
     i, j = tpl.index("<style>"), tpl.index("</style>")
     tpl = tpl[:i] + rem_to_var(tpl[i:j]) + tpl[j:]
     repl = {
@@ -867,6 +868,7 @@ def main() -> int:
     ap.add_argument("--no-stamp", action="store_true", help="don't update meta.last_updated")
     ap.add_argument("--now", help="override build time (ISO) for testing")
     ap.add_argument("--week-start", help="Sunday (YYYY-MM-DD) that starts the calendar week; default: upcoming Sunday")
+    ap.add_argument("--no-landscape", action="store_true", help="skip landscape-a/ and landscape-b/ mockups")
     args = ap.parse_args()
 
     path = Path(args.json)
@@ -893,14 +895,32 @@ def main() -> int:
         tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
         tmp.replace(path)
     out3 = Path(args.out)
+    data_pristine = copy.deepcopy(data)
     html3 = build_v3(data, now, week_start)
     leaks = private_leaks(html3)
     if leaks:
         print(f"[build] ERROR: v3 output mentions hidden terms {leaks}; not writing {out3}", file=sys.stderr)
         return 3
+    # landscape mockups (1920x1080): same data, same hide-leak check; only written when --out is the default v3 path
+    land = []
+    if not args.no_landscape:
+        for name in ("a", "b"):
+            tpl = f"template_landscape_{name}.html"
+            if not (HERE / tpl).exists():
+                continue
+            h = build_v3(copy.deepcopy(data_pristine), now, week_start, template=tpl)
+            lk = private_leaks(h)
+            if lk:
+                print(f"[build] ERROR: landscape-{name} output mentions hidden terms {lk}; not writing", file=sys.stderr)
+                return 3
+            land.append((HERE / f"landscape-{name}" / "index.html", h))
     out3.parent.mkdir(parents=True, exist_ok=True)
     out3.write_text(html3)
     print(f"[build] wrote {out3} (last_updated {data['meta'].get('last_updated')})")
+    for o, h in land:
+        o.parent.mkdir(parents=True, exist_ok=True)
+        o.write_text(h)
+        print(f"[build] wrote {o}")
     return 0
 
 
