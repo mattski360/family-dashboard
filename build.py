@@ -868,7 +868,7 @@ def main() -> int:
     ap.add_argument("--no-stamp", action="store_true", help="don't update meta.last_updated")
     ap.add_argument("--now", help="override build time (ISO) for testing")
     ap.add_argument("--week-start", help="Sunday (YYYY-MM-DD) that starts the calendar week; default: upcoming Sunday")
-    ap.add_argument("--no-landscape", action="store_true", help="skip landscape-a/ and landscape-b/ mockups")
+    ap.add_argument("--no-landscape", action="store_true", help="skip landscape/ (final) and the landscape-a/ mockup")
     args = ap.parse_args()
 
     path = Path(args.json)
@@ -904,16 +904,16 @@ def main() -> int:
     # landscape mockups (1920x1080): same data, same hide-leak check; only written when --out is the default v3 path
     land = []
     if not args.no_landscape:
-        for name in ("a", "b"):
-            tpl = f"template_landscape_{name}.html"
+        # landscape/ is the final wall-display page; landscape-b/ is a static redirect to it (not rebuilt)
+        for name, tpl in (("a", "template_landscape_a.html"), ("", "template_landscape.html")):
             if not (HERE / tpl).exists():
                 continue
             h = build_v3(copy.deepcopy(data_pristine), now, week_start, template=tpl)
             lk = private_leaks(h)
             if lk:
-                print(f"[build] ERROR: landscape-{name} output mentions hidden terms {lk}; not writing", file=sys.stderr)
+                print(f"[build] ERROR: landscape{'-' + name if name else ''} output mentions hidden terms {lk}; not writing", file=sys.stderr)
                 return 3
-            land.append((HERE / f"landscape-{name}" / "index.html", h))
+            land.append((HERE / ("landscape-" + name if name else "landscape") / "index.html", h))
     out3.parent.mkdir(parents=True, exist_ok=True)
     out3.write_text(html3)
     print(f"[build] wrote {out3} (last_updated {data['meta'].get('last_updated')})")
