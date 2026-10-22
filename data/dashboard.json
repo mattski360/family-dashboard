@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-20T20:06:52-06:00",
+    "last_updated": "2026-10-21T20:11:53-06:00",
     "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
       "2026-10-16",
@@ -1493,7 +1493,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-20",
+      "as_of": "2026-10-21",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -1508,36 +1508,26 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 92.73
+          "pct": 63.39
         }
       ],
       "previous": {
-        "as_of": "2026-10-18",
+        "as_of": "2026-10-20",
         "courses": [
-          {
-            "name": "Geometry (Lam)",
-            "short": "Geometry",
-            "pct": 98.04
-          },
-          {
-            "name": "Patriot Chorale (Washburn)",
-            "short": "Chorale",
-            "pct": 97.78
-          },
-          {
-            "name": "Biology (Anderson)",
-            "short": "Biology",
-            "pct": 96.38
-          },
-          {
-            "name": "U.S. History (Chancellor)",
-            "short": "U.S. History",
-            "pct": 95.44
-          },
           {
             "name": "English 9 (Coleman)",
             "short": "English 9",
-            "pct": 93.92
+            "pct": 100.0
+          },
+          {
+            "name": "D.E.A.R.",
+            "short": "D.E.A.R.",
+            "pct": 100.0
+          },
+          {
+            "name": "Geometry (Lam)",
+            "short": "Geometry",
+            "pct": 92.73
           }
         ]
       }
@@ -1545,7 +1535,7 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-20",
+      "as_of": "2026-10-21",
       "courses": [
         {
           "name": "Language Arts 8",
@@ -1560,12 +1550,12 @@
         {
           "name": "Science 8",
           "short": "Science 8",
-          "pct": 94.92
+          "pct": 91.81
         },
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 91.24
+          "pct": 90.84
         },
         {
           "name": "Math 8",
@@ -1574,7 +1564,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-19",
+        "as_of": "2026-10-20",
         "courses": [
           {
             "name": "Language Arts 8",
@@ -1589,17 +1579,17 @@
           {
             "name": "Science 8",
             "short": "Science 8",
-            "pct": 95.7
-          },
-          {
-            "name": "Math 8",
-            "short": "Math 8",
-            "pct": 93.65
+            "pct": 94.92
           },
           {
             "name": "Utah History",
             "short": "Utah History",
             "pct": 91.24
+          },
+          {
+            "name": "Math 8",
+            "short": "Math 8",
+            "pct": 89.54
           }
         ]
       }
@@ -1607,61 +1597,16 @@
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-10-17",
+      "as_of": "2026-10-21",
       "courses": [
-        {
-          "name": "Composition",
-          "short": "Composition",
-          "pct": 100.0
-        },
-        {
-          "name": "Language",
-          "short": "Language",
-          "pct": 99.33
-        },
-        {
-          "name": "Literature",
-          "short": "Literature",
-          "pct": 98.48
-        },
-        {
-          "name": "History",
-          "short": "History",
-          "pct": 98.35
-        },
-        {
-          "name": "Art",
-          "short": "Art",
-          "pct": 98.0
-        },
         {
           "name": "Math",
           "short": "Math",
-          "pct": 97.55
-        },
-        {
-          "name": "Exercise Science",
-          "short": "Exercise Science",
-          "pct": 95.0
-        },
-        {
-          "name": "Spelling",
-          "short": "Spelling",
-          "pct": 95.0
-        },
-        {
-          "name": "Music",
-          "short": "Music",
-          "pct": 94.0
-        },
-        {
-          "name": "Geography",
-          "short": "Geography",
-          "pct": 93.18
+          "pct": 80.0
         }
       ],
       "previous": {
-        "as_of": "2026-10-14",
+        "as_of": "2026-10-17",
         "courses": [
           {
             "name": "Composition",
@@ -1671,7 +1616,12 @@
           {
             "name": "Language",
             "short": "Language",
-            "pct": 99.17
+            "pct": 99.33
+          },
+          {
+            "name": "Literature",
+            "short": "Literature",
+            "pct": 98.48
           },
           {
             "name": "History",
@@ -1689,11 +1639,6 @@
             "pct": 97.55
           },
           {
-            "name": "Literature",
-            "short": "Literature",
-            "pct": 97.18
-          },
-          {
             "name": "Exercise Science",
             "short": "Exercise Science",
             "pct": 95.0
@@ -1701,7 +1646,7 @@
           {
             "name": "Spelling",
             "short": "Spelling",
-            "pct": 94.1
+            "pct": 95.0
           },
           {
             "name": "Music",
