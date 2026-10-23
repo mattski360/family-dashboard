@@ -12,4 +12,6 @@ status=0
 "$PY" fetch_youth.py      || { echo "[run] fetch_youth.py failed; keeping existing youth data" >&2; status=1; }
 "$PY" fetch_byu.py        || { echo "[run] fetch_byu.py failed; keeping last good BYU games" >&2; status=1; }
 "$PY" build.py || exit 2
+# Also publish to Cloudflare Pages (family-dashboard-5rk.pages.dev) while GitHub Pages stays on; skipped if no credentials.
+./deploy_cloudflare.sh || { echo "[run] Cloudflare deploy failed (GitHub copy still published by the push)" >&2; status=1; }
 exit $status
