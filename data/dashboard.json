@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-21T20:11:53-06:00",
+    "last_updated": "2026-10-22T20:10:45-06:00",
     "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
       "2026-10-16",
@@ -1493,7 +1493,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-21",
+      "as_of": "2026-10-22",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -1506,13 +1506,18 @@
           "pct": 100.0
         },
         {
+          "name": "Biology (Anderson)",
+          "short": "Biology",
+          "pct": 100.0
+        },
+        {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 63.39
+          "pct": 93.15
         }
       ],
       "previous": {
-        "as_of": "2026-10-20",
+        "as_of": "2026-10-21",
         "courses": [
           {
             "name": "English 9 (Coleman)",
@@ -1527,7 +1532,7 @@
           {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 92.73
+            "pct": 63.39
           }
         ]
       }
@@ -1535,7 +1540,7 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-21",
+      "as_of": "2026-10-22",
       "courses": [
         {
           "name": "Language Arts 8",
@@ -1550,21 +1555,21 @@
         {
           "name": "Science 8",
           "short": "Science 8",
-          "pct": 91.81
-        },
-        {
-          "name": "Utah History",
-          "short": "Utah History",
-          "pct": 90.84
+          "pct": 93.88
         },
         {
           "name": "Math 8",
           "short": "Math 8",
-          "pct": 89.54
+          "pct": 93.62
+        },
+        {
+          "name": "Utah History",
+          "short": "Utah History",
+          "pct": 87.78
         }
       ],
       "previous": {
-        "as_of": "2026-10-20",
+        "as_of": "2026-10-21",
         "courses": [
           {
             "name": "Language Arts 8",
@@ -1579,12 +1584,12 @@
           {
             "name": "Science 8",
             "short": "Science 8",
-            "pct": 94.92
+            "pct": 91.81
           },
           {
             "name": "Utah History",
             "short": "Utah History",
-            "pct": 91.24
+            "pct": 90.84
           },
           {
             "name": "Math 8",
@@ -1597,66 +1602,26 @@
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-10-21",
+      "as_of": "2026-10-22",
       "courses": [
+        {
+          "name": "Geography",
+          "short": "Geography",
+          "pct": 95.0
+        },
         {
           "name": "Math",
           "short": "Math",
-          "pct": 80.0
+          "pct": 94.59
         }
       ],
       "previous": {
-        "as_of": "2026-10-17",
+        "as_of": "2026-10-21",
         "courses": [
-          {
-            "name": "Composition",
-            "short": "Composition",
-            "pct": 100.0
-          },
-          {
-            "name": "Language",
-            "short": "Language",
-            "pct": 99.33
-          },
-          {
-            "name": "Literature",
-            "short": "Literature",
-            "pct": 98.48
-          },
-          {
-            "name": "History",
-            "short": "History",
-            "pct": 98.35
-          },
-          {
-            "name": "Art",
-            "short": "Art",
-            "pct": 98.0
-          },
           {
             "name": "Math",
             "short": "Math",
-            "pct": 97.55
-          },
-          {
-            "name": "Exercise Science",
-            "short": "Exercise Science",
-            "pct": 95.0
-          },
-          {
-            "name": "Spelling",
-            "short": "Spelling",
-            "pct": 95.0
-          },
-          {
-            "name": "Music",
-            "short": "Music",
-            "pct": 94.0
-          },
-          {
-            "name": "Geography",
-            "short": "Geography",
-            "pct": 93.18
+            "pct": 80.0
           }
         ]
       }
