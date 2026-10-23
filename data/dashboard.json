@@ -1488,6 +1488,11 @@
             }
           ]
         }
+      },
+      "fight_song": {
+        "src": "../assets/cougar-song.mp3",
+        "credit": "",
+        "cloudflare_only": true
       }
     }
   },

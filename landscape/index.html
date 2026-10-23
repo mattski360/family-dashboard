@@ -338,7 +338,7 @@ header{align-items:center}
 .quiet{font-size:calc(var(--fs) * 1)}
 </style>
 </head>
-<body data-ver="a0cce8a4e0df" data-rotate="30" data-tz="America/Denver" data-last="2026-10-22T20:10:45-06:00" data-stale-days="8" data-week-start="2026-10-25" data-build-date="2026-10-23">
+<body data-ver="5a5a5ba83633" data-rotate="30" data-tz="America/Denver" data-last="2026-10-22T20:10:45-06:00" data-stale-days="8" data-week-start="2026-10-25" data-build-date="2026-10-23">
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 <defs>
 <symbol id="i-fball" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10.2" ry="6.2" transform="rotate(-45 12 12)"/><path d="M9 15l6-6M9.6 12.6l2 2M11 11l2 2M12.4 9.4l2 2"/></symbol>
@@ -787,7 +787,7 @@ header{align-items:center}
 @media (max-height:620px) and (orientation:landscape){#byupop .bp-card{font-size:15px}#byupop .nx li:nth-child(4){display:none}#byupop .bp-list li{padding:.2em 0}#byupop .bp-hd{padding-top:1vmin;padding-bottom:1vmin}}
 body.byupop-on #cougs{z-index:40}
 </style>
-<div id="byupop" aria-hidden="true" data-song=""><div class="bp-card" role="dialog" aria-label="BYU Cougars">
+<div id="byupop" aria-hidden="true" data-song="" data-song-cf="../assets/cougar-song.mp3"><div class="bp-card" role="dialog" aria-label="BYU Cougars">
 <button class="bp-x" id="bpx" type="button" aria-label="Close">&times;</button>
 <div class="bp-hd"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg><b>BYU Cougars</b><span>Go Cougs!</span></div>
 <div class="bp-body"><section class="bp-col"><h3>Football</h3><div class="bp-facts"><b>6-0</b> · 1st in Big 12</div><div class="bp-chips"><span class="bp-chip">#2 AP</span><span class="bp-chip">#3 Coaches</span></div><h4>Recent</h4><ul class="bp-list"><li><span class="bp-r w">W 28-24</span><span class="bp-o">vs Notre Dame</span><span class="bp-d">Sat Oct 17</span></li><li><span class="bp-r w">W 24-10</span><span class="bp-o">vs Iowa State</span><span class="bp-d">Fri Oct 9</span></li><li><span class="bp-r w">W 41-23</span><span class="bp-o">at Colorado State</span><span class="bp-d">Sat Sep 19</span></li></ul><h4>Up next</h4><ul class="bp-list nx"><li><span class="bp-o">at UCF</span><span class="bp-d">Sat Oct 24 · 1:30 PM MT</span><span class="bp-m">Away · FOX</span></li><li><span class="bp-o">vs Arizona State</span><span class="bp-d">Sat Oct 31 · 1:30 PM MT</span><span class="bp-m">Home</span></li><li><span class="bp-o">at Utah</span><span class="bp-d">Sat Nov 7 · TBA</span><span class="bp-m">Away</span></li><li><span class="bp-o">vs Baylor</span><span class="bp-d">Sat Nov 14 · TBA</span><span class="bp-m">Home</span></li></ul></section><section class="bp-col"><h3>Men's Basketball</h3><div class="bp-facts"></div><div class="bp-chips"><span class="bp-chip">#25 AP</span><span class="bp-chip">#25 Coaches</span></div><h4>Recent</h4><ul class="bp-list"><li><span class="bp-r w">W 72-61</span><span class="bp-o">vs Nebraska <i>Exh.</i></span><span class="bp-d">Fri Oct 16</span></li></ul><h4>Up next</h4><ul class="bp-list nx"><li><span class="bp-o">at UNLV <i>Exh.</i></span><span class="bp-d">Sat Oct 24 · 2:00 PM MT</span><span class="bp-m">Away · MW+</span></li><li><span class="bp-o">vs Ohio State</span><span class="bp-d">Mon Nov 2 · 7:00 PM MT</span><span class="bp-m">Neutral · FS1</span></li><li><span class="bp-o">vs Omaha</span><span class="bp-d">Fri Nov 6 · 7:00 PM MT</span><span class="bp-m">Home · ESPN+</span></li><li><span class="bp-o">vs Queens</span><span class="bp-d">Tue Nov 10 · 7:00 PM MT</span><span class="bp-m">Home · ESPN+</span></li></ul></section></div>
@@ -801,8 +801,8 @@ body.byupop-on #cougs{z-index:40}
   function arm(ms){clearTimeout(t);t=setTimeout(close,ms);}
   function open(){pop.classList.add('on');document.body.classList.add('byupop-on');pop.setAttribute('aria-hidden','false');pop.querySelector('.bp-card').scrollTop=0;arm(30000);
     if(src){try{au=au||new Audio(src);au.currentTime=0;
-      au.onloadedmetadata=function(){if(isFinite(au.duration)&&au.duration>3)arm(au.duration*1000+1500);};
-      au.onended=function(){arm(1500);};
+      au.onloadedmetadata=function(){if(!au.paused&&isFinite(au.duration)&&au.duration>3)arm(au.duration*1000+1500);};
+      au.onended=function(){arm(1500);};au.onerror=function(){arm(30000);};
       var p=au.play();if(p&&p.then)p.then(function(){if(isFinite(au.duration)&&au.duration>3)arm((au.duration-au.currentTime)*1000+1500);},function(){arm(30000);});
     }catch(e){arm(30000);}}}
   y.addEventListener('click',function(){if(!pop.classList.contains('on'))open();});

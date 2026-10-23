@@ -866,7 +866,10 @@ def render_byu_pop(data: dict, now: dt.datetime) -> str:
         u = dt.datetime.fromisoformat(upd).astimezone(ZoneInfo("America/Denver"))
         upd_s = f'Updated {u:%b} {u.day}, {u.year}'
     song = byu.get("fight_song") or {}
-    src = song.get("src") or ""
+    # cloudflare_only: the MP3 is gitignored and only uploaded by deploy_cloudflare.sh, which fills data-song from
+    # data-song-cf in its staging copy; GitHub Pages gets data-song="" (30 s auto-close, no audio).
+    src = "" if song.get("cloudflare_only") else (song.get("src") or "")
+    cf_src = song.get("src") or "" if song.get("cloudflare_only") else ""
     return f'''<style>
 #byupop{{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:2.5vmin;background:rgba(0,20,45,.55)}}
 #byupop.on{{display:flex}}
@@ -900,7 +903,7 @@ def render_byu_pop(data: dict, now: dt.datetime) -> str:
 @media (max-height:620px) and (orientation:landscape){{#byupop .bp-card{{font-size:15px}}#byupop .nx li:nth-child(4){{display:none}}#byupop .bp-list li{{padding:.2em 0}}#byupop .bp-hd{{padding-top:1vmin;padding-bottom:1vmin}}}}
 body.byupop-on #cougs{{z-index:40}}
 </style>
-<div id="byupop" aria-hidden="true" data-song="{esc(src)}"><div class="bp-card" role="dialog" aria-label="BYU Cougars">
+<div id="byupop" aria-hidden="true" data-song="{esc(src)}" data-song-cf="{esc(cf_src)}"><div class="bp-card" role="dialog" aria-label="BYU Cougars">
 <button class="bp-x" id="bpx" type="button" aria-label="Close">&times;</button>
 <div class="bp-hd"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg><b>BYU Cougars</b><span>Go Cougs!</span></div>
 <div class="bp-body">{"".join(cols)}</div>
@@ -914,8 +917,8 @@ body.byupop-on #cougs{{z-index:40}}
   function arm(ms){{clearTimeout(t);t=setTimeout(close,ms);}}
   function open(){{pop.classList.add('on');document.body.classList.add('byupop-on');pop.setAttribute('aria-hidden','false');pop.querySelector('.bp-card').scrollTop=0;arm(30000);
     if(src){{try{{au=au||new Audio(src);au.currentTime=0;
-      au.onloadedmetadata=function(){{if(isFinite(au.duration)&&au.duration>3)arm(au.duration*1000+1500);}};
-      au.onended=function(){{arm(1500);}};
+      au.onloadedmetadata=function(){{if(!au.paused&&isFinite(au.duration)&&au.duration>3)arm(au.duration*1000+1500);}};
+      au.onended=function(){{arm(1500);}};au.onerror=function(){{arm(30000);}};
       var p=au.play();if(p&&p.then)p.then(function(){{if(isFinite(au.duration)&&au.duration>3)arm((au.duration-au.currentTime)*1000+1500);}},function(){{arm(30000);}});
     }}catch(e){{arm(30000);}}}}}}
   y.addEventListener('click',function(){{if(!pop.classList.contains('on'))open();}});

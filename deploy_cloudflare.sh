@@ -15,6 +15,12 @@ export PATH="$TOOLS/node_modules/.bin:$PATH"
 STAGE=$(mktemp -d /tmp/fd-cf-XXXXXX); trap 'rm -rf "$STAGE"' EXIT
 cp index.html "$STAGE/"
 for d in v2 v3 landscape landscape-a landscape-b assets; do [ -d "$d" ] && cp -r "$d" "$STAGE/"; done
+# fight song (gitignored, Cloudflare only): enable it in the staged pages
+if [ -f "$STAGE/assets/cougar-song.mp3" ]; then
+  for f in "$STAGE"/v3/index.html "$STAGE"/landscape/index.html "$STAGE"/landscape-a/index.html; do
+    [ -f "$f" ] && sed -i -E 's/data-song="" data-song-cf="([^"]+)"/data-song="\1" data-song-cf="\1"/' "$f"
+  done
+fi
 if [ -f data/private_hide.txt ]; then
   python3 - "$STAGE" <<'PY' || { echo "[cf] hidden term found in staged files; NOT deploying" >&2; exit 3; }
 import html, pathlib, sys
