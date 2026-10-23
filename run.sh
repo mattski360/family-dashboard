@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Weekly refresh: pull AHS school events, ward-site youth fallback and BYU football/basketball games, then render v3/index.html.
+# fetch_byu.py also refreshes sports.byu.summary (record, Big 12 standing, AP/Coaches/CFP ranks) for the BYU "Y" easter-egg popup.
 # (index.html and v2/index.html are static redirects to v3/ and are not rebuilt.)
 # A failed fetch keeps the previous data and the page is still rebuilt.
 # build.py exits 3 (and writes nothing) if a term from data/private_hide.txt would appear on the page; run.sh then exits 2.

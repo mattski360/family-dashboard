@@ -156,6 +156,38 @@ def fetch_espn(sport: str, season: int) -> list[dict]:
     return sorted(games.values(), key=lambda g: (g["date"], g["start"] or "99"))
 
 
+RANK_API = "https://site.api.espn.com/apis/site/v2/sports/{path}/rankings"
+TEAM_API = "https://site.api.espn.com/apis/site/v2/sports/{path}/teams/" + TEAM
+
+
+def fetch_summary(sport: str) -> dict:
+    """Record, conference standing and poll ranks from ESPN (omitted when unknown; never guessed)."""
+    path = SPORTS[sport]["path"]
+    out: dict = {}
+    t = get(TEAM_API.format(path=path)).get("team") or {}
+    for it in (t.get("record") or {}).get("items") or []:
+        if it.get("type") == "total" and it.get("summary"):
+            out["record"] = it["summary"]
+            st = {x["name"]: x.get("value") for x in it.get("stats") or []}
+            lw, ll = st.get("leagueWins"), st.get("leagueLosses")
+            if lw is not None and ll is not None and (lw or ll):
+                out["conf_record"] = f"{int(lw)}-{int(ll)}"
+    if t.get("standingSummary"):
+        out["standing"] = t["standingSummary"]
+    polls = []
+    for r in get(RANK_API.format(path=path)).get("rankings") or []:
+        nm = r.get("shortName") or r.get("name") or ""
+        if not any(k in nm for k in ("AP", "Coaches", "Playoff", "CFP")) or "FCS" in nm or "Div" in nm:
+            continue
+        for x in r.get("ranks") or []:
+            if (x.get("team") or {}).get("id") == TEAM:
+                label = "CFP" if ("Playoff" in nm or "CFP" in nm) else ("AP" if "AP" in nm else "Coaches")
+                polls.append({"poll": label, "rank": x.get("current"), "as_of": (r.get("date") or "")[:10],
+                              "week": r.get("headline")})
+    out["polls"] = polls
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", default=str(HERE / "data" / "dashboard.json"))
@@ -202,6 +234,13 @@ def main() -> int:
     byu.update({"team": "BYU Cougars", "source": {k: src[v] for k, v in used.items()} or byu.get("source"),
                 "seasons": {"football": str(seas["football"]), "mbb": f"{seas['mbb'] - 1}-{str(seas['mbb'])[2:]}"},
                 "games": out})
+    summ = byu.get("summary") or {}
+    for sp in SPORTS:
+        try:
+            summ[sp] = fetch_summary(sp)
+        except Exception as e:  # noqa: BLE001  keep last good summary
+            print(f"[fetch_byu] {sp}: summary fetch failed ({e}); keeping previous", file=sys.stderr)
+    byu["summary"] = summ
     if len(failed) < len(SPORTS):
         byu["updated"] = dt.datetime.now(DEN).isoformat(timespec="seconds")
     tmp = path.with_suffix(".tmp")

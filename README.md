@@ -137,3 +137,12 @@ The default window is **21 days**, so a weekly run still fills the ten day tiles
 Final URL: https://mattski360.github.io/family-dashboard/landscape/ (built from `template_landscape.html` by `build.py`, so `run.sh` regenerates it weekly with the same hidden-term leak check; `landscape-b/` is now a static redirect to it, `landscape-a/` is still built as a mockup).
 Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 1280×800, 1280×720, 960×540) with no scrolling; sizes scale with the viewport so the physical size on the panel is the same at any devicePixelRatio. Touch-friendly (bigger nav/tap targets, no zoom), Screen Wake Lock with a muted-video fallback, `manifest.webmanifest` (fullscreen, landscape) for Chrome "Add to Home screen". Add `?info` to the URL to show the real viewport / devicePixelRatio / wake-lock status on the device.
 `/workspace/.venv-shot/bin/python shot_landscape_final.py` writes `preview-land-final-<W>x<H>-p1/p2.png` and runs Android touch checks (tap-to-pause, resume, BYU Y, idea buttons, motto triple-tap, nav dots, 3 s hold on "Prayer:"); exits non-zero on any overflow or failed check.
+
+## BYU easter-egg popup
+Tapping the faded BYU "Y" (nav corner, v3 / landscape / landscape-a) still plays the Go Cougs animation and also opens a
+BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).
+Data: `sports.byu.games` + `sports.byu.summary` + `sports.byu.updated` in data/dashboard.json, refreshed every week by
+`fetch_byu.py` (run.sh, Sat 8:55 PM). Unknown items are omitted. Auto-closes after 30 s; X or tap outside closes.
+Optional audio: set `sports.byu.fight_song = {"src": "../assets/<file>", "credit": "..."}` to a licensed file; the popup
+then stays open for the song's length (30 s fallback if play() is rejected). None is set: "The Cougar Song" (Rise and
+Shout) is still under copyright (registered 1947, renewed 1975; held by the Sandgren family/BYU), so no copy is in the repo.

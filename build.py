@@ -808,6 +808,124 @@ def render_v3_adventures(m: Model) -> str:
             f'<script type="application/json" id="advdata">{js}</script>')
 
 
+# ------------------------------------------------------------------ BYU easter-egg popup (tap the faded Y)
+# Football + men's basketball only: record / polls / standing, recent results, next games. Data: sports.byu
+# (fetch_byu.py, refreshed weekly by run.sh). Optional sports.byu.fight_song = {"src","title","credit"}: played on open
+# and the popup stays up for the song; without it (or if play() is rejected) it auto-closes after 30 s.
+def render_byu_pop(data: dict, now: dt.datetime) -> str:
+    byu = (data.get("sports") or {}).get("byu") or {}
+    games = byu.get("games") or []
+    if not games:
+        return ""
+    today = now.astimezone(ZoneInfo("America/Denver")).date()
+    summ = byu.get("summary") or {}
+
+    def when(g):
+        dd = d(g["date"])
+        return f'{DOW[dd.weekday()][:3]} {dd:%b} {dd.day} · {fmt_time(g.get("start")) + " MT" if g.get("start") else "TBA"}'
+
+    def opp(g):
+        return ("vs " if g.get("home_away") == "home" else "at " if g.get("home_away") == "away" else "vs ") + g["opponent"]
+
+    def ha(g):
+        return {"home": "Home", "away": "Away", "neutral": "Neutral"}.get(g.get("home_away"), "")
+
+    cols = []
+    for sp, name in (("football", "Football"), ("mbb", "Men's Basketball")):
+        gs = [g for g in games if g.get("sport") == sp]
+        past = [g for g in gs if g.get("result")][-3:][::-1]
+        nxt = [g for g in gs if not g.get("result") and d(g["date"]) >= today][:4]
+        s = summ.get(sp) or {}
+        chips = [f'<span class="bp-chip">#{int(p["rank"])} {esc(p["poll"])}</span>' for p in s.get("polls") or [] if p.get("rank")]
+        facts = []
+        if s.get("record"):
+            facts.append(f'<b>{esc(s["record"])}</b>')
+        if s.get("conf_record"):
+            facts.append(f'{esc(s["conf_record"])} conf')
+        if s.get("standing"):
+            facts.append(esc(s["standing"]))
+        if not s.get("record") and sp == "mbb" and not past:
+            facts.append("Season opens soon")
+        rows_p = "".join(
+            f'<li><span class="bp-r {"w" if g["result"].startswith("W") else "l"}">{esc(g["result"])}</span>'
+            f'<span class="bp-o">{esc(opp(g))}{" <i>Exh.</i>" if g.get("note") == "Exhibition" else ""}</span>'
+            f'<span class="bp-d">{esc(DOW[d(g["date"]).weekday()][:3])} {d(g["date"]):%b} {d(g["date"]).day}</span></li>' for g in past)
+        rows_n = "".join(
+            f'<li><span class="bp-o">{esc(opp(g))}{" <i>Exh.</i>" if g.get("note") == "Exhibition" else ""}</span>'
+            f'<span class="bp-d">{esc(when(g))}</span>'
+            f'<span class="bp-m">{esc(ha(g))}{" · " + esc(g["tv"]) if g.get("tv") else ""}</span></li>' for g in nxt)
+        cols.append(f'<section class="bp-col"><h3>{name}</h3>'
+                    f'<div class="bp-facts">{" · ".join(facts)}</div>'
+                    + (f'<div class="bp-chips">{"".join(chips)}</div>' if chips else "")
+                    + (f'<h4>Recent</h4><ul class="bp-list">{rows_p}</ul>' if rows_p else "")
+                    + (f'<h4>Up next</h4><ul class="bp-list nx">{rows_n}</ul>' if rows_n else "")
+                    + '</section>')
+    upd = byu.get("updated")
+    upd_s = ""
+    if upd:
+        u = dt.datetime.fromisoformat(upd).astimezone(ZoneInfo("America/Denver"))
+        upd_s = f'Updated {u:%b} {u.day}, {u.year}'
+    song = byu.get("fight_song") or {}
+    src = song.get("src") or ""
+    return f'''<style>
+#byupop{{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:2.5vmin;background:rgba(0,20,45,.55)}}
+#byupop.on{{display:flex}}
+#byupop .bp-card{{position:relative;width:min(96vw,1240px);max-height:94vh;overflow:auto;background:#fff;border-radius:2vmin;box-shadow:0 1.5vmin 6vmin rgba(0,0,0,.4);
+  font-family:inherit;color:#0B1F3A;font-size:clamp(16px,2.05vmin,26px);line-height:1.3;border-top:1.1vmin solid #0062B8}}
+#byupop .bp-hd{{display:flex;align-items:center;gap:1.6vmin;background:#002E5D;color:#fff;padding:1.6vmin 2.4vmin;padding-right:9vmin}}
+#byupop .bp-hd svg{{width:4.6vmin;height:4.6vmin;min-width:28px;min-height:28px;flex:none}}
+#byupop .bp-hd b{{font-size:1.55em;font-weight:900;letter-spacing:.02em}}
+#byupop .bp-hd span{{opacity:.85;font-size:.9em;margin-left:auto;white-space:nowrap}}
+#byupop .bp-x{{position:absolute;top:.6vmin;right:.8vmin;width:max(48px,7vmin);height:max(48px,7vmin);border:0;border-radius:50%;background:#0062B8;color:#fff;
+  font-size:max(26px,4vmin);line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}}
+#byupop .bp-body{{display:grid;grid-template-columns:1fr 1fr;gap:2.4vmin;padding:2vmin 2.4vmin 1.2vmin}}
+#byupop .bp-col{{min-width:0}}
+#byupop h3{{margin:0 0 .3em;font-size:1.3em;color:#002E5D;border-bottom:.35vmin solid #0062B8;padding-bottom:.2em}}
+#byupop h4{{margin:.6em 0 .2em;font-size:max(12px,.8em);text-transform:uppercase;letter-spacing:.08em;color:#0062B8}}
+#byupop .bp-facts{{font-size:1.05em}}
+#byupop .bp-facts b{{font-size:1.25em;color:#002E5D}}
+#byupop .bp-chips{{display:flex;flex-wrap:wrap;gap:.4em;margin-top:.4em}}
+#byupop .bp-chip{{background:#002E5D;color:#fff;border-radius:1em;padding:.15em .7em;font-weight:800;font-size:.9em}}
+#byupop .bp-list{{list-style:none;margin:0;padding:0}}
+#byupop .bp-list li{{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 .6em;padding:.32em 0;border-bottom:1px solid #E3EAF3}}
+#byupop .bp-o{{font-weight:700;flex:1 1 auto;min-width:0}}
+#byupop .bp-o i{{font-style:normal;font-weight:600;font-size:max(12px,.75em);color:#5A6B85}}
+#byupop .bp-d{{color:#3A4A63;white-space:nowrap}}
+#byupop .nx .bp-d{{flex-basis:100%;order:3;font-size:.92em}}
+#byupop .bp-m{{color:#0062B8;font-weight:700;font-size:.9em;white-space:nowrap}}
+#byupop .bp-r{{font-weight:900;min-width:4.6em}}
+#byupop .bp-r.w{{color:#0062B8}} #byupop .bp-r.l{{color:#9A2B2B}}
+#byupop .bp-ft{{padding:.6vmin 2.4vmin 1.6vmin;color:#5A6B85;font-size:.8em;display:flex;justify-content:space-between;gap:1em}}
+@media (orientation:portrait){{#byupop .bp-card{{font-size:clamp(14px,2.6vmin,30px)}}#byupop .bp-body{{grid-template-columns:1fr}}}}
+@media (max-height:620px) and (orientation:landscape){{#byupop .bp-card{{font-size:15px}}#byupop .nx li:nth-child(4){{display:none}}#byupop .bp-list li{{padding:.2em 0}}#byupop .bp-hd{{padding-top:1vmin;padding-bottom:1vmin}}}}
+body.byupop-on #cougs{{z-index:40}}
+</style>
+<div id="byupop" aria-hidden="true" data-song="{esc(src)}"><div class="bp-card" role="dialog" aria-label="BYU Cougars">
+<button class="bp-x" id="bpx" type="button" aria-label="Close">&times;</button>
+<div class="bp-hd"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg><b>BYU Cougars</b><span>Go Cougs!</span></div>
+<div class="bp-body">{"".join(cols)}</div>
+<div class="bp-ft"><span>{esc(upd_s)}</span><span>{esc(song.get("credit") or "")}</span></div>
+</div></div>
+<script>(function(){{
+  var pop=document.getElementById('byupop'),y=document.getElementById('yegg');if(!pop||!y)return;
+  var t=0,au=null,src=pop.getAttribute('data-song');
+  function close(){{pop.classList.remove('on');document.body.classList.remove('byupop-on');pop.setAttribute('aria-hidden','true');clearTimeout(t);
+    if(au){{try{{au.pause();au.currentTime=0;}}catch(e){{}}}}}}
+  function arm(ms){{clearTimeout(t);t=setTimeout(close,ms);}}
+  function open(){{pop.classList.add('on');document.body.classList.add('byupop-on');pop.setAttribute('aria-hidden','false');pop.querySelector('.bp-card').scrollTop=0;arm(30000);
+    if(src){{try{{au=au||new Audio(src);au.currentTime=0;
+      au.onloadedmetadata=function(){{if(isFinite(au.duration)&&au.duration>3)arm(au.duration*1000+1500);}};
+      au.onended=function(){{arm(1500);}};
+      var p=au.play();if(p&&p.then)p.then(function(){{if(isFinite(au.duration)&&au.duration>3)arm((au.duration-au.currentTime)*1000+1500);}},function(){{arm(30000);}});
+    }}catch(e){{arm(30000);}}}}}}
+  y.addEventListener('click',function(){{if(!pop.classList.contains('on'))open();}});
+  document.getElementById('bpx').addEventListener('click',function(e){{e.stopPropagation();close();}});
+  pop.addEventListener('click',function(e){{e.stopPropagation();if(e.target===pop)close();}});
+  pop.addEventListener('pointerdown',function(e){{e.stopPropagation();}});
+}})();</script>
+'''
+
+
 def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, template: str = "template_v3.html") -> str:
     m = Model(data, now, week_start)
     meta = m.meta
@@ -841,6 +959,8 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
     out = tpl
     for k, v in repl.items():
         out = out.replace("{{" + k + "}}", str(v))
+    if 'id="yegg"' in out:
+        out = out.replace("</body>", render_byu_pop(data, now) + "</body>", 1)
     # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads
     out = out.replace("{{VERSION}}", hashlib.sha256(out.encode()).hexdigest()[:12])
     left = re.findall(r"\{\{[A-Z_0-9]+\}\}", out)
