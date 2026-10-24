@@ -1661,5 +1661,99 @@
         "Reservation / Fee / Notes": "Combine with Art Dye disc golf"
       }
     }
+  },
+  "chores": {
+    "source": "Chore chart xlsx (Sheet1), Oct 2026",
+    "reset_time": "00:00",
+    "timezone": "America/Denver",
+    "kids": [
+      "luke",
+      "wyatt",
+      "tanner"
+    ],
+    "daily": {
+      "title": "All boys: Personal Responsibility",
+      "note": "Every day",
+      "groups": [
+        {
+          "id": "d1",
+          "items": [
+            "🛌 Clean bedroom",
+            "🛌 Make bed",
+            "👕 Pick up personal items",
+            "🚽 Clean assigned bathroom"
+          ]
+        },
+        {
+          "id": "d2",
+          "items": [
+            "👖 Put away own laundry",
+            "🎹 Practice piano"
+          ]
+        }
+      ]
+    },
+    "zones": [
+      {
+        "id": "A",
+        "color": "Blue",
+        "name": "Kitchen & Waste",
+        "tasks": [
+          {
+            "id": "a1",
+            "text": "🍽️ Empty dishwasher and tidy kitchen"
+          },
+          {
+            "id": "a2",
+            "text": "🗑️ Take out all trash"
+          }
+        ]
+      },
+      {
+        "id": "B",
+        "color": "Green",
+        "name": "Floors & Bathrooms",
+        "tasks": [
+          {
+            "id": "b1",
+            "text": "⬇️ Pick up, vacuum, and mop stairs and downstairs"
+          },
+          {
+            "id": "b2",
+            "text": "👟 Organize the mudroom and vacuum"
+          }
+        ]
+      },
+      {
+        "id": "C",
+        "color": "Orange",
+        "name": "Common Areas & Yard",
+        "tasks": [
+          {
+            "id": "c1",
+            "text": "🧹 Pick up & vacuum living room"
+          },
+          {
+            "id": "c2",
+            "text": "🐕 Dog poop and 🐓 chicken eggs"
+          }
+        ]
+      }
+    ],
+    "rotation": {
+      "anchor_sunday": "2026-10-04",
+      "order": [
+        "luke",
+        "wyatt",
+        "tanner"
+      ],
+      "zones": [
+        "A",
+        "B",
+        "C"
+      ],
+      "offset": 1,
+      "note": "Zone for order[i] in week w (Sundays since anchor) = zones[(i + w + offset) % 3]. Chart leaves 'Assigned:' blank; assumed week of Oct 18 = Luke A, Wyatt B, Tanner C (chart row order L/W/T and zone order A/B/C), advancing one zone each Sunday."
+    }
   }
 }
