@@ -796,6 +796,12 @@ def adventure_candidates() -> dict:
     return out
 
 
+def render_meals(data: dict, today: dt.date) -> str:
+    """Meal planner card (landscape); build_meals.block() fills it in and adds the planner popup."""
+    return ('<button class="meal" id="mlcard" type="button" aria-label="Meal planner"><span class="me">\U0001F37D\uFE0F</span>'
+            '<span class="mt"><b>Tonight: Tap to plan</b><small>Meal planner</small></span></button>')
+
+
 def render_v3_adventures(m: Model) -> str:
     """Two buttons at the bottom of page 2; tapping one shows a random in-season idea in a popup (JS)."""
     data = adventure_candidates()
@@ -957,6 +963,7 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
         "BYU_TODAY": render_v3_byu_line(m),
         "GRADES": render_v3_grades(m),
         "ADVENTURES": render_v3_adventures(m),
+        "MEALS": render_meals(data, m.today),
         "ROTATE_SECONDS": esc(meta.get("v3_rotate_seconds", meta.get("v2_rotate_seconds", 30))),
     }
     out = tpl
@@ -965,6 +972,9 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
     if template == "template_landscape.html" and data.get("chores"):   # chores panel (mockup A), live landscape only
         import build_chores_mockups as _chores
         out = out.replace("</body>", _chores.block(data, "a", live=True) + "</body>", 1)
+    if template == "template_landscape.html":   # meal planner v1 (live landscape only)
+        import build_meals as _meals
+        out = out.replace("</body>", _meals.block(data) + "</body>", 1)
     if 'id="yegg"' in out:
         out = out.replace("</body>", render_byu_pop(data, now) + "</body>", 1)
     # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads

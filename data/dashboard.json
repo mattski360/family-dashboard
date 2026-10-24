@@ -1755,5 +1755,78 @@
       "offset": 1,
       "note": "Zone for order[i] in week w (Sundays since anchor) = zones[(i + w + offset) % 3]. Chart leaves 'Assigned:' blank; assumed week of Oct 18 = Luke A, Wyatt B, Tanner C (chart row order L/W/T and zone order A/B/C), advancing one zone each Sunday."
     }
+  },
+  "meals": {
+    "_note": "Meal planner. library = meal buttons {name, emoji, tags}; tags: quick, crockpot, grill, kids. Starter meals are PLACEHOLDERS until Matt sends the real list. The weekly plan itself lives in each screen's localStorage ('dash-meals:<Sunday>' = {YYYY-MM-DD: mealName}).",
+    "library": [
+      {
+        "name": "Tacos",
+        "emoji": "🌮",
+        "tags": [
+          "quick",
+          "kids",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Spaghetti",
+        "emoji": "🍝",
+        "tags": [
+          "quick",
+          "kids",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Burgers",
+        "emoji": "🍔",
+        "tags": [
+          "grill",
+          "kids",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Grilled Chicken",
+        "emoji": "🍗",
+        "tags": [
+          "grill",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Crockpot Chili",
+        "emoji": "🌶️",
+        "tags": [
+          "crockpot",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Pot Roast",
+        "emoji": "🥩",
+        "tags": [
+          "crockpot",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Breakfast for Dinner",
+        "emoji": "🥞",
+        "tags": [
+          "quick",
+          "kids",
+          "placeholder"
+        ]
+      },
+      {
+        "name": "Homemade Pizza",
+        "emoji": "🍕",
+        "tags": [
+          "kids",
+          "placeholder"
+        ]
+      }
+    ]
   }
 }

@@ -154,10 +154,18 @@ function render(){var ws=weekStart(cday),days=[0,1,2,3,4,5,6].map(function(i){re
 }
 
 LIVE_CSS = r"""
-#chbtn{right:calc(max(14px,env(safe-area-inset-right)) + max(56px,6vh) + 8px);bottom:calc(env(safe-area-inset-bottom) + max(4px,.5vh));
-  height:calc(var(--nav) - env(safe-area-inset-bottom) - max(8px,1vh));min-height:36px;font-size:max(16px,1.75vh);box-shadow:0 2px 8px rgba(40,48,68,.14)}
-#chbtn::after{content:"";position:absolute;inset:-8px -4px}
+#chbtn{right:auto;bottom:auto;left:0;top:0;width:0;height:0;visibility:hidden;justify-content:center;border-radius:1.6rem;
+  font-size:max(24px,2.9vh);gap:.6em;box-shadow:0 4px 14px rgba(40,48,68,.2);z-index:8}
+#chbtn.ok{visibility:visible}
+#chbtn b{font-size:.8em;padding:.2em .7em}
+#chbtn:active{filter:brightness(.95)}
 """
+
+# live: park the big button over the .chslot reserved at the bottom of each page (identical rect on p1 and p2)
+LIVE_JS = r"""document.body.classList.add('has-ch');(function(){function place(){var b=document.getElementById('chbtn');if(!b)return;
+var sl=[].slice.call(document.querySelectorAll('.chslot')).map(function(e){return e.getBoundingClientRect()}).filter(function(r){return r.width>0});
+if(!sl.length)return;var r=sl[0];b.style.left=r.left+'px';b.style.top=r.top+'px';b.style.width=r.width+'px';b.style.height=r.height+'px';b.classList.add('ok');}
+window.addEventListener('resize',place);window.addEventListener('load',place);setTimeout(place,0);setTimeout(place,600);setInterval(place,5000);})();"""
 
 
 def block(data: dict, v: str, live: bool = False) -> str:
@@ -168,7 +176,7 @@ def block(data: dict, v: str, live: bool = False) -> str:
     core = (CORE.replace("__DATA__", json.dumps(CH, ensure_ascii=False)).replace("__NAMES__", json.dumps(NAMES))
             .replace("__CHECK__", CHECK_SVG))
     return (f"<style>{CSS}{css}{LIVE_CSS if live else ''}</style>\n<script>(function(){{{core}{js}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();"
-            f"if(/[?&]open=1/.test(location.search))setTimeout(openP,300);}})();</script>\n")
+            f"{LIVE_JS if live else ''}if(/[?&]open=1/.test(location.search))setTimeout(openP,300);}})();</script>\n")
 
 
 def main() -> int:

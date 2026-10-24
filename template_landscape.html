@@ -298,6 +298,16 @@ body.paused #prog{background:#C9A0FF}
 #etoast.on{opacity:1}
 
 /* ---------- landscape overrides ---------- */
+/* bottom row: small idea buttons (weekend first) + slot the big fixed Chores button sits over (same spot on both pages) */
+.brow{display:flex;align-items:stretch;justify-content:flex-end;gap:.8rem;flex:none}
+.brow .adv{flex:1;min-width:0;display:flex;gap:.5rem;align-items:center}
+.brow .ab{order:2;min-height:40px;height:max(40px,4.6vh);font-size:max(14px,1.45vh);font-weight:700;padding:0 1rem;border-radius:999px;opacity:.75;flex:0 1 auto}
+.brow .ab.weekend{order:1}
+.brow .ab .ae{font-size:1em}
+.chslot{display:none;width:clamp(300px,34vw,680px);height:max(64px,7.6vh);flex:none}
+body.has-ch .chslot{display:block}
+.brow .adv{flex:0 1 auto}
+
 #p1 .spirit{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
 #p1 .sc{padding:1.1rem 1.4rem}
 #p1 .items{margin:.9rem 0 .8rem;gap:.8rem}
@@ -352,6 +362,7 @@ header{align-items:center}
   <div class="spirit">{{SPIRIT}}</div>
   <div class="kids">{{KIDS}}</div>
   <div class="pstrip" id="pstrip"><span class="lab"><svg class="ic"><use href="#i-users"/></svg>Parents</span>{{PARENTS}}</div>
+  <div class="brow">{{MEALS}}<div class="chslot"></div></div>
 </section>
 
 <!-- ====================== PAGE 2: THIS WEEK ====================== -->
@@ -363,7 +374,7 @@ header{align-items:center}
   </header>
   <div class="h">This week <span id="range"></span></div>
   <div class="days">{{TILES}}</div>
-  {{ADVENTURES}}
+  <div class="brow">{{ADVENTURES}}<div class="chslot"></div></div>
 </section>
 </div>
 
