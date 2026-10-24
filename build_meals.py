@@ -110,6 +110,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 def block(data: dict) -> str:
     lib = [{"name": m["name"], "emoji": m.get("emoji", "🍽️"), "tags": m.get("tags", [])}
-           for m in (data.get("meals") or {}).get("library", [])]
+           for m in sorted((data.get("meals") or {}).get("library", []), key=lambda m: m["name"].lower())]
     js = JS.replace("__LIB__", json.dumps(lib, ensure_ascii=False).replace("</", "<\\/"))
     return f"<style>{CSS}</style>\n<script>(function(){{{js}}})();</script>\n"

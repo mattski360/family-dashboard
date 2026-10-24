@@ -1757,15 +1757,140 @@
     }
   },
   "meals": {
-    "_note": "Meal planner. library = meal buttons {name, emoji, tags}; tags: quick, crockpot, grill, kids. Starter meals are PLACEHOLDERS until Matt sends the real list. The weekly plan itself lives in each screen's localStorage ('dash-meals:<Sunday>' = {YYYY-MM-DD: mealName}).",
+    "_note": "Meal planner. library = meal buttons {name, emoji, tags}; tags: quick, crockpot, grill, kids. The weekly plan itself lives in each screen's localStorage ('dash-meals:<Sunday>' = {YYYY-MM-DD: mealName}).",
     "library": [
       {
-        "name": "Tacos",
+        "name": "7Up Chicken",
+        "emoji": "🍗",
+        "tags": []
+      },
+      {
+        "name": "Baked Tacos",
         "emoji": "🌮",
         "tags": [
+          "kids"
+        ]
+      },
+      {
+        "name": "Carne Asada",
+        "emoji": "🥩",
+        "tags": [
+          "grill"
+        ]
+      },
+      {
+        "name": "Cheddar Broccoli Soup",
+        "emoji": "🥣",
+        "tags": [
+          "crockpot"
+        ]
+      },
+      {
+        "name": "Chicken and Broccoli Casserole",
+        "emoji": "🥦",
+        "tags": []
+      },
+      {
+        "name": "Chicken and Rice-A-Roni",
+        "emoji": "🍗",
+        "tags": [
           "quick",
-          "kids",
-          "placeholder"
+          "kids"
+        ]
+      },
+      {
+        "name": "Chicken Tortilla Soup",
+        "emoji": "🍲",
+        "tags": [
+          "crockpot"
+        ]
+      },
+      {
+        "name": "Chili",
+        "emoji": "🌶️",
+        "tags": [
+          "crockpot"
+        ]
+      },
+      {
+        "name": "Enchiladas",
+        "emoji": "🫔",
+        "tags": []
+      },
+      {
+        "name": "Fajita Quesadillas",
+        "emoji": "🧀",
+        "tags": [
+          "quick",
+          "kids"
+        ]
+      },
+      {
+        "name": "Fajitas",
+        "emoji": "🫑",
+        "tags": [
+          "quick"
+        ]
+      },
+      {
+        "name": "Fried Rice",
+        "emoji": "🍚",
+        "tags": [
+          "quick"
+        ]
+      },
+      {
+        "name": "Ham and Cheese Sliders",
+        "emoji": "🥪",
+        "tags": [
+          "quick",
+          "kids"
+        ]
+      },
+      {
+        "name": "Homemade Pizza",
+        "emoji": "🍕",
+        "tags": [
+          "kids"
+        ]
+      },
+      {
+        "name": "Hot Dogs",
+        "emoji": "🌭",
+        "tags": [
+          "quick",
+          "grill",
+          "kids"
+        ]
+      },
+      {
+        "name": "Pot Roast",
+        "emoji": "🥩",
+        "tags": [
+          "crockpot"
+        ]
+      },
+      {
+        "name": "Salmon",
+        "emoji": "🐟",
+        "tags": [
+          "grill"
+        ]
+      },
+      {
+        "name": "Sloppy Joes",
+        "emoji": "🍔",
+        "tags": [
+          "quick",
+          "kids"
+        ]
+      },
+      {
+        "name": "Smashburgers",
+        "emoji": "🍔",
+        "tags": [
+          "grill",
+          "kids"
         ]
       },
       {
@@ -1773,58 +1898,38 @@
         "emoji": "🍝",
         "tags": [
           "quick",
-          "kids",
-          "placeholder"
+          "kids"
         ]
       },
       {
-        "name": "Burgers",
-        "emoji": "🍔",
-        "tags": [
-          "grill",
-          "kids",
-          "placeholder"
-        ]
-      },
-      {
-        "name": "Grilled Chicken",
-        "emoji": "🍗",
-        "tags": [
-          "grill",
-          "placeholder"
-        ]
-      },
-      {
-        "name": "Crockpot Chili",
-        "emoji": "🌶️",
-        "tags": [
-          "crockpot",
-          "placeholder"
-        ]
-      },
-      {
-        "name": "Pot Roast",
-        "emoji": "🥩",
-        "tags": [
-          "crockpot",
-          "placeholder"
-        ]
-      },
-      {
-        "name": "Breakfast for Dinner",
-        "emoji": "🥞",
+        "name": "Spam and Rice",
+        "emoji": "🍙",
         "tags": [
           "quick",
-          "kids",
-          "placeholder"
+          "kids"
         ]
       },
       {
-        "name": "Homemade Pizza",
-        "emoji": "🍕",
+        "name": "Steak and Potatoes",
+        "emoji": "🥔",
         "tags": [
-          "kids",
-          "placeholder"
+          "grill"
+        ]
+      },
+      {
+        "name": "Tacos",
+        "emoji": "🌮",
+        "tags": [
+          "quick",
+          "kids"
+        ]
+      },
+      {
+        "name": "Taquitos",
+        "emoji": "🌯",
+        "tags": [
+          "quick",
+          "kids"
         ]
       }
     ]
