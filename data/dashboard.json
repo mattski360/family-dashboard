@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-23T20:43:31-06:00",
+    "last_updated": "2026-10-23T20:45:05-06:00",
     "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
       "2026-10-16",
@@ -1965,6 +1965,27 @@
         "tags": [
           "grill",
           "kids"
+        ]
+      },
+      {
+        "name": "Smoked Brisket",
+        "emoji": "🍖",
+        "tags": [
+          "grill"
+        ]
+      },
+      {
+        "name": "Smoked Pork Shoulder",
+        "emoji": "🐖",
+        "tags": [
+          "grill"
+        ]
+      },
+      {
+        "name": "Kalua Pork",
+        "emoji": "🌺",
+        "tags": [
+          "crockpot"
         ]
       }
     ]
