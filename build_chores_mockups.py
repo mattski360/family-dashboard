@@ -39,6 +39,12 @@ CSS = r"""
 .chk.on .tx b{text-decoration:line-through;text-decoration-thickness:2px;color:var(--dk)}
 .prog{height:1vh;min-height:8px;border-radius:99px;background:#EEF0F4;overflow:hidden}.prog i{display:block;height:100%;background:var(--c);transition:width .25s}
 .chdone{color:var(--dk);font-weight:900}
+#celt{position:fixed;inset:0;z-index:10001;pointer-events:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#celt .celmsg{background:#fff;border:.5vh solid var(--c,#F2B33D);border-radius:3vh;padding:3vh 4vw;font-size:max(28px,6vh);font-weight:900;color:var(--dk,#283044);box-shadow:0 2vh 6vh rgba(40,48,68,.3);text-align:center;animation:celin .35s cubic-bezier(.2,1.6,.5,1)}
+#celt .celmsg small{display:block;font-size:.4em;color:#69718a;margin-top:.6vh}
+#celt .celcf i{position:absolute;top:-4vh;width:1.2vh;height:2vh;border-radius:.3vh;animation:celfall 2s linear forwards}
+@keyframes celin{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes celfall{to{top:105vh;transform:rotate(720deg)}}
 """
 
 CHECK_SVG = '<svg viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
@@ -69,18 +75,34 @@ function tasksFor(kid,day){ // [{id,title,sub}] for one kid on one day: 2 daily 
 function chkHTML(t,on,extra){return '<button class="chk'+(on?' on':'')+'" data-id="'+t.id+'"'+(extra||'')+'><span class="bx">'+CHECK+'</span><span class="tx"><b>'+t.title+'</b>'+(t.sub?'<small>'+t.sub+'</small>':'')+'</span></button>';}
 function weekChips(day){var z=zonesFor(day);return '<div class="wk"><span>This week</span>'+CH.kids.map(function(k){var zz=zone(z[k]);return '<span class="wkc p-'+k+'">'+NM[k]+' → <i class="zt z'+zz.id+'">'+zz.id+'</i>'+zz.name+'</span>'}).join('')+'</div>';}
 function dateLabel(d){return DOWN[d.getUTCDay()]+', '+d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});}
+
+// --- celebration: one random sound (never the same twice in a row) + toast/confetti when a kid checks his LAST box.
+// Called only from the click handler (a user gesture, so Android/Chrome autoplay allows play()); never on load.
+var CEL_N=20,CEL_BASE='/assets/celebrate/',CEL_VOL=0.6,celAud=[],celLast=-1;
+function allDone(kid,day,s){var ts=tasksFor(kid,day);return ts.length>0&&ts.every(function(t){return s[t.id]});}
+function celPreload(){if(celAud.length)return;for(var i=1;i<=CEL_N;i++){var a=new Audio(CEL_BASE+(i<10?'0':'')+i+'.mp3');a.preload='auto';a.volume=CEL_VOL;celAud.push(a);}}
+function celPick(){var i;do{i=Math.floor(Math.random()*CEL_N)}while(CEL_N>1&&i===celLast);celLast=i;return i;}
+function celebrate(kid){
+  try{celPreload();var i=celPick(),a=celAud[i];a.volume=CEL_VOL;a.currentTime=0;window.__celPlays=(window.__celPlays||0)+1;window.__celLastSrc=a.src;
+    var p=a.play();if(p&&p.catch)p.catch(function(){});}catch(e){}
+  var t=document.getElementById('celt');if(t)t.remove();
+  var cols=['#F2B33D','#E8574A','#3BA776','#3D7FE0','#9A5BD6','#F28CB1'],cf='';
+  for(var j=0;j<70;j++)cf+='<i style="left:'+(Math.random()*100)+'%;background:'+cols[j%6]+';animation-delay:'+(Math.random()*.5).toFixed(2)+'s;animation-duration:'+(1.6+Math.random()*1.4).toFixed(2)+'s;transform:rotate('+(Math.random()*360|0)+'deg)"></i>';
+  document.body.insertAdjacentHTML('beforeend','<div id="celt" class="p-'+kid+'"><div class="celcf">'+cf+'</div><div class="celmsg">🎉 Great job, '+NM[kid]+'! 🎉<small>All chores done today</small></div></div>');
+  setTimeout(function(){var t=document.getElementById('celt');if(t)t.remove();},3500);}
 var chp,cday,timer;
 function openP(){cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);}
 function closeP(){chp.classList.remove('on');chp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);updBtn();}
 function updBtn(){var d=choreDay(),s=load(d),n=0,t=0;CH.kids.forEach(function(k){tasksFor(k,d).forEach(function(x){t++;if(s[x.id])n++})});
   document.getElementById('chbtnc').textContent=n+'/'+t;}
 function init(){
+  ['pointerdown','touchstart'].forEach(function(e){document.addEventListener(e,celPreload,{once:true,passive:true})});setTimeout(celPreload,4000);
   document.body.insertAdjacentHTML('beforeend','<button id="chbtn" type="button" aria-label="Chores">✅ Chores <b id="chbtnc"></b></button><div id="chp" aria-hidden="true"><div class="cc" role="dialog" aria-label="Chores"><button class="x" type="button" aria-label="Close">&times;</button><div class="chd"></div><div class="cb"></div></div></div>');
   chp=document.getElementById('chp');
   var b=document.getElementById('chbtn');['pointerdown','touchstart'].forEach(function(e){b.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
   b.addEventListener('click',function(e){e.stopPropagation();openP()});
   chp.addEventListener('click',function(e){e.stopPropagation();if(e.target===chp||e.target.closest('.x'))return closeP();
-    var c=e.target.closest('.chk');if(c&&!c.disabled){var day=c.dataset.day?new Date(c.dataset.day+'T00:00:00Z'):cday,s=load(day);s[c.dataset.id]=!s[c.dataset.id];if(!s[c.dataset.id])delete s[c.dataset.id];save(day,s);render();}
+    var c=e.target.closest('.chk');if(c&&!c.disabled){var day=c.dataset.day?new Date(c.dataset.day+'T00:00:00Z'):cday,s=load(day),kid=c.dataset.id.split(':')[0],was=allDone(kid,day,s);s[c.dataset.id]=!s[c.dataset.id];if(!s[c.dataset.id])delete s[c.dataset.id];save(day,s);render();if(s[c.dataset.id]&&!was&&allDone(kid,day,s))celebrate(kid);}
     var k=e.target.closest('[data-kid]');if(k&&!c){window.__chkid=k.dataset.kid;render();}});
   ['pointerdown','touchstart'].forEach(function(e){chp.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
   updBtn();setInterval(function(){var d=choreDay();if(cday&&iso(d)!==iso(cday)){cday=d;prune(d);if(chp.classList.contains('on'))render();}updBtn();},30000);
