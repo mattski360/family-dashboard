@@ -6,10 +6,6 @@ Data: data/dashboard.json -> chores (tasks, weekly zone rotation). Checks persis
 import json, sys
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
-data = json.loads((HERE / "data" / "dashboard.json").read_text())
-CH = data["chores"]
-NAMES = {k: (data["people"].get(k) or {}).get("label", k.title()) for k in CH["kids"]}
-base = (HERE / "landscape" / "index.html").read_text()
 
 CSS = r"""
 #chbtn{position:fixed;right:calc(max(14px,env(safe-area-inset-right)) + max(60px,6.5vh));bottom:max(4px,env(safe-area-inset-bottom));z-index:8;
@@ -74,8 +70,8 @@ function chkHTML(t,on,extra){return '<button class="chk'+(on?' on':'')+'" data-i
 function weekChips(day){var z=zonesFor(day);return '<div class="wk"><span>This week</span>'+CH.kids.map(function(k){var zz=zone(z[k]);return '<span class="wkc p-'+k+'">'+NM[k]+' → <i class="zt z'+zz.id+'">'+zz.id+'</i>'+zz.name+'</span>'}).join('')+'</div>';}
 function dateLabel(d){return DOWN[d.getUTCDay()]+', '+d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});}
 var chp,cday,timer;
-function openP(){cday=choreDay();prune(cday);render();chp.classList.add('on');}
-function closeP(){chp.classList.remove('on');updBtn();}
+function openP(){cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);}
+function closeP(){chp.classList.remove('on');chp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);updBtn();}
 function updBtn(){var d=choreDay(),s=load(d),n=0,t=0;CH.kids.forEach(function(k){tasksFor(k,d).forEach(function(x){t++;if(s[x.id])n++})});
   document.getElementById('chbtnc').textContent=n+'/'+t;}
 function init(){
@@ -157,12 +153,36 @@ function render(){var ws=weekStart(cday),days=[0,1,2,3,4,5,6].map(function(i){re
 """),
 }
 
-for v, (title, css, js) in VARIANTS.items():
+LIVE_CSS = r"""
+#chbtn{right:calc(max(14px,env(safe-area-inset-right)) + max(56px,6vh) + 8px);bottom:calc(env(safe-area-inset-bottom) + max(4px,.5vh));
+  height:calc(var(--nav) - env(safe-area-inset-bottom) - max(8px,1vh));min-height:36px;font-size:max(16px,1.75vh);box-shadow:0 2px 8px rgba(40,48,68,.14)}
+#chbtn::after{content:"";position:absolute;inset:-8px -4px}
+"""
+
+
+def block(data: dict, v: str, live: bool = False) -> str:
+    """<style>+<script> for variant v. live=True: nav-sized button and rotation hold while open (window.dashRotHold)."""
+    CH = data["chores"]
+    NAMES = {k: (data["people"].get(k) or {}).get("label", k.title()) for k in CH["kids"]}
+    title, css, js = VARIANTS[v]
     core = (CORE.replace("__DATA__", json.dumps(CH, ensure_ascii=False)).replace("__NAMES__", json.dumps(NAMES))
             .replace("__CHECK__", CHECK_SVG))
-    block = (f"<style>{CSS}{css}</style>\n<script>(function(){{{core}{js}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();"
-             f"if(/[?&]open=1/.test(location.search))setTimeout(openP,300);}})();</script>\n")
-    out = base.replace("<title>", f"<title>[Chores mockup {v.upper()}: {title}] ", 1).replace("</body>", block + "</body>", 1)
-    # mockups must not trigger the live page's auto-reload-to-latest
-    o = HERE / f"chores-{v}" / "index.html"; o.parent.mkdir(exist_ok=True); o.write_text(out)
-    print("wrote", o)
+    return (f"<style>{CSS}{css}{LIVE_CSS if live else ''}</style>\n<script>(function(){{{core}{js}\nif(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();"
+            f"if(/[?&]open=1/.test(location.search))setTimeout(openP,300);}})();</script>\n")
+
+
+def main() -> int:
+    data = json.loads((HERE / "data" / "dashboard.json").read_text())
+    base = (HERE / "landscape" / "index.html").read_text()
+    if 'id="chbtn"' in base:   # live page already has chores (option A); keep the existing preview folders
+        print("[chores] landscape already includes chores; previews left as-is")
+        return 0
+    for v, (title, css, js) in VARIANTS.items():
+        out = base.replace("<title>", f"<title>[Chores mockup {v.upper()}: {title}] ", 1).replace("</body>", block(data, v) + "</body>", 1)
+        o = HERE / f"chores-{v}" / "index.html"; o.parent.mkdir(exist_ok=True); o.write_text(out)
+        print("wrote", o)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

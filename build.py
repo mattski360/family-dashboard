@@ -962,6 +962,9 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
     out = tpl
     for k, v in repl.items():
         out = out.replace("{{" + k + "}}", str(v))
+    if template == "template_landscape.html" and data.get("chores"):   # chores panel (mockup A), live landscape only
+        import build_chores_mockups as _chores
+        out = out.replace("</body>", _chores.block(data, "a", live=True) + "</body>", 1)
     if 'id="yegg"' in out:
         out = out.replace("</body>", render_byu_pop(data, now) + "</body>", 1)
     # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads

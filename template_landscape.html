@@ -496,6 +496,7 @@ header{align-items:center}
   function rotHold(on){var now=Date.now();
     if(on){if(!holdAt)holdAt=now;return;}
     if(!holdAt)return; var d=now-holdAt; holdAt=0; if(pausedUntil)pausedUntil+=d; else shownAt+=d; save(); loop();}
+  window.dashRotHold=rotHold; // used by the Chores panel
   function loop(){
     if(holdAt)return;
     var now=Date.now();

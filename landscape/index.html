@@ -338,7 +338,7 @@ header{align-items:center}
 .quiet{font-size:calc(var(--fs) * 1)}
 </style>
 </head>
-<body data-ver="5a5a5ba83633" data-rotate="30" data-tz="America/Denver" data-last="2026-10-22T20:10:45-06:00" data-stale-days="8" data-week-start="2026-10-25" data-build-date="2026-10-23">
+<body data-ver="711f749d52e1" data-rotate="30" data-tz="America/Denver" data-last="2026-10-22T20:10:45-06:00" data-stale-days="8" data-week-start="2026-10-25" data-build-date="2026-10-23">
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 <defs>
 <symbol id="i-fball" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10.2" ry="6.2" transform="rotate(-45 12 12)"/><path d="M9 15l6-6M9.6 12.6l2 2M11 11l2 2M12.4 9.4l2 2"/></symbol>
@@ -530,6 +530,7 @@ header{align-items:center}
   function rotHold(on){var now=Date.now();
     if(on){if(!holdAt)holdAt=now;return;}
     if(!holdAt)return; var d=now-holdAt; holdAt=0; if(pausedUntil)pausedUntil+=d; else shownAt+=d; save(); loop();}
+  window.dashRotHold=rotHold; // used by the Chores panel
   function loop(){
     if(holdAt)return;
     var now=Date.now();
@@ -754,6 +755,100 @@ header{align-items:center}
   setTimeout(function(){var u=location.href.split('?')[0];location.replace(u+'?'+(B.classList.contains('dbg')?'info&':'')+'r='+Date.now());},1800*1000+20000);
 })();
 </script>
+<style>
+#chbtn{position:fixed;right:calc(max(14px,env(safe-area-inset-right)) + max(60px,6.5vh));bottom:max(4px,env(safe-area-inset-bottom));z-index:8;
+  height:max(52px,5.2vh);padding:0 max(18px,1.6vh);border:0;border-radius:999px;background:linear-gradient(135deg,#D3E4FF,#C9F0DC 55%,#FFE0BF);
+  color:#283044;font:800 max(18px,1.9vh)/1 inherit;font-family:inherit;display:flex;align-items:center;gap:.45em;box-shadow:0 3px 12px rgba(40,48,68,.18);cursor:pointer}
+#chbtn b{background:#fff;border-radius:999px;padding:.18em .55em;font-size:.85em;color:#1C8452}
+#chp{position:fixed;inset:0;z-index:25;display:none;background:rgba(40,48,68,.38);align-items:center;justify-content:center;padding:1.6vh 1.4vw}
+#chp.on{display:flex}
+#chp .cc{position:relative;width:100%;height:100%;background:#FBFCFE;border-radius:2.2vh;box-shadow:0 2vh 6vh rgba(0,0,0,.25);display:flex;flex-direction:column;
+  overflow:hidden;font-size:clamp(15px,1.85vh,24px);color:#283044;font-family:inherit}
+#chp .chd{display:flex;align-items:center;gap:1.2vw;padding:1.4vh 1.6vw;border-bottom:1px solid #EEF0F4;flex:none;padding-right:calc(1.6vw + max(64px,7vh))}
+#chp .chd h2{font-size:1.75em;font-weight:900;white-space:nowrap}
+#chp .chd .dt{color:#69718a;font-weight:700;font-size:1.05em;white-space:nowrap}
+#chp .wk{display:flex;gap:.6vw;margin-left:auto;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+#chp .wk>span{color:#69718a;font-weight:800;font-size:.8em;text-transform:uppercase;letter-spacing:.06em}
+#chp .wkc{border-radius:999px;padding:.3em .8em;font-weight:800;font-size:.92em;background:var(--bg);color:var(--dk);border:2px solid var(--mid);white-space:nowrap}
+#chp .x{position:absolute;top:1vh;right:1vw;width:max(60px,6.5vh);height:max(60px,6.5vh);border-radius:50%;border:0;background:#EEF0F4;color:#283044;font-size:max(30px,3.4vh);cursor:pointer;line-height:1}
+#chp .cb{flex:1;min-height:0;padding:1.4vh 1.6vw;display:flex;gap:1.2vw}
+#chp .zt{display:inline-block;border-radius:.5em;padding:.1em .5em;font-weight:900;font-size:.8em;color:#fff;margin-right:.35em}
+#chp .zA{background:#4F8EEB}#chp .zB{background:#3DB97B}#chp .zC{background:#F29A3D}
+.chk{display:flex;align-items:center;gap:.9em;width:100%;border:2.5px solid var(--mid);background:#fff;border-radius:1.4vh;padding:.7vh 1vw;text-align:left;
+  font:inherit;color:inherit;cursor:pointer;min-height:56px;transition:background .15s}
+.chk .bx{flex:none;width:max(44px,4.6vh);height:max(44px,4.6vh);border-radius:1vh;border:3px solid var(--c);background:#fff;display:flex;align-items:center;justify-content:center}
+.chk .bx svg{width:70%;height:70%;opacity:0;transform:scale(.4);transition:all .18s}
+.chk.on{background:var(--bg);border-color:var(--c)}
+.chk.on .bx{background:var(--c)}
+.chk.on .bx svg{opacity:1;transform:none}
+.chk .tx{min-width:0;flex:1}
+.chk .tx b{display:block;font-weight:800}
+.chk .tx small{display:block;color:#69718a;font-size:.82em;line-height:1.3}
+.chk.on .tx b{text-decoration:line-through;text-decoration-thickness:2px;color:var(--dk)}
+.prog{height:1vh;min-height:8px;border-radius:99px;background:#EEF0F4;overflow:hidden}.prog i{display:block;height:100%;background:var(--c);transition:width .25s}
+.chdone{color:var(--dk);font-weight:900}
+
+#chp .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:1.1vh;background:var(--bg);border-radius:1.8vh;padding:1.4vh 1vw;border:2px solid var(--mid)}
+#chp .col h3{display:flex;align-items:center;gap:.5em;font-size:1.55em;font-weight:900;color:var(--dk)}
+#chp .col h3 span{margin-left:auto;font-size:.62em}
+#chp .col h4{font-size:.8em;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--dk);margin-top:.5vh}
+#chp .col .chk{flex:1;max-height:15vh}
+
+#chbtn{right:calc(max(14px,env(safe-area-inset-right)) + max(56px,6vh) + 8px);bottom:calc(env(safe-area-inset-bottom) + max(4px,.5vh));
+  height:calc(var(--nav) - env(safe-area-inset-bottom) - max(8px,1vh));min-height:36px;font-size:max(16px,1.75vh);box-shadow:0 2px 8px rgba(40,48,68,.14)}
+#chbtn::after{content:"";position:absolute;inset:-8px -4px}
+</style>
+<script>(function(){
+var CH={"source": "Chore chart xlsx (Sheet1), Oct 2026", "reset_time": "00:00", "timezone": "America/Denver", "kids": ["luke", "wyatt", "tanner"], "daily": {"title": "All boys: Personal Responsibility", "note": "Every day", "groups": [{"id": "d1", "items": ["🛌 Clean bedroom", "🛌 Make bed", "👕 Pick up personal items", "🚽 Clean assigned bathroom"]}, {"id": "d2", "items": ["👖 Put away own laundry", "🎹 Practice piano"]}]}, "zones": [{"id": "A", "color": "Blue", "name": "Kitchen & Waste", "tasks": [{"id": "a1", "text": "🍽️ Empty dishwasher and tidy kitchen"}, {"id": "a2", "text": "🗑️ Take out all trash"}]}, {"id": "B", "color": "Green", "name": "Floors & Bathrooms", "tasks": [{"id": "b1", "text": "⬇️ Pick up, vacuum, and mop stairs and downstairs"}, {"id": "b2", "text": "👟 Organize the mudroom and vacuum"}]}, {"id": "C", "color": "Orange", "name": "Common Areas & Yard", "tasks": [{"id": "c1", "text": "🧹 Pick up & vacuum living room"}, {"id": "c2", "text": "🐕 Dog poop and 🐓 chicken eggs"}]}], "rotation": {"anchor_sunday": "2026-10-04", "order": ["luke", "wyatt", "tanner"], "zones": ["A", "B", "C"], "offset": 1, "note": "Zone for order[i] in week w (Sundays since anchor) = zones[(i + w + offset) % 3]. Chart leaves 'Assigned:' blank; assumed week of Oct 18 = Luke A, Wyatt B, Tanner C (chart row order L/W/T and zone order A/B/C), advancing one zone each Sunday."}}, NM={"luke": "Luke", "wyatt": "Wyatt", "tanner": "Tanner"}, CHECK='<svg viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>', TZ=CH.timezone||'America/Denver';
+var DOWN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function mtParts(d){var f=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(d),o={};f.forEach(function(p){o[p.type]=p.value});return o;}
+function choreDay(now){ // the chore "day" (MT); before reset_time it still counts as yesterday
+  var p=mtParts(now||new Date()),rt=(CH.reset_time||'00:00').split(':'),d=new Date(Date.UTC(+p.year,+p.month-1,+p.day));
+  if(+p.hour*60+ +p.minute < +rt[0]*60+ +rt[1]) d.setUTCDate(d.getUTCDate()-1); return d;}
+function iso(d){return d.toISOString().slice(0,10);}
+function addD(d,n){var x=new Date(d);x.setUTCDate(x.getUTCDate()+n);return x;}
+function weekStart(d){return addD(d,-d.getUTCDay());}
+function zonesFor(day){ // {kid: zone} for the week containing day
+  var r=CH.rotation,a=new Date(r.anchor_sunday+'T00:00:00Z'),w=Math.round((weekStart(day)-a)/6048e5),o={};
+  r.order.forEach(function(k,i){o[k]=r.zones[(((i+w+(r.offset||0))%3)+3)%3];});return o;}
+function zone(id){for(var i=0;i<CH.zones.length;i++)if(CH.zones[i].id===id)return CH.zones[i];}
+function key(day){return 'chores-'+iso(day);}
+function load(day){try{return JSON.parse(localStorage.getItem(key(day))||'{}')}catch(e){return {}}}
+function save(day,s){try{localStorage.setItem(key(day),JSON.stringify(s))}catch(e){}}
+function prune(today){try{var keep=iso(weekStart(today));Object.keys(localStorage).forEach(function(k){if(/^chores-\d{4}-\d\d-\d\d$/.test(k)&&k.slice(7)<keep)localStorage.removeItem(k)})}catch(e){}}
+function tasksFor(kid,day){ // [{id,title,sub}] for one kid on one day: 2 daily groups + 2 zone tasks
+  var z=zone(zonesFor(day)[kid]),out=[];
+  CH.daily.groups.forEach(function(g,i){out.push({id:kid+':'+g.id,title:i?g.items.join(' · '):'Bedroom & bathroom',sub:i?'':g.items.join(' · '),kind:'daily'})});
+  out[1].title=CH.daily.groups[1].items.join(' & ');
+  z.tasks.forEach(function(t){out.push({id:kid+':'+t.id,title:t.text,sub:'Zone '+z.id+' · '+z.name,kind:'zone',zone:z.id})});return out;}
+function chkHTML(t,on,extra){return '<button class="chk'+(on?' on':'')+'" data-id="'+t.id+'"'+(extra||'')+'><span class="bx">'+CHECK+'</span><span class="tx"><b>'+t.title+'</b>'+(t.sub?'<small>'+t.sub+'</small>':'')+'</span></button>';}
+function weekChips(day){var z=zonesFor(day);return '<div class="wk"><span>This week</span>'+CH.kids.map(function(k){var zz=zone(z[k]);return '<span class="wkc p-'+k+'">'+NM[k]+' → <i class="zt z'+zz.id+'">'+zz.id+'</i>'+zz.name+'</span>'}).join('')+'</div>';}
+function dateLabel(d){return DOWN[d.getUTCDay()]+', '+d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});}
+var chp,cday,timer;
+function openP(){cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);}
+function closeP(){chp.classList.remove('on');chp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);updBtn();}
+function updBtn(){var d=choreDay(),s=load(d),n=0,t=0;CH.kids.forEach(function(k){tasksFor(k,d).forEach(function(x){t++;if(s[x.id])n++})});
+  document.getElementById('chbtnc').textContent=n+'/'+t;}
+function init(){
+  document.body.insertAdjacentHTML('beforeend','<button id="chbtn" type="button" aria-label="Chores">✅ Chores <b id="chbtnc"></b></button><div id="chp" aria-hidden="true"><div class="cc" role="dialog" aria-label="Chores"><button class="x" type="button" aria-label="Close">&times;</button><div class="chd"></div><div class="cb"></div></div></div>');
+  chp=document.getElementById('chp');
+  var b=document.getElementById('chbtn');['pointerdown','touchstart'].forEach(function(e){b.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
+  b.addEventListener('click',function(e){e.stopPropagation();openP()});
+  chp.addEventListener('click',function(e){e.stopPropagation();if(e.target===chp||e.target.closest('.x'))return closeP();
+    var c=e.target.closest('.chk');if(c&&!c.disabled){var day=c.dataset.day?new Date(c.dataset.day+'T00:00:00Z'):cday,s=load(day);s[c.dataset.id]=!s[c.dataset.id];if(!s[c.dataset.id])delete s[c.dataset.id];save(day,s);render();}
+    var k=e.target.closest('[data-kid]');if(k&&!c){window.__chkid=k.dataset.kid;render();}});
+  ['pointerdown','touchstart'].forEach(function(e){chp.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
+  updBtn();setInterval(function(){var d=choreDay();if(cday&&iso(d)!==iso(cday)){cday=d;prune(d);if(chp.classList.contains('on'))render();}updBtn();},30000);
+}
+
+function render(){var s=load(cday);
+  chp.querySelector('.chd').innerHTML='<h2>✅ Chores</h2><span class="dt">'+dateLabel(cday)+'</span>'+weekChips(cday);
+  chp.querySelector('.cb').innerHTML=CH.kids.map(function(k){var ts=tasksFor(k,cday),n=ts.filter(function(t){return s[t.id]}).length,z=zone(zonesFor(cday)[k]);
+    return '<div class="col p-'+k+'"><h3>'+NM[k]+'<span class="'+(n===ts.length?'chdone':'')+'">'+(n===ts.length?'All done! 🎉':n+' of '+ts.length)+'</span></h3><div class="prog"><i style="width:'+(100*n/ts.length)+'%"></i></div>'+
+      '<h4>Every day</h4>'+chkHTML(ts[0],s[ts[0].id])+chkHTML(ts[1],s[ts[1].id])+
+      '<h4><i class="zt z'+z.id+'">Zone '+z.id+'</i>'+z.name+' · this week</h4>'+chkHTML(ts[2],s[ts[2].id])+chkHTML(ts[3],s[ts[3].id])+'</div>'}).join('');}
+
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();if(/[?&]open=1/.test(location.search))setTimeout(openP,300);})();</script>
 <style>
 #byupop{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:2.5vmin;background:rgba(0,20,45,.55)}
 #byupop.on{display:flex}
