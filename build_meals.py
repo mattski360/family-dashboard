@@ -3,6 +3,7 @@
 [{name, emoji, tags}]. Plan lives in localStorage 'dash-meals:<weekStartSunday>' = {YYYY-MM-DD: mealName} (one object per
 week, so it can move to a Cloudflare Worker + KV later with the same key/value shape)."""
 import json
+from pathlib import Path
 
 CSS = r"""
 #mlcard{order:-1;flex:none;margin-right:auto;align-self:center;display:flex;align-items:center;gap:.7rem;border:0;cursor:pointer;font-family:inherit;
@@ -48,6 +49,22 @@ CSS = r"""
 #mlk .mb.sel{border-color:#3DB97B;background:#E9F8F0}
 #mlk .mb.used{opacity:.55}
 #mlk .mb .bd{position:absolute;top:.4em;right:.5em;font-size:.62em;font-weight:800;background:#EEF0F4;color:#69718a;border-radius:999px;padding:.15em .6em}
+#mls{position:absolute;inset:0;background:#FBFCFE;display:none;flex-direction:column;padding:1.4vh 1.6vw;gap:1.2vh;z-index:1}
+#mls.on{display:flex}
+#mls .kh{display:flex;align-items:center;gap:1vw;flex-wrap:wrap;padding-right:max(70px,7.5vh);flex:none}
+#mls .kh h3{font-size:1.6em;font-weight:900}
+#mls .wm{flex:none;color:#4B3F72;background:#F4F1FA;border-radius:1.2vh;padding:.6em 1em;font-weight:700;line-height:1.5}
+#mls .bd2{flex:1;min-height:0;display:flex;gap:1.4vw}
+#mls .lst{flex:1;min-width:0;overflow-y:auto;columns:3 15em;column-gap:2vw}
+#mls .grp{break-inside:avoid;margin-bottom:1.2vh}
+#mls .grp h4{font-size:.85em;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#69718a;margin-bottom:.3em}
+#mls .grp li{list-style:none;font-weight:700;padding:.12em 0}#mls .grp li small{color:#8B7BC0;font-weight:800}
+#mls .side{flex:none;overflow-y:auto;width:max(260px,22vw);display:flex;flex-direction:column;gap:1.2vh}
+#mls .side a.big,#mls .side button.big{display:flex;align-items:center;justify-content:center;gap:.5em;text-decoration:none;border:0;border-radius:1.6vh;min-height:max(80px,9vh);font-family:inherit;font-weight:900;font-size:1.25em;cursor:pointer;background:#E4EEFF;color:#245A9E}
+#mls .side a.big.m2{background:#E9F8F0;color:#1F7A4D}#mls .side button.big.q{background:#EEF0F4;color:#283044;font-size:1.05em;min-height:max(60px,7vh)}
+#mls .qrb{display:none;flex-direction:column;align-items:center;gap:.6vh;background:#fff;border:2px solid #E6E9F0;border-radius:1.6vh;padding:1vh}
+#mls .qrb.on{display:flex}#mls .qrb svg{width:100%;height:auto;max-height:30vh;width:auto}#mls .qrb small{font-weight:700;color:#69718a;text-align:center}
+#mls .none{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.3em;font-weight:800;color:#69718a;line-height:1.6}
 #mlk .sec{grid-column:1/-1;font-size:.8em;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#69718a;align-self:end}
 """
 
@@ -68,7 +85,7 @@ window.dashMealTiles=tiles;window.addEventListener('storage',function(e){if(!e.k
 function meal(n){var all=LIB.concat(BUILTIN);for(var i=0;i<all.length;i++)if(all[i].name===n)return all[i];return n?{name:n,emoji:'\uD83C\uDF7D\uFE0F',tags:[]}:null}
 function planned(s){return load(sun(s))[s]||''}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-var mlp,mlk,wk,pday,filt='all';
+var mlp,mlk,mls,wk,pday,filt='all';
 function card(){tiles();var c=document.getElementById('mlcard');if(!c)return;var t=todayISO(),a=meal(planned(t)),b=meal(planned(add(t,1)));
   c.innerHTML='<span class="me">'+(a?a.emoji:'\uD83C\uDF7D\uFE0F')+'</span><span class="mt"><b>Tonight: '+(a?esc(a.name):'<span class="tp">Tap to plan</span>')+'</b>'+
     '<small>Tomorrow: '+(b?b.emoji+' '+esc(b.name):'Tap to plan')+'</small></span>';}
@@ -85,21 +102,50 @@ function renderK(){var p=load(wk),cur=p[pday];
   var mb=function(m,bi){var u=used(m.name,pday);return '<button class="mb'+(bi?' bi':'')+(m.name===cur?' sel':'')+(u.length&&!bi?' used':'')+'" data-m="'+esc(m.name)+'"><span class="e">'+m.emoji+'</span>'+esc(m.name)+(u.length&&!bi?'<span class="bd">had '+u[0]+'</span>':'')+'</button>'};
   var lib=LIB.filter(function(m){return filt==='all'||(m.tags||[]).indexOf(filt)>=0}),bi=BUILTIN.filter(function(m){return filt==='all'||(m.tags||[]).indexOf(filt)>=0});
   mlk.querySelector('.grid').innerHTML=lib.map(function(m){return mb(m,0)}).join('')+(bi.length?'<div class="sec">Easy nights</div>'+bi.map(function(m){return mb(m,1)}).join(''):'')+(cur?'<div class="sec"></div><button class="mb bi" data-m=""><span class="e">\u274C</span>Clear this day</button>':'');}
+
+var SECS=[['produce','\uD83E\uDD6C Produce'],['meat','\uD83E\uDD69 Meat & Seafood'],['dairy','\uD83E\uDDC0 Dairy & Eggs'],['bakery','\uD83C\uDF5E Bakery'],['frozen','\uD83E\uDDCA Frozen'],['pantry','\uD83E\uDD6B Pantry']];
+var TO={s:['Sabrina','sabrinahjensen@gmail.com'],m:['Matt','mattski360@gmail.com']},shopMail={};
+function shop(){var p=load(wk),days=[],items={};for(var i=0;i<7;i++){var d=add(wk,i),m=meal(p[d]);if(!m)continue;days.push([DOW[i],m]);
+  (m.ingredients||[]).forEach(function(g){var k=g.item.toLowerCase();if(!items[k])items[k]={item:g.item,sec:g.section,n:0,from:[]};items[k].n++;if(items[k].from.indexOf(m.name)<0)items[k].from.push(m.name)})}
+  return {days:days,items:items}}
+function wkLabel(){return new Date(wk+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}
+function bodyTxt(r){var t='Dinners: '+r.days.map(function(x){return x[0]+' '+x[1].name}).join(', ')+'\n',lim=1800;
+  SECS.forEach(function(s){var l=Object.keys(r.items).map(function(k){return r.items[k]}).filter(function(x){return x.sec===s[0]});if(!l.length)return;
+    t+='\n'+s[1].replace(/^\S+ /,'').toUpperCase()+'\n'+l.map(function(x){return '- '+x.item+(x.n>1?' (x'+x.n+')':'')}).join('\n')+'\n'});
+  if(t.length>lim)t=t.slice(0,lim-40).replace(/\n[^\n]*$/,'')+'\n...(list trimmed - see the dashboard)';return t}
+function renderS(){var r=shop(),h,box=mls.querySelector('.bd2');mls.querySelector('h3').textContent='\uD83D\uDED2 Shopping list \u00b7 week of '+wkLabel();
+  var ex=r.days.filter(function(x){return !(x[1].ingredients||[]).length}).map(function(x){return x[1].name});
+  if(!r.days.length){mls.querySelector('.wm').style.display='none';box.innerHTML='<div class="none">No dinners planned for this week yet.<br>Tap \u25C2 Back and pick some meals, then come back here. \uD83D\uDE0A</div>';return}
+  mls.querySelector('.wm').style.display='';mls.querySelector('.wm').innerHTML='<b>This week:</b> '+r.days.map(function(x){return x[0]+' '+x[1].emoji+' '+esc(x[1].name)}).join(' \u00b7 ')+(ex.length?'<br><small>No groceries needed for: '+esc(ex.join(', '))+'</small>':'');
+  h='<div class="lst">';SECS.forEach(function(s){var l=Object.keys(r.items).map(function(k){return r.items[k]}).filter(function(x){return x.sec===s[0]}).sort(function(a,b){return a.item.localeCompare(b.item)});
+    if(l.length)h+='<div class="grp"><h4>'+s[1]+'</h4><ul>'+l.map(function(x){return '<li>'+esc(x.item)+(x.n>1?' <small>\u00d7'+x.n+'</small>':'')+'</li>'}).join('')+'</ul></div>'});
+  if(!Object.keys(r.items).length)h+='<div class="none">Nothing to buy \u2014 this week is all easy nights!</div>';
+  var subj='Shopping list \u2013 week of '+wkLabel(),body=bodyTxt(r);
+  Object.keys(TO).forEach(function(k){shopMail[k]='mailto:'+TO[k][1]+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body)});
+  h+='</div><div class="side"><a class="big" href="'+esc(shopMail.s)+'">\u2709\uFE0F Email Sabrina</a><a class="big m2" href="'+esc(shopMail.m)+'">\u2709\uFE0F Email Matt</a>'+
+    '<button class="big q" data-act="qs">\uD83D\uDCF1 Show QR \u00b7 Sabrina</button><button class="big q" data-act="qm">\uD83D\uDCF1 Show QR \u00b7 Matt</button><div class="qrb"></div></div>';
+  box.innerHTML=h}
+function showQR(k){var b=mls.querySelector('.qrb');try{var q=qrcode(0,'L');q.addData(unescape(encodeURIComponent(shopMail[k])));q.make();b.innerHTML=q.createSvgTag({cellSize:4,margin:2,scalable:true})+'<small>Scan with a phone camera to open the email to '+TO[k][0]+'</small>'}
+  catch(e){b.innerHTML='<small>List too long for a QR code \u2014 use the email button.</small>'}b.classList.add('on')}
 function setDay(d,n){var p=load(wk);if(n)p[d]=n;else delete p[d];save(wk,p);}
 function rnd(exclude){var c=pool().filter(function(m){return BUILTIN.indexOf(m)<0}),fresh=c.filter(function(m){return !used(m.name).length&&exclude.indexOf(m.name)<0}),nx=c.filter(function(m){return exclude.indexOf(m.name)<0});var l=fresh.length?fresh:(nx.length?nx:c);return l.length?l[Math.floor(Math.random()*l.length)].name:''}
-function openP(){wk=sun(todayISO());render();mlk.classList.remove('on');mlp.classList.add('on');mlp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);}
+function openP(){wk=sun(todayISO());render();mlk.classList.remove('on');mls.classList.remove('on');mlp.classList.add('on');mlp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);}
 function closeP(){mlp.classList.remove('on');mlp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);card();}
 function init(){var c=document.getElementById('mlcard');if(!c)return;
   document.body.insertAdjacentHTML('beforeend','<div id="mlp" aria-hidden="true"><div class="mc" role="dialog" aria-label="Meal planner"><button class="x" type="button" aria-label="Close">&times;</button>'+
-   '<div class="mh"><h2>\uD83C\uDF7D\uFE0F Dinners</h2><span class="wr"></span><div class="acts"><button class="a wk nw"></button><button class="a" data-act="fill">\uD83C\uDFB2 Fill empty days</button><button class="a" data-act="copy">\u21BA Copy last week</button><button class="a clr" data-act="clear">Clear week</button></div></div>'+
-   '<div class="days7"></div><div id="mlk"><div class="kh"><button class="a" data-act="back">\u25C2 Back</button><h3></h3><div class="chips"></div><button class="a wk" data-act="rnd">\uD83C\uDFB2 Random</button></div><div class="grid"></div></div></div></div>');
-  mlp=document.getElementById('mlp');mlk=document.getElementById('mlk');
+   '<div class="mh"><h2>\uD83C\uDF7D\uFE0F Dinners</h2><span class="wr"></span><div class="acts"><button class="a wk nw"></button><button class="a" data-act="fill">\uD83C\uDFB2 Fill empty days</button><button class="a" data-act="copy">\u21BA Copy last week</button><button class="a wk" data-act="shop">\uD83D\uDED2 Shopping list</button><button class="a clr" data-act="clear">Clear week</button></div></div>'+
+   '<div class="days7"></div><div id="mlk"><div class="kh"><button class="a" data-act="back">\u25C2 Back</button><h3></h3><div class="chips"></div><button class="a wk" data-act="rnd">\uD83C\uDFB2 Random</button></div><div class="grid"></div></div><div id="mls"><div class="kh"><button class="a" data-act="sback">\u25C2 Back</button><h3></h3></div><div class="wm"></div><div class="bd2"></div></div></div></div>');
+  mlp=document.getElementById('mlp');mlk=document.getElementById('mlk');mls=document.getElementById('mls');
   [c,mlp].forEach(function(el){['pointerdown','touchstart'].forEach(function(e){el.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})})});
   c.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();openP()});
   mlp.addEventListener('click',function(e){e.stopPropagation();var t=e.target;
     if(t===mlp||t.closest('.x'))return closeP();
     var b=t.closest('[data-act]'),a=b&&b.dataset.act;
     if(t.closest('.nw')){var tw=sun(todayISO());wk=wk===tw?add(tw,7):tw;return render();}
+    if(a==='shop'){renderS();mls.classList.add('on');return;}
+    if(a==='sback'){mls.classList.remove('on');return render();}
+    if(a==='qs'||a==='qm')return showQR(a==='qs'?'s':'m');
+    if(t.closest('a.big'))return;
     if(a==='back'){mlk.classList.remove('on');return render();}
     if(a==='fill'){filt='all';var p=load(wk),taken=Object.keys(p).map(function(k){return p[k]});for(var i=0;i<7;i++){var d=add(wk,i);if(!p[d]){var n=rnd(taken);if(n){p[d]=n;taken.push(n)}}}save(wk,p);return render();}
     if(a==='copy'){var lw=load(add(wk,-7)),q={};Object.keys(lw).forEach(function(d){q[add(d,7)]=lw[d]});if(!Object.keys(q).length){alert('Nothing planned last week.');return}save(wk,q);return render();}
@@ -115,7 +161,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 def block(data: dict) -> str:
-    lib = [{"name": m["name"], "emoji": m.get("emoji", "🍽️"), "tags": m.get("tags", [])}
+    lib = [{"name": m["name"], "emoji": m.get("emoji", "🍽️"), "tags": m.get("tags", []), "ingredients": m.get("ingredients", [])}
            for m in sorted((data.get("meals") or {}).get("library", []), key=lambda m: m["name"].lower())]
     js = JS.replace("__LIB__", json.dumps(lib, ensure_ascii=False).replace("</", "<\\/"))
-    return f"<style>{CSS}</style>\n<script>(function(){{{js}}})();</script>\n"
+    qr = (Path(__file__).resolve().parent / "assets" / "qrcode.js").read_text().replace("</", "<\\/")
+    return f"<style>{CSS}</style>\n<script>{qr}</script>\n<script>(function(){{{js}}})();</script>\n"

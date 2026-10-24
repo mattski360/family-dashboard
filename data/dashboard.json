@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-23T20:45:05-06:00",
+    "last_updated": "2026-10-23T21:00:09-06:00",
     "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
       "2026-10-16",
@@ -1762,13 +1762,73 @@
       {
         "name": "7Up Chicken",
         "emoji": "🍗",
-        "tags": []
+        "tags": [],
+        "ingredients": [
+          {
+            "item": "chicken thighs or breasts",
+            "section": "meat"
+          },
+          {
+            "item": "7Up (2L)",
+            "section": "pantry"
+          },
+          {
+            "item": "soy sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "brown sugar",
+            "section": "pantry"
+          },
+          {
+            "item": "rice",
+            "section": "pantry"
+          }
+        ]
       },
       {
         "name": "Baked Tacos",
         "emoji": "🌮",
         "tags": [
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "ground beef (1 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "taco shells",
+            "section": "pantry"
+          },
+          {
+            "item": "taco seasoning",
+            "section": "pantry"
+          },
+          {
+            "item": "refried beans",
+            "section": "pantry"
+          },
+          {
+            "item": "salsa",
+            "section": "pantry"
+          },
+          {
+            "item": "shredded cheddar",
+            "section": "dairy"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "lettuce",
+            "section": "produce"
+          },
+          {
+            "item": "tomatoes",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1776,6 +1836,44 @@
         "emoji": "🥩",
         "tags": [
           "grill"
+        ],
+        "ingredients": [
+          {
+            "item": "flank or skirt steak (2 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "limes",
+            "section": "produce"
+          },
+          {
+            "item": "oranges",
+            "section": "produce"
+          },
+          {
+            "item": "cilantro",
+            "section": "produce"
+          },
+          {
+            "item": "garlic",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "avocados",
+            "section": "produce"
+          },
+          {
+            "item": "corn tortillas",
+            "section": "pantry"
+          },
+          {
+            "item": "salsa",
+            "section": "pantry"
+          }
         ]
       },
       {
@@ -1783,12 +1881,76 @@
         "emoji": "🥣",
         "tags": [
           "crockpot"
+        ],
+        "ingredients": [
+          {
+            "item": "broccoli",
+            "section": "produce"
+          },
+          {
+            "item": "carrots",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "sharp cheddar",
+            "section": "dairy"
+          },
+          {
+            "item": "half-and-half",
+            "section": "dairy"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          },
+          {
+            "item": "chicken broth",
+            "section": "pantry"
+          },
+          {
+            "item": "flour",
+            "section": "pantry"
+          },
+          {
+            "item": "bread bowls or crusty bread",
+            "section": "bakery"
+          }
         ]
       },
       {
         "name": "Chicken and Broccoli Casserole",
         "emoji": "🥦",
-        "tags": []
+        "tags": [],
+        "ingredients": [
+          {
+            "item": "chicken breasts",
+            "section": "meat"
+          },
+          {
+            "item": "broccoli",
+            "section": "produce"
+          },
+          {
+            "item": "cream of chicken soup",
+            "section": "pantry"
+          },
+          {
+            "item": "rice",
+            "section": "pantry"
+          },
+          {
+            "item": "mayonnaise",
+            "section": "pantry"
+          },
+          {
+            "item": "shredded cheddar",
+            "section": "dairy"
+          }
+        ]
       },
       {
         "name": "Chicken and Rice-A-Roni",
@@ -1796,6 +1958,24 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "chicken breasts",
+            "section": "meat"
+          },
+          {
+            "item": "Rice-A-Roni (chicken)",
+            "section": "pantry"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          },
+          {
+            "item": "green beans or side veggie",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1803,6 +1983,56 @@
         "emoji": "🍲",
         "tags": [
           "crockpot"
+        ],
+        "ingredients": [
+          {
+            "item": "chicken breasts",
+            "section": "meat"
+          },
+          {
+            "item": "black beans",
+            "section": "pantry"
+          },
+          {
+            "item": "diced tomatoes with green chiles",
+            "section": "pantry"
+          },
+          {
+            "item": "chicken broth",
+            "section": "pantry"
+          },
+          {
+            "item": "corn",
+            "section": "pantry"
+          },
+          {
+            "item": "tortilla chips",
+            "section": "pantry"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "cilantro",
+            "section": "produce"
+          },
+          {
+            "item": "limes",
+            "section": "produce"
+          },
+          {
+            "item": "avocados",
+            "section": "produce"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "shredded cheese",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1810,12 +2040,84 @@
         "emoji": "🌶️",
         "tags": [
           "crockpot"
+        ],
+        "ingredients": [
+          {
+            "item": "ground beef (1 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "kidney beans",
+            "section": "pantry"
+          },
+          {
+            "item": "pinto beans",
+            "section": "pantry"
+          },
+          {
+            "item": "diced tomatoes",
+            "section": "pantry"
+          },
+          {
+            "item": "tomato sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "chili powder",
+            "section": "pantry"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "shredded cheddar",
+            "section": "dairy"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "cornbread mix",
+            "section": "bakery"
+          }
         ]
       },
       {
         "name": "Enchiladas",
         "emoji": "🫔",
-        "tags": []
+        "tags": [],
+        "ingredients": [
+          {
+            "item": "chicken or ground beef",
+            "section": "meat"
+          },
+          {
+            "item": "flour tortillas",
+            "section": "pantry"
+          },
+          {
+            "item": "enchilada sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "black beans",
+            "section": "pantry"
+          },
+          {
+            "item": "shredded cheese",
+            "section": "dairy"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "green onions",
+            "section": "produce"
+          }
+        ]
       },
       {
         "name": "Fajita Quesadillas",
@@ -1823,6 +2125,40 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "chicken breasts",
+            "section": "meat"
+          },
+          {
+            "item": "bell peppers",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "flour tortillas",
+            "section": "pantry"
+          },
+          {
+            "item": "fajita seasoning",
+            "section": "pantry"
+          },
+          {
+            "item": "salsa",
+            "section": "pantry"
+          },
+          {
+            "item": "shredded Mexican cheese",
+            "section": "dairy"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1830,6 +2166,48 @@
         "emoji": "🫑",
         "tags": [
           "quick"
+        ],
+        "ingredients": [
+          {
+            "item": "chicken or steak (2 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "bell peppers",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "limes",
+            "section": "produce"
+          },
+          {
+            "item": "avocados",
+            "section": "produce"
+          },
+          {
+            "item": "flour tortillas",
+            "section": "pantry"
+          },
+          {
+            "item": "fajita seasoning",
+            "section": "pantry"
+          },
+          {
+            "item": "salsa",
+            "section": "pantry"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "shredded cheese",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1837,6 +2215,40 @@
         "emoji": "🍚",
         "tags": [
           "quick"
+        ],
+        "ingredients": [
+          {
+            "item": "rice",
+            "section": "pantry"
+          },
+          {
+            "item": "soy sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "sesame oil",
+            "section": "pantry"
+          },
+          {
+            "item": "eggs",
+            "section": "dairy"
+          },
+          {
+            "item": "peas and carrots",
+            "section": "frozen"
+          },
+          {
+            "item": "green onions",
+            "section": "produce"
+          },
+          {
+            "item": "garlic",
+            "section": "produce"
+          },
+          {
+            "item": "ham or chicken",
+            "section": "meat"
+          }
         ]
       },
       {
@@ -1845,6 +2257,36 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "Hawaiian rolls",
+            "section": "bakery"
+          },
+          {
+            "item": "deli ham",
+            "section": "meat"
+          },
+          {
+            "item": "Swiss cheese",
+            "section": "dairy"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          },
+          {
+            "item": "Dijon mustard",
+            "section": "pantry"
+          },
+          {
+            "item": "poppy seeds",
+            "section": "pantry"
+          },
+          {
+            "item": "Worcestershire sauce",
+            "section": "pantry"
+          }
         ]
       },
       {
@@ -1852,6 +2294,40 @@
         "emoji": "🍕",
         "tags": [
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "flour",
+            "section": "pantry"
+          },
+          {
+            "item": "yeast",
+            "section": "pantry"
+          },
+          {
+            "item": "pizza sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "mozzarella",
+            "section": "dairy"
+          },
+          {
+            "item": "pepperoni",
+            "section": "meat"
+          },
+          {
+            "item": "Italian sausage",
+            "section": "meat"
+          },
+          {
+            "item": "bell peppers",
+            "section": "produce"
+          },
+          {
+            "item": "mushrooms",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1861,6 +2337,36 @@
           "quick",
           "grill",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "hot dogs",
+            "section": "meat"
+          },
+          {
+            "item": "hot dog buns",
+            "section": "bakery"
+          },
+          {
+            "item": "ketchup",
+            "section": "pantry"
+          },
+          {
+            "item": "mustard",
+            "section": "pantry"
+          },
+          {
+            "item": "relish",
+            "section": "pantry"
+          },
+          {
+            "item": "chips",
+            "section": "pantry"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1868,6 +2374,36 @@
         "emoji": "🥩",
         "tags": [
           "crockpot"
+        ],
+        "ingredients": [
+          {
+            "item": "chuck roast (3 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "potatoes",
+            "section": "produce"
+          },
+          {
+            "item": "carrots",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "celery",
+            "section": "produce"
+          },
+          {
+            "item": "beef broth",
+            "section": "pantry"
+          },
+          {
+            "item": "onion soup mix",
+            "section": "pantry"
+          }
         ]
       },
       {
@@ -1875,6 +2411,32 @@
         "emoji": "🐟",
         "tags": [
           "grill"
+        ],
+        "ingredients": [
+          {
+            "item": "salmon fillets",
+            "section": "meat"
+          },
+          {
+            "item": "lemons",
+            "section": "produce"
+          },
+          {
+            "item": "asparagus",
+            "section": "produce"
+          },
+          {
+            "item": "garlic",
+            "section": "produce"
+          },
+          {
+            "item": "rice",
+            "section": "pantry"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1883,6 +2445,28 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "ground beef (1 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "Manwich or ketchup",
+            "section": "pantry"
+          },
+          {
+            "item": "chips",
+            "section": "pantry"
+          },
+          {
+            "item": "hamburger buns",
+            "section": "bakery"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1891,6 +2475,48 @@
         "tags": [
           "grill",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "ground beef 80/20 (2 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "burger buns",
+            "section": "bakery"
+          },
+          {
+            "item": "American cheese",
+            "section": "dairy"
+          },
+          {
+            "item": "lettuce",
+            "section": "produce"
+          },
+          {
+            "item": "tomatoes",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "pickles",
+            "section": "pantry"
+          },
+          {
+            "item": "ketchup",
+            "section": "pantry"
+          },
+          {
+            "item": "mustard",
+            "section": "pantry"
+          },
+          {
+            "item": "fries",
+            "section": "frozen"
+          }
         ]
       },
       {
@@ -1899,6 +2525,32 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "spaghetti",
+            "section": "pantry"
+          },
+          {
+            "item": "marinara sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "ground beef or Italian sausage",
+            "section": "meat"
+          },
+          {
+            "item": "Parmesan",
+            "section": "dairy"
+          },
+          {
+            "item": "garlic bread",
+            "section": "bakery"
+          },
+          {
+            "item": "salad mix",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1907,6 +2559,28 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "Spam",
+            "section": "pantry"
+          },
+          {
+            "item": "rice",
+            "section": "pantry"
+          },
+          {
+            "item": "soy sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "furikake",
+            "section": "pantry"
+          },
+          {
+            "item": "eggs",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1914,6 +2588,32 @@
         "emoji": "🥔",
         "tags": [
           "grill"
+        ],
+        "ingredients": [
+          {
+            "item": "steaks",
+            "section": "meat"
+          },
+          {
+            "item": "russet potatoes",
+            "section": "produce"
+          },
+          {
+            "item": "garlic",
+            "section": "produce"
+          },
+          {
+            "item": "salad mix",
+            "section": "produce"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1922,6 +2622,40 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "ground beef (1 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "taco shells or tortillas",
+            "section": "pantry"
+          },
+          {
+            "item": "taco seasoning",
+            "section": "pantry"
+          },
+          {
+            "item": "salsa",
+            "section": "pantry"
+          },
+          {
+            "item": "shredded cheddar",
+            "section": "dairy"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "lettuce",
+            "section": "produce"
+          },
+          {
+            "item": "tomatoes",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1930,6 +2664,28 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "frozen taquitos",
+            "section": "frozen"
+          },
+          {
+            "item": "salsa",
+            "section": "pantry"
+          },
+          {
+            "item": "refried beans",
+            "section": "pantry"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          },
+          {
+            "item": "avocados",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1938,6 +2694,36 @@
         "tags": [
           "quick",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "eggs",
+            "section": "dairy"
+          },
+          {
+            "item": "milk",
+            "section": "dairy"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          },
+          {
+            "item": "bacon or sausage",
+            "section": "meat"
+          },
+          {
+            "item": "pancake mix",
+            "section": "pantry"
+          },
+          {
+            "item": "syrup",
+            "section": "pantry"
+          },
+          {
+            "item": "fruit",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1945,6 +2731,40 @@
         "emoji": "🐟",
         "tags": [
           "quick"
+        ],
+        "ingredients": [
+          {
+            "item": "white fish (cod/tilapia)",
+            "section": "meat"
+          },
+          {
+            "item": "corn tortillas",
+            "section": "pantry"
+          },
+          {
+            "item": "blackening seasoning",
+            "section": "pantry"
+          },
+          {
+            "item": "cabbage slaw mix",
+            "section": "produce"
+          },
+          {
+            "item": "limes",
+            "section": "produce"
+          },
+          {
+            "item": "cilantro",
+            "section": "produce"
+          },
+          {
+            "item": "avocados",
+            "section": "produce"
+          },
+          {
+            "item": "sour cream",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1952,12 +2772,68 @@
         "emoji": "🦐",
         "tags": [
           "quick"
+        ],
+        "ingredients": [
+          {
+            "item": "shrimp",
+            "section": "frozen"
+          },
+          {
+            "item": "mangoes",
+            "section": "produce"
+          },
+          {
+            "item": "red onion",
+            "section": "produce"
+          },
+          {
+            "item": "cilantro",
+            "section": "produce"
+          },
+          {
+            "item": "limes",
+            "section": "produce"
+          },
+          {
+            "item": "jalapeño",
+            "section": "produce"
+          },
+          {
+            "item": "tortillas",
+            "section": "pantry"
+          }
         ]
       },
       {
         "name": "Dumpling Casserole",
         "emoji": "🥟",
-        "tags": []
+        "tags": [],
+        "ingredients": [
+          {
+            "item": "chicken breasts",
+            "section": "meat"
+          },
+          {
+            "item": "cream of chicken soup",
+            "section": "pantry"
+          },
+          {
+            "item": "chicken broth",
+            "section": "pantry"
+          },
+          {
+            "item": "biscuit mix",
+            "section": "pantry"
+          },
+          {
+            "item": "mixed vegetables",
+            "section": "frozen"
+          },
+          {
+            "item": "milk",
+            "section": "dairy"
+          }
+        ]
       },
       {
         "name": "Tinfoil Dinners",
@@ -1965,6 +2841,36 @@
         "tags": [
           "grill",
           "kids"
+        ],
+        "ingredients": [
+          {
+            "item": "ground beef (1 lb)",
+            "section": "meat"
+          },
+          {
+            "item": "potatoes",
+            "section": "produce"
+          },
+          {
+            "item": "carrots",
+            "section": "produce"
+          },
+          {
+            "item": "onion",
+            "section": "produce"
+          },
+          {
+            "item": "foil",
+            "section": "pantry"
+          },
+          {
+            "item": "onion soup mix",
+            "section": "pantry"
+          },
+          {
+            "item": "butter",
+            "section": "dairy"
+          }
         ]
       },
       {
@@ -1972,6 +2878,32 @@
         "emoji": "🍖",
         "tags": [
           "grill"
+        ],
+        "ingredients": [
+          {
+            "item": "brisket (whole or flat)",
+            "section": "meat"
+          },
+          {
+            "item": "BBQ rub",
+            "section": "pantry"
+          },
+          {
+            "item": "BBQ sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "pickles",
+            "section": "pantry"
+          },
+          {
+            "item": "rolls or sliced bread",
+            "section": "bakery"
+          },
+          {
+            "item": "coleslaw mix",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1979,6 +2911,28 @@
         "emoji": "🐖",
         "tags": [
           "grill"
+        ],
+        "ingredients": [
+          {
+            "item": "pork shoulder",
+            "section": "meat"
+          },
+          {
+            "item": "BBQ rub",
+            "section": "pantry"
+          },
+          {
+            "item": "BBQ sauce",
+            "section": "pantry"
+          },
+          {
+            "item": "buns",
+            "section": "bakery"
+          },
+          {
+            "item": "coleslaw mix",
+            "section": "produce"
+          }
         ]
       },
       {
@@ -1986,6 +2940,28 @@
         "emoji": "🌺",
         "tags": [
           "crockpot"
+        ],
+        "ingredients": [
+          {
+            "item": "pork shoulder",
+            "section": "meat"
+          },
+          {
+            "item": "Hawaiian sea salt",
+            "section": "pantry"
+          },
+          {
+            "item": "liquid smoke",
+            "section": "pantry"
+          },
+          {
+            "item": "rice",
+            "section": "pantry"
+          },
+          {
+            "item": "cabbage",
+            "section": "produce"
+          }
         ]
       }
     ]
