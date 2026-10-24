@@ -439,7 +439,25 @@ def v3_dow(k) -> str:
     return str(k or "")[:3].title()
 
 
-def _v3_prayer(m) -> str:
+# FSY topic -> emoji for the kid-friendly landscape cards (first keyword match wins)
+FSY_TOPIC_EMOJI = [(("body", "health"), "\U0001F4AA"), (("sabbath", "temple", "worship"), "\u26EA"),
+    (("media", "music", "phone", "screen"), "\U0001F4F1"), (("friend", "relationship", "dating"), "\U0001F91D"),
+    (("language", "word", "speak"), "\U0001F5E3\uFE0F"), (("dress", "modest", "appearance"), "\U0001F455"),
+    (("honest", "integrity"), "\u2705"), (("work", "self-reliance", "education"), "\U0001F6E0\uFE0F"),
+    (("family",), "\U0001F3E1"), (("pray", "spirit", "jesus", "christ"), "\U0001F31F"),
+    (("repent", "agency", "choose", "choice"), "\U0001F9ED")]
+
+
+def fsy_emoji(topic: str) -> str:
+    t = (topic or "").lower()
+    return next((e for keys, e in FSY_TOPIC_EMOJI if any(k in t for k in keys)), "\U0001F31F")
+
+
+def _em(s: str, on: bool) -> str:
+    return f'<i class="em">{s}</i>' if on else ""
+
+
+def _v3_prayer(m, emoji: bool = False) -> str:
     """'Prayer: <boy>' line. Rotates weekly (Sunday start) through meta.prayer_rotation.order from anchor_sunday;
     the iPad works out the current week client-side so it advances without a rebuild."""
     pr = (m.meta.get("prayer_rotation") or {})
@@ -449,13 +467,14 @@ def _v3_prayer(m) -> str:
     names = {k.get("id"): k.get("name") for k in m.kids if isinstance(k, dict)}
     spans = "".join(f'<b class="pr-n p-{esc(k)}" data-i="{i}">{esc(names.get(k) or k.title())}</b>' for i, k in enumerate(order))
     return (f'<div class="prayer" data-anchor="{esc(pr["anchor_sunday"])}" data-n="{len(order)}">'
-            f'<span class="pr-l">Prayer:</span> {spans}</div>')
+            f'<span class="pr-l">{_em("\U0001F64F", emoji)}Prayer:</span> {spans}</div>')
 
 
-def render_v3_spirit(m: Model) -> str:
+def render_v3_spirit(m: Model, emoji: bool = False) -> str:
     """CFM: week's lesson title + reading, then TODAY's scripture/thought from come_follow_me.daily (one element per
     weekday with data-dow; JS shows the one matching the iPad's date). Falls back to the featured question when no
-    daily queue is loaded. FSY: chapter + today's tip (large) and tomorrow's tip from daily_by_weekday."""
+    daily queue is loaded. FSY: chapter + today's tip (large) and tomorrow's tip from daily_by_weekday.
+    emoji=True (live landscape): kid-friendly emoji accents (mockup A) instead of the line-icon bubbles."""
     sp = m.data.get("spiritual", {}) or {}
     cfm = sp.get("come_follow_me", {}) or {}
     fsy = sp.get("strength_of_youth", {}) or {}
@@ -470,7 +489,7 @@ def render_v3_spirit(m: Model) -> str:
     dates = cfm.get("dates_label") or ""
     dates_s = f" \u00b7 {esc(dates)}" if dates else ""
     daily = [x for x in (cfm.get("daily") or []) if isinstance(x, dict) and x.get("dow")] if not pending_cfm else []
-    fallback = (f'<div class="sq">{esc(q)}{f" <i>{esc(ref)}</i>" if ref else ""}</div>' if q else "")
+    fallback = (f'<div class="sq">{_em("\U0001F4AC", emoji)}{" " if emoji else ""}{esc(q)}{f" <i>{esc(ref)}</i>" if ref else ""}</div>' if q else "")
     cfd = ""
     if daily:
         boxes = []
@@ -479,15 +498,18 @@ def render_v3_spirit(m: Model) -> str:
             body = (f'<div class="cq">\u201c{esc(quote)}\u201d</div>' if quote else "") + \
                    (f'<div class="ct">{esc(x.get("thought"))}</div>' if x.get("thought") else "")
             sref = esc(x.get("scripture") or "")
-            boxes.append(f'<div class="tbox cfd" data-dow="{esc(v3_dow(x["dow"]))}"><div class="tk">Today'
+            boxes.append(f'<div class="tbox cfd" data-dow="{esc(v3_dow(x["dow"]))}"><div class="tk">'
+                         f'{_em("\u2728", emoji) + "Scripture of the day" if emoji else "Today"}'
                          f'{f" <span>{sref}</span>" if sref else ""}</div>{body}</div>')
         # no item for today's weekday -> show the featured question instead
         cfd = "".join(boxes) + (f'<div class="cfd-none">{fallback}</div>' if fallback else "")
+    cfm_badge = _em("\U0001F4D6", emoji) or f'<span class="bub">{ic("book")}</span>'
+    fsy_badge = _em("\U0001F6E1\uFE0F", emoji) or f'<span class="bub">{ic("star")}</span>'
     cfm_html = (f'<div class="sc cfm{" pending" if pending_cfm else ""}">'
-                f'<div class="sk"><span class="bub">{ic("book")}</span>Come, Follow Me{dates_s}</div>'
+                f'<div class="sk">{cfm_badge}Come, Follow Me{dates_s}</div>'
                 f'<div class="stt">{esc(cfm.get("title") or CFM_WAIT)}</div>'
-                + (f'<div class="srd">{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else "")
-                + _v3_prayer(m)
+                + (f'<div class="srd">{_em("\U0001F4DA", emoji)}{esc(cfm.get("reading"))}</div>' if cfm.get("reading") else "")
+                + _v3_prayer(m, emoji)
                 + (cfd or fallback) + "</div>")
     pending_fsy = fsy.get("status") == "pending" or not fsy.get("topic")
     topic = fsy.get("topic") or "This month\u2019s chapter is on its way"
@@ -499,14 +521,14 @@ def render_v3_spirit(m: Model) -> str:
     tips = ""
     if tipmap and not pending_fsy:
         t0 = "".join(f'<span class="tip" data-dow="{esc(v3_dow(k))}">{esc(v)}</span>' for k, v in tipmap.items())
-        tips = (f'<div class="tbox t-today"><div class="tk">Try today</div><div class="ft">{t0}</div></div>'
-                f'<div class="sq t-tmrw"><b>Tomorrow</b>{t0}</div>')
+        tips = (f'<div class="tbox t-today"><div class="tk">{_em("\U0001F3AF", emoji)}Try today</div><div class="ft">{t0}</div></div>'
+                f'<div class="sq t-tmrw"><b>{_em("\U0001F51C", emoji)}Tomorrow</b>{t0}</div>')
     elif fsy.get("daily_application"):
-        tips = f'<div class="tbox"><div class="tk">Try today</div><div class="ft">{esc(fsy["daily_application"])}</div></div>'
+        tips = f'<div class="tbox"><div class="tk">{_em("\U0001F3AF", emoji)}Try today</div><div class="ft">{esc(fsy["daily_application"])}</div></div>'
     sub = " \u00b7 ".join(x for x in (chap, fsy.get("label")) if x)
     fsy_html = (f'<div class="sc fsy{" pending" if pending_fsy else ""}">'
-                f'<div class="sk"><span class="bub">{ic("star")}</span>Strength of Youth</div>'
-                f'<div class="stt">{esc(topic)}</div>'
+                f'<div class="sk">{fsy_badge}Strength of Youth</div>'
+                f'<div class="stt">{_em(fsy_emoji(topic), emoji and not pending_fsy)}{esc(topic)}</div>'
                 + (f'<div class="srd">{esc(sub)}</div>' if sub else "") + f'{tips}</div>')
     return cfm_html + fsy_html
 
@@ -958,7 +980,7 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
         "SPRITE": V3_SPRITE.read_text().strip(),
         "KIDS": render_v3_kids(m),
         "PARENTS": render_v3_parents(m),
-        "SPIRIT": render_v3_spirit(m),
+        "SPIRIT": render_v3_spirit(m, emoji=(template == "template_landscape.html")),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
         "BYU_TODAY": render_v3_byu_line(m),
         "GRADES": render_v3_grades(m),
