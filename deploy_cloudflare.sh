@@ -14,7 +14,7 @@ set -a; . "$ENV"; set +a
 export PATH="$TOOLS/node_modules/.bin:$PATH"
 STAGE=$(mktemp -d /tmp/fd-cf-XXXXXX); trap 'rm -rf "$STAGE"' EXIT
 cp index.html "$STAGE/"
-for d in v2 v3 landscape landscape-a landscape-b assets chores-a chores-b chores-c; do [ -d "$d" ] && cp -r "$d" "$STAGE/"; done
+for d in v2 v3 landscape landscape-a landscape-b assets chores-a chores-b chores-c cfm-a cfm-b cfm-c; do [ -d "$d" ] && cp -r "$d" "$STAGE/"; done
 # fight song (gitignored, Cloudflare only): enable it in the staged pages
 if [ -f "$STAGE/assets/cougar-song.mp3" ]; then
   for f in "$STAGE"/v3/index.html "$STAGE"/landscape/index.html "$STAGE"/landscape-a/index.html; do
