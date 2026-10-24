@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-22T20:10:45-06:00",
+    "last_updated": "2026-10-23T20:35:43-06:00",
     "school_feed_synced": "2026-10-17T20:58:57-06:00",
     "school_feed_window": [
       "2026-10-16",
@@ -1927,6 +1927,14 @@
       {
         "name": "Taquitos",
         "emoji": "🌯",
+        "tags": [
+          "quick",
+          "kids"
+        ]
+      },
+      {
+        "name": "Breakfast for Dinner",
+        "emoji": "🥞",
         "tags": [
           "quick",
           "kids"
