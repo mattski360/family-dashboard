@@ -11,6 +11,8 @@ CSS = r"""
 #mlcard b{font-size:max(17px,1.9vh);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #mlcard small{font-size:max(13px,1.35vh);font-weight:700;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #mlcard .tp{color:#8B7BC0;font-style:italic}
+.day .dml{flex:none;display:flex;align-items:center;gap:.25rem;margin:.1rem 0 .3rem;background:#F4F1FA;color:#4B3F72;border-radius:.6rem;padding:.22rem .45rem;font-size:.72rem;font-weight:800;line-height:1.2;min-width:0;overflow:hidden;white-space:nowrap}
+.day .dml span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 #mlp button{font-size:1em;height:auto;box-shadow:none}
 #mlp{position:fixed;inset:0;z-index:25;display:none;background:rgba(40,48,68,.38);align-items:center;justify-content:center;padding:1.6vh 1.4vw}
 #mlp.on{display:flex}
@@ -58,12 +60,16 @@ function D(s){return new Date(s+'T00:00:00Z')}function I(d){return d.toISOString
 function sun(s){return add(s,-D(s).getUTCDay())}
 function KEY(w){return 'dash-meals:'+w}
 function load(w){try{return JSON.parse(localStorage.getItem(KEY(w))||'{}')||{}}catch(e){return {}}}
-function save(w,o){try{localStorage.setItem(KEY(w),JSON.stringify(o))}catch(e){}}
+function save(w,o){try{localStorage.setItem(KEY(w),JSON.stringify(o))}catch(e){}tiles();}
+var tilesSig=null;function tiles(){var sig=[],els=document.querySelectorAll('.day[data-date]');for(var i=0;i<els.length;i++){var el=els[i],d=el.getAttribute('data-date'),m=meal(planned(d)),x=el.querySelector('.dml');
+  if(!m){if(x)x.remove();continue}sig.push(d+m.name);var h='\uD83C\uDF7D\uFE0F '+m.emoji+' <span>'+esc(m.name)+'</span>';if(!x){x=document.createElement('div');x.className='dml';var aw=el.querySelector('.away');el.insertBefore(x,aw||null)}
+  if(x.innerHTML!==h){x.innerHTML=h;x.title=m.name}}sig=sig.join('|');if(sig!==tilesSig){var first=tilesSig===null;tilesSig=sig;if(!first||sig)window.dispatchEvent(new Event('resize'))}}
+window.dashMealTiles=tiles;window.addEventListener('storage',function(e){if(!e.key||e.key.indexOf('dash-meals:')===0){tiles();card()}});
 function meal(n){var all=LIB.concat(BUILTIN);for(var i=0;i<all.length;i++)if(all[i].name===n)return all[i];return n?{name:n,emoji:'\uD83C\uDF7D\uFE0F',tags:[]}:null}
 function planned(s){return load(sun(s))[s]||''}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 var mlp,mlk,wk,pday,filt='all';
-function card(){var c=document.getElementById('mlcard');if(!c)return;var t=todayISO(),a=meal(planned(t)),b=meal(planned(add(t,1)));
+function card(){tiles();var c=document.getElementById('mlcard');if(!c)return;var t=todayISO(),a=meal(planned(t)),b=meal(planned(add(t,1)));
   c.innerHTML='<span class="me">'+(a?a.emoji:'\uD83C\uDF7D\uFE0F')+'</span><span class="mt"><b>Tonight: '+(a?esc(a.name):'<span class="tp">Tap to plan</span>')+'</b>'+
     '<small>Tomorrow: '+(b?b.emoji+' '+esc(b.name):'Tap to plan')+'</small></span>';}
 function used(name,except){var t=todayISO(),cw=sun(t),out=[];[add(cw,-7),cw].forEach(function(w,wi){var p=load(w);Object.keys(p).forEach(function(d){if(p[d]===name&&d!==except)out.push((wi?'':'last ')+DOW[D(d).getUTCDay()])})});return out}

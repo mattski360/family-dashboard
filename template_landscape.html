@@ -500,7 +500,7 @@ header{align-items:center}
   function render(i){cur=i;
     pages.forEach(function(pg,k){pg.classList.toggle('on',k===i);if(k===i)pg.scrollTop=0;});
     each('#nav .dot',function(d,k){d.classList.toggle('on',k===i);});
-    navl.textContent=pages[i].getAttribute('data-name');}
+    navl.textContent=pages[i].getAttribute('data-name');if(window.dashMealTiles)window.dashMealTiles();}
   function save(){store(KEY,{i:cur,t:shownAt,p:pausedUntil});}
   function show(i){render(i);shownAt=Date.now();save();}
   var holdAt=0; // rotation frozen (adventure popup open): no page change, timer resumes where it was on release
