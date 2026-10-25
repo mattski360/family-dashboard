@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-23T21:00:09-06:00",
-    "school_feed_synced": "2026-10-17T20:58:57-06:00",
+    "last_updated": "2026-10-24T21:06:03-06:00",
+    "school_feed_synced": "2026-10-24T21:06:00-06:00",
     "school_feed_window": [
-      "2026-10-16",
-      "2026-11-07"
+      "2026-10-23",
+      "2026-11-14"
     ],
     "later_days": 8,
     "week_start": "2026-10-25",
@@ -240,38 +240,6 @@
       "source": "canyon_grove"
     },
     {
-      "id": "ahs-20261016-fall-break",
-      "date": "2026-10-16",
-      "start": null,
-      "end": null,
-      "title": "Fall break",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": "no_school",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261019-fall-break",
-      "date": "2026-10-19",
-      "start": null,
-      "end": null,
-      "title": "Fall break",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": "no_school",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "cga-20261019-q2",
       "date": "2026-10-19",
       "title": "Quarter 2 begins",
@@ -281,22 +249,6 @@
       "priority": "high",
       "kind": "school",
       "source": "canyon_grove"
-    },
-    {
-      "id": "ahs-20261020-term-2-begins",
-      "date": "2026-10-20",
-      "start": null,
-      "end": null,
-      "title": "Term 2 begins",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "ahsm-20261022-pumpkin-run",
@@ -420,6 +372,36 @@
       "source": "ahs_feed"
     },
     {
+      "id": "fam-20261029-dl3904",
+      "date": "2026-10-29",
+      "end_date": null,
+      "start": "12:28",
+      "end": "14:19",
+      "title": "Dad's flight home",
+      "note": "Delta 3904 ABQ → SLC · lands 2:19 PM",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261029-rs-favorite-things",
+      "date": "2026-10-29",
+      "end_date": null,
+      "start": "19:00",
+      "end": null,
+      "title": "Relief Society Favorite Things Party",
+      "note": "Charmayne's home · $10–15 fall gift + fall treat",
+      "who": [
+        "parents"
+      ],
+      "priority": "low",
+      "kind": "event",
+      "source": "family"
+    },
+    {
       "id": "ahs-20261030-no-school-k-5-in-service",
       "date": "2026-10-30",
       "start": null,
@@ -439,6 +421,62 @@
       "date": "2026-10-30",
       "start": null,
       "end": null,
+      "title": "Spirit apparel day",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261031-halloween",
+      "date": "2026-10-31",
+      "end_date": null,
+      "title": "Halloween",
+      "note": "",
+      "who": [
+        "family"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261101-dst-ends",
+      "date": "2026-11-01",
+      "end_date": null,
+      "title": "Clocks fall back 1 hour",
+      "note": "Daylight saving time ends",
+      "who": [
+        "family"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261103-eq-training",
+      "date": "2026-11-03",
+      "end_date": null,
+      "start": "19:30",
+      "end": null,
+      "title": "EQ presidency training (proposed)",
+      "note": "Stake offices · with the stake presidency",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "ahs-20261105-spirit-apparel-day",
+      "date": "2026-11-05",
+      "start": "08:30",
+      "end": "15:10",
       "title": "Spirit apparel day",
       "note": "",
       "who": [
@@ -473,6 +511,82 @@
       "note": "",
       "who": [
         "tanner"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261113-k-5-no-school-k-5-in-service-day",
+      "date": "2026-11-13",
+      "start": null,
+      "end": null,
+      "title": "K-5 No School, K-5 In-Service Day",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261113-no-school",
+      "date": "2026-11-13",
+      "start": null,
+      "end": null,
+      "title": "No school",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261113-spirit-apparel-day",
+      "date": "2026-11-13",
+      "start": null,
+      "end": null,
+      "title": "Spirit apparel day",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261113-term-2-midterm",
+      "date": "2026-11-13",
+      "start": null,
+      "end": null,
+      "title": "Term 2 Midterm",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261114-girls-choice-dance-sadie-hawkins-childho",
+      "date": "2026-11-14",
+      "start": "20:30",
+      "end": "22:30",
+      "title": "Girls' Choice Dance Sadie Hawkins: Childhood Characters",
+      "note": "",
+      "who": [
+        "luke"
       ],
       "flag": null,
       "priority": "normal",
@@ -540,74 +654,111 @@
       "hide_after": "2026-10-18",
       "priority": "normal",
       "done": false
+    },
+    {
+      "id": "todo-tanner-oct29-30",
+      "text": "Plan for Tanner Thu–Fri",
+      "detail": "K-5 half day Thu Oct 29 (out at 12 PM, Grandparents Day); no school Fri Oct 30",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-10-29",
+      "hide_after": "2026-10-30",
+      "priority": "normal",
+      "done": false
+    },
+    {
+      "id": "todo-eq-training-nov3",
+      "text": "Confirm stake EQ presidency training",
+      "detail": "Proposed Tue Nov 3, 7:30 PM, stake offices",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-11-02",
+      "hide_after": "2026-11-03",
+      "priority": "normal",
+      "done": false
+    },
+    {
+      "id": "todo-mtb-party",
+      "text": "Watch for Lone Peak MTB end-of-season party date",
+      "detail": "Coach Nick said it will be added to the TeamSnap schedule",
+      "who": [
+        "parents",
+        "luke"
+      ],
+      "due": null,
+      "hide_after": "2026-11-21",
+      "priority": "low",
+      "done": false
     }
   ],
   "spiritual": {
     "come_follow_me": {
       "status": "ready",
-      "week_of": "2026-10-19",
-      "lesson": 43,
-      "dates_label": "Oct 19–25",
-      "title": "“Before I Formed Thee in the Belly I Knew Thee”",
-      "reading": "Jeremiah 1–3; 7; 16–18; 20",
-      "summary": "Jeremiah felt too young to be a prophet, but the Lord had known and ordained him before he was born and promised, “I am with thee.” Jesus is “the fountain of living waters,” and the Lord will gather His people “one of a city, and two of a family.”",
+      "week_of": "2026-10-26",
+      "lesson": 44,
+      "dates_label": "Oct 26–Nov 1",
+      "title": "“I Will Turn Their Mourning into Joy”",
+      "reading": "Jeremiah 31–33; 36–39; Lamentations 1; 3",
+      "summary": "The Lord promised captive Israel a new and everlasting covenant, with His law written in their hearts, and said, “I will turn their mourning into joy.” Jeremiah's prophecies were written down by Baruch, Ebed-melech bravely rescued Jeremiah from the dungeon, and Lamentations reminds us the Lord's compassions “are new every morning.”",
       "questions": [
-        "What did Jeremiah learn about himself in Jeremiah 1:5, and how is it true for you too?",
-        "What might the “broken cisterns” and the “fountain of living waters” stand for? (2:13)",
-        "How can we help gather Heavenly Father’s children, like the fishers and hunters? (16:14–16)"
+        "What does it mean to have God's law written in your heart? (Jeremiah 31:33)",
+        "How was Ebed-melech brave, and how can we stand up for what is right? (Jeremiah 38:7–13)",
+        "How can Jesus Christ turn sadness into joy? (Jeremiah 31:13; Lamentations 3:22–26)"
       ],
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/43?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/44?lang=eng",
       "previous": {
-        "show_before": "2026-10-19",
-        "lesson": 42,
-        "dates_label": "Oct 12–18",
-        "title": "“The Redeemer Shall Come to Zion”",
-        "reading": "Isaiah 58–66",
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/42?lang=eng"
+        "show_before": "2026-10-26",
+        "lesson": 43,
+        "dates_label": "Oct 19–25",
+        "title": "“Before I Formed Thee in the Belly I Knew Thee”",
+        "reading": "Jeremiah 1–3; 7; 16–18; 20",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/43?lang=eng"
       },
       "featured_question": 0,
       "daily": [
         {
           "dow": "Mon",
-          "scripture": "Jeremiah 1:5",
-          "quote": "Before I formed thee in the belly I knew thee",
-          "thought": "Heavenly Father knew each of us before we were born and has work for us to do. What strength has He given you?"
+          "scripture": "Jeremiah 31:3",
+          "quote": "I have loved thee with an everlasting love",
+          "thought": "Some things wear out fast, but God's love lasts forever. When have you felt His love?"
         },
         {
           "dow": "Tue",
-          "scripture": "Jeremiah 1:6–8",
-          "quote": "Be not afraid of their faces: for I am with thee",
-          "thought": "Jeremiah felt too young, but the Lord promised to be with him. What hard thing can you try today with His help?"
+          "scripture": "Jeremiah 31:13",
+          "quote": "I will turn their mourning into joy, and will comfort them",
+          "thought": "Jesus can turn sad days into happy ones. Who can we comfort today?"
         },
         {
           "dow": "Wed",
-          "scripture": "Jeremiah 2:13",
-          "quote": "they have forsaken me the fountain of living waters",
-          "thought": "Jesus is a fountain that never runs dry. How can we drink from His living water today?"
+          "scripture": "Jeremiah 31:33",
+          "quote": "I will put my law in their inward parts, and write it in their hearts",
+          "thought": "Covenants are promises written on our hearts. What promise did you make at baptism?"
         },
         {
           "dow": "Thu",
-          "scripture": "Jeremiah 3:14–15",
-          "quote": "I will take you one of a city, and two of a family, and I will bring you to Zion",
-          "thought": "The Lord gathers His children one by one. Who can we include or invite this week?"
+          "scripture": "Jeremiah 36:2",
+          "quote": "Take thee a roll of a book, and write therein all the words that I have spoken unto thee",
+          "thought": "The Lord had Jeremiah's words written down so we could read them. What verse is special to you?"
         },
         {
           "dow": "Fri",
-          "scripture": "Jeremiah 16:16",
-          "quote": "Behold, I will send for many fishers, saith the Lord",
-          "thought": "President Nelson compared these fishers and hunters to missionaries. How can we help gather Israel?"
+          "scripture": "Jeremiah 38:10–13",
+          "quote": "they drew up Jeremiah with cords, and took him up out of the dungeon",
+          "thought": "Ebed-melech bravely rescued the prophet. How can you stand up for what is right this week?"
         },
         {
           "dow": "Sat",
-          "scripture": "Jeremiah 18:6",
-          "quote": "as the clay is in the potter’s hand, so are ye in mine hand",
-          "thought": "The Lord shapes us like a potter shapes clay. What can we let Him help us change?"
+          "scripture": "Lamentations 3:22–23",
+          "quote": "his compassions fail not. They are new every morning",
+          "thought": "Every morning is a fresh start with the Lord. What can we do better today?"
         },
         {
           "dow": "Sun",
-          "scripture": "Jeremiah 1:9",
-          "quote": "Behold, I have put my words in thy mouth",
-          "thought": "Prophets speak the Lord’s words. Share one thing you remember from the prophet at general conference."
+          "scripture": "Jeremiah 32:17",
+          "quote": "there is nothing too hard for thee",
+          "thought": "Nothing is too hard for Heavenly Father. What can we ask Him to help us with this week?"
         }
       ],
       "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh."
@@ -939,7 +1090,8 @@
             "FOX"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "result": "L 31-39"
         },
         {
           "id": "byu-mbb-2026-10-24-unlv",
@@ -953,7 +1105,8 @@
             "MW+"
           ],
           "venue": null,
-          "note": "Exhibition"
+          "note": "Exhibition",
+          "result": "W 89-77"
         },
         {
           "id": "byu-football-2026-10-31-arizona-state",
@@ -1452,11 +1605,11 @@
           "note": null
         }
       ],
-      "updated": "2026-10-23T06:51:28-06:00",
+      "updated": "2026-10-24T21:06:03-06:00",
       "summary": {
         "football": {
-          "record": "6-0",
-          "standing": "1st in Big 12",
+          "record": "6-1",
+          "standing": "2nd in Big 12",
           "polls": [
             {
               "poll": "AP",
