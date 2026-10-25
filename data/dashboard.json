@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-24T21:07:16-06:00",
+    "last_updated": "2026-10-25T11:42:44-06:00",
     "school_feed_synced": "2026-10-24T21:06:00-06:00",
     "school_feed_window": [
       "2026-10-23",
@@ -761,7 +761,104 @@
           "thought": "Nothing is too hard for Heavenly Father. What can we ask Him to help us with this week?"
         }
       ],
-      "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh."
+      "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh.",
+      "deep_dive": {
+        "_comment": "Tap-to-open study popup (live landscape). Filled on the Saturday refresh from the official lesson page for week_of. Quotes must be copied verbatim (KJV / manual). See README 'Study popups'.",
+        "week_of": "2026-10-26",
+        "intro": "When the Lord called Jeremiah, his job was not only “to root out, and to pull down” but also “to build, and to plant” (Jeremiah 1:10). Even after Jerusalem fell, the Lord promised a Messiah, “the Branch of righteousness” (Jeremiah 33:15), and a new covenant. When we make mistakes or feel sad, He promises: “I will turn their mourning into joy” (Jeremiah 31:13).",
+        "scripture_blocks": [
+          {
+            "ref": "Jeremiah 31; 33",
+            "about": "Comfort and hope for Israel in captivity"
+          },
+          {
+            "ref": "Jeremiah 31:31–34; 32:37–42",
+            "about": "The new and everlasting covenant"
+          },
+          {
+            "ref": "Jeremiah 36",
+            "about": "Jeremiah and Baruch write the Lord’s words; the king burns the scroll"
+          },
+          {
+            "ref": "Jeremiah 37–39",
+            "about": "King Zedekiah, Ebed-melech, and the fall of Jerusalem"
+          },
+          {
+            "ref": "Lamentations 1; 3",
+            "about": "Poems of sorrow, and hope in the Lord’s mercy"
+          }
+        ],
+        "principles": [
+          {
+            "emoji": "🏠",
+            "title": "The Lord will bring His covenant people out of captivity.",
+            "ref": "Jeremiah 31; 33",
+            "explain": "Israel would cry with “lamentation, and bitter weeping” (Jeremiah 31:15), but the Lord promised to gather them home again. He keeps His promises to us, too."
+          },
+          {
+            "emoji": "❤️",
+            "title": "“They shall be my people, and I will be their God.”",
+            "ref": "Jeremiah 31:31–34; 32:37–42",
+            "explain": "A covenant is a two-way promise with God. The new covenant isn’t just about looking good on the outside—God wants His law written in our hearts, so we choose right because we love Him."
+          },
+          {
+            "emoji": "📜",
+            "title": "The scriptures have power to turn me away from evil.",
+            "ref": "Jeremiah 36",
+            "explain": "Baruch wrote Jeremiah’s words on a scroll. King Jehoiakim cut it up and burned it, but the Lord had it written again. God’s word is worth protecting and reading."
+          },
+          {
+            "emoji": "🦺",
+            "title": "I can be bold in standing up for what is right.",
+            "ref": "Jeremiah 38:6–13; 39:15–18",
+            "explain": "Jeremiah was thrown into a muddy dungeon. Ebed-melech went to the king, then pulled Jeremiah out with ropes and old rags. The Lord promised to protect him because he trusted God."
+          },
+          {
+            "emoji": "🌅",
+            "title": "The Lord can relieve the sorrow I experience because of sin.",
+            "ref": "Lamentations 1; 3",
+            "explain": "Lamentations are sad poems written after Jerusalem and its temple were destroyed. Even there, we find hope: Jesus Christ’s mercy is fresh every morning, and we can always repent."
+          }
+        ],
+        "key_verses": [
+          {
+            "ref": "Jeremiah 31:3",
+            "text": "Yea, I have loved thee with an everlasting love: therefore with lovingkindness have I drawn thee."
+          },
+          {
+            "ref": "Jeremiah 31:13",
+            "text": "For I will turn their mourning into joy, and will comfort them, and make them rejoice from their sorrow."
+          },
+          {
+            "ref": "Jeremiah 31:33",
+            "text": "I will put my law in their inward parts, and write it in their hearts; and will be their God, and they shall be my people."
+          },
+          {
+            "ref": "Jeremiah 32:17",
+            "text": "There is nothing too hard for thee."
+          },
+          {
+            "ref": "Lamentations 3:22–23",
+            "text": "It is of the Lord’s mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness."
+          }
+        ],
+        "quote": {
+          "text": "My plea to all who have fallen into this trap of the adversary is to never give up! Regardless of how desperate things may seem or how desperate they may yet become, please believe me, you can always have hope. Always.",
+          "by": "President M. Russell Ballard, “The Joy of Hope Fulfilled,” Ensign, Nov. 1992"
+        },
+        "questions": [
+          "What does it mean to have God’s law written in your heart? (Jeremiah 31:33)",
+          "What promises have you made to God at baptism? How is He keeping His promises to you? (Mosiah 18:10, 13)",
+          "How did different people treat Jeremiah’s scroll? How do you feel about the scriptures? (Jeremiah 36)",
+          "What impresses you about Ebed-melech? How could you follow his example this week? (Jeremiah 38:7–13)",
+          "What in Lamentations 3:22–26 helps us understand the forgiveness Jesus Christ offers?"
+        ],
+        "activity": {
+          "title": "Write it on your heart",
+          "steps": "Each person draws a big heart on a piece of paper. Read Jeremiah 31:31–34 together, then write inside your heart the things you learn about making covenants with God (and one promise you made at baptism). Bonus: find something that lasts a long time (like a coin) and something that doesn’t (like a banana) and talk about what “everlasting love” means (Jeremiah 31:3)."
+        },
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/44?lang=eng"
+      }
     },
     "strength_of_youth": {
       "status": "ready",
@@ -781,7 +878,59 @@
         "Sat": "Get moving outside, and ask Christ for strength with a hard habit."
       },
       "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/10-your-body-is-sacred?lang=eng",
-      "lesson_plan_url": "https://www.churchofjesuschrist.org/study/ftsoy/2026/10/fsy-lessons/00-intro?lang=eng"
+      "lesson_plan_url": "https://www.churchofjesuschrist.org/study/ftsoy/2026/10/fsy-lessons/00-intro?lang=eng",
+      "deep_dive": {
+        "_comment": "Tap-to-open study popup (live landscape). Monthly: refresh when strength_of_youth.month changes. Quotes verbatim from the guide. See README 'Study popups'.",
+        "month": "2026-10",
+        "chapter_title": "10. Your body is sacred",
+        "scripture": {
+          "ref": "1 Corinthians 6:19",
+          "text": "What? know ye not that your body is the temple of the Holy Ghost which is in you, which ye have of God, and ye are not your own?"
+        },
+        "intro": "Your body is an amazing gift from your Heavenly Father. Having a body gives you increased power to exercise your freedom to choose between right and wrong.",
+        "teachings": [
+          {
+            "emoji": "✨",
+            "title": "Your body is in the image of God",
+            "explain": "The scriptures compare our bodies to a holy temple, a place where the Spirit can dwell. Your body isn’t perfect now, but your experiences help you prepare for a perfect, resurrected body someday."
+          },
+          {
+            "emoji": "🍎",
+            "title": "Body and spirit are connected",
+            "explain": "Your soul is your body and your spirit together, so physical health and spiritual health go hand in hand. The Word of Wisdom teaches how to care for your body and promises blessings."
+          },
+          {
+            "emoji": "👕",
+            "title": "Treat your body—and others’ bodies—with respect",
+            "explain": "When choosing clothes, hairstyle, and looks, see yourself and others as God’s beloved children with a divine destiny, not just bodies."
+          },
+          {
+            "emoji": "💪",
+            "title": "Strengthen your body, don’t hurt it",
+            "explain": "Enjoy the good things God has given. Alcohol, tobacco, coffee, tea, and harmful drugs are not for your body or spirit—and even medicine can hurt if it’s misused."
+          },
+          {
+            "emoji": "🛡️",
+            "title": "Keep sacred things sacred",
+            "explain": "Avoid anything you watch, read, listen to, post, or text that is meant to stir up wrong feelings, including pornography. If a situation makes temptation stronger, avoid it."
+          }
+        ],
+        "quotes": [
+          "Ask yourself, “Am I honoring my body as a sacred gift from God?”",
+          "Do things that will strengthen your body, not things that will hurt or damage it.",
+          "The Lord has promised great treasures of knowledge to those who keep the Word of Wisdom.",
+          "Turn to Jesus Christ and His gospel, and you will find that weaknesses can become strengths."
+        ],
+        "blessings": "A healthy body, free from addiction, also increases your ability to receive personal revelation, think clearly, and serve the Lord.",
+        "questions": [
+          "Am I honoring my body as a sacred gift from God?",
+          "What is one habit (sleep, food, screens, exercise) I could improve to take better care of my body?",
+          "How does keeping the Word of Wisdom help me feel the Spirit and think clearly?",
+          "When I’m tempted, what can I fill my life with to invite Heavenly Father’s and Jesus Christ’s power? (prayer, scriptures, service)",
+          "How can I show respect for other people’s bodies in what I say, joke about, or post?"
+        ],
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/10-your-body-is-sacred?lang=eng"
+      }
     }
   },
   "academics": {

@@ -105,6 +105,14 @@ Optional fields:
 
 When `status` is `"pending"`, or there is no reading (CFM) or topic (FSY), the card shows a placeholder title.
 
+### Study popups (`deep_dive`, live landscape only) – fill on every Saturday refresh
+Tapping the Come, Follow Me or Strength of Youth card on `landscape/` opens a big study popup (build_study.py). Rotation is held while open; closes with X, a tap outside, or 5 min idle. Test with `landscape/?study=cfm` or `?study=fsy`; screenshots: `python3 shot_study.py`.
+Content comes **only** from the official pages (`source_url`). Copy scripture (KJV) and guide/manual quotes **verbatim**; never invent quotes. Kid-friendly explanations (ages ~10–15) are our own words.
+* `spiritual.come_follow_me.deep_dive` – **replace every Saturday** with the next lesson (from the "Ideas for Learning at Home and at Church" and "Ideas for Teaching Children" sections). The popup is hidden if `deep_dive.week_of` ≠ `come_follow_me.week_of`.
+  `{week_of, intro, scripture_blocks:[{ref, about}], principles:[{emoji, title (manual heading), ref, explain}] (3–5), key_verses:[{ref, text}] (3–5, verbatim KJV), quote:{text, by} (optional, verbatim from the lesson), questions:[…] (4–5 family discussion), activity:{title, steps} (from the children's section), source_url}`
+* `spiritual.strength_of_youth.deep_dive` – **replace when `strength_of_youth.month` changes** (monthly chapter); hidden if its `month` ≠ `strength_of_youth.month`.
+  `{month, chapter_title, scripture:{ref, text}, intro, teachings:[{emoji, title, explain}] (4–5, from Eternal Truths / Invitations), quotes:[…] (verbatim from the chapter), blessings, questions:[…] (questions to ponder), source_url}`
+
 ## School feed filtering (fetch_school.py)
 Kept: school-wide items (no school, half days, term start/end, grades posted, picture retakes), HS items for grade 9 (Luke), ES items for K-5, generic ES, or grade 5 (Tanner), spirit-apparel days (low priority), and parent events.
 Dropped: middle school, other grades, kindergarten, clubs, rehearsals, athletics, senior nights, AP/ACT/PSAT for other grades, admissions, and faculty items.

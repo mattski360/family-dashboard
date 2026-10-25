@@ -997,6 +997,9 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
     if template == "template_landscape.html":   # meal planner v1 (live landscape only)
         import build_meals as _meals
         out = out.replace("</body>", _meals.block(data) + "</body>", 1)
+    if template == "template_landscape.html":   # CFM / FSY study popups (live landscape only)
+        import build_study as _study
+        out = out.replace("</body>", _study.block(data) + "</body>", 1)
     if 'id="yegg"' in out:
         out = out.replace("</body>", render_byu_pop(data, now) + "</body>", 1)
     # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads
