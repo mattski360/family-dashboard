@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-25T11:42:44-06:00",
+    "last_updated": "2026-10-25T20:04:32-06:00",
     "school_feed_synced": "2026-10-24T21:06:00-06:00",
     "school_feed_window": [
       "2026-10-23",
@@ -1860,7 +1860,7 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-24",
+      "as_of": "2026-10-25",
       "courses": [
         {
           "name": "Language Arts 8",
@@ -1868,9 +1868,14 @@
           "pct": 99.81
         },
         {
+          "name": "Health I",
+          "short": "Health I",
+          "pct": 100.0
+        },
+        {
           "name": "Food & Nutrition",
           "short": "Food & Nutrition",
-          "pct": 99.36
+          "pct": 90.4
         },
         {
           "name": "Science 8",
@@ -1889,7 +1894,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-22",
+        "as_of": "2026-10-24",
         "courses": [
           {
             "name": "Language Arts 8",
@@ -1909,7 +1914,7 @@
           {
             "name": "Math 8",
             "short": "Math 8",
-            "pct": 93.62
+            "pct": 93.6
           },
           {
             "name": "Utah History",
