@@ -5,14 +5,14 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-25T20:04:32-06:00",
+    "last_updated": "2026-10-26T20:07:49-06:00",
     "school_feed_synced": "2026-10-24T21:06:00-06:00",
     "school_feed_window": [
       "2026-10-23",
       "2026-11-14"
     ],
     "later_days": 8,
-    "week_start": "2026-10-25",
+    "week_start": "2026-11-01",
     "motto": "We are Jensens, we are brave, we choose the right, and we always help others.",
     "prayer_rotation": {
       "anchor_sunday": "2026-10-04",
@@ -26,12 +26,14 @@
       "weekend": [
         "Lake Blanche",
         "Welfare Square Tour",
-        "Waterfall Canyon Via Ferrata"
+        "Waterfall Canyon Via Ferrata",
+        "Ensign Peak"
       ],
       "evening": [
         "Peaks Ice Arena Public Skate",
         "Beacon Hill Park Disc Golf",
-        "Super Chix Custard Run"
+        "Super Chix Custard Run",
+        "Trail Trash Pickup"
       ]
     }
   },
@@ -1803,7 +1805,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-24",
+      "as_of": "2026-10-26",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -1828,11 +1830,11 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 100.12
+          "pct": 93.28
         }
       ],
       "previous": {
-        "as_of": "2026-10-22",
+        "as_of": "2026-10-24",
         "courses": [
           {
             "name": "English 9 (Coleman)",
@@ -1850,9 +1852,14 @@
             "pct": 100.0
           },
           {
+            "name": "History of the United States (Chancellor)",
+            "short": "US History",
+            "pct": 100.0
+          },
+          {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 93.15
+            "pct": 100.12
           }
         ]
       }
@@ -1860,12 +1867,12 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-25",
+      "as_of": "2026-10-26",
       "courses": [
         {
           "name": "Language Arts 8",
           "short": "Language Arts 8",
-          "pct": 99.81
+          "pct": 99.64
         },
         {
           "name": "Health I",
@@ -1894,7 +1901,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-24",
+        "as_of": "2026-10-25",
         "courses": [
           {
             "name": "Language Arts 8",
@@ -1902,9 +1909,14 @@
             "pct": 99.81
           },
           {
+            "name": "Health I",
+            "short": "Health I",
+            "pct": 100.0
+          },
+          {
             "name": "Food & Nutrition",
             "short": "Food & Nutrition",
-            "pct": 99.36
+            "pct": 90.4
           },
           {
             "name": "Science 8",
@@ -1927,17 +1939,17 @@
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-10-24",
+      "as_of": "2026-10-26",
       "courses": [
         {
           "name": "Geography",
           "short": "Geography",
-          "pct": 95.0
+          "pct": 96.67
         },
         {
           "name": "Math",
           "short": "Math",
-          "pct": 95.05
+          "pct": 82.81
         },
         {
           "name": "Spelling",
@@ -1946,7 +1958,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-22",
+        "as_of": "2026-10-24",
         "courses": [
           {
             "name": "Geography",
@@ -1956,7 +1968,12 @@
           {
             "name": "Math",
             "short": "Math",
-            "pct": 94.59
+            "pct": 95.05
+          },
+          {
+            "name": "Spelling",
+            "short": "Spelling",
+            "pct": 85.0
           }
         ]
       }
@@ -1964,28 +1981,28 @@
   },
   "adventures": {
     "this_week": {
-      "week_start": "2026-10-25",
+      "week_start": "2026-11-01",
       "weekend": {
-        "#": "115",
-        "Name": "Waterfall Canyon Via Ferrata",
-        "Description": "Guided iron-rung climbing route above Ogden",
-        "Location": "Ogden (Utah Adventure Center)",
-        "Drive Time from Highland": "1 hr 15 min",
-        "Best Season(s)": "May-Oct",
-        "Cost Tier": "$$$",
-        "Category": "Brave Challenge",
-        "Reservation / Fee / Notes": "Guide required, gear included; ~$140/person group rate"
+        "#": "86",
+        "Name": "Ensign Peak",
+        "Description": "Short climb where Brigham Young viewed the valley in 1847",
+        "Location": "Salt Lake City",
+        "Drive Time from Highland": "40 min",
+        "Best Season(s)": "Year-round",
+        "Cost Tier": "Free",
+        "Category": "Church History",
+        "Reservation / Fee / Notes": "Sunday-friendly 1-mi RT"
       },
       "evening": {
-        "#": "26",
-        "Name": "Super Chix Custard Run",
-        "Description": "Frozen custard and chicken sandwiches",
-        "Location": "American Fork",
-        "Drive Time from Highland": "10 min",
-        "Best Season(s)": "Year-round",
-        "Cost Tier": "$",
-        "Category": "Treats & Food Runs",
-        "Reservation / Fee / Notes": "Combine with Art Dye disc golf"
+        "#": "58",
+        "Name": "Trail Trash Pickup",
+        "Description": "Clean the Murdock Canal Trail with grabbers",
+        "Location": "Highland",
+        "Drive Time from Highland": "Home",
+        "Best Season(s)": "Mar-Nov",
+        "Cost Tier": "Free",
+        "Category": "Service",
+        "Reservation / Fee / Notes": "Treat stop afterward"
       }
     }
   },
