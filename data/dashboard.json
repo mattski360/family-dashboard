@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-26T20:07:49-06:00",
+    "last_updated": "2026-10-27T20:09:43-06:00",
     "school_feed_synced": "2026-10-24T21:06:00-06:00",
     "school_feed_window": [
       "2026-10-23",
@@ -1805,12 +1805,12 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-26",
+      "as_of": "2026-10-27",
       "courses": [
         {
           "name": "English 9 (Coleman)",
           "short": "English 9",
-          "pct": 100.0
+          "pct": 76.79
         },
         {
           "name": "D.E.A.R.",
@@ -1830,11 +1830,11 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 93.28
+          "pct": 90.22
         }
       ],
       "previous": {
-        "as_of": "2026-10-24",
+        "as_of": "2026-10-26",
         "courses": [
           {
             "name": "English 9 (Coleman)",
@@ -1859,7 +1859,7 @@
           {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 100.12
+            "pct": 93.28
           }
         ]
       }
@@ -1867,7 +1867,7 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-26",
+      "as_of": "2026-10-27",
       "courses": [
         {
           "name": "Language Arts 8",
@@ -1882,7 +1882,7 @@
         {
           "name": "Food & Nutrition",
           "short": "Food & Nutrition",
-          "pct": 90.4
+          "pct": 99.49
         },
         {
           "name": "Science 8",
@@ -1892,21 +1892,21 @@
         {
           "name": "Math 8",
           "short": "Math 8",
-          "pct": 93.6
+          "pct": 93.96
         },
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 87.78
+          "pct": 88.56
         }
       ],
       "previous": {
-        "as_of": "2026-10-25",
+        "as_of": "2026-10-26",
         "courses": [
           {
             "name": "Language Arts 8",
             "short": "Language Arts 8",
-            "pct": 99.81
+            "pct": 99.64
           },
           {
             "name": "Health I",
@@ -1939,7 +1939,7 @@
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-10-26",
+      "as_of": "2026-10-27",
       "courses": [
         {
           "name": "Geography",
@@ -1949,7 +1949,7 @@
         {
           "name": "Math",
           "short": "Math",
-          "pct": 82.81
+          "pct": 97.26
         },
         {
           "name": "Spelling",
@@ -1958,17 +1958,17 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-24",
+        "as_of": "2026-10-26",
         "courses": [
           {
             "name": "Geography",
             "short": "Geography",
-            "pct": 95.0
+            "pct": 96.67
           },
           {
             "name": "Math",
             "short": "Math",
-            "pct": 95.05
+            "pct": 82.81
           },
           {
             "name": "Spelling",
