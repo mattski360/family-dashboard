@@ -624,8 +624,14 @@ def byu_games_on(m: Model, day: dt.date) -> list[dict]:
     return sorted(out, key=lambda g: g.get("start") or "99")
 
 
+def byu_opp(g: dict) -> str:
+    """Opponent name, with its current poll rank ("No. 6 Utah") for unplayed games when fetch_byu.py tagged one."""
+    rk = g.get("opp_rank")
+    return f'No. {int(rk)} {g["opponent"]}' if rk and not g.get("result") else g["opponent"]
+
+
 def byu_matchup(g: dict) -> str:
-    return f'{"@" if g.get("home_away") == "away" else "vs"} {g["opponent"]}'
+    return f'{"@" if g.get("home_away") == "away" else "vs"} {byu_opp(g)}'
 
 
 def byu_when(g: dict) -> str:
@@ -840,6 +846,27 @@ def render_v3_adventures(m: Model) -> str:
 # Football + men's basketball only: record / polls / standing, recent results, next games. Data: sports.byu
 # (fetch_byu.py, refreshed weekly by run.sh). Optional sports.byu.fight_song = {"src","title","credit"}: played on open
 # and the popup stays up for the song; without it (or if play() is rejected) it auto-closes after 30 s.
+def byu_live_polls(s: dict, gs: list[dict], today: dt.date) -> list[dict]:
+    """BYU's poll ranks that are still current. A rank is dropped (no number shown, never guessed) when it is more than
+    9 days old while the season is under way, or -- football, one game a week -- when the poll was published before
+    BYU's latest game (it can't reflect that result yet; the new AP/Coaches poll comes out the next day).
+    fetch_byu.py brings the number back as soon as the new poll is out. Unranked = no entry = no chip."""
+    last = max((g["date"] for g in gs if g.get("result") and g.get("note") != "Exhibition"), default="")
+    football = any(g.get("sport") == "football" for g in gs)
+    out = []
+    for p in s.get("polls") or []:
+        rk = p.get("rank")
+        if not isinstance(rk, int) or not 0 < rk <= 25:
+            continue
+        asof = p.get("as_of") or ""
+        if football and last and (not asof or asof <= last):
+            continue
+        if last and asof and (today - d(asof)).days > 9:
+            continue
+        out.append(p)
+    return out
+
+
 def render_byu_pop(data: dict, now: dt.datetime) -> str:
     byu = (data.get("sports") or {}).get("byu") or {}
     games = byu.get("games") or []
@@ -853,7 +880,7 @@ def render_byu_pop(data: dict, now: dt.datetime) -> str:
         return f'{DOW[dd.weekday()][:3]} {dd:%b} {dd.day} · {fmt_time(g.get("start")) + " MT" if g.get("start") else "TBA"}'
 
     def opp(g):
-        return ("vs " if g.get("home_away") == "home" else "at " if g.get("home_away") == "away" else "vs ") + g["opponent"]
+        return ("vs " if g.get("home_away") == "home" else "at " if g.get("home_away") == "away" else "vs ") + byu_opp(g)
 
     def ha(g):
         return {"home": "Home", "away": "Away", "neutral": "Neutral"}.get(g.get("home_away"), "")
@@ -864,7 +891,7 @@ def render_byu_pop(data: dict, now: dt.datetime) -> str:
         past = [g for g in gs if g.get("result")][-3:][::-1]
         nxt = [g for g in gs if not g.get("result") and d(g["date"]) >= today][:4]
         s = summ.get(sp) or {}
-        chips = [f'<span class="bp-chip">#{int(p["rank"])} {esc(p["poll"])}</span>' for p in s.get("polls") or [] if p.get("rank")]
+        chips = [f'<span class="bp-chip">#{int(p["rank"])} {esc(p["poll"])}</span>' for p in byu_live_polls(s, gs, today)]
         facts = []
         if s.get("record"):
             facts.append(f'<b>{esc(s["record"])}</b>')

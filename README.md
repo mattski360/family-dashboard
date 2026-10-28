@@ -124,6 +124,14 @@ The default window is **21 days**, so a weekly run still fills the ten day tiles
 * Runs on every `run.sh`, so the Saturday refresh picks up new kickoff/tipoff times, TV networks and added games (bowl games, tournament opponents) automatically. Nothing is invented: unset times are stored as `null` (TBA) and "TV (TBA)" as no network.
 * **Fail soft:** if both sources fail for a sport, its previous games are kept and the script exits 2; run.sh logs it and still builds.
 * The official pages show the current season, so the dashboard rolls into the next football / basketball season on its own.
+* **Poll ranks are data-driven, never hardcoded.** Every run reads ESPN's rankings endpoint
+  (`site.api.espn.com/apis/site/v2/sports/{sport}/rankings`): BYU's current AP / Coaches (and CFP once released) rank goes to
+  `sports.byu.summary.<sport>.polls[] {poll, rank, as_of, week}`; BYU missing from a poll (unranked, ESPN 0/99) = no entry = no
+  number shown. Upcoming games get `opp_rank` / `opp_rank_poll` (opponent's current CFP-else-AP rank) and render as "No. 6 Utah";
+  the "No. 17 Kansas" prefixes baked into the official schedule page go stale, so they are stripped.
+* **Stale-rank guard (build.py `byu_live_polls`):** a poll chip is hidden if the poll is more than 9 days old in season, or
+  (football) was published before BYU's latest game. The AP/Coaches polls come out Sunday, after the Saturday 8:55 PM run, so
+  any nightly update should run `python3 fetch_byu.py` before `build.py` to pick up the new poll on Sunday.
 
 ## Young Men this week (`youth`)
 ```json

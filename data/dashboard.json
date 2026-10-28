@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-27T20:09:43-06:00",
-    "school_feed_synced": "2026-10-24T21:06:00-06:00",
+    "last_updated": "2026-10-28T13:41:32-06:00",
+    "school_feed_synced": "2026-10-28T13:41:29-06:00",
     "school_feed_window": [
-      "2026-10-23",
-      "2026-11-14"
+      "2026-10-27",
+      "2026-11-18"
     ],
     "later_days": 8,
     "week_start": "2026-11-01",
@@ -282,38 +282,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261023-term-1-grades-posted",
-      "date": "2026-10-23",
-      "start": null,
-      "end": null,
-      "title": "Term 1 grades posted",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261023-picture-retakes",
-      "date": "2026-10-23",
-      "start": "08:15",
-      "end": "12:30",
-      "title": "Picture retakes",
-      "note": "",
-      "who": [
-        "luke",
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "fam-trip-20261026-abq",
       "date": "2026-10-26",
       "end_date": "2026-10-29",
@@ -404,11 +372,11 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261030-no-school-k-5-in-service",
+      "id": "ahs-20261030-k-5-no-school-k-5-in-service-day",
       "date": "2026-10-30",
       "start": null,
       "end": null,
-      "title": "No school — K-5 in-service",
+      "title": "K-5 No School. K-5 In-Service Day",
       "note": "",
       "who": [
         "tanner"
@@ -586,6 +554,21 @@
       "start": "20:30",
       "end": "22:30",
       "title": "Girls' Choice Dance Sadie Hawkins: Childhood Characters",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261116-early-out-ahyc-ms-and-hs",
+      "date": "2026-11-16",
+      "start": "14:16",
+      "end": "15:10",
+      "title": "Early Out AHYC MS and HS",
       "note": "",
       "who": [
         "luke"
@@ -1266,8 +1249,10 @@
           "start": "13:30",
           "opponent": "Arizona State",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FOX",
+          "tv_all": [
+            "FOX"
+          ],
           "venue": null,
           "note": null
         },
@@ -1303,13 +1288,15 @@
           "id": "byu-football-2026-11-07-utah",
           "sport": "football",
           "date": "2026-11-07",
-          "start": null,
+          "start": "10:00",
           "opponent": "Utah",
           "home_away": "away",
           "tv": null,
           "tv_all": [],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 6,
+          "opp_rank_poll": "AP"
         },
         {
           "id": "byu-mbb-2026-11-10-queens",
@@ -1538,32 +1525,36 @@
           "note": null
         },
         {
-          "id": "byu-mbb-2027-01-09-no-17-kansas",
+          "id": "byu-mbb-2027-01-09-kansas",
           "sport": "mbb",
           "date": "2027-01-09",
           "start": "11:00",
-          "opponent": "No. 17 Kansas",
+          "opponent": "Kansas",
           "home_away": "home",
           "tv": "ESPN",
           "tv_all": [
             "ESPN"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 17,
+          "opp_rank_poll": "AP"
         },
         {
-          "id": "byu-mbb-2027-01-12-no-5-arizona",
+          "id": "byu-mbb-2027-01-12-arizona",
           "sport": "mbb",
           "date": "2027-01-12",
           "start": "21:00",
-          "opponent": "No. 5 Arizona",
+          "opponent": "Arizona",
           "home_away": "away",
           "tv": "ESPN",
           "tv_all": [
             "ESPN"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 5,
+          "opp_rank_poll": "AP"
         },
         {
           "id": "byu-mbb-2027-01-16-utah",
@@ -1580,18 +1571,20 @@
           "note": null
         },
         {
-          "id": "byu-mbb-2027-01-20-no-18-iowa-state",
+          "id": "byu-mbb-2027-01-20-iowa-state",
           "sport": "mbb",
           "date": "2027-01-20",
           "start": "19:00",
-          "opponent": "No. 18 Iowa State",
+          "opponent": "Iowa State",
           "home_away": "away",
           "tv": "FS1",
           "tv_all": [
             "FS1"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 18,
+          "opp_rank_poll": "AP"
         },
         {
           "id": "byu-mbb-2027-01-23-west-virginia",
@@ -1618,16 +1611,18 @@
           "note": null
         },
         {
-          "id": "byu-mbb-2027-01-30-no-10-houston",
+          "id": "byu-mbb-2027-01-30-houston",
           "sport": "mbb",
           "date": "2027-01-30",
           "start": "12:00",
-          "opponent": "No. 10 Houston",
+          "opponent": "Houston",
           "home_away": "away",
           "tv": null,
           "tv_all": [],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 10,
+          "opp_rank_poll": "AP"
         },
         {
           "id": "byu-mbb-2027-02-02-baylor",
@@ -1700,18 +1695,20 @@
           "note": null
         },
         {
-          "id": "byu-mbb-2027-02-22-no-5-arizona",
+          "id": "byu-mbb-2027-02-22-arizona",
           "sport": "mbb",
           "date": "2027-02-22",
           "start": "19:00",
-          "opponent": "No. 5 Arizona",
+          "opponent": "Arizona",
           "home_away": "home",
           "tv": "ESPN",
           "tv_all": [
             "ESPN"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 5,
+          "opp_rank_poll": "AP"
         },
         {
           "id": "byu-mbb-2027-02-27-ucf",
@@ -1742,21 +1739,23 @@
           "note": null
         },
         {
-          "id": "byu-mbb-2027-03-05-no-19-texas-tech",
+          "id": "byu-mbb-2027-03-05-texas-tech",
           "sport": "mbb",
           "date": "2027-03-05",
           "start": "19:00",
-          "opponent": "No. 19 Texas Tech",
+          "opponent": "Texas Tech",
           "home_away": "away",
           "tv": "FS1",
           "tv_all": [
             "FS1"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "opp_rank": 19,
+          "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-10-24T21:06:03-06:00",
+      "updated": "2026-10-28T13:41:32-06:00",
       "summary": {
         "football": {
           "record": "6-1",
@@ -1764,17 +1763,30 @@
           "polls": [
             {
               "poll": "AP",
-              "rank": 2,
-              "as_of": "2026-10-18",
-              "week": "2026 NCAA Football Rankings - AP Poll Week 8"
+              "rank": 8,
+              "as_of": "2026-10-25",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 9"
             },
             {
               "poll": "Coaches",
-              "rank": 3,
-              "as_of": "2026-10-18",
-              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 8"
+              "rank": 9,
+              "as_of": "2026-10-25",
+              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
             }
-          ]
+          ],
+          "polls_checked": [
+            {
+              "poll": "AP",
+              "as_of": "2026-10-25",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 9"
+            },
+            {
+              "poll": "Coaches",
+              "as_of": "2026-10-25",
+              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
+            }
+          ],
+          "checked": "2026-10-28T13:41:31-06:00"
         },
         "mbb": {
           "polls": [
@@ -1790,7 +1802,20 @@
               "as_of": "2026-10-19",
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
-          ]
+          ],
+          "polls_checked": [
+            {
+              "poll": "AP",
+              "as_of": "2026-10-19",
+              "week": "2027 NCAA Basketball Rankings - AP Top 25 Preseason"
+            },
+            {
+              "poll": "Coaches",
+              "as_of": "2026-10-19",
+              "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
+            }
+          ],
+          "checked": "2026-10-28T13:41:32-06:00"
         }
       },
       "fight_song": {

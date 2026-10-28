@@ -46,6 +46,9 @@ TV_RE = re.compile(r"^(ESPN(2|U|NEWS|\+)?|ABC|FOX|Fox|FS1|FS2|CBS|CBSSN|CBS Spor
                    r"Max|HBO Max|Paramount\+|Pac-12 Network|Prime Video|Netflix|TV \(TBA\))$")
 
 
+RANK_PREFIX = re.compile(r"^(?:No\.|#)\s*\d+\s+", re.I)
+
+
 def seasons(today: dt.date) -> dict[str, int]:
     return {"football": today.year if today.month >= 3 else today.year - 1,
             "mbb": today.year + 1 if today.month >= 7 else today.year}
@@ -90,9 +93,10 @@ def fetch_official(sport: str) -> list[dict]:
         loc = re.search(r'schedule-event-location">(.*?)</span>', b, re.S)
         res = re.search(r'schedule-event-item-result__wrapper[^>]*>(.*?)</div>', b, re.S)
         res_t = _txt(res.group(1)) if res else ""
-        g = {"id": f"byu-{sport}-{when.date().isoformat()}-{re.sub(r'[^a-z0-9]+', '-', _txt(opp.group(1)).lower()).strip('-')}",
+        name = RANK_PREFIX.sub("", _txt(opp.group(1)))   # "No. 17 Kansas" -> "Kansas" (the site's rank goes stale)
+        g = {"id": f"byu-{sport}-{when.date().isoformat()}-{re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')}",
              "sport": sport, "date": when.date().isoformat(), "start": None if tba else when.strftime("%H:%M"),
-             "opponent": _txt(opp.group(1)), "home_away": ha, "tv": tv[0] if tv else None, "tv_all": tv,
+             "opponent": name, "home_away": ha, "tv": tv[0] if tv else None, "tv_all": tv,
              "venue": _txt(loc.group(1)) if loc else None,
              "note": "Exhibition" if "schedule-event-item__exhibition" in b else None}
         mo = re.match(r"^([WLT])\s*(\d+\s*-\s*\d+)", res_t)
@@ -160,8 +164,26 @@ RANK_API = "https://site.api.espn.com/apis/site/v2/sports/{path}/rankings"
 TEAM_API = "https://site.api.espn.com/apis/site/v2/sports/{path}/teams/" + TEAM
 
 
-def fetch_summary(sport: str) -> dict:
-    """Record, conference standing and poll ranks from ESPN (omitted when unknown; never guessed)."""
+def fetch_polls(sport: str) -> list[dict]:
+    """Current AP / Coaches / CFP polls from ESPN's rankings endpoint: [{poll, as_of, week, ranks:{team_id: (rank, names)}}]."""
+    out = []
+    for r in get(RANK_API.format(path=SPORTS[sport]["path"])).get("rankings") or []:
+        nm = r.get("shortName") or r.get("name") or ""
+        if not any(k in nm for k in ("AP", "Coaches", "Playoff", "CFP")) or "FCS" in nm or "Div" in nm:
+            continue
+        label = "CFP" if ("Playoff" in nm or "CFP" in nm) else ("AP" if "AP" in nm else "Coaches")
+        ranks = {}
+        for x in r.get("ranks") or []:
+            t, cur = x.get("team") or {}, x.get("current")
+            if t.get("id") and isinstance(cur, int) and 0 < cur <= 25:      # 0/99/missing = unranked
+                names = {t.get(k, "").lower() for k in ("location", "nickname", "shortDisplayName", "displayName") if t.get(k)}
+                ranks[t["id"]] = (cur, names)
+        out.append({"poll": label, "as_of": (r.get("date") or "")[:10], "week": r.get("headline"), "ranks": ranks})
+    return out
+
+
+def fetch_summary(sport: str, polls: list[dict]) -> dict:
+    """Record, conference standing and BYU's current poll ranks (omitted when unknown or unranked; never guessed)."""
     path = SPORTS[sport]["path"]
     out: dict = {}
     t = get(TEAM_API.format(path=path)).get("team") or {}
@@ -174,18 +196,29 @@ def fetch_summary(sport: str) -> dict:
                 out["conf_record"] = f"{int(lw)}-{int(ll)}"
     if t.get("standingSummary"):
         out["standing"] = t["standingSummary"]
-    polls = []
-    for r in get(RANK_API.format(path=path)).get("rankings") or []:
-        nm = r.get("shortName") or r.get("name") or ""
-        if not any(k in nm for k in ("AP", "Coaches", "Playoff", "CFP")) or "FCS" in nm or "Div" in nm:
-            continue
-        for x in r.get("ranks") or []:
-            if (x.get("team") or {}).get("id") == TEAM:
-                label = "CFP" if ("Playoff" in nm or "CFP" in nm) else ("AP" if "AP" in nm else "Coaches")
-                polls.append({"poll": label, "rank": x.get("current"), "as_of": (r.get("date") or "")[:10],
-                              "week": r.get("headline")})
-    out["polls"] = polls
+    out["polls"] = [{"poll": p["poll"], "rank": p["ranks"][TEAM][0], "as_of": p["as_of"], "week": p["week"]}
+                    for p in polls if TEAM in p["ranks"]]
+    # every poll that was checked, so the page can tell "unranked this week" from "not checked"
+    out["polls_checked"] = [{"poll": p["poll"], "as_of": p["as_of"], "week": p["week"]} for p in polls]
+    out["checked"] = dt.datetime.now(DEN).isoformat(timespec="seconds")
     return out
+
+
+def tag_opp_ranks(games: list[dict], sport: str, polls: list[dict], today: dt.date) -> None:
+    """Upcoming games get opp_rank = the opponent's CURRENT AP rank (CFP once it is out); played/unranked games get none."""
+    poll = next((p for p in polls if p["poll"] == "CFP"), None) or next((p for p in polls if p["poll"] == "AP"), None)
+    for g in games:
+        if g.get("sport") != sport:
+            continue
+        g.pop("opp_rank", None)
+        g.pop("opp_rank_poll", None)
+        g["opponent"] = RANK_PREFIX.sub("", g.get("opponent") or "")
+        if not poll or g.get("result") or g.get("date", "") < today.isoformat():
+            continue
+        o = g["opponent"].lower()
+        hit = [rk for tid, (rk, names) in poll["ranks"].items() if tid != TEAM and o in names]
+        if len(hit) == 1:
+            g["opp_rank"], g["opp_rank_poll"] = hit[0], poll["poll"]
 
 
 def main() -> int:
@@ -237,11 +270,17 @@ def main() -> int:
     summ = byu.get("summary") or {}
     for sp in SPORTS:
         try:
-            summ[sp] = fetch_summary(sp)
-        except Exception as e:  # noqa: BLE001  keep last good summary
-            print(f"[fetch_byu] {sp}: summary fetch failed ({e}); keeping previous", file=sys.stderr)
+            polls = fetch_polls(sp)
+            summ[sp] = fetch_summary(sp, polls)
+            tag_opp_ranks(out, sp, polls, today)
+            print(f"[fetch_byu] {sp}: record {summ[sp].get('record', '?')}, polls "
+                  + (", ".join(f"#{p['rank']} {p['poll']} ({p['as_of']})" for p in summ[sp]["polls"]) or "unranked"))
+        except Exception as e:  # noqa: BLE001  keep last good summary (build.py hides poll ranks once they are stale)
+            print(f"[fetch_byu] {sp}: summary/poll fetch failed ({e}); keeping previous", file=sys.stderr)
+            tag_opp_ranks(out, sp, [], today)
+            failed.append(sp + "-polls")
     byu["summary"] = summ
-    if len(failed) < len(SPORTS):
+    if len([f for f in failed if f in SPORTS]) < len(SPORTS):
         byu["updated"] = dt.datetime.now(DEN).isoformat(timespec="seconds")
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
