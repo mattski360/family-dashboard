@@ -84,20 +84,37 @@ function celPreload(){if(celAud.length)return;for(var i=1;i<=CEL_N;i++){var a=ne
 function celPick(){var i;do{i=Math.floor(Math.random()*CEL_N)}while(CEL_N>1&&i===celLast);celLast=i;return i;}
 function celebrate(kid){
   try{celPreload();var i=celPick(),a=celAud[i];a.volume=CEL_VOL;a.currentTime=0;window.__celPlays=(window.__celPlays||0)+1;window.__celLastSrc=a.src;
-    var p=a.play();if(p&&p.catch)p.catch(function(){});}catch(e){}
+    songDuck(a);var p=a.play();if(p&&p.catch)p.catch(function(){songDuck(null);});}catch(e){songDuck(null);}
   var t=document.getElementById('celt');if(t)t.remove();
   var cols=['#F2B33D','#E8574A','#3BA776','#3D7FE0','#9A5BD6','#F28CB1'],cf='';
   for(var j=0;j<70;j++)cf+='<i style="left:'+(Math.random()*100)+'%;background:'+cols[j%6]+';animation-delay:'+(Math.random()*.5).toFixed(2)+'s;animation-duration:'+(1.6+Math.random()*1.4).toFixed(2)+'s;transform:rotate('+(Math.random()*360|0)+'deg)"></i>';
   document.body.insertAdjacentHTML('beforeend','<div id="celt" class="p-'+kid+'"><div class="celcf">'+cf+'</div><div class="celmsg">🎉 Great job, '+NM[kid]+'! 🎉<small>All chores done today</small></div></div>');
   setTimeout(function(){var t=document.getElementById('celt');if(t)t.remove();},3500);}
+// --- chore song: plays once (no loop) while the panel is open; stopped + rewound on close, page hide or unload.
+// src comes from #chsong[data-chsong]; empty on GitHub Pages (MP3 is gitignored), filled by deploy_cloudflare.sh.
+// Opening by tap calls play() inside the click gesture; ?open=1 (no gesture) may be refused by autoplay -> ignored quietly.
+// While a celebration sound plays the song is ducked to SONG_DUCK, then restored when that sound ends.
+var SONG_VOL=0.7,SONG_DUCK=0.12,song=null,songDuckT=0;
+function songSrc(){var e=document.getElementById('chsong');return e?e.getAttribute('data-chsong')||'':'';}
+function songStart(){var src=songSrc();if(!src)return;
+  try{if(!song){song=new Audio(src);song.preload='auto';song.loop=false;}
+    song.volume=SONG_VOL;song.currentTime=0;window.__songPlays=(window.__songPlays||0)+1;
+    var p=song.play();if(p&&p.catch)p.catch(function(){window.__songBlocked=(window.__songBlocked||0)+1;});}catch(e){}}
+function songStop(){clearTimeout(songDuckT);if(!song)return;try{song.pause();song.currentTime=0;song.volume=SONG_VOL;}catch(e){}}
+function songDuck(cel){ // cel = celebration Audio now playing (null = restore)
+  clearTimeout(songDuckT);if(!song)return;
+  if(!cel){song.volume=SONG_VOL;return;}
+  song.volume=SONG_DUCK;window.__songDucked=(window.__songDucked||0)+1;
+  var done=function(){cel.removeEventListener('ended',done);clearTimeout(songDuckT);if(song)song.volume=SONG_VOL;};
+  cel.addEventListener('ended',done);songDuckT=setTimeout(done,6000);} // fallback if 'ended' never fires
 var chp,cday,timer;
-function openP(){cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);}
-function closeP(){chp.classList.remove('on');chp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);updBtn();}
+function openP(){if(chp.classList.contains('on'))return;cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);songStart();}
+function closeP(){songStop();chp.classList.remove('on');chp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);updBtn();}
 function updBtn(){var d=choreDay(),s=load(d),n=0,t=0;CH.kids.forEach(function(k){tasksFor(k,d).forEach(function(x){t++;if(s[x.id])n++})});
   document.getElementById('chbtnc').textContent=n+'/'+t;}
 function init(){
   ['pointerdown','touchstart'].forEach(function(e){document.addEventListener(e,celPreload,{once:true,passive:true})});setTimeout(celPreload,4000);
-  document.body.insertAdjacentHTML('beforeend','<button id="chbtn" type="button" aria-label="Chores">✅ Chores <b id="chbtnc"></b></button><div id="chp" aria-hidden="true"><div class="cc" role="dialog" aria-label="Chores"><button class="x" type="button" aria-label="Close">&times;</button><div class="chd"></div><div class="cb"></div></div></div>');
+  document.body.insertAdjacentHTML('beforeend','<button id="chbtn" type="button" aria-label="Chores">✅ Chores <b id="chbtnc"></b></button><div id="chp" aria-hidden="true"><div class="cc" role="dialog" aria-label="Chores"><button class="x" type="button" aria-label="Close">&times;</button><div class="chd"></div><div class="cb"></div></div></div><div id="chsong" hidden data-chsong="" data-chsong-cf="/assets/chore-song.mp3"></div>');
   chp=document.getElementById('chp');
   var b=document.getElementById('chbtn');['pointerdown','touchstart'].forEach(function(e){b.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
   b.addEventListener('click',function(e){e.stopPropagation();openP()});
@@ -105,6 +122,7 @@ function init(){
     var c=e.target.closest('.chk');if(c&&!c.disabled){var day=c.dataset.day?new Date(c.dataset.day+'T00:00:00Z'):cday,s=load(day),kid=c.dataset.id.split(':')[0],was=allDone(kid,day,s);s[c.dataset.id]=!s[c.dataset.id];if(!s[c.dataset.id])delete s[c.dataset.id];save(day,s);render();if(s[c.dataset.id]&&!was&&allDone(kid,day,s))celebrate(kid);}
     var k=e.target.closest('[data-kid]');if(k&&!c){window.__chkid=k.dataset.kid;render();}});
   ['pointerdown','touchstart'].forEach(function(e){chp.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
+  window.addEventListener('pagehide',songStop);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')songStop();});
   updBtn();setInterval(function(){var d=choreDay();if(cday&&iso(d)!==iso(cday)){cday=d;prune(d);if(chp.classList.contains('on'))render();}updBtn();},30000);
 }
 """

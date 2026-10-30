@@ -21,6 +21,12 @@ if [ -f "$STAGE/assets/cougar-song.mp3" ]; then
     [ -f "$f" ] && sed -i -E 's/data-song="" data-song-cf="([^"]+)"/data-song="\1" data-song-cf="\1"/' "$f"
   done
 fi
+# chore song (gitignored, Cloudflare only): enable it in every staged page that has the Chores panel
+if [ -f "$STAGE/assets/chore-song.mp3" ]; then
+  { grep -rl --include=index.html 'data-chsong=""' "$STAGE" || true; } | while read -r f; do
+    sed -i -E 's/data-chsong="" data-chsong-cf="([^"]+)"/data-chsong="\1" data-chsong-cf="\1"/' "$f"
+  done
+fi
 if [ -f data/private_hide.txt ]; then
   python3 - "$STAGE" <<'PY' || { echo "[cf] hidden term found in staged files; NOT deploying" >&2; exit 3; }
 import html, pathlib, sys
