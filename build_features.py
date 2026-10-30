@@ -114,6 +114,14 @@ CSS = r"""
 #gcomp .gstarts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 #gcomp .gstarts button{border:0;background:#FFEBD2;color:#8A4A12;font:inherit;font-size:17px;font-weight:700;border-radius:99px;padding:8px 16px;min-height:44px;cursor:pointer}
 #gcomp .kbt{border:0;background:#F3E6D6;color:#8A4A12;font:inherit;font-size:15px;font-weight:800;border-radius:99px;padding:8px 14px;min-height:44px;cursor:pointer}
+.p-guest{--c:#9AA3B5;--dk:#4F5870;--bg:#F1F3F7;--mid:#DFE3EA}
+#p3 .gnote.p-guest{background:#F7F8FA}
+#gcomp .ggrw{margin-top:10px;align-items:center}
+#gcomp .ggrw[hidden]{display:none}
+#gcomp .ggrw label{font-size:18px;font-weight:800;color:#4F5870;white-space:nowrap}
+#gcomp .ggrw input{font-size:22px;padding:10px 16px;border-color:#D5DAE3;flex:0 1 420px}
+#gcomp .ggrw input:focus{border-color:#8A93A8;box-shadow:0 0 0 4px #E6E9EF}
+#gcomp .ggrw .gopt{font-size:15px;font-weight:700;color:var(--faint)}
 #gkeys{display:none;margin-top:12px;gap:8px;flex-direction:column}
 #gkeys.on{display:flex}
 #gkeys .kr{display:flex;gap:8px;justify-content:center}
@@ -156,6 +164,7 @@ COMP_HTML = """
 <div id="gcomp" aria-hidden="true"><div class="gcard" role="dialog" aria-label="Add to the gratitude board">
   <div class="gch"><span>🍁</span>What are you grateful for?<button class="gcx" id="gcx" type="button" aria-label="Close">&times;</button></div>
   <div class="gl">Who&rsquo;s writing?</div><div class="gnames" id="gnames"></div>
+  <div class="grw ggrw" id="ggrw" hidden><label for="gguest">👋 Guest name</label><input id="gguest" type="text" maxlength="24" autocomplete="off" autocapitalize="words" enterkeyhint="next" placeholder="Your name"><span class="gopt">optional &middot; shows as &ldquo;Name (guest)&rdquo;</span></div>
   <div class="gl">I&rsquo;m grateful for&hellip;</div>
   <div class="grw"><input id="gin" type="text" maxlength="120" autocomplete="off" autocapitalize="sentences" enterkeyhint="done" placeholder="e.g. Mom&rsquo;s pancakes on Saturday">
     <button class="gsave" id="gsave" type="button" disabled>Add 🍂</button></div>
@@ -256,7 +265,7 @@ JS = r"""
   var LEAVES=['🍁','🍂','🍁','🌻','🍂','🥧','🍁','🌾'];
   var SAMPLES=B.getAttribute('data-grat-force')!=='1'?[]:[['Luke','Getting to pass the sacrament with my quorum'],['Tanner','Pancakes on Saturday mornings!'],['Sabrina','Five boys (counting Matt) who make me laugh every day'],
     ['Wyatt','BYU football wins 🏈'],['Matt','A warm house, a full pantry and a family who prays together'],['Tanner','My brothers playing catch with me'],
-    ['Luke','Snow days and sledding'],['Wyatt','My friends at school'],['Sabrina','The temple being so close to home'],['Matt','Fall colors up American Fork Canyon']];
+    ['Luke','Snow days and sledding'],['Wyatt','My friends at school'],['Sabrina','The temple being so close to home'],['Matt','Fall colors up American Fork Canyon'],['Guest','Such a warm welcome and yummy rolls','Grandma Jo']];
   var now0=new Date(), pn=parts(now0), YEAR=pn.year, GK='grat-'+YEAR, qs=location.search;
   var active=window.__gratOn?window.__gratOn():false;
   if(!active){P3.parentNode.removeChild(P3);var dd=document.querySelector('#nav .dot[data-i="2"]');if(dd)dd.parentNode.removeChild(dd);return;}
@@ -265,22 +274,23 @@ JS = r"""
   function sizeP3(){var vv=window.visualViewport,W=vv?vv.width:innerWidth,H=Math.min(innerHeight,vv?vv.height:1e9);
     P3.style.setProperty('--fs',(Math.min(W/1920,H/1080)*20).toFixed(2)+'px');}
   function thanksgiving(){var y=+YEAR,d=new Date(Date.UTC(y,10,1,12)),first=(4-d.getUTCDay()+7)%7+1;return y+'-11-'+('0'+(first+21)).slice(-2);}
-  function pc(name){for(var i=0;i<PEOPLE.length;i++)if(PEOPLE[i][0]===name)return PEOPLE[i][1];return 'family';}
+  function byName(x){return x.n==='Guest'?(x.g?x.g+' (guest)':'Guest'):x.n;}
+  function pc(name){if(name==='Guest')return 'guest';for(var i=0;i<PEOPLE.length;i++)if(PEOPLE[i][0]===name)return PEOPLE[i][1];return 'family';}
   var selIdx=-1;
   function renderBoard(newTs){
     sizeP3();
-    var arr=notes(), sample=!arr.length&&SAMPLES.length>0, list=sample?SAMPLES.map(function(s,i){return{n:s[0],t:s[1],ts:Date.now()-i*36e5*7,s:1};}):arr.slice();
+    var arr=notes(), sample=!arr.length&&SAMPLES.length>0, list=sample?SAMPLES.map(function(s,i){return{n:s[0],t:s[1],g:s[2]||'',ts:Date.now()-i*36e5*7,s:1};}):arr.slice();
     list.sort(function(a,b){return b.ts-a.ts;});
     document.getElementById('gcount').textContent=sample?0:arr.length;
     var cnt={};arr.forEach(function(x){cnt[x.n]=(cnt[x.n]||0)+1;});
     var tg=thanksgiving(), dn=dayNum(tg)-dayNum(ymd(new Date()));
-    document.getElementById('gwho').innerHTML=PEOPLE.map(function(p){return '<span class="gper p-'+p[1]+'"><span class="av">'+p[0][0]+'</span>'+p[0]+'<b>'+(cnt[p[0]]||0)+'</b></span>';}).join('')+
+    document.getElementById('gwho').innerHTML=PEOPLE.map(function(p){return '<span class="gper p-'+p[1]+'"><span class="av">'+p[0][0]+'</span>'+p[0]+'<b>'+(cnt[p[0]]||0)+'</b></span>';}).join('')+'<span class="gper p-guest"><span class="av">👋</span>Guests<b>'+(cnt.Guest||0)+'</b></span>'+
       '<span class="gtk">🦃 '+(dn>1?'Thanksgiving in '+dn+' days':dn===1?'Thanksgiving is tomorrow!':dn===0?'Happy Thanksgiving!':'Thank you for a grateful November')+'</span>';
     var bd=document.getElementById('gboard'), h='';
     list.forEach(function(x,i){var r=((x.ts/1000|0)%7)-3, lf=LEAVES[(x.ts/1000|0)%LEAVES.length];
       var dd=new Intl.DateTimeFormat('en-US',{timeZone:TZ,month:'short',day:'numeric'}).format(new Date(x.ts));
       h+='<div class="gnote p-'+pc(x.n)+(x.ts===newTs?' new':'')+'" data-ts="'+x.ts+'"'+(x.s?' data-sample="1"':'')+' style="--r:'+(r*.6).toFixed(1)+'deg"><span class="lf">'+lf+'</span>'+
-         '<div class="gtx">'+esc(x.t)+'</div><div class="gby"><span class="dot"></span>'+esc(x.n)+(x.s?'':' <span class="gd">&middot; '+dd+'</span>')+'</div>'+
+         '<div class="gtx">'+esc(x.t)+'</div><div class="gby"><span class="dot"></span>'+esc(byName(x))+(x.s?'':' <span class="gd">&middot; '+dd+'</span>')+'</div>'+
          (x.s?'':'<button class="gdel" type="button">Remove</button>')+'</div>';});
     bd.innerHTML=h||'<div class="gempty">Be the first to add something you\u2019re grateful for! 🍁</div>';
     // keep the newest notes that fit; older ones stay saved (count shown bottom-right)
@@ -300,8 +310,9 @@ JS = r"""
     if(n.classList.contains('sel'))setTimeout(function(){n.classList.remove('sel');},6000);});
 
   // composer: rotation and page reloads are frozen while it is open; it closes itself after 2 min without typing
+  var gg=document.getElementById('gguest'), ggrw=document.getElementById('ggrw'), tgt=null;
   var comp=document.getElementById('gcomp'), gin=document.getElementById('gin'), gsave=document.getElementById('gsave'), who='', idle=0, kbd=false;
-  document.getElementById('gnames').innerHTML=PEOPLE.map(function(p){return '<button type="button" class="p-'+p[1]+'" data-n="'+p[0]+'"><span class="av">'+p[0][0]+'</span>'+p[0]+'</button>';}).join('');
+  document.getElementById('gnames').innerHTML=PEOPLE.map(function(p){return '<button type="button" class="p-'+p[1]+'" data-n="'+p[0]+'"><span class="av">'+p[0][0]+'</span>'+p[0]+'</button>';}).join('')+'<button type="button" class="p-guest" data-n="Guest"><span class="av">👋</span>Guest</button>';
   document.getElementById('gstarts').innerHTML=STARTS.map(function(s){return '<button type="button">'+s+'</button>';}).join('');
   function upd(){gsave.disabled=!(who&&gin.value.trim());document.getElementById('gcnt').textContent=gin.value.length+'/120';
     clearTimeout(idle);idle=setTimeout(close,120000);}
@@ -312,14 +323,19 @@ JS = r"""
   function close(){clearTimeout(idle);comp.classList.remove('on');comp.setAttribute('aria-hidden','true');gin.blur();
     window.__composing=false; if(window.dashRotHold)window.dashRotHold(false);}
   function save(){var t=gin.value.trim().replace(/\s+/g,' ');if(!who||!t)return;
-    var ts=Date.now(),a=notes();a.push({n:who,t:t.slice(0,120),ts:ts});store(GK,a);
-    gin.value='';close();renderBoard(ts);var to=document.getElementById('gtoast');to.textContent='🍂 Thanks, '+who+'! Added to the board.';
+    var ts=Date.now(),a=notes(),g=who==='Guest'?gg.value.trim().replace(/\s+/g,' ').slice(0,24):'',x={n:who,t:t.slice(0,120),ts:ts};if(g)x.g=g;a.push(x);store(GK,a);
+    gin.value='';gg.value='';close();renderBoard(ts);var to=document.getElementById('gtoast');to.textContent='🍂 Thanks, '+(who==='Guest'?(g||'friend'):who)+'! Added to the board.';
     to.classList.add('on');setTimeout(function(){to.classList.remove('on');},1800);}
   document.getElementById('gadd').addEventListener('click',open);
   document.getElementById('gcx').addEventListener('click',function(ev){ev.stopPropagation();close();});
   comp.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===comp)close();});
   document.getElementById('gnames').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;who=b.getAttribute('data-n');
-    [].forEach.call(this.querySelectorAll('button'),function(o){o.classList.toggle('on',o===b);});upd();if(!kbd)gin.focus();});
+    [].forEach.call(this.querySelectorAll('button'),function(o){o.classList.toggle('on',o===b);});
+    var isG=who==='Guest';ggrw.hidden=!isG;tgt=isG?gg:gin;upd();if(!kbd)tgt.focus();});
+  gg.addEventListener('focus',function(){tgt=gg;}); gin.addEventListener('focus',function(){tgt=gin;});
+  gg.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();tgt=gin;gin.focus();}});
+  // with the built-in keys on, tapping a field picks where the keys type
+  gg.addEventListener('pointerdown',function(){tgt=gg;}); gin.addEventListener('pointerdown',function(){tgt=gin;});
   document.getElementById('gstarts').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;gin.value=b.textContent+(gin.value?' '+gin.value:'');upd();if(!kbd)gin.focus();});
   gin.addEventListener('input',upd);
   gin.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();save();}});
@@ -331,11 +347,13 @@ JS = r"""
   var keys=document.getElementById('gkeys'), shift=true; keys.innerHTML=kh;
   function caps(){[].forEach.call(keys.querySelectorAll('button[data-k]'),function(b){var k=b.getAttribute('data-k');if(k.length===1&&/[a-z]/.test(k))b.textContent=shift?k.toUpperCase():k;});}
   keys.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;var k=b.getAttribute('data-k');
-    if(k==='shift'){shift=!shift;caps();return;} if(k==='bs'){gin.value=gin.value.slice(0,-1);} else if(k==='ok'){save();return;}
-    else if(gin.value.length<120){gin.value+=(shift&&/[a-z]/.test(k))?k.toUpperCase():k;if(shift&&/[a-z]/.test(k)){shift=false;caps();}}
-    if(/[.!]/.test(k)){shift=true;caps();} upd();});
+    if(k==='shift'){shift=!shift;caps();return;} var F=tgt||gin, mx=F===gg?24:120;
+    if(k==='bs'){F.value=F.value.slice(0,-1);} else if(k==='ok'){if(F===gg){tgt=gin;shift=!gin.value;caps();upd();return;}save();return;}
+    else if(F.value.length<mx){F.value+=(shift&&/[a-z]/.test(k))?k.toUpperCase():k;if(shift&&/[a-z]/.test(k)){shift=false;caps();}}
+    if(/[.!]/.test(k)||(F===gg&&k===' ')){shift=true;caps();} upd();});
   document.getElementById('gkbt').addEventListener('click',function(){kbd=!kbd;keys.classList.toggle('on',kbd);
-    gin.setAttribute('inputmode',kbd?'none':'text');if(kbd){gin.blur();shift=!gin.value;caps();}else gin.focus();});
+    gin.setAttribute('inputmode',kbd?'none':'text');gg.setAttribute('inputmode',kbd?'none':'text');var F=tgt||gin;if(kbd){F.blur();shift=!F.value;caps();}else F.focus();});
+  gg.addEventListener('input',function(){clearTimeout(idle);idle=setTimeout(close,120000);});
   window.__grat={open:open,close:close,render:renderBoard};
   renderBoard();
   window.addEventListener('resize',function(){clearTimeout(window.__g);window.__g=setTimeout(function(){if(!comp.classList.contains('on'))renderBoard();},200);});

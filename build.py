@@ -984,7 +984,7 @@ body.byupop-on #cougs{{z-index:40}}
 '''
 
 
-def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, template: str = "template_v3.html", features=True) -> str:
+def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, template: str = "template_v3.html", features=True, themes=None) -> str:
     m = Model(data, now, week_start)
     meta = m.meta
     last = meta.get("last_updated") or now.isoformat(timespec="seconds")
@@ -1031,6 +1031,9 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
         import build_features as _feat
         _fun = json.loads((HERE / "data" / "daily_fun.json").read_text())
         out = _feat.transform(out, _fun, prod=True)
+    import build_theme as _theme
+    if template in ("template_v3.html", "template_landscape.html") and (_theme.LIVE if themes is None else themes):
+        out = _theme.apply(out)   # monthly colour theme, picked in the browser (off until Matt approves the 12 previews)
     if 'id="yegg"' in out:
         out = out.replace("</body>", render_byu_pop(data, now) + "</body>", 1)
     # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads
