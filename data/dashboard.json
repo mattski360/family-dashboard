@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-28T20:10:39-06:00",
+    "last_updated": "2026-10-29T20:12:07-06:00",
     "school_feed_synced": "2026-10-28T13:41:29-06:00",
     "school_feed_window": [
       "2026-10-27",
@@ -1830,7 +1830,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-28",
+      "as_of": "2026-10-29",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -1845,7 +1845,7 @@
         {
           "name": "Biology (Anderson)",
           "short": "Biology",
-          "pct": 100.0
+          "pct": 92.31
         },
         {
           "name": "History of the United States (Chancellor)",
@@ -1855,16 +1855,16 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 90.22
+          "pct": 94.75
         }
       ],
       "previous": {
-        "as_of": "2026-10-27",
+        "as_of": "2026-10-28",
         "courses": [
           {
             "name": "English 9 (Coleman)",
             "short": "English 9",
-            "pct": 76.79
+            "pct": 100.0
           },
           {
             "name": "D.E.A.R.",
@@ -1892,66 +1892,66 @@
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-28",
+      "as_of": "2026-10-29",
       "courses": [
         {
           "name": "English 8 Term 2",
           "short": "English 8",
-          "pct": 103.5
+          "pct": 99.92
+        },
+        {
+          "name": "Health I",
+          "short": "Health I",
+          "pct": 100.0
         },
         {
           "name": "Food & Nutrition",
           "short": "Food & Nutrition",
-          "pct": 100.0
+          "pct": 99.49
         },
         {
           "name": "Science 8",
           "short": "Science 8",
-          "pct": 85.2
+          "pct": 93.14
         },
         {
           "name": "Math 8",
           "short": "Math 8",
-          "pct": 95.29
+          "pct": 93.96
         },
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 88.0
+          "pct": 87.98
         }
       ],
       "previous": {
-        "as_of": "2026-10-27",
+        "as_of": "2026-10-28",
         "courses": [
           {
-            "name": "Language Arts 8",
-            "short": "Language Arts 8",
-            "pct": 99.64
-          },
-          {
-            "name": "Health I",
-            "short": "Health I",
-            "pct": 100.0
+            "name": "English 8 Term 2",
+            "short": "English 8",
+            "pct": 103.5
           },
           {
             "name": "Food & Nutrition",
             "short": "Food & Nutrition",
-            "pct": 99.49
+            "pct": 100.0
           },
           {
             "name": "Science 8",
             "short": "Science 8",
-            "pct": 93.88
+            "pct": 85.2
           },
           {
             "name": "Math 8",
             "short": "Math 8",
-            "pct": 93.96
+            "pct": 95.29
           },
           {
             "name": "Utah History",
             "short": "Utah History",
-            "pct": 88.56
+            "pct": 88.0
           }
         ]
       }
@@ -1959,17 +1959,22 @@
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-10-28",
+      "as_of": "2026-10-29",
       "courses": [
         {
           "name": "Geography",
           "short": "Geography",
-          "pct": 96.67
+          "pct": 96.88
+        },
+        {
+          "name": "History",
+          "short": "History",
+          "pct": 114.29
         },
         {
           "name": "Math",
           "short": "Math",
-          "pct": 97.56
+          "pct": 97.8
         },
         {
           "name": "Spelling",
@@ -1978,7 +1983,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-10-27",
+        "as_of": "2026-10-28",
         "courses": [
           {
             "name": "Geography",
@@ -1988,7 +1993,7 @@
           {
             "name": "Math",
             "short": "Math",
-            "pct": 97.26
+            "pct": 97.56
           },
           {
             "name": "Spelling",
