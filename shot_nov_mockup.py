@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Screenshots of landscape-mock/ (November features mockup).
 Usage: /workspace/.venv-shot/bin/python shot_nov_mockup.py [URL]
-Writes mock_weather.png, mock_trivia_joke.png, mock_trivia_joke_revealed.png, mock_gratitude.png (+ _composer, 1180x820 variants)."""
+Writes mock_weather.png, mock_page2_weather.png, mock_trivia_joke.png, mock_trivia_joke_revealed.png, mock_gratitude.png (+ _composer, 1180x820 variants)."""
 import json, shutil, sys, time
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -36,6 +36,8 @@ with sync_playwright() as p:
         ctx, pg = ctx_page(0); print(w, h, "p1", pg.evaluate(CHECK, "p1"))
         pg.screenshot(path=str(HERE / f"mock_weather{sfx}.png")); ctx.close()
         ctx, pg = ctx_page(1); print(w, h, "p2", pg.evaluate(CHECK, "p2"))
+        print("  weather chips p1/p2:", pg.evaluate("[document.querySelectorAll('#wx .wd').length, document.querySelectorAll('#wx2 .wd').length]"))
+        pg.screenshot(path=str(HERE / f"mock_page2_weather{sfx}.png"))
         pg.screenshot(path=str(HERE / f"mock_trivia_joke{sfx}.png"))
         pg.click("#ftr"); pg.click("#fjk"); pg.wait_for_timeout(600)
         print("  still p2 after taps:", pg.evaluate("document.querySelector('.page.on').id"))
