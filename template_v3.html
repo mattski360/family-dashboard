@@ -294,6 +294,13 @@ body.paused #prog{background:#C9A0FF}
 #etoast{position:fixed;left:50%;bottom:calc(var(--nav) + 18px);z-index:23;transform:translateX(-50%);background:rgba(40,48,68,.88);color:#fff;font-size:16px;font-weight:700;
   border-radius:99px;padding:10px 18px;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap}
 #etoast.on{opacity:1}
+/* 10 s per riddle: shrinking bar + big number */
+.etimer{display:flex;align-items:center;gap:12px;width:min(420px,100%)}
+.etbar{flex:1;height:18px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 2px #F4C548;overflow:hidden}
+.etbar i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#5FD39A,#9BE3BE);transition:width .2s linear,background .3s}
+.etnum{min-width:2.4em;font-size:28px;font-weight:900;line-height:1;color:#1C8452;font-variant-numeric:tabular-nums}
+.etimer.low .etbar i{background:linear-gradient(90deg,#FF8A80,#FFAE57)}
+.etimer.low .etnum{color:var(--red)}
 </style>
 </head>
 <body data-ver="{{VERSION}}" data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
@@ -333,10 +340,11 @@ body.paused #prog{background:#C9A0FF}
 <div id="cougs" aria-hidden="true">Go Cougs!</div>
 <div id="egg" aria-hidden="true"><div class="ecard" role="dialog" aria-label="Secret challenge"><button class="ex" id="ex" type="button" aria-label="Close">&times;</button>
   <div class="eintro" id="eintro"><div class="et1">You found the secret $20 challenge!</div>
-    <div class="etxt">Solve 3 riddles in a row. Type each answer on the keypad and press Enter. You get one try per riddle. One wrong answer locks the challenge for 24 hours. Solve all 3 to win $20!</div>
+    <div class="etxt">Solve 3 riddles in a row. You only get 10 seconds for each riddle: type the answer on the keypad and press Enter before the timer runs out. You get one try per riddle. A wrong answer or running out of time locks the challenge for 24 hours. Solve all 3 to win $20!</div>
     <div class="eshh">Shh, don&rsquo;t tell your brothers or anyone else where this is. Keeping it secret gives you the best chance to win.</div>
     <button class="estart" id="estart" type="button">Start</button></div>
   <div class="eplay" id="eplay"><div class="estage" id="estage"></div>
+    <div class="etimer" id="etimer" aria-label="Seconds left"><div class="etbar"><i id="etfill"></i></div><span class="etnum" id="etnum">10</span></div>
     <div class="erid" id="erid"></div>
     <div class="edisp" id="edisp"></div>
     <div class="ekeys" id="ekeys"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button class="ek-c" data-k="c">Clear</button><button>0</button><button class="ek-e" data-k="e">Enter</button></div>
@@ -504,41 +512,54 @@ body.paused #prog{background:#C9A0FF}
   window.__grades={open:gOpen,close:gClose};
   // hidden $20 riddle egg: press-and-hold "Prayer:" (.prayer, page 1) for 3 s. Nothing shows before that.
   // Three stages; only a salted SHA-256 per stage is in the page (checked with crypto.subtle). A wrong answer at any
-  // stage ends the attempt and locks it for 24 h (egg20-lock; long-press then does nothing). Closing with x (any time) gives
-  // up and resets to the intro without a lock. Passing all three shows the $20 win screen; the win is stored in egg20-won.
+  // stage ends the attempt and locks it for 24 h (egg20-lock-v2; long-press then does nothing). Each riddle has a 10 s timer;
+  // running out counts as a wrong answer (same lock). Closing with x (any time) gives up, stops the timer and resets to the
+  // intro without a lock. Passing all three shows the $20 win screen; the win is stored in egg20-won-v2.
   // three stages; each has its own salt and only the SHA-256 of salt+answer
   var EGG_STAGES=[{"q": "Brave and true, we say me through and through. Count every word I hold — that number is your clue.", "salt": "jensen-egg-2026:s1:", "hash": "9f27e8331e02bc13fc98ec6b1d185c7400821b1bc09c7a162b88ca6233a67b0a"}, {"q": "Mom and Dad said ‘I do’ in the year when the Olympic torch had left Salt Lake two winters behind, and the world met again in the city where the Games were born. What year was it?", "salt": "jensen-egg-2026:s2:", "hash": "0c876c83098a2fe82dfc883491cbed00b883ae57d43a7af324f1ca84072891d5"}, {"q": "Utah joined the Union in 1896. Count how many states had joined before it, then add one. That’s Utah’s number.", "salt": "jensen-egg-2026:s3:", "hash": "a40158de4877ff0d9d98b8352f81fe488ea3785503f83a151092f673f4ae8094"}], EGG_HOLD=3000, eStage=0;
   var eEl=document.getElementById('egg'), eDisp=document.getElementById('edisp'), eMsg=document.getElementById('emsg'),
       eWin=document.getElementById('eggwin'), eToast=document.getElementById('etoast'), eBusy=false, eFired=0, eToastT=0;
   function eGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
   function eSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
-  // Reset epoch: bump EGG_EPOCH to clear a past win/lock on every device at next load.
-  var EGG_EPOCH='2026-10-09b';
-  if(eGet('egg20-epoch')!==EGG_EPOCH){try{localStorage.removeItem('egg20-won');localStorage.removeItem('egg20-lock');}catch(e){} eSet('egg20-epoch',EGG_EPOCH);}
+  // Versioned state keys: to reset a past win/lock on every device, bump the version (v3, ...) and add the old keys below.
+  var EGG_LOCK='egg20-lock-v2', EGG_WON='egg20-won-v2', EGG_SECS=10;
+  ['egg20-lock','egg20-won','egg20-epoch'].forEach(function(k){try{localStorage.removeItem(k);}catch(e){}});
   function eNice(iso){var d=new Date(iso);if(isNaN(d))return iso;
     return new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short',month:'short',day:'numeric'}).format(d)+' \u00b7 '+
       new Intl.DateTimeFormat('en-US',{timeZone:TZ,hour:'numeric',minute:'2-digit'}).format(d);}
   function eToastShow(t){eToast.textContent=t;eToast.classList.add('on');clearTimeout(eToastT);eToastT=setTimeout(function(){eToast.classList.remove('on');},3500);}
   function eKeys(on){each('#ekeys button',function(b){b.disabled=!on;});}
   function eOpen(){
-    var won=eGet('egg20-won');
+    var won=eGet(EGG_WON);
     if(won){eToastShow('Already claimed on '+eNice(won));return;}
-    var lock=parseInt(eGet('egg20-lock')||'0',10);
+    var lock=parseInt(eGet(EGG_LOCK)||'0',10);
     if(lock&&Date.now()<lock)return;                       // locked: fully silent
     eIntro();
     eEl.classList.add('on');eEl.setAttribute('aria-hidden','false');
   }
   var eCard=document.querySelector('#egg .ecard');
-  function eIntro(){eStage=0;eBusy=false;eCard.className='ecard intro';}
+  // 10 s countdown per riddle (deadline-based, so a sleeping/backgrounded tab still runs out on time)
+  var eTm=document.getElementById('etimer'), eTmFill=document.getElementById('etfill'), eTmNum=document.getElementById('etnum'), eTmr=0, eDeadline=0;
+  function eTimerStop(){clearInterval(eTmr);eTmr=0;}
+  function eTimerDraw(){var left=Math.max(0,eDeadline-Date.now()), s=Math.ceil(left/1000);
+    eTmNum.textContent=s; eTmFill.style.width=(left/(EGG_SECS*10)).toFixed(1)+'%'; eTm.classList.toggle('low',s<=3); return left;}
+  function eTimerStart(){eTimerStop();eDeadline=Date.now()+EGG_SECS*1000;eTimerDraw();
+    eTmr=setInterval(function(){if(eTimerDraw()<=0){eTimerStop();eTimeUp();}},100);}
+  function eLock(){eSet(EGG_LOCK,String(Date.now()+24*3600*1000));}
+  function eTimeUp(){if(!eEl.classList.contains('on')||eBusy||!eCard.classList.contains('play'))return;   // Enter already pressed / closed
+    eBusy=true; eLock(); eKeys(false); eMsg.className='emsg'; eMsg.textContent='Time\u2019s up! The challenge is locked. Try again tomorrow.';
+    setTimeout(eClose,4000);}
+  function eIntro(){eTimerStop();eStage=0;eBusy=false;eCard.className='ecard intro';}
   function eShowStage(i){eCard.className='ecard play';eStage=i;eBusy=false;eDisp.textContent='';eMsg.textContent='';eMsg.className='emsg';eKeys(true);
     document.getElementById('estage').textContent='Stage '+(i+1)+' of '+EGG_STAGES.length;
-    document.getElementById('erid').textContent=EGG_STAGES[i].q;}
-  function eClose(){eEl.classList.remove('on');eEl.setAttribute('aria-hidden','true');eStage=0;}
+    document.getElementById('erid').textContent=EGG_STAGES[i].q;
+    eTimerStart();}
+  function eClose(){eTimerStop();eEl.classList.remove('on');eEl.setAttribute('aria-hidden','true');eStage=0;}
   function eHex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return ('0'+b.toString(16)).slice(-2);}).join('');}
   function eCheck(){
     var v=eDisp.textContent; if(!v||eBusy)return;
-    if(!(window.crypto&&crypto.subtle&&window.TextEncoder)){eMsg.textContent='Try again later';return;}   // no secure context: no try used
-    eBusy=true;
+    if(!(window.crypto&&crypto.subtle&&window.TextEncoder)){eTimerStop();eKeys(false);eMsg.textContent='Try again later';return;}   // no secure context: no try used, no lock
+    eBusy=true; eTimerStop();                                // answered in time: the clock stops while it is checked
     var st=EGG_STAGES[eStage];
     crypto.subtle.digest('SHA-256',new TextEncoder().encode(st.salt+v)).then(function(h){
       if(!eEl.classList.contains('on'))return;              // closed while checking
@@ -548,14 +569,14 @@ body.paused #prog{background:#C9A0FF}
           var next=eStage+1;setTimeout(function(){if(eEl.classList.contains('on')&&eStage===next-1)eShowStage(next);},1200);
           return;
         }
-        var iso=new Date().toISOString(); eSet('egg20-won',iso); eSet('egg20-lock','');
+        var iso=new Date().toISOString(); eSet(EGG_WON,iso); eSet(EGG_LOCK,'');
         eClose(); eWinShow(iso);
       }else{
-        eSet('egg20-lock',String(Date.now()+24*3600*1000));
+        eLock();
         eKeys(false); eMsg.className='emsg'; eMsg.textContent='Not quite! The challenge is locked. Try again tomorrow.';
         setTimeout(eClose,4000);
       }
-    },function(){eBusy=false;eMsg.textContent='Try again later';});
+    },function(){eKeys(false);eMsg.textContent='Try again later';});   // digest failed: no try used, no lock
   }
   function eWinShow(iso){
     document.getElementById('ewhen').textContent='Won '+eNice(iso);
