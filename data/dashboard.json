@@ -5,8 +5,8 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-30T16:43:27-06:00",
-    "school_feed_synced": "2026-10-30T16:43:22-06:00",
+    "last_updated": "2026-10-30T17:18:43-06:00",
+    "school_feed_synced": "2026-10-30T17:15:08-06:00",
     "school_feed_window": [
       "2026-10-29",
       "2026-11-20"
@@ -1785,7 +1785,7 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-10-30T16:43:27-06:00",
+      "updated": "2026-10-30T17:15:12-06:00",
       "summary": {
         "football": {
           "record": "6-1",
@@ -1816,7 +1816,7 @@
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
             }
           ],
-          "checked": "2026-10-30T16:43:26-06:00"
+          "checked": "2026-10-30T17:15:11-06:00"
         },
         "mbb": {
           "polls": [
@@ -1845,7 +1845,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
           ],
-          "checked": "2026-10-30T16:43:27-06:00"
+          "checked": "2026-10-30T17:15:12-06:00"
         }
       },
       "fight_song": {

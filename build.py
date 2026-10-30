@@ -984,7 +984,7 @@ body.byupop-on #cougs{{z-index:40}}
 '''
 
 
-def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, template: str = "template_v3.html") -> str:
+def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, template: str = "template_v3.html", features=True) -> str:
     m = Model(data, now, week_start)
     meta = m.meta
     last = meta.get("last_updated") or now.isoformat(timespec="seconds")
@@ -1027,6 +1027,10 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
     if template == "template_landscape.html":   # CFM / FSY study popups (live landscape only)
         import build_study as _study
         out = out.replace("</body>", _study.block(data) + "</body>", 1)
+    if template == "template_landscape.html" and features:   # weather (p1+p2), trivia/joke (p2), gratitude board (p3)
+        import build_features as _feat
+        _fun = json.loads((HERE / "data" / "daily_fun.json").read_text())
+        out = _feat.transform(out, _fun, prod=True)
     if 'id="yegg"' in out:
         out = out.replace("</body>", render_byu_pop(data, now) + "</body>", 1)
     # page version = hash of everything else on the page; the iPad compares it with the published copy and reloads

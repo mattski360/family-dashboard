@@ -154,6 +154,13 @@ Final URL: https://mattski360.github.io/family-dashboard/landscape/ (built from 
 Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 1280×800, 1280×720, 960×540) with no scrolling; sizes scale with the viewport so the physical size on the panel is the same at any devicePixelRatio. Touch-friendly (bigger nav/tap targets, no zoom), Screen Wake Lock with a muted-video fallback, `manifest.webmanifest` (fullscreen, landscape) for Chrome "Add to Home screen". Add `?info` to the URL to show the real viewport / devicePixelRatio / wake-lock status on the device.
 `/workspace/.venv-shot/bin/python shot_landscape_final.py` writes `preview-land-final-<W>x<H>-p1/p2.png` and runs Android touch checks (tap-to-pause, resume, BYU Y, idea buttons, motto triple-tap, nav dots, 3 s hold on "Prayer:"); exits non-zero on any overflow or failed check.
 
+### Weather, trivia/joke and gratitude board (live landscape only, `build_features.py`)
+`build.py` applies `build_features.transform(..., prod=True)` to `landscape/index.html` only:
+- **Weather (pages 1 and 2 headers)** – Highland, UT (40.43, -111.79): now plus today and the next 4 days from Open-Meteo (free, no key), fetched in the browser once and drawn in both headers. It is cached in localStorage `wx-highland-v1` and refreshed every 30 min and when the day changes. Readings older than 3 h show "as of"; with no data it shows "Weather unavailable right now · retrying".
+- **Trivia + joke of the day (page 2, beside the idea buttons)** – picked by date from `data/daily_fun.json` (45 of each, kid-friendly). Tap to reveal the answer. Tapping doesn't flip the page.
+- **Gratitude board (3rd rotating page)** – shown while the Denver date is between `GRAT_FROM` and `GRAT_TO` (`10-30`..`11-30`, set in `build_features.py`). Use `?grat=0` / `?grat=1` to force it off or on. Notes are kept in this browser's localStorage `grat-YYYY`, so they are not shared between devices. While someone is typing, rotation and the auto-reload pause.
+- `build_nov_mockup.py` writes the MOCKUP preview to `landscape-mock/`, deployed with `deploy_mockup_preview.sh` to the `mockup` branch alias. `shot_features.py` takes screenshots and runs a fit check of all 3 pages at 1920×1080 and 1180×820.
+
 ## BYU easter-egg popup
 Tapping the faded BYU "Y" (nav corner, v3 / landscape / landscape-a) still plays the Go Cougs animation and also opens a
 BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).
