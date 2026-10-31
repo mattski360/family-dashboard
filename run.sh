@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Weekly refresh: pull AHS school events, ward-site youth fallback and BYU football/basketball games, then render v3/index.html.
+# Weekly refresh: pull AHS school events, ward-site youth fallback and BYU football/basketball games, then render
+# v3/index.html and landscape/index.html (+ landscape/ver.txt). Exit 0 = everything worked; 1 = a fetch or the Cloudflare
+# deploy failed (the message says which; the pages were still built); 2 = build refused (hidden term).
 # fetch_byu.py also refreshes sports.byu.summary (record, Big 12 standing, AP/Coaches/CFP ranks) for the BYU "Y" easter-egg popup.
 # (index.html and v2/index.html are static redirects to v3/ and are not rebuilt.)
 # A failed fetch keeps the previous data and the page is still rebuilt.
@@ -12,7 +14,6 @@ status=0
 "$PY" fetch_youth.py      || { echo "[run] fetch_youth.py failed; keeping existing youth data" >&2; status=1; }
 "$PY" fetch_byu.py        || { echo "[run] fetch_byu.py failed; keeping last good BYU games" >&2; status=1; }
 "$PY" build.py || exit 2
-"$PY" build_chores_mockups.py >/dev/null || echo "[run] chores mockups failed" >&2
 # Also publish to Cloudflare Pages (family-dashboard-5rk.pages.dev) while GitHub Pages stays on; skipped if no credentials.
 ./deploy_cloudflare.sh || { echo "[run] Cloudflare deploy failed (GitHub copy still published by the push)" >&2; status=1; }
 exit $status

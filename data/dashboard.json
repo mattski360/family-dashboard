@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-30T18:48:50-06:00",
+    "last_updated": "2026-10-30T20:12:02-06:00",
     "school_feed_synced": "2026-10-30T18:48:46-06:00",
     "school_feed_window": [
       "2026-10-29",
@@ -1000,7 +1000,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-17T20:58:57-06:00",
+    "site_synced": "2026-10-30T20:10:20-06:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -1011,28 +1011,12 @@
     "later_days": 14,
     "activities": [
       {
-        "id": "yth-site-20261001-deacons-tabitha-s-way-service-project",
-        "date": "2026-10-01",
-        "title": "Tabitha's Way Service Project",
-        "group": "deacons",
-        "kind": "activity",
-        "source": "site"
-      },
-      {
         "id": "yth-20261008-teachers",
         "date": "2026-10-08",
         "title": "Bike ride to Bubba's",
         "group": "teachers",
         "kind": "activity",
         "source": "sheet"
-      },
-      {
-        "id": "yth-site-20261008-all-youth-fall-festival",
-        "date": "2026-10-08",
-        "title": "Fall Festival",
-        "group": "all_youth",
-        "kind": "activity",
-        "source": "site"
       },
       {
         "id": "yth-20261008-deacons",
@@ -1057,14 +1041,6 @@
         "group": "all_youth",
         "kind": "none",
         "source": "sheet"
-      },
-      {
-        "id": "yth-site-20261015-deacons-learn-to-make-a-meal",
-        "date": "2026-10-15",
-        "title": "Learn to Make a Meal",
-        "group": "deacons",
-        "kind": "activity",
-        "source": "site"
       },
       {
         "id": "yth-site-20261022-all-youth-fall-break-no-activity",
@@ -1122,6 +1098,54 @@
         "title": "Tour the MTC",
         "group": "deacons",
         "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261105-deacons-bowling",
+        "date": "2026-11-05",
+        "title": "Bowling",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261105-teachers-saturday-morning-hike-at-the-y",
+        "date": "2026-11-05",
+        "title": "Saturday morning hike at the Y",
+        "group": "teachers",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261112-teachers-dodgeball-priests-invited-to-pl",
+        "date": "2026-11-12",
+        "title": "Dodgeball (Priests invited to play with Teachers)",
+        "group": "teachers",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261112-deacons-financial-night",
+        "date": "2026-11-12",
+        "title": "Financial Night",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261119-teachers-temple-trip",
+        "date": "2026-11-19",
+        "title": "Temple Trip",
+        "group": "teachers",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261126-all-youth-thanksgiving-no-activity",
+        "date": "2026-11-26",
+        "title": "Thanksgiving — No Activity",
+        "group": "all_youth",
+        "kind": "none",
         "source": "site"
       }
     ]
@@ -1917,7 +1941,9 @@
             "pct": 90.22
           }
         ]
-      }
+      },
+      "check_status": "ok",
+      "checked_at": "2026-10-29T20:12:10-06:00"
     },
     "wyatt": {
       "connected": true,
@@ -1984,7 +2010,9 @@
             "pct": 88.0
           }
         ]
-      }
+      },
+      "check_status": "ok",
+      "checked_at": "2026-10-29T20:12:10-06:00"
     },
     "tanner": {
       "connected": true,
@@ -2031,7 +2059,9 @@
             "pct": 85.0
           }
         ]
-      }
+      },
+      "check_status": "ok",
+      "checked_at": "2026-10-29T20:12:10-06:00"
     }
   },
   "adventures": {

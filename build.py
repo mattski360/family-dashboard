@@ -1063,7 +1063,7 @@ def main() -> int:
     ap.add_argument("--no-stamp", action="store_true", help="don't update meta.last_updated")
     ap.add_argument("--now", help="override build time (ISO) for testing")
     ap.add_argument("--week-start", help="Sunday (YYYY-MM-DD) that starts the calendar week; default: upcoming Sunday")
-    ap.add_argument("--no-landscape", action="store_true", help="skip landscape/ (final) and the landscape-a/ mockup")
+    ap.add_argument("--no-landscape", action="store_true", help="skip landscape/ (the wall-display page)")
     args = ap.parse_args()
 
     path = Path(args.json)
@@ -1099,8 +1099,8 @@ def main() -> int:
     # landscape mockups (1920x1080): same data, same hide-leak check; only written when --out is the default v3 path
     land = []
     if not args.no_landscape:
-        # landscape/ is the final wall-display page; landscape-b/ is a static redirect to it (not rebuilt)
-        for name, tpl in (("a", "template_landscape_a.html"), ("", "template_landscape.html")):
+        # landscape/ is the final wall-display page; landscape-a/ and landscape-b/ are static redirects to it (not rebuilt)
+        for name, tpl in (("", "template_landscape.html"),):
             if not (HERE / tpl).exists():
                 continue
             h = build_v3(copy.deepcopy(data_pristine), now, week_start, template=tpl)
@@ -1116,6 +1116,9 @@ def main() -> int:
         o.parent.mkdir(parents=True, exist_ok=True)
         o.write_text(h)
         print(f"[build] wrote {o}")
+        ver = re.search(r'<body[^>]* data-ver="([0-9a-f]{12})"', h)
+        if ver:   # tiny file the wall page polls every 10 min instead of re-downloading the whole page
+            (o.parent / "ver.txt").write_text(ver.group(1) + "\n")
     return 0
 
 

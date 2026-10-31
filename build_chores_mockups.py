@@ -108,12 +108,12 @@ function songDuck(cel){ // cel = celebration Audio now playing (null = restore)
   var done=function(){cel.removeEventListener('ended',done);clearTimeout(songDuckT);if(song)song.volume=SONG_VOL;};
   cel.addEventListener('ended',done);songDuckT=setTimeout(done,6000);} // fallback if 'ended' never fires
 var chp,cday,timer;
-function openP(){if(chp.classList.contains('on'))return;cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);songStart();}
+function openP(){if(chp.classList.contains('on'))return;cday=choreDay();prune(cday);render();chp.classList.add('on');chp.setAttribute('aria-hidden','false');if(window.dashRotHold)window.dashRotHold(true);songStart();celPreload();}
 function closeP(){songStop();chp.classList.remove('on');chp.setAttribute('aria-hidden','true');if(window.dashRotHold)window.dashRotHold(false);updBtn();}
 function updBtn(){var d=choreDay(),s=load(d),n=0,t=0;CH.kids.forEach(function(k){tasksFor(k,d).forEach(function(x){t++;if(s[x.id])n++})});
   document.getElementById('chbtnc').textContent=n+'/'+t;}
 function init(){
-  ['pointerdown','touchstart'].forEach(function(e){document.addEventListener(e,celPreload,{once:true,passive:true})});setTimeout(celPreload,4000);
+  // celebration sounds load lazily: when the Chores panel first opens (celebrate() also loads them if needed)
   document.body.insertAdjacentHTML('beforeend','<button id="chbtn" type="button" aria-label="Chores">✅ Chores <b id="chbtnc"></b></button><div id="chp" aria-hidden="true"><div class="cc" role="dialog" aria-label="Chores"><button class="x" type="button" aria-label="Close">&times;</button><div class="chd"></div><div class="cb"></div></div></div><div id="chsong" hidden data-chsong="" data-chsong-cf="/assets/chore-song.mp3"></div>');
   chp=document.getElementById('chp');
   var b=document.getElementById('chbtn');['pointerdown','touchstart'].forEach(function(e){b.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});

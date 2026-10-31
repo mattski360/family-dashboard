@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta http-equiv="refresh" content="1800">
 <meta name="robots" content="noindex,nofollow">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -747,11 +746,24 @@ header{align-items:center}
   document.getElementById('advagain').addEventListener('click',function(ev){ev.stopPropagation();aShow(aKind);});
   window.__adv={open:aShow,close:aClose};
 
-  // pick up a new build without waiting for the 30-minute reload: compare data-ver with the published page
-  setInterval(function(){if(!window.fetch||document.getElementById('egg').classList.contains('on')||eWin.classList.contains('on')||aEl.classList.contains('on'))return;
-    fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
-      var m=/data-ver="([0-9a-f]+)"/.exec(t||'');if(m&&m[1]!==B.getAttribute('data-ver'))location.replace(location.pathname+'?r='+Date.now());
-    }).catch(function(){});},10*60*1000);
+  // Reloads (the only two): busy() = someone is using the page (typing on the gratitude board, a popup or panel open,
+  // or a touch in the last 2 min); both wait until it is idle.
+  // 1. new build: every 10 min compare data-ver with the published ver.txt (12-char hash written by build.py next to
+  //    index.html); if that file is missing or odd, fall back to reading data-ver from the published page itself.
+  // 2. safety net: reload once the page has been up 90 min (clears any stuck state / slow memory growth on the display).
+  var bootAt=Date.now(), lastTouch=0, BUSY='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on';
+  ['pointerdown','touchstart','keydown'].forEach(function(e){document.addEventListener(e,function(){lastTouch=Date.now();},{capture:true,passive:true});});
+  function busy(){return !!window.__composing||Date.now()-lastTouch<120000||!!document.querySelector(BUSY);}
+  function reloadNow(){var q=location.search,k=[];if(/[?&]info\b/.test(q))k.push('info');var g=/[?&](grat=[01])/.exec(q);if(g)k.push(g[1]);
+    location.replace(location.pathname+'?'+k.concat('r='+Date.now()).join('&'));}
+  window.__busy=busy;
+  setInterval(function(){if(!window.fetch||busy())return;var mine=B.getAttribute('data-ver');
+    function fromPage(){return fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';})
+      .then(function(t){var m=/data-ver="([0-9a-f]+)"/.exec(t||'');return m?m[1]:'';});}
+    fetch(location.pathname.replace(/[^\/]*$/,'')+'ver.txt?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';})
+      .then(function(t){var m=/^\s*([0-9a-f]{12})\s*$/.exec(t||'');return m?m[1]:fromPage();},fromPage)
+      .then(function(v){if(v&&v!==mine&&!busy())reloadNow();}).catch(function(){});},10*60*1000);
+  setInterval(function(){if(Date.now()-bootAt>=90*60*1000&&!busy())reloadNow();},60000);
 
   window.addEventListener('resize',function(){clearTimeout(window.__f);window.__f=setTimeout(fit,150);});
   window.addEventListener('orientationchange',function(){setTimeout(fit,300);});
@@ -783,8 +795,6 @@ header{align-items:center}
     setInterval(function(){wi.textContent='viewport '+innerWidth+'\u00d7'+innerHeight+'  dpr '+(window.devicePixelRatio||1)+
       '\nscreen '+screen.width+'\u00d7'+screen.height+'  fs '+(B.getAttribute('data-fs')||'')+'\nwake lock: '+wlState+'\n'+navigator.userAgent;},1000);}
   tick(); setInterval(tick,15000);
-  // fallback reload (meta refresh may be ignored in home-screen mode); bust caches
-  setTimeout(function(){var u=location.href.split('?')[0];location.replace(u+'?'+(B.classList.contains('dbg')?'info&':'')+'r='+Date.now());},1800*1000+20000);
 })();
 </script>
 </body>

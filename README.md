@@ -1,6 +1,6 @@
 # Jensen Family wall dashboard
 
-A static page (`v3/index.html`, with CSS and JS inline and no external requests) for a wall-mounted iPad, portrait-first (820×1180; landscape 1180×820 also fits). Published with GitHub Pages from `main`.
+A static page (`v3/index.html`, with CSS and JS inline; v3 makes no external requests, while the landscape wall page also fetches weather from Open-Meteo in the browser) for a wall-mounted iPad, portrait-first (820×1180; landscape 1180×820 also fits). Published with GitHub Pages from `main`.
 
 Live: https://mattski360.github.io/family-dashboard/v3/ (the iPad's URL).
 The root URL (`index.html`) and the old `/v2/` URL (`v2/index.html`) are small static redirect pages to `v3/` (meta refresh + `location.replace`); they are committed as-is and not rebuilt. The earlier v1 and v2 layouts were retired in October 2026 (see git history).
@@ -8,7 +8,7 @@ The root URL (`index.html`) and the old `/v2/` URL (`v2/index.html`) are small s
 `build.py` renders `v3/index.html` from `data/dashboard.json` using `template_v3.html` + the icon sprite `v3_sprite.svg`.
 
 ```
-./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) + fetch_byu.py (BYU games) → data/dashboard.json, then build.py → v3/index.html
+./run.sh                 # fetch_school.py (AHS ICS) + fetch_youth.py (ward site, fallback) + fetch_byu.py (BYU games) → data/dashboard.json, then build.py → v3/index.html + landscape/index.html (+ landscape/ver.txt), then deploy_cloudflare.sh. Exit 0 = all OK, 1 = a fetch or the deploy failed (named in the log), 2 = hidden-term refusal
 python3 build.py [--week-start 2026-10-18]   # re-render only (stamps meta.last_updated, sets meta.week_start)
 python3 build.py --no-stamp [--out PATH]
 python3 fetch_school.py --dry-run [--days 21] [--today 2026-10-08]
@@ -68,7 +68,7 @@ Portrait 820×1180 is the target; light white theme, rounded type (SF Pro Rounde
 | `youth` | Young Men activities (see below), tagged YM / All youth on the boy's Today and Tomorrow lines and on the week tile for that day |
 | `todos[]` | `{id, text, detail, who[], due, hide_after, priority, done}`. Kept in the JSON but not rendered (v3 has no Heads-up section) |
 | `spiritual` | see below |
-| `grades` | Hidden grades card. `luke` / `wyatt` / `tanner`: `{connected: true, source: "canvas" | "veracross", as_of: "YYYY-MM-DD", courses[] {name, short, pct}, previous: {as_of, courses[]}}` (`previous` = last snapshot, kept for future drop detection; not rendered yet). a kid set to `{connected: false}` shows "Not connected yet" |
+| `grades` | Hidden grades card. `luke` / `wyatt` / `tanner`: `{connected: true, source: "canvas" | "veracross", as_of: "YYYY-MM-DD", courses[] {name, short, pct}, previous: {as_of, courses[]}, checked_at, check_status}` (`previous` = last snapshot, kept for future drop detection; not rendered yet). `as_of` moves only when that kid's grades change; `checked_at` (ISO) is stamped on every successful nightly check by `python3 grades_checked.py luke wyatt tanner` (`--status signin` records a failed check without moving it). Not rendered anywhere. a kid set to `{connected: false}` shows "Not connected yet" |
 | `academics` | `updated` (ISO), `kids.<id>.courses[] {name, percent, letter}`, `missing_count` (int or null), `upcoming_tests[] {date, course, title}` (hidden once past), `note`. Legacy, not rendered (superseded by `grades`) |
 | `sports.byu` | Written by `fetch_byu.py`: `team`, `source` (per sport), `seasons`, `updated`, `games[] {id, sport (football/mbb), date, start (HH:MM MT or null = TBA), opponent, home_away (home/away/neutral), tv (first network or null), tv_all[], venue, note ("Exhibition"/null), result ("W 63-7", past games)}` |
 | `screen_time` | `enabled` (bool), `updated`, `kids.<id> {today_minutes, daily_avg_minutes, limit_minutes}`. Null values show "coming soon" |
@@ -150,7 +150,8 @@ The default window is **21 days**, so a weekly run still fills the ten day tiles
 
 ## Landscape wall display (Apolosign 21.5", 1920×1080) – `landscape/`
 
-Final URL: https://mattski360.github.io/family-dashboard/landscape/ (built from `template_landscape.html` by `build.py`, so `run.sh` regenerates it weekly with the same hidden-term leak check; `landscape-b/` is now a static redirect to it, `landscape-a/` is still built as a mockup).
+Final URL: https://mattski360.github.io/family-dashboard/landscape/ (built from `template_landscape.html` by `build.py`, so `run.sh` regenerates it weekly with the same hidden-term leak check; `landscape-a/` and `landscape-b/` are static redirects to it; `template_landscape_a.html` is no longer built).
+**Reloads (landscape)** – only two, both wait while the page is busy (typing on the gratitude board, any popup/panel open — chores, meals, study, BYU, grades, egg, ideas — or a touch in the last 2 min): every 10 min it fetches `landscape/ver.txt` (the 12-char `data-ver`, written by build.py) with `cache: no-store` and reloads on a new build (falls back to reading `data-ver` from the published page if ver.txt is missing), and a safety reload after the page has been up 90 min. There is no meta refresh on this page.
 Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 1280×800, 1280×720, 960×540) with no scrolling; sizes scale with the viewport so the physical size on the panel is the same at any devicePixelRatio. Touch-friendly (bigger nav/tap targets, no zoom), Screen Wake Lock with a muted-video fallback, `manifest.webmanifest` (fullscreen, landscape) for Chrome "Add to Home screen". Add `?info` to the URL to show the real viewport / devicePixelRatio / wake-lock status on the device.
 `/workspace/.venv-shot/bin/python shot_landscape_final.py` writes `preview-land-final-<W>x<H>-p1/p2.png` and runs Android touch checks (tap-to-pause, resume, BYU Y, idea buttons, motto triple-tap, nav dots, 3 s hold on "Prayer:"); exits non-zero on any overflow or failed check.
 
@@ -158,13 +159,13 @@ Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 12
 `build.py` applies `build_features.transform(..., prod=True)` to `landscape/index.html` only:
 - **Weather (pages 1 and 2 headers)** – Highland, UT (40.43, -111.79): now plus today and the next 4 days from Open-Meteo (free, no key), fetched in the browser once and drawn in both headers. It is cached in localStorage `wx-highland-v1` and refreshed every 30 min and when the day changes. Readings older than 3 h show "as of"; with no data it shows "Weather unavailable right now · retrying".
 - **Trivia + joke of the day (page 2, beside the idea buttons)** – picked by date from `data/daily_fun.json` (45 of each, kid-friendly). Tap to reveal the answer. Tapping doesn't flip the page.
-- **Gratitude board (3rd rotating page)** – shown while the Denver date is between `GRAT_FROM` and `GRAT_TO` (`10-30`..`11-30`, set in `build_features.py`). Use `?grat=0` / `?grat=1` to force it off or on. Notes are kept in this browser's localStorage `grat-YYYY`, so they are not shared between devices. While someone is typing, rotation and the auto-reload pause.
+- **Gratitude board (3rd rotating page)** – shown while the Denver date is between `GRAT_FROM` and `GRAT_TO` (`10-30`..`11-30`, set in `build_features.py`). Use `?grat=0` / `?grat=1` to force it off or on. Notes are kept in this browser's localStorage `grat-YYYY`, so they are not shared between devices. While someone is typing, rotation and both reloads pause.
 - **Guest notes** – the composer has a 6th "Guest" button with an optional name field (24 characters max, works with the built-in keys). A note shows as "Name (guest)", or just "Guest" when the name is blank, in a neutral grey and is counted under "Guests". Check it with `shot_guest.py`.
-- **Monthly colour themes (`build_theme.py`, NOT live yet)** – 12 light pastel themes, picked in the browser by the Denver month, with `?theme=MM` to preview a month and `?theme=off` to turn them off. They stay off (`LIVE = False`) until Matt approves them. `build_theme_preview.py` writes a local preview copy and `shot_themes.py` saves `shots_theme/theme_01.png`..`theme_12.png`.
+- **Monthly colour themes (`build_theme.py`, live since Oct 30 2026, `LIVE = True`)** – 12 light pastel themes, picked in the browser by the Denver month, with `?theme=MM` to preview a month and `?theme=off` to turn them off. Set `LIVE = False` to turn them off. `build_theme_preview.py` writes a local preview copy and `shot_themes.py` saves `shots_theme/theme_01.png`..`theme_12.png`.
 - `build_nov_mockup.py` writes the MOCKUP preview to `landscape-mock/`, deployed with `deploy_mockup_preview.sh` to the `mockup` branch alias. `shot_features.py` takes screenshots and runs a fit check of all 3 pages at 1920×1080 and 1180×820.
 
 ## BYU easter-egg popup
-Tapping the faded BYU "Y" (nav corner, v3 / landscape / landscape-a) still plays the Go Cougs animation and also opens a
+Tapping the faded BYU "Y" (nav corner, v3 / landscape) still plays the Go Cougs animation and also opens a
 BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).
 Data: `sports.byu.games` + `sports.byu.summary` + `sports.byu.updated` in data/dashboard.json, refreshed every week by
 `fetch_byu.py` (run.sh, Sat 8:55 PM). Unknown items are omitted. Auto-closes after 30 s; X or tap outside closes.

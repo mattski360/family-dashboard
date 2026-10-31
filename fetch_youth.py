@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Best-effort FALLBACK parse of the ward site's "<Month> Youth Activities" lists
+"""Best-effort FALLBACK parse of the ward site's youth activity lists ("<Month> Youth Activities" headings, or one
+"Youth Activities" heading with a sub-heading per month)
 (https://www.highland43.org/wardannouncements) into data/dashboard.json -> youth.activities.
 
 * The ward Google Sheet (entered as source "sheet"/"manual") is the primary source. Site items are
@@ -17,6 +18,7 @@ import html
 import json
 import re
 import sys
+import time
 import urllib.request
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -40,10 +42,17 @@ DATE_RE = re.compile(r"^(?P<mon>jan|feb|mar|apr|may|jun|jul|aug|sept?|oct|nov|de
                      r"(?:st|nd|rd|th)?\s*(?:\((?P<grp>[^)]*)\))?\s*:?\s*(?P<rest>.*)$", re.I)
 
 
-def fetch(url: str) -> str:
+def fetch(url: str, tries: int = 3) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (family-dashboard)"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8", "replace")
+    for k in range(tries):   # the ward site occasionally drops the TLS connection; retry before giving up
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return r.read().decode("utf-8", "replace")
+        except Exception:
+            if k == tries - 1:
+                raise
+            time.sleep(3 * (k + 1))
+    raise RuntimeError("unreachable")
 
 
 def to_lines(fragment: str) -> list[str]:
@@ -52,18 +61,32 @@ def to_lines(fragment: str) -> list[str]:
     return [re.sub(r"\s+", " ", ln).strip() for ln in text.splitlines() if ln.strip()]
 
 
-def group_of(label: str) -> str | None:
-    if len(label) > 30:
-        return None
+def _group_one(label: str) -> str | None:
     for pat, code in GROUPS:
         if re.search(pat, label, re.I):
             return code
     return None
 
 
+# a label naming several groups ("YW Sr. & Teachers", "Teachers & Priests") is filed under the one that involves our
+# boys first, so a joint activity isn't dropped just because YW is named first
+GROUP_PREF = ["teachers", "deacons", "all_ym", "all_youth", "priests", "yw"]
+
+
+def group_of(label: str) -> str | None:
+    if len(label) > 30:
+        return None
+    if re.search(r"\ball\s*groups\b", label, re.I):
+        return "all_youth"
+    codes = {c for c in (_group_one(x) for x in re.split(r"\s*(?:&|\band\b|,|/)\s*", label)) if c}
+    if not codes:
+        return None
+    return min(codes, key=GROUP_PREF.index)
+
+
 def split_group(text: str) -> tuple[str, str]:
     """'Deacons: Tour the MTC' -> ('deacons', 'Tour the MTC'); no prefix -> all_youth."""
-    m = re.match(r"^([A-Za-z .&]+?):\s*(.+)$", text)
+    m = re.match(r"^([A-Za-z .&()/,]+?):\s*(.+)$", text)
     if m and group_of(m.group(1)):
         return group_of(m.group(1)), m.group(2).strip()
     return "all_youth", text.strip()
@@ -77,30 +100,61 @@ def year_for(month: int, today: dt.date) -> int:
     return today.year
 
 
+def month_sections(page: str) -> list[tuple[str, str]]:
+    """(month name, body html) for each month's youth-activity list. Two page layouts are understood:
+    * one heading per month: "<h2>November Youth Activities</h2> ...list..."
+    * one "<h2>Youth Activities</h2>" heading with a sub-heading per month: "<h3>November</h3> ...list..." (Oct 2026 layout)."""
+    heads = []
+    for m in re.finditer(r"(?is)<h([1-4])[^>]*>(.*?)</h\1>", page):
+        t = to_lines(m.group(2))
+        heads.append((int(m.group(1)), t[0] if t else "", m.start(), m.end()))
+    out = []
+    for k, (lvl, text, _s, end) in enumerate(heads):
+        body_end = heads[k + 1][2] if k + 1 < len(heads) else len(page)
+        hm = re.match(r"^(\w+)\s+youth activities", text, re.I)
+        if hm and hm.group(1).lower() in [f.lower() for f in FULL]:
+            out.append((hm.group(1), page[end:body_end]))
+            continue
+        if re.fullmatch(r"(?i)youth activities:?", text.strip()):
+            for lvl2, text2, _s2, end2 in heads[k + 1:]:
+                if lvl2 <= lvl:
+                    break
+                j = heads.index((lvl2, text2, _s2, end2))
+                sub_end = heads[j + 1][2] if j + 1 < len(heads) else len(page)
+                mm = re.fullmatch(r"(?i)(\w+):?", text2.strip())
+                if mm and mm.group(1).lower() in [f.lower() for f in FULL]:
+                    out.append((mm.group(1), page[end2:sub_end]))
+    return out
+
+
+AND_DATE_RE = re.compile(r"^(?:&|and)\s+(?P<mon>jan|feb|mar|apr|may|jun|jul|aug|sept?|oct|nov|dec)[a-z]*\.?\s+(?P<day>\d{1,2})"
+                         r"(?:st|nd|rd|th)?\s*:?\s*(?P<rest>.*)$", re.I)
+
+
 def parse(page: str, today: dt.date) -> list[dict]:
     wanted = {FULL[today.month - 1].lower(), FULL[today.month % 12].lower()}   # this month + next
     items: list[dict] = []
-    for m in re.finditer(r"(?is)<h[1-4][^>]*>(.*?)</h[1-4]>", page):
-        head = to_lines(m.group(1))
-        head = head[0] if head else ""
-        hm = re.match(r"^(\w+)\s+youth activities", head, re.I)
-        if not hm or hm.group(1).lower() not in wanted:
+    for month, body in month_sections(page):
+        if month.lower() not in wanted:
             continue
-        nxt = re.search(r"(?is)<h[1-4][^>]*>", page[m.end():])
-        body = page[m.end(): m.end() + nxt.start()] if nxt else page[m.end():]
-        cur: dt.date | None = None
+        cur: list[dt.date] = []
         cur_grp = None
         for line in to_lines(body):
             dm = DATE_RE.match(line)
             if dm:
                 mon = MONTHS[dm.group("mon").lower()[:3]]
-                cur = dt.date(year_for(mon, today), mon, int(dm.group("day")))
+                cur = [dt.date(year_for(mon, today), mon, int(dm.group("day")))]
                 cur_grp = group_of(dm.group("grp")) if dm.group("grp") else None
                 rest = dm.group("rest").strip()
+                am = AND_DATE_RE.match(rest)     # "December 24th & December 31st" -> both dates
+                if am:
+                    mon2 = MONTHS[am.group("mon").lower()[:3]]
+                    cur.append(dt.date(year_for(mon2, today), mon2, int(am.group("day"))))
+                    rest = am.group("rest").strip()
                 if not rest:
                     continue
                 line = rest
-            if cur is None:
+            if not cur:
                 continue
             grp, title = split_group(line)
             if cur_grp and grp == "all_youth":
@@ -108,11 +162,12 @@ def parse(page: str, today: dt.date) -> list[dict]:
             none = bool(re.search(r"no activity|cancel", title, re.I))
             title = re.sub(r"\s*-\s*no activity", " \u2014 no activity", title, flags=re.I)
             title = re.sub(r"\s+sunday event$", "", title, flags=re.I)
-            items.append({
-                "id": f"yth-site-{cur:%Y%m%d}-{re.sub(r'[^a-z0-9]+', '-', (grp + '-' + title).lower()).strip('-')[:40]}",
-                "date": cur.isoformat(), "title": title[:1].upper() + title[1:], "group": grp,
-                "kind": "none" if none else "activity", "source": "site",
-            })
+            for d in cur:
+                items.append({
+                    "id": f"yth-site-{d:%Y%m%d}-{re.sub(r'[^a-z0-9]+', '-', (grp + '-' + title).lower()).strip('-')[:40]}",
+                    "date": d.isoformat(), "title": title[:1].upper() + title[1:], "group": grp,
+                    "kind": "none" if none else "activity", "source": "site",
+                })
     return items
 
 

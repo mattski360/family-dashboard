@@ -5,8 +5,8 @@
      (wx-highland-v1), graceful fallback ("as of" time / "Weather unavailable").
   2. Trivia + Joke of the day (page-2 bottom row): tap-to-reveal, one of each per day from data/daily_fun.json.
   3. Gratitude board: third rotating page from GRAT_FROM to GRAT_TO (Oct 30 - Nov 30). Name picker + text box,
-     notes in localStorage (grat-YYYY, this device only). Composing freezes rotation, the version-check reload and the
-     30-min reload (replaces the meta refresh). ?grat=0 / ?grat=1 force it off / on.
+     notes in localStorage (grat-YYYY, this device only). Composing freezes rotation and both reloads (the template's
+     10-min version check and 90-min safety reload wait for window.__composing). ?grat=0 / ?grat=1 force it off / on.
 build.py calls transform(html, fun, prod=True) on the rendered landscape page; build_nov_mockup.py makes the preview."""
 import html, json, re, sys
 from pathlib import Path
@@ -94,6 +94,7 @@ CSS = r"""
 /* composer overlay (outside #stage: its taps never flip pages) */
 #gcomp{position:fixed;inset:0;z-index:60;background:rgba(80,40,10,.35);display:none;align-items:flex-start;justify-content:center;padding-top:3vh}
 #gcomp.on{display:flex}
+#gcomp .gcard{max-height:100%;overflow-y:auto;box-sizing:border-box;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #gcomp .gcard{width:min(92vw,1100px);background:#FFFBF5;border-radius:28px;padding:22px 28px 22px;box-shadow:0 20px 60px rgba(80,40,10,.3);font-size:18px}
 #gcomp .gch{display:flex;align-items:center;gap:12px;font-size:26px;font-weight:800;color:#8A4A12}
 #gcomp .gch .gcx{margin-left:auto;border:0;background:#F3E6D6;color:#8A4A12;font-size:28px;line-height:1;width:52px;height:52px;border-radius:99px;cursor:pointer}
@@ -319,8 +320,13 @@ JS = r"""
   function open(ev){if(ev){ev.stopPropagation();ev.preventDefault();}
     window.__composing=true; if(window.dashRotHold)window.dashRotHold(true);
     comp.classList.add('on');comp.setAttribute('aria-hidden','false');upd();
-    if(!kbd)setTimeout(function(){gin.focus();},60);}
-  function close(){clearTimeout(idle);comp.classList.remove('on');comp.setAttribute('aria-hidden','true');gin.blur();
+    vvFit();if(!kbd)setTimeout(function(){gin.focus();},60);}
+  // Android on-screen keyboard: keep the composer inside the visible area (input + Save never hidden)
+  var VV=window.visualViewport;
+  function vvFit(){if(!VV||!comp.classList.contains('on'))return;comp.style.top=VV.offsetTop+'px';comp.style.height=VV.height+'px';comp.style.bottom='auto';
+    var a=document.activeElement;if(a===gin||a===gg)a.scrollIntoView({block:'nearest'});}
+  if(VV){VV.addEventListener('resize',vvFit);VV.addEventListener('scroll',vvFit);}
+  function close(){clearTimeout(idle);comp.classList.remove('on');comp.setAttribute('aria-hidden','true');gin.blur();comp.style.top=comp.style.height=comp.style.bottom='';
     window.__composing=false; if(window.dashRotHold)window.dashRotHold(false);}
   function save(){var t=gin.value.trim().replace(/\s+/g,' ');if(!who||!t)return;
     var ts=Date.now(),a=notes(),g=who==='Guest'?gg.value.trim().replace(/\s+/g,' ').slice(0,24):'',x={n:who,t:t.slice(0,120),ts:ts};if(g)x.g=g;a.push(x);store(GK,a);
@@ -332,7 +338,7 @@ JS = r"""
   document.getElementById('gnames').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;who=b.getAttribute('data-n');
     [].forEach.call(this.querySelectorAll('button'),function(o){o.classList.toggle('on',o===b);});
     var isG=who==='Guest';ggrw.hidden=!isG;tgt=isG?gg:gin;upd();if(!kbd)tgt.focus();});
-  gg.addEventListener('focus',function(){tgt=gg;}); gin.addEventListener('focus',function(){tgt=gin;});
+  gg.addEventListener('focus',function(){tgt=gg;gg.scrollIntoView({block:'nearest'});}); gin.addEventListener('focus',function(){tgt=gin;gin.scrollIntoView({block:'nearest'});});
   gg.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();tgt=gin;gin.focus();}});
   // with the built-in keys on, tapping a field picks where the keys type
   gg.addEventListener('pointerdown',function(){tgt=gg;}); gin.addEventListener('pointerdown',function(){tgt=gin;});
@@ -373,9 +379,10 @@ def sub1(h, old, new, count=1):
 def transform(h, fun, prod=False):
     if not prod:
         h = sub1(h, "<title>", "<title>MOCKUP Nov features · ")
-    # 30-min meta reload -> JS reload that waits while someone is typing on the gratitude board
-    h = re.sub(r'<meta http-equiv="refresh" content="1800">\n?', "", h, count=1)
+    # (reloads: the template's version check + 90-min safety reload already wait while window.__composing is set)
     h = sub1(h, "</head>", f"<style>{CSS}</style></head>")
+    # Android keyboard resizes the layout instead of covering the gratitude composer
+    h = sub1(h, 'viewport-fit=cover">', 'viewport-fit=cover, interactive-widget=resizes-content">')
     h = sub1(h, "<body ", f'<body data-grat-from="{GRAT_FROM}" data-grat-to="{GRAT_TO}" ' + ('' if prod else 'data-grat-force="1" '))
     # 1. weather in the page-1 header, under the date/clock
     for pid, wid in (("p1", "wx"), ("p2", "wx2")):  # same widget on both pages; one fetch renders both
@@ -407,11 +414,6 @@ def transform(h, fun, prod=False):
     h = sub1(h, "(cur+1)%2", "(cur+1)%RP.length", 0)
     if not prod:  # the mockup keeps its own rotation state (same origin as the live page)
         h = sub1(h, "KEY='dash-land-rot'", "KEY='dash-mock-rot'")
-    # version-check reload also waits while composing; plus the 30-min reload (was the meta refresh)
-    h = sub1(h, "aEl.classList.contains('on'))return;", "aEl.classList.contains('on')||window.__composing)return;")
-    h = sub1(h, "window.addEventListener('resize',function(){clearTimeout(window.__f);",
-             "var bootAt=Date.now();setInterval(function(){if(!window.__composing&&Date.now()-bootAt>1800e3)location.reload();},30000);\n"
-             "  window.addEventListener('resize',function(){clearTimeout(window.__f);")
     fun_json = json.dumps({"trivia": fun["trivia"], "jokes": fun["jokes"]}, ensure_ascii=False).replace("</", "<\\/")
     h = sub1(h, "</body>", f'<script type="application/json" id="fundata">{fun_json}</script>{JS}</body>')
     return h

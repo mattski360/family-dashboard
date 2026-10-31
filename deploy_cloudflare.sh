@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Publish the built pages to Cloudflare Pages (project family-dashboard, branch main).
-# Stages ONLY public output (index.html, v2/, v3/, landscape/, landscape-a/, landscape-b/, assets/) -- never data/,
-# scripts, private_hide.txt or previews -- and refuses to deploy (exit 3) if a hidden term appears in any staged file.
+# Stages ONLY public output (index.html, v2/, v3/, landscape/, assets/, and the landscape-a/ + landscape-b/ redirects)
+# -- never data/, scripts, private_hide.txt or previews -- and refuses to deploy (exit 3) if a hidden term appears in any staged file.
 # Needs /home/box/.secrets/cloudflare.env (CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID) and wrangler + Node 22 in
 # /home/box/cf-tools (npm i node@22 wrangler). Exits 0 quietly-skipped (with a note) if the credentials are missing.
 set -euo pipefail
@@ -14,10 +14,11 @@ set -a; . "$ENV"; set +a
 export PATH="$TOOLS/node_modules/.bin:$PATH"
 STAGE=$(mktemp -d /tmp/fd-cf-XXXXXX); trap 'rm -rf "$STAGE"' EXIT
 cp index.html "$STAGE/"
-for d in v2 v3 landscape landscape-a landscape-b assets chores-a chores-b chores-c cfm-a cfm-b cfm-c; do [ -d "$d" ] && cp -r "$d" "$STAGE/"; done
+for d in v2 v3 landscape landscape-a landscape-b assets; do   # (old chores-*/cfm-* mockups no longer published)
+  [ -d "$d" ] && cp -r "$d" "$STAGE/"; done
 # fight song (gitignored, Cloudflare only): enable it in the staged pages
 if [ -f "$STAGE/assets/cougar-song.mp3" ]; then
-  for f in "$STAGE"/v3/index.html "$STAGE"/landscape/index.html "$STAGE"/landscape-a/index.html; do
+  for f in "$STAGE"/v3/index.html "$STAGE"/landscape/index.html; do
     [ -f "$f" ] && sed -i -E 's/data-song="" data-song-cf="([^"]+)"/data-song="\1" data-song-cf="\1"/' "$f"
   done
 fi
