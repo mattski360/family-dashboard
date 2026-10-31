@@ -11,7 +11,7 @@ Every border is an inset box-shadow, so no layout size changes. build.py applies
 import colorsys, urllib.parse
 
 # Not live until Matt approves the previews (build_theme_preview.py + shot_themes.py -> shots_theme/). Set True to ship.
-LIVE = False
+LIVE = True
 
 #        name, P, S, T, N, kids (Luke, Wyatt, Tanner), emoji (header/cards), pattern
 THEMES = {

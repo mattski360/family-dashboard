@@ -5,8 +5,8 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-30T17:30:41-06:00",
-    "school_feed_synced": "2026-10-30T17:30:37-06:00",
+    "last_updated": "2026-10-30T18:48:50-06:00",
+    "school_feed_synced": "2026-10-30T18:48:46-06:00",
     "school_feed_window": [
       "2026-10-29",
       "2026-11-20"
@@ -1130,7 +1130,7 @@
     "byu": {
       "team": "BYU Cougars",
       "source": {
-        "football": "ESPN site API team schedule (team 252)",
+        "football": "byucougars.com schedule page",
         "mbb": "byucougars.com schedule page"
       },
       "seasons": {
@@ -1139,7 +1139,7 @@
       },
       "games": [
         {
-          "id": "byu-football-401856775",
+          "id": "byu-football-2026-09-05-utah-tech",
           "sport": "football",
           "date": "2026-09-05",
           "start": "18:00",
@@ -1149,51 +1149,42 @@
           "tv_all": [
             "ESPN+"
           ],
-          "venue": "LaVell Edwards Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-09-06T00:00Z",
           "result": "W 63-7"
         },
         {
-          "id": "byu-football-401856810",
+          "id": "byu-football-2026-09-12-arizona",
           "sport": "football",
           "date": "2026-09-12",
           "start": "13:30",
           "opponent": "Arizona",
           "home_away": "home",
-          "tv": "Fox",
+          "tv": "FOX",
           "tv_all": [
-            "Fox"
+            "FOX"
           ],
-          "venue": "LaVell Edwards Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-09-12T19:30Z",
           "result": "W 28-17"
         },
         {
-          "id": "byu-football-401856795",
+          "id": "byu-football-2026-09-19-colorado-state",
           "sport": "football",
           "date": "2026-09-19",
-          "start": "18:15",
+          "start": "17:30",
           "opponent": "Colorado State",
           "home_away": "away",
           "tv": "CBS",
           "tv_all": [
             "CBS"
           ],
-          "venue": "Canvas Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-09-20T00:15Z",
           "result": "W 41-23"
         },
         {
-          "id": "byu-football-401856818",
+          "id": "byu-football-2026-10-03-tcu",
           "sport": "football",
           "date": "2026-10-03",
           "start": "17:00",
@@ -1204,29 +1195,23 @@
             "ESPN",
             "Disney+"
           ],
-          "venue": "Amon G. Carter Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-10-03T23:00Z",
           "result": "W 17-10"
         },
         {
-          "id": "byu-football-401856826",
+          "id": "byu-football-2026-10-09-iowa-state",
           "sport": "football",
           "date": "2026-10-09",
-          "start": "20:30",
+          "start": "20:15",
           "opponent": "Iowa State",
           "home_away": "home",
           "tv": "ESPN",
           "tv_all": [
             "ESPN"
           ],
-          "venue": "LaVell Edwards Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-10-10T02:30Z",
           "result": "W 24-10"
         },
         {
@@ -1243,7 +1228,7 @@
           "result": "W 72-61"
         },
         {
-          "id": "byu-football-401856809",
+          "id": "byu-football-2026-10-17-notre-dame",
           "sport": "football",
           "date": "2026-10-17",
           "start": "17:30",
@@ -1253,29 +1238,23 @@
           "tv_all": [
             "ABC"
           ],
-          "venue": "LaVell Edwards Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-10-17T23:30Z",
           "result": "W 28-24"
         },
         {
-          "id": "byu-football-401856835",
+          "id": "byu-football-2026-10-24-ucf",
           "sport": "football",
           "date": "2026-10-24",
           "start": "13:30",
           "opponent": "UCF",
           "home_away": "away",
-          "tv": "Fox",
+          "tv": "FOX",
           "tv_all": [
-            "Fox"
+            "FOX"
           ],
-          "venue": "Acrisure Bounce House",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_FINAL",
-          "espn_utc": "2026-10-24T19:30Z",
           "result": "L 31-39"
         },
         {
@@ -1294,21 +1273,18 @@
           "result": "W 89-77"
         },
         {
-          "id": "byu-football-401856843",
+          "id": "byu-football-2026-10-31-arizona-state",
           "sport": "football",
           "date": "2026-10-31",
           "start": "13:30",
           "opponent": "Arizona State",
           "home_away": "home",
-          "tv": "Fox",
+          "tv": "FOX",
           "tv_all": [
-            "Fox"
+            "FOX"
           ],
-          "venue": "LaVell Edwards Stadium",
-          "note": null,
-          "postseason": false,
-          "status": "STATUS_SCHEDULED",
-          "espn_utc": "2026-10-31T19:30Z"
+          "venue": null,
+          "note": null
         },
         {
           "id": "byu-mbb-2026-11-02-ohio-state",
@@ -1339,7 +1315,7 @@
           "note": null
         },
         {
-          "id": "byu-football-401856849",
+          "id": "byu-football-2026-11-07-utah",
           "sport": "football",
           "date": "2026-11-07",
           "start": "10:00",
@@ -1347,11 +1323,8 @@
           "home_away": "away",
           "tv": null,
           "tv_all": [],
-          "venue": "Rice-Eccles Stadium",
+          "venue": null,
           "note": null,
-          "postseason": false,
-          "status": "STATUS_SCHEDULED",
-          "espn_utc": "2026-11-07T17:00Z",
           "opp_rank": 6,
           "opp_rank_poll": "AP"
         },
@@ -1384,7 +1357,7 @@
           "note": null
         },
         {
-          "id": "byu-football-401856858",
+          "id": "byu-football-2026-11-14-baylor",
           "sport": "football",
           "date": "2026-11-14",
           "start": null,
@@ -1392,11 +1365,8 @@
           "home_away": "home",
           "tv": null,
           "tv_all": [],
-          "venue": "LaVell Edwards Stadium",
-          "note": null,
-          "postseason": false,
-          "status": "STATUS_SCHEDULED",
-          "espn_utc": "2026-11-14T05:00Z"
+          "venue": null,
+          "note": null
         },
         {
           "id": "byu-mbb-2026-11-18-northern-colorado",
@@ -1413,7 +1383,7 @@
           "note": null
         },
         {
-          "id": "byu-football-401856866",
+          "id": "byu-football-2026-11-21-kansas",
           "sport": "football",
           "date": "2026-11-21",
           "start": null,
@@ -1421,11 +1391,8 @@
           "home_away": "away",
           "tv": null,
           "tv_all": [],
-          "venue": "David Booth Kansas Memorial Stadium",
-          "note": null,
-          "postseason": false,
-          "status": "STATUS_SCHEDULED",
-          "espn_utc": "2026-11-21T05:00Z"
+          "venue": null,
+          "note": null
         },
         {
           "id": "byu-mbb-2026-11-23-washington",
@@ -1466,7 +1433,7 @@
           "note": null
         },
         {
-          "id": "byu-football-401856876",
+          "id": "byu-football-2026-11-28-cincinnati",
           "sport": "football",
           "date": "2026-11-28",
           "start": null,
@@ -1474,11 +1441,8 @@
           "home_away": "home",
           "tv": null,
           "tv_all": [],
-          "venue": "LaVell Edwards Stadium",
-          "note": null,
-          "postseason": false,
-          "status": "STATUS_SCHEDULED",
-          "espn_utc": "2026-11-28T05:00Z"
+          "venue": null,
+          "note": null
         },
         {
           "id": "byu-mbb-2026-12-05-northwestern",
@@ -1821,7 +1785,7 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-10-30T17:30:41-06:00",
+      "updated": "2026-10-30T18:48:50-06:00",
       "summary": {
         "football": {
           "record": "6-1",
@@ -1852,7 +1816,7 @@
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
             }
           ],
-          "checked": "2026-10-30T17:30:41-06:00"
+          "checked": "2026-10-30T18:48:50-06:00"
         },
         "mbb": {
           "polls": [
@@ -1881,7 +1845,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
           ],
-          "checked": "2026-10-30T17:30:41-06:00"
+          "checked": "2026-10-30T18:48:50-06:00"
         }
       },
       "fight_song": {
