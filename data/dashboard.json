@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-30T20:12:02-06:00",
-    "school_feed_synced": "2026-10-30T18:48:46-06:00",
+    "last_updated": "2026-10-31T21:04:31-06:00",
+    "school_feed_synced": "2026-10-31T21:01:53-06:00",
     "school_feed_window": [
-      "2026-10-29",
-      "2026-11-20"
+      "2026-10-30",
+      "2026-11-21"
     ],
     "later_days": 8,
     "week_start": "2026-11-01",
@@ -312,36 +312,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261029-grandparents-day-gathering-generations",
-      "date": "2026-10-29",
-      "start": null,
-      "end": null,
-      "title": "Grandparents Day (Gathering Generations)",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261029-k-5-half-day",
-      "date": "2026-10-29",
-      "start": "08:30",
-      "end": "12:00",
-      "title": "K-5 half day",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": "half_day",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "fam-20261029-dl3904",
       "date": "2026-10-29",
       "end_date": null,
@@ -428,6 +398,37 @@
       "source": "family"
     },
     {
+      "id": "fam-20261101-tithing",
+      "date": "2026-11-01",
+      "end_date": null,
+      "start": "15:00",
+      "end": null,
+      "title": "Tithing declaration",
+      "note": "Highland 43rd Ward · with the bishopric",
+      "who": [
+        "family"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261102-mtb-banquet",
+      "date": "2026-11-02",
+      "end_date": null,
+      "start": "18:00",
+      "end": "20:00",
+      "title": "MTB end-of-season banquet",
+      "note": "Highland Gardens · dinner provided · State champs!",
+      "who": [
+        "luke",
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
       "id": "fam-20261103-eq-training",
       "date": "2026-11-03",
       "end_date": null,
@@ -440,6 +441,36 @@
       ],
       "priority": "normal",
       "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "fam-trip-20261104-nyc",
+      "date": "2026-11-04",
+      "end_date": "2026-11-06",
+      "start": null,
+      "end": null,
+      "title": "New York",
+      "note": "Dad's work trip",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "trip",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261104-dl2012",
+      "date": "2026-11-04",
+      "end_date": null,
+      "start": "10:39",
+      "end": "15:00",
+      "title": "Dad's flight SLC → Newark",
+      "note": "Delta 2012 · lands 5:00 PM ET",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
       "source": "family"
     },
     {
@@ -471,6 +502,21 @@
       "priority": "low",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261106-dl1009",
+      "date": "2026-11-06",
+      "end_date": null,
+      "start": "04:59",
+      "end": "10:09",
+      "title": "Dad's flight home",
+      "note": "Delta 1009 EWR → SLC · lands 10:09 AM",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
     },
     {
       "id": "ahs-20261106-dance-festival-performance",
@@ -697,7 +743,7 @@
     {
       "id": "todo-mtb-party",
       "text": "Watch for Lone Peak MTB end-of-season party date",
-      "detail": "Coach Nick said it will be added to the TeamSnap schedule",
+      "detail": "Banquet set: Mon Nov 2, 6–8 PM, Highland Gardens (on the calendar)",
       "who": [
         "parents",
         "luke"
@@ -705,246 +751,258 @@
       "due": null,
       "hide_after": "2026-11-21",
       "priority": "low",
+      "done": true
+    },
+    {
+      "id": "todo-missionary-week",
+      "text": "Help set up missionary appointments for the ward's missionary week",
+      "detail": "Nov 11–15 · H43 Missionary Signup sheet (Steve Brown, Oct 31 email)",
+      "who": [
+        "parents"
+      ],
+      "due": "2026-11-10",
+      "hide_after": "2026-11-15",
+      "priority": "normal",
       "done": false
     }
   ],
   "spiritual": {
     "come_follow_me": {
       "status": "ready",
-      "week_of": "2026-10-26",
-      "lesson": 44,
-      "dates_label": "Oct 26–Nov 1",
-      "title": "“I Will Turn Their Mourning into Joy”",
-      "reading": "Jeremiah 31–33; 36–39; Lamentations 1; 3",
-      "summary": "The Lord promised captive Israel a new and everlasting covenant, with His law written in their hearts, and said, “I will turn their mourning into joy.” Jeremiah's prophecies were written down by Baruch, Ebed-melech bravely rescued Jeremiah from the dungeon, and Lamentations reminds us the Lord's compassions “are new every morning.”",
+      "week_of": "2026-11-02",
+      "lesson": 45,
+      "dates_label": "Nov 2–8",
+      "title": "“A New Spirit Will I Put within You”",
+      "reading": "Ezekiel 1–3; 33–34; 36–37; 47",
+      "summary": "Ezekiel was a prophet in exile in Babylon. The Lord called him to be a “watchman,” taught that He wants to forgive, promised “a new heart” and “a new spirit,” showed dry bones coming back to life and two sticks (the Bible and the Book of Mormon) joined as one, and gave Ezekiel a vision of healing water flowing from the temple.",
       "questions": [
-        "What does it mean to have God's law written in your heart? (Jeremiah 31:33)",
-        "How was Ebed-melech brave, and how can we stand up for what is right? (Jeremiah 38:7–13)",
-        "How can Jesus Christ turn sadness into joy? (Jeremiah 31:13; Lamentations 3:22–26)"
+        "How is our living prophet like a watchman for us? (Ezekiel 3:17)",
+        "What does it mean to get “a new heart” and “a new spirit”? (Ezekiel 36:26)",
+        "How do the Bible and the Book of Mormon work together to bring us to Jesus Christ? (Ezekiel 37:15–23)"
       ],
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/44?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/45?lang=eng",
       "previous": {
-        "show_before": "2026-10-26",
-        "lesson": 43,
-        "dates_label": "Oct 19–25",
-        "title": "“Before I Formed Thee in the Belly I Knew Thee”",
-        "reading": "Jeremiah 1–3; 7; 16–18; 20",
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/43?lang=eng"
+        "show_before": "2026-11-02",
+        "lesson": 44,
+        "dates_label": "Oct 26–Nov 1",
+        "title": "“I Will Turn Their Mourning into Joy”",
+        "reading": "Jeremiah 31–33; 36–39; Lamentations 1; 3",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/44?lang=eng"
       },
       "featured_question": 0,
       "daily": [
         {
           "dow": "Mon",
-          "scripture": "Jeremiah 31:3",
-          "quote": "I have loved thee with an everlasting love",
-          "thought": "Some things wear out fast, but God's love lasts forever. When have you felt His love?"
+          "scripture": "Ezekiel 3:17",
+          "quote": "I have made thee a watchman unto the house of Israel",
+          "thought": "A prophet is like a watchman who sees danger before we do. What has our prophet warned us about lately?"
         },
         {
           "dow": "Tue",
-          "scripture": "Jeremiah 31:13",
-          "quote": "I will turn their mourning into joy, and will comfort them",
-          "thought": "Jesus can turn sad days into happy ones. Who can we comfort today?"
+          "scripture": "Ezekiel 34:11",
+          "quote": "I, even I, will both search my sheep, and seek them out",
+          "thought": "Jesus is our Good Shepherd and never stops looking for us. Who is one “lost sheep” we could reach out to?"
         },
         {
           "dow": "Wed",
-          "scripture": "Jeremiah 31:33",
-          "quote": "I will put my law in their inward parts, and write it in their hearts",
-          "thought": "Covenants are promises written on our hearts. What promise did you make at baptism?"
+          "scripture": "Ezekiel 33:11",
+          "quote": "turn ye, turn ye from your evil ways",
+          "thought": "The Lord wants to forgive, not punish. What is one thing we could turn away from today?"
         },
         {
           "dow": "Thu",
-          "scripture": "Jeremiah 36:2",
-          "quote": "Take thee a roll of a book, and write therein all the words that I have spoken unto thee",
-          "thought": "The Lord had Jeremiah's words written down so we could read them. What verse is special to you?"
+          "scripture": "Ezekiel 36:26",
+          "quote": "A new heart also will I give you, and a new spirit will I put within you",
+          "thought": "Jesus can soften a “stony heart.” How does repenting make our hearts new?"
         },
         {
           "dow": "Fri",
-          "scripture": "Jeremiah 38:10–13",
-          "quote": "they drew up Jeremiah with cords, and took him up out of the dungeon",
-          "thought": "Ebed-melech bravely rescued the prophet. How can you stand up for what is right this week?"
+          "scripture": "Ezekiel 37:4–5",
+          "quote": "O ye dry bones, hear the word of the Lord",
+          "thought": "God brought dry bones back to life! What helps you feel spiritually alive?"
         },
         {
           "dow": "Sat",
-          "scripture": "Lamentations 3:22–23",
-          "quote": "his compassions fail not. They are new every morning",
-          "thought": "Every morning is a fresh start with the Lord. What can we do better today?"
+          "scripture": "Ezekiel 37:17",
+          "quote": "join them one to another into one stick; and they shall become one in thine hand",
+          "thought": "The Bible and the Book of Mormon work together. What's a favorite story from each?"
         },
         {
           "dow": "Sun",
-          "scripture": "Jeremiah 32:17",
-          "quote": "there is nothing too hard for thee",
-          "thought": "Nothing is too hard for Heavenly Father. What can we ask Him to help us with this week?"
+          "scripture": "Ezekiel 47:9",
+          "quote": "every thing shall live whither the river cometh",
+          "thought": "Ezekiel saw a river from the temple heal the Dead Sea. How do temple blessings heal families?"
         }
       ],
       "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh.",
       "deep_dive": {
         "_comment": "Tap-to-open study popup (live landscape). Filled on the Saturday refresh from the official lesson page for week_of. Quotes must be copied verbatim (KJV / manual). See README 'Study popups'.",
-        "week_of": "2026-10-26",
-        "intro": "When the Lord called Jeremiah, his job was not only “to root out, and to pull down” but also “to build, and to plant” (Jeremiah 1:10). Even after Jerusalem fell, the Lord promised a Messiah, “the Branch of righteousness” (Jeremiah 33:15), and a new covenant. When we make mistakes or feel sad, He promises: “I will turn their mourning into joy” (Jeremiah 31:13).",
+        "week_of": "2026-11-02",
+        "intro": "Ezekiel was a priest who was captured and taken to Babylon with other Israelites, far from the temple. Then he had a vision and saw “the glory of the Lord” (Ezekiel 1:28) right there among the exiles. His message is full of hope: if the people would “hear the word of the Lord” (Ezekiel 37:4), their “stony heart” could be replaced with “a new heart” (Ezekiel 36:26).",
         "scripture_blocks": [
           {
-            "ref": "Jeremiah 31; 33",
-            "about": "Comfort and hope for Israel in captivity"
+            "ref": "Ezekiel 1–3",
+            "about": "Ezekiel’s vision of God’s glory and his call to be a watchman"
           },
           {
-            "ref": "Jeremiah 31:31–34; 32:37–42",
-            "about": "The new and everlasting covenant"
+            "ref": "Ezekiel 33–34",
+            "about": "The Lord wants to forgive; shepherds who should feed the sheep"
           },
           {
-            "ref": "Jeremiah 36",
-            "about": "Jeremiah and Baruch write the Lord’s words; the king burns the scroll"
+            "ref": "Ezekiel 36",
+            "about": "A new heart and a new spirit"
           },
           {
-            "ref": "Jeremiah 37–39",
-            "about": "King Zedekiah, Ebed-melech, and the fall of Jerusalem"
+            "ref": "Ezekiel 37",
+            "about": "The valley of dry bones and the two sticks of Judah and Joseph"
           },
           {
-            "ref": "Lamentations 1; 3",
-            "about": "Poems of sorrow, and hope in the Lord’s mercy"
+            "ref": "Ezekiel 47",
+            "about": "Healing water flows out from the temple"
           }
         ],
         "principles": [
           {
-            "emoji": "🏠",
-            "title": "The Lord will bring His covenant people out of captivity.",
-            "ref": "Jeremiah 31; 33",
-            "explain": "Israel would cry with “lamentation, and bitter weeping” (Jeremiah 31:15), but the Lord promised to gather them home again. He keeps His promises to us, too."
+            "emoji": "🔭",
+            "title": "Prophets are like watchmen who warn us of danger.",
+            "ref": "Ezekiel 3:17; 33:1–5",
+            "explain": "A watchman stood on the city wall to spot danger coming and warn everyone. Our living prophet sees spiritual dangers we can’t see yet and warns us so we can stay safe."
           },
           {
-            "emoji": "❤️",
-            "title": "“They shall be my people, and I will be their God.”",
-            "ref": "Jeremiah 31:31–34; 32:37–42",
-            "explain": "A covenant is a two-way promise with God. The new covenant isn’t just about looking good on the outside—God wants His law written in our hearts, so we choose right because we love Him."
+            "emoji": "🐑",
+            "title": "The Lord invites me to feed His sheep.",
+            "ref": "Ezekiel 3; 34",
+            "explain": "The Lord called leaders shepherds. Jesus is the Good Shepherd who looks for lost sheep and helps hurt ones. We can be shepherds too by ministering to friends, family, and anyone who feels left out."
           },
           {
-            "emoji": "📜",
-            "title": "The scriptures have power to turn me away from evil.",
-            "ref": "Jeremiah 36",
-            "explain": "Baruch wrote Jeremiah’s words on a scroll. King Jehoiakim cut it up and burned it, but the Lord had it written again. God’s word is worth protecting and reading."
+            "emoji": "💗",
+            "title": "The Lord wants to forgive.",
+            "ref": "Ezekiel 33:10–19; 36:26–27",
+            "explain": "Repenting isn’t just saying sorry—it’s turning around. When we turn to the Lord, He doesn’t keep score of our old sins. He gives us a new heart and His Spirit to help us do better."
           },
           {
-            "emoji": "🦺",
-            "title": "I can be bold in standing up for what is right.",
-            "ref": "Jeremiah 38:6–13; 39:15–18",
-            "explain": "Jeremiah was thrown into a muddy dungeon. Ebed-melech went to the king, then pulled Jeremiah out with ropes and old rags. The Lord promised to protect him because he trusted God."
+            "emoji": "📚",
+            "title": "The Lord is gathering His people and giving them new life.",
+            "ref": "Ezekiel 37",
+            "explain": "Ezekiel saw dry bones come back to life, and two sticks joined into one. The stick of Judah can mean the Bible and the stick of Joseph the Book of Mormon. Together they help gather people to Jesus Christ."
           },
           {
-            "emoji": "🌅",
-            "title": "The Lord can relieve the sorrow I experience because of sin.",
-            "ref": "Lamentations 1; 3",
-            "explain": "Lamentations are sad poems written after Jerusalem and its temple were destroyed. Even there, we find hope: Jesus Christ’s mercy is fresh every morning, and we can always repent."
+            "emoji": "🏞️",
+            "title": "I can find spiritual healing in the house of the Lord.",
+            "ref": "Ezekiel 47:1–12",
+            "explain": "The Dead Sea is so salty nothing can live in it. In Ezekiel’s vision, water from the temple made it full of fish, with trees whose leaves were medicine. Temple covenants bring that kind of healing to us and our families."
           }
         ],
         "key_verses": [
           {
-            "ref": "Jeremiah 31:3",
-            "text": "Yea, I have loved thee with an everlasting love: therefore with lovingkindness have I drawn thee."
+            "ref": "Ezekiel 3:17",
+            "text": "Son of man, I have made thee a watchman unto the house of Israel: therefore hear the word at my mouth, and give them warning from me."
           },
           {
-            "ref": "Jeremiah 31:13",
-            "text": "For I will turn their mourning into joy, and will comfort them, and make them rejoice from their sorrow."
+            "ref": "Ezekiel 34:16",
+            "text": "I will seek that which was lost, and bring again that which was driven away, and will bind up that which was broken, and will strengthen that which was sick: but I will destroy the fat and the strong; I will feed them with judgment."
           },
           {
-            "ref": "Jeremiah 31:33",
-            "text": "I will put my law in their inward parts, and write it in their hearts; and will be their God, and they shall be my people."
+            "ref": "Ezekiel 36:26",
+            "text": "A new heart also will I give you, and a new spirit will I put within you: and I will take away the stony heart out of your flesh, and I will give you an heart of flesh."
           },
           {
-            "ref": "Jeremiah 32:17",
-            "text": "There is nothing too hard for thee."
+            "ref": "Ezekiel 37:16–17",
+            "text": "Moreover, thou son of man, take thee one stick, and write upon it, For Judah, and for the children of Israel his companions: then take another stick, and write upon it, For Joseph, the stick of Ephraim, and for all the house of Israel his companions: And join them one to another into one stick; and they shall become one in thine hand."
           },
           {
-            "ref": "Lamentations 3:22–23",
-            "text": "It is of the Lord’s mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness."
+            "ref": "Ezekiel 47:9",
+            "text": "And it shall come to pass, that every thing that liveth, which moveth, whithersoever the rivers shall come, shall live: and there shall be a very great multitude of fish, because these waters shall come thither: for they shall be healed; and every thing shall live whither the river cometh."
           }
         ],
         "quote": {
-          "text": "My plea to all who have fallen into this trap of the adversary is to never give up! Regardless of how desperate things may seem or how desperate they may yet become, please believe me, you can always have hope. Always.",
-          "by": "President M. Russell Ballard, “The Joy of Hope Fulfilled,” Ensign, Nov. 1992"
+          "text": "Despite how far the covenant people had fallen, God had not totally abandoned them.",
+          "by": "Come, Follow Me—For Home and Church: Old Testament 2026, Nov. 2–8"
         },
         "questions": [
-          "What does it mean to have God’s law written in your heart? (Jeremiah 31:33)",
-          "What promises have you made to God at baptism? How is He keeping His promises to you? (Mosiah 18:10, 13)",
-          "How did different people treat Jeremiah’s scroll? How do you feel about the scriptures? (Jeremiah 36)",
-          "What impresses you about Ebed-melech? How could you follow his example this week? (Jeremiah 38:7–13)",
-          "What in Lamentations 3:22–26 helps us understand the forgiveness Jesus Christ offers?"
+          "Who are the “sheep” the Lord wants you to feed? How can you follow the Savior’s example as our shepherd? (Ezekiel 34:11–31)",
+          "What do you find in Ezekiel 33:12–19 and 36:26–27 that helps you understand what it means to repent?",
+          "What is the Lord trying to accomplish through the gathering of Israel, and how is He doing it? (Ezekiel 37)",
+          "How have the Bible and the Book of Mormon worked together to help you come to Christ? (Ezekiel 37:15–23)",
+          "What might the waters in Ezekiel 47:1–12 symbolize? How have you found healing because of the temple?"
         ],
         "activity": {
-          "title": "Write it on your heart",
-          "steps": "Each person draws a big heart on a piece of paper. Read Jeremiah 31:31–34 together, then write inside your heart the things you learn about making covenants with God (and one promise you made at baptism). Bonus: find something that lasts a long time (like a coin) and something that doesn’t (like a banana) and talk about what “everlasting love” means (Jeremiah 31:3)."
+          "title": "Two sticks, one message",
+          "steps": "Find two sticks. Write For Judah (Bible) on one and For Joseph (Book of Mormon) on the other. Read Ezekiel 37:15–23 together, then hold the sticks together and take turns sharing a story or scripture from each book that helps you feel closer to the Savior. Bonus: play “watchman”—one person looks out the window and tells everyone what’s happening outside, then talk about how our prophet is a watchman for us (Ezekiel 3:17)."
         },
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/44?lang=eng"
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/45?lang=eng"
       }
     },
     "strength_of_youth": {
       "status": "ready",
-      "label": "October chapter",
-      "month": "2026-10",
-      "topic": "Ch. 10: Your body is sacred",
-      "focus": "“Treat your body—and others’ bodies—with respect.”",
-      "quote": "Ask yourself, “Am I honoring my body as a sacred gift from God?”",
+      "label": "November chapter",
+      "month": "2026-11",
+      "topic": "Ch. 11: Truth will make you free",
+      "focus": "“Live with integrity.”",
+      "quote": "Be the same faithful follower of Jesus Christ in public and in private.",
       "daily_application": "",
       "daily_by_weekday": {
-        "Sun": "Sabbath rest: recharge body and spirit; no screens at dinner.",
-        "Mon": "Phone out of the bedroom tonight; aim for 8–10 hours of sleep.",
-        "Tue": "Fuel up with water and real food; skip energy drinks.",
-        "Wed": "No vaping or harmful substances—your body is a temple.",
-        "Thu": "Choose uplifting media; scroll past anything that drags you down.",
-        "Fri": "Respect others’ bodies: no body-shaming jokes or comments.",
-        "Sat": "Get moving outside, and ask Christ for strength with a hard habit."
+        "Sun": "Bring one gospel question to dinner; look for the answer together.",
+        "Mon": "Always be learning: give homework your full effort today.",
+        "Tue": "Learn one new thing about Jesus Christ from the scriptures.",
+        "Wed": "No lying, cheating, or copying—at school, online, everywhere.",
+        "Thu": "Be the same person in public and in private.",
+        "Fri": "Stand up for what's right kindly, even if you stand alone.",
+        "Sat": "Learn a new skill or read a good book for fun."
       },
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/10-your-body-is-sacred?lang=eng",
-      "lesson_plan_url": "https://www.churchofjesuschrist.org/study/ftsoy/2026/10/fsy-lessons/00-intro?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/11-truth-will-make-you-free?lang=eng",
+      "lesson_plan_url": "https://www.churchofjesuschrist.org/study/ftsoy/2026/11/fsy-lessons/00-intro?lang=eng",
       "deep_dive": {
         "_comment": "Tap-to-open study popup (live landscape). Monthly: refresh when strength_of_youth.month changes. Quotes verbatim from the guide. See README 'Study popups'.",
-        "month": "2026-10",
-        "chapter_title": "10. Your body is sacred",
+        "month": "2026-11",
+        "chapter_title": "11. Truth will make you free",
         "scripture": {
-          "ref": "1 Corinthians 6:19",
-          "text": "What? know ye not that your body is the temple of the Holy Ghost which is in you, which ye have of God, and ye are not your own?"
+          "ref": "John 8:32",
+          "text": "And ye shall know the truth, and the truth shall make you free."
         },
-        "intro": "Your body is an amazing gift from your Heavenly Father. Having a body gives you increased power to exercise your freedom to choose between right and wrong.",
+        "intro": "Your Heavenly Father is a God of truth. All truth comes from Him and leads to Him. You show that you value truth when you keep learning, live with integrity, and bravely stand for what you know is right.",
         "teachings": [
           {
-            "emoji": "✨",
-            "title": "Your body is in the image of God",
-            "explain": "The scriptures compare our bodies to a holy temple, a place where the Spirit can dwell. Your body isn’t perfect now, but your experiences help you prepare for a perfect, resurrected body someday."
+            "emoji": "📖",
+            "title": "Always be learning",
+            "explain": "Heavenly Father wants His children to keep learning—at school, in training, and from sources you trust. Education isn’t just about money; it’s part of becoming more like Him. Ask the Lord to guide you."
           },
           {
-            "emoji": "🍎",
-            "title": "Body and spirit are connected",
-            "explain": "Your soul is your body and your spirit together, so physical health and spiritual health go hand in hand. The Word of Wisdom teaches how to care for your body and promises blessings."
+            "emoji": "✝️",
+            "title": "Learn spiritual truths",
+            "explain": "While you learn about the world, learn about the Savior who created it. Seminary and personal gospel study help you know Him and prepare to serve a mission and share the gospel."
           },
           {
-            "emoji": "👕",
-            "title": "Treat your body—and others’ bodies—with respect",
-            "explain": "When choosing clothes, hairstyle, and looks, see yourself and others as God’s beloved children with a divine destiny, not just bodies."
+            "emoji": "🤝",
+            "title": "Live with integrity",
+            "explain": "Integrity means loving what is right more than being comfortable or popular. Don’t steal, lie, cheat, or deceive—at school, at work, or online. Be the same person when no one is watching."
           },
           {
-            "emoji": "💪",
-            "title": "Strengthen your body, don’t hurt it",
-            "explain": "Enjoy the good things God has given. Alcohol, tobacco, coffee, tea, and harmful drugs are not for your body or spirit—and even medicine can hurt if it’s misused."
+            "emoji": "🎁",
+            "title": "You have something precious to share",
+            "explain": "The gospel holds answers to life’s questions. You don’t have to know everything—you know enough to love your neighbor, share true principles, and invite friends to learn more."
           },
           {
-            "emoji": "🛡️",
-            "title": "Keep sacred things sacred",
-            "explain": "Avoid anything you watch, read, listen to, post, or text that is meant to stir up wrong feelings, including pornography. If a situation makes temptation stronger, avoid it."
+            "emoji": "❓",
+            "title": "Questions can build faith",
+            "explain": "Having questions isn’t weakness. Joseph Smith was 14 when he asked a question with faith. Look for answers in the scriptures, the prophets, family, leaders, and God—and keep living what you already know."
           }
         ],
         "quotes": [
-          "Ask yourself, “Am I honoring my body as a sacred gift from God?”",
-          "Do things that will strengthen your body, not things that will hurt or damage it.",
-          "The Lord has promised great treasures of knowledge to those who keep the Word of Wisdom.",
-          "Turn to Jesus Christ and His gospel, and you will find that weaknesses can become strengths."
+          "Living with integrity means you love what is right in the sight of God—more than you love personal comfort, popularity, or convenience. It means doing what is right simply because it is right.",
+          "Be the same faithful follower of Jesus Christ in public and in private.",
+          "Honesty brings peace and self-respect.",
+          "When you stand up for the teachings of Jesus Christ, He stands with you. Jesus Christ is your strength!"
         ],
-        "blessings": "A healthy body, free from addiction, also increases your ability to receive personal revelation, think clearly, and serve the Lord.",
+        "blessings": "Education increases your ability to serve the Lord, including as a missionary. It empowers you to bless others, especially your family. The more you learn, the more you can help build God’s kingdom and influence the world for good.",
         "questions": [
-          "Am I honoring my body as a sacred gift from God?",
-          "What is one habit (sleep, food, screens, exercise) I could improve to take better care of my body?",
-          "How does keeping the Word of Wisdom help me feel the Spirit and think clearly?",
-          "When I’m tempted, what can I fill my life with to invite Heavenly Father’s and Jesus Christ’s power? (prayer, scriptures, service)",
-          "How can I show respect for other people’s bodies in what I say, joke about, or post?"
+          "Why does God want you to learn about Him and the world around you?",
+          "What should you do when you have questions?",
+          "Do you strive to be honest in all that you do?",
+          "Am I the same follower of Jesus Christ online and in private as I am at church?",
+          "How can I stand up for what is right without being unkind to people who believe differently?"
         ],
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/10-your-body-is-sacred?lang=eng"
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/for-the-strength-of-youth/11-truth-will-make-you-free?lang=eng"
       }
     }
   },
@@ -1000,7 +1058,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-30T20:10:20-06:00",
+    "site_synced": "2026-10-31T21:01:54-06:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -1308,7 +1366,8 @@
             "FOX"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "result": "W 27-20"
         },
         {
           "id": "byu-mbb-2026-11-02-ohio-state",
@@ -1809,10 +1868,10 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-10-30T18:48:50-06:00",
+      "updated": "2026-10-31T21:01:57-06:00",
       "summary": {
         "football": {
-          "record": "6-1",
+          "record": "7-1",
           "standing": "2nd in Big 12",
           "polls": [
             {
@@ -1840,7 +1899,7 @@
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
             }
           ],
-          "checked": "2026-10-30T18:48:50-06:00"
+          "checked": "2026-10-31T21:01:56-06:00"
         },
         "mbb": {
           "polls": [
@@ -1869,7 +1928,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
           ],
-          "checked": "2026-10-30T18:48:50-06:00"
+          "checked": "2026-10-31T21:01:57-06:00"
         }
       },
       "fight_song": {
