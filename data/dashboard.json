@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-01T20:01:18-07:00",
+    "last_updated": "2026-11-01T20:03:50-07:00",
     "school_feed_synced": "2026-11-01T20:01:14-07:00",
     "school_feed_window": [
       "2026-10-31",
@@ -1957,7 +1957,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-31",
+      "as_of": "2026-11-01",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -1982,11 +1982,11 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 91.45
+          "pct": 92.58
         }
       ],
       "previous": {
-        "as_of": "2026-10-29",
+        "as_of": "2026-10-31",
         "courses": [
           {
             "name": "English 9 (Coleman)",
@@ -1999,29 +1999,29 @@
             "pct": 100.0
           },
           {
+            "name": "History of the United States (Chancellor)",
+            "short": "US History",
+            "pct": 94.37
+          },
+          {
             "name": "Biology (Anderson)",
             "short": "Biology",
             "pct": 92.31
           },
           {
-            "name": "History of the United States (Chancellor)",
-            "short": "US History",
-            "pct": 100.0
-          },
-          {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 94.75
+            "pct": 91.45
           }
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-10-31T21:05:56-06:00"
+      "checked_at": "2026-11-01T20:03:50-07:00"
     },
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-10-31",
+      "as_of": "2026-11-01",
       "courses": [
         {
           "name": "English 8 Term 2",
@@ -2051,16 +2051,16 @@
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 87.98
+          "pct": 84.51
         }
       ],
       "previous": {
-        "as_of": "2026-10-29",
+        "as_of": "2026-10-31",
         "courses": [
           {
             "name": "English 8 Term 2",
             "short": "English 8",
-            "pct": 99.92
+            "pct": 100.07
           },
           {
             "name": "Health I",
@@ -2073,14 +2073,14 @@
             "pct": 99.49
           },
           {
-            "name": "Science 8",
-            "short": "Science 8",
-            "pct": 93.14
-          },
-          {
             "name": "Math 8",
             "short": "Math 8",
             "pct": 93.96
+          },
+          {
+            "name": "Science 8",
+            "short": "Science 8",
+            "pct": 93.14
           },
           {
             "name": "Utah History",
@@ -2090,7 +2090,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-10-31T21:05:56-06:00"
+      "checked_at": "2026-11-01T20:03:50-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2139,7 +2139,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-10-31T21:05:56-06:00"
+      "checked_at": "2026-11-01T20:03:50-07:00"
     }
   },
   "adventures": {
