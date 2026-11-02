@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-10-31T21:06:00-06:00",
-    "school_feed_synced": "2026-10-31T21:01:53-06:00",
+    "last_updated": "2026-11-01T20:01:18-07:00",
+    "school_feed_synced": "2026-11-01T20:01:14-07:00",
     "school_feed_window": [
-      "2026-10-30",
-      "2026-11-21"
+      "2026-10-31",
+      "2026-11-22"
     ],
     "later_days": 8,
     "week_start": "2026-11-01",
@@ -340,36 +340,6 @@
       "priority": "low",
       "kind": "event",
       "source": "family"
-    },
-    {
-      "id": "ahs-20261030-k-5-no-school-k-5-in-service-day",
-      "date": "2026-10-30",
-      "start": null,
-      "end": null,
-      "title": "K-5 No School. K-5 In-Service Day",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": "no_school",
-      "priority": "high",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
-      "id": "ahs-20261030-spirit-apparel-day",
-      "date": "2026-10-30",
-      "start": null,
-      "end": null,
-      "title": "Spirit apparel day",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": null,
-      "priority": "low",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "fam-20261031-halloween",
@@ -1058,7 +1028,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-10-31T21:01:54-06:00",
+    "site_synced": "2026-11-01T20:01:15-07:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -1101,14 +1071,6 @@
         "source": "sheet"
       },
       {
-        "id": "yth-site-20261022-all-youth-fall-break-no-activity",
-        "date": "2026-10-22",
-        "title": "Fall Break — no activity",
-        "group": "all_youth",
-        "kind": "none",
-        "source": "site"
-      },
-      {
         "id": "yth-20261022-fall-festival",
         "date": "2026-10-22",
         "title": "Fall Festival",
@@ -1126,14 +1088,6 @@
         "source": "sheet"
       },
       {
-        "id": "yth-site-20261025-all-youth-festival-devotional",
-        "date": "2026-10-25",
-        "title": "Festival devotional",
-        "group": "all_youth",
-        "kind": "activity",
-        "source": "site"
-      },
-      {
         "id": "yth-20261029-teachers-mtc",
         "date": "2026-10-29",
         "title": "MTC tour?",
@@ -1149,14 +1103,6 @@
         "group": "deacons",
         "kind": "activity",
         "source": "sheet"
-      },
-      {
-        "id": "yth-site-20261029-deacons-tour-the-mtc",
-        "date": "2026-10-29",
-        "title": "Tour the MTC",
-        "group": "deacons",
-        "kind": "activity",
-        "source": "site"
       },
       {
         "id": "yth-site-20261105-deacons-bowling",
@@ -1202,6 +1148,70 @@
         "id": "yth-site-20261126-all-youth-thanksgiving-no-activity",
         "date": "2026-11-26",
         "title": "Thanksgiving — No Activity",
+        "group": "all_youth",
+        "kind": "none",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261203-deacons-learn-how-to-gift",
+        "date": "2026-12-03",
+        "title": "Learn How to Gift",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261203-all-youth-ward-event-ward-christmas-part",
+        "date": "2026-12-03",
+        "title": "Ward Event: Ward Christmas Party",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261210-teachers-cookoff-challenge-ym-vs-yw",
+        "date": "2026-12-10",
+        "title": "Cookoff Challenge (YM vs. YW)",
+        "group": "teachers",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261210-deacons-minute-to-win-it",
+        "date": "2026-12-10",
+        "title": "Minute to Win It",
+        "group": "deacons",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261217-teachers-cold-plunge-sauna",
+        "date": "2026-12-17",
+        "title": "Cold Plunge & Sauna",
+        "group": "teachers",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261217-all-youth-white-elephant-jr-class-in-cha",
+        "date": "2026-12-17",
+        "title": "White Elephant (Jr. class in charge)",
+        "group": "all_youth",
+        "kind": "activity",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261224-all-youth-christmas-break-no-activity",
+        "date": "2026-12-24",
+        "title": "Christmas Break — No Activity",
+        "group": "all_youth",
+        "kind": "none",
+        "source": "site"
+      },
+      {
+        "id": "yth-site-20261231-all-youth-christmas-break-no-activity",
+        "date": "2026-12-31",
+        "title": "Christmas Break — No Activity",
         "group": "all_youth",
         "kind": "none",
         "source": "site"
@@ -1404,11 +1414,13 @@
           "start": "10:00",
           "opponent": "Utah",
           "home_away": "away",
-          "tv": null,
-          "tv_all": [],
+          "tv": "ABC",
+          "tv_all": [
+            "ABC"
+          ],
           "venue": null,
           "note": null,
-          "opp_rank": 6,
+          "opp_rank": 3,
           "opp_rank_poll": "AP"
         },
         {
@@ -1868,7 +1880,7 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-10-31T21:01:57-06:00",
+      "updated": "2026-11-01T20:01:18-07:00",
       "summary": {
         "football": {
           "record": "7-1",
@@ -1876,32 +1888,34 @@
           "polls": [
             {
               "poll": "AP",
-              "rank": 8,
-              "as_of": "2026-10-25",
-              "week": "2026 NCAA Football Rankings - AP Poll Week 9"
+              "rank": 7,
+              "as_of": "2026-11-01",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 10"
             },
             {
               "poll": "Coaches",
-              "rank": 9,
-              "as_of": "2026-10-25",
-              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
+              "rank": 8,
+              "as_of": "2026-11-01",
+              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 10"
             }
           ],
           "polls_checked": [
             {
               "poll": "AP",
-              "as_of": "2026-10-25",
-              "week": "2026 NCAA Football Rankings - AP Poll Week 9"
+              "as_of": "2026-11-01",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 10"
             },
             {
               "poll": "Coaches",
-              "as_of": "2026-10-25",
-              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 9"
+              "as_of": "2026-11-01",
+              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 10"
             }
           ],
-          "checked": "2026-10-31T21:01:56-06:00"
+          "checked": "2026-11-01T20:01:17-07:00"
         },
         "mbb": {
+          "record": "0-0",
+          "standing": "1st in Big 12",
           "polls": [
             {
               "poll": "AP",
@@ -1928,7 +1942,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
           ],
-          "checked": "2026-10-31T21:01:57-06:00"
+          "checked": "2026-11-01T20:01:18-07:00"
         }
       },
       "fight_song": {
