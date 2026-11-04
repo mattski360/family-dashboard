@@ -386,6 +386,50 @@ header{align-items:center}
 .ev{gap:.55rem;margin:.5rem 0 .3rem}
 .away{font-size:.85rem}
 .quiet{font-size:1rem}
+/* ---------- decluttered wall page (Nov 2026) ---------- */
+/* page 1: compact study cards = kicker + this week's title + one overview line; tap opens the deep-dive popup */
+#p1 .spirit{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;gap:1rem}
+#p1 .spirit .sc.mini{flex-direction:column !important;flex-wrap:nowrap;gap:.18rem !important;padding:.7rem 1.15rem .75rem !important;overflow:hidden}
+#p1 .spirit .sc.mini>*{flex:none !important;min-width:0}
+#p1 .spirit .mini .sk{font-size:.74rem}
+#p1 .spirit .mini .sk .em{font-size:1.45em;margin-right:.35em}
+#p1 .spirit .mini .stt{font-size:1.22rem !important;line-height:1.18;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#p1 .spirit .mini .stt .em{font-size:1.1em}
+.sline{display:flex;align-items:center;gap:.3rem 1.1rem;min-width:0}
+#p1 .spirit .mini .srd{display:block;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+#p1 .spirit .mini .prayer{margin:0 !important;font-size:.95rem !important;flex:none;white-space:nowrap}
+/* page 2 (calendar): a little more compact; the page scrolls (touch) if the week still does not fit */
+.days{gap:.55rem}
+.day{padding:.6rem .6rem .5rem}
+.ev{gap:.45rem;margin:.4rem 0 .25rem}
+.page.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y}
+/* "More" button (nav corner, next to the faded Y) + popup with big buttons: weather, ideas, joke, trivia. px sizes: outside the fitted pages */
+#morebtn{position:absolute;right:calc(max(14px,env(safe-area-inset-right)) + max(56px,6vh) + 6px);top:50%;transform:translateY(-50%);border:0;cursor:pointer;
+  font:inherit;font-size:max(15px,1.85vh);font-weight:800;color:#5B47B0;background:#F1ECFF;border-radius:99px;padding:0 max(16px,1.8vh);height:min(max(34px,4.2vh),calc(var(--nav) - 6px));
+  display:flex;align-items:center;gap:.35em;box-shadow:0 1px 0 rgba(40,48,68,.06);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#morebtn:active{filter:brightness(.94)}
+#morepop{position:fixed;inset:0;z-index:18;display:none;align-items:center;justify-content:center;padding:2.4vh 2vw;background:rgba(40,48,68,.42);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+#morepop.on{display:flex}
+.mcard{position:relative;width:min(1100px,100%);max-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:#FBFCFE;border-radius:30px;
+  box-shadow:0 18px 50px rgba(40,48,68,.25);padding:26px 30px 30px;font-size:clamp(16px,2.1vh,24px)}
+.mx{position:absolute;right:16px;top:16px;width:60px;height:60px;border-radius:50%;border:0;background:#EEF0F4;color:var(--muted);font:inherit;font-size:32px;font-weight:700;line-height:1;cursor:pointer;z-index:2}
+.mh{font-size:1.5em;font-weight:900;letter-spacing:-.01em;padding-right:70px;margin-bottom:.8em}
+.mhome,.mview{display:none}.mhome.on,.mview.on{display:block}
+.mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mgrid .adv{display:contents}
+.mgrid button{order:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3em;min-height:max(130px,17vh);border:0;border-radius:24px;padding:14px;
+  font:inherit;font-size:1.25em;font-weight:800;cursor:pointer;opacity:1;background:#EEF5FF;color:#245A9E;touch-action:manipulation;-webkit-tap-highlight-color:transparent;box-shadow:inset 0 0 0 2px rgba(40,48,68,.06)}
+.mgrid button .ae,.mgrid button .me{font-size:2em;line-height:1;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
+.mgrid button:active{transform:scale(.98);filter:brightness(.95)}
+.mgrid button:disabled{opacity:.45}
+.mgrid .mb-wx{order:1;background:linear-gradient(135deg,#E3EFFF,#F2F7FF);color:#2C62C0}
+.mgrid .ab.weekend{order:2} .mgrid .ab.evening{order:3;background:#FFEFE0;color:#B0541A}
+.mgrid .mb-jk{order:4;background:linear-gradient(135deg,#FFF4D6,#FFE9DC);color:#B4620C}
+.mgrid .mb-tr{order:5;background:linear-gradient(135deg,#EAF2FF,#F4EEFF);color:#5B47B0}
+.mback{border:0;background:#EEF0F4;color:var(--text);font:inherit;font-size:1em;font-weight:800;border-radius:99px;padding:0 22px;min-height:52px;cursor:pointer;margin-bottom:16px}
+.mv{display:none}.mv.on{display:block}
+.mvh{font-size:1.45em;font-weight:900;margin-bottom:.6em;padding-right:70px}
 </style>
 </head>
 <body data-ver="{{VERSION}}" data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
@@ -414,11 +458,14 @@ header{align-items:center}
   </header>
   <div class="h">This week <span id="range"></span></div>
   <div class="days">{{TILES}}</div>
-  <div class="brow">{{ADVENTURES}}<div class="chslot"></div></div>
+  <div class="brow"><div class="chslot"></div></div>
 </section>
 </div>
 
-<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
+<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="morebtn" type="button" aria-label="More: weather, ideas, joke and trivia"><span class="em">✨</span>More</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
+<div id="morepop" aria-hidden="true"><div class="mcard" role="dialog" aria-label="More"><button class="mx" id="morex" type="button" aria-label="Close">&times;</button>
+  <div class="mhome on" id="mhome"><div class="mh">✨ More for today</div><div class="mgrid" id="mgrid">{{ADVENTURES}}</div></div>
+  <div class="mview" id="mview"><button class="mback" id="mback" type="button">&lsaquo; Back</button><div id="mvbody"></div></div></div></div>
 <div id="advpop" aria-hidden="true"><div class="acard" role="dialog" aria-label="Adventure idea"><button class="ex" id="advx" type="button" aria-label="Close">&times;</button>
   <div class="ak" id="advk"></div><div class="an2" id="advn"></div><div class="ad" id="advd"></div>
   <div class="achips" id="advc"></div><div class="anote" id="advx2"></div>
@@ -544,12 +591,17 @@ header{align-items:center}
     navl.textContent=pages[i].getAttribute('data-name');if(window.dashMealTiles)window.dashMealTiles();}
   function save(){store(KEY,{i:cur,t:shownAt,p:pausedUntil});}
   function show(i){render(i);shownAt=Date.now();save();}
-  var holdAt=0; // rotation frozen (adventure popup open): no page change, timer resumes where it was on release
+  var holdAt=0; // rotation frozen (a popup/panel open): no page change, timer resumes where it was on release
+  // every popup / panel that freezes rotation and defers reloads (also used by busy() below)
+  var POPS='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on,#morepop.on';
   function rotHold(on){var now=Date.now();
     if(on){if(!holdAt)holdAt=now;return;}
-    if(!holdAt)return; var d=now-holdAt; holdAt=0; if(pausedUntil)pausedUntil+=d; else shownAt+=d; save(); loop();}
+    // release only when no other popup is still open (they share this one hold)
+    if(!holdAt||document.querySelector(POPS)||window.__composing)return; var d=now-holdAt; holdAt=0; if(pausedUntil)pausedUntil+=d; else shownAt+=d; save(); loop();}
   window.dashRotHold=rotHold; // used by the Chores panel
   function loop(){
+    // watchdog: a hold whose popup has gone (closed by some path that never released it) is released after 1 s
+    if(holdAt&&Date.now()-holdAt>1000&&!document.querySelector(POPS)&&!window.__composing)rotHold(false);
     if(holdAt)return;
     var now=Date.now();
     if(pausedUntil&&now>=pausedUntil){shownAt=pausedUntil;pausedUntil=0;save();}
@@ -745,13 +797,34 @@ header{align-items:center}
   document.getElementById('advx').addEventListener('click',function(ev){ev.stopPropagation();aClose();});
   document.getElementById('advagain').addEventListener('click',function(ev){ev.stopPropagation();aShow(aKind);});
   window.__adv={open:aShow,close:aClose};
+  each('#mgrid .ab .ae',function(e){e.textContent=e.parentNode.getAttribute('data-kind')==='weekend'?'\uD83C\uDFD4\uFE0F':'\uD83C\uDF05';});
+
+  // "More" popup (nav corner): big buttons for Weather / Weekend idea / Evening idea / Joke / Trivia. Idea buttons open the
+  // adventure popup on top (closing it returns here); the others show their panel (.mv[data-v]) inside the card with a Back button.
+  // Rotation is frozen and reloads wait while it is open (#morepop.on is in POPS); closes on x, backdrop tap or 3 min idle.
+  var mEl=document.getElementById('morepop'), mHome=document.getElementById('mhome'), mView=document.getElementById('mview'), mT=0, M_IDLE=180000;
+  function mBump(){clearTimeout(mT);mT=setTimeout(mClose,M_IDLE);}
+  function mHomeShow(){mHome.classList.add('on');mView.classList.remove('on');each('#mvbody .mv',function(v){v.classList.remove('on');});}
+  function mOpen(v){mHomeShow();mEl.classList.add('on');mEl.setAttribute('aria-hidden','false');rotHold(true);mBump();if(v)mShow(v);}
+  function mShow(v){var el=document.querySelector('#mvbody .mv[data-v="'+v+'"]');if(!el)return;
+    each('#mvbody .mv',function(x){x.classList.toggle('on',x===el);});mHome.classList.remove('on');mView.classList.add('on');
+    mEl.querySelector('.mcard').scrollTop=0;if(window.__moreShow)window.__moreShow(v);}
+  function mClose(){clearTimeout(mT);if(!mEl.classList.contains('on'))return;aClose();mEl.classList.remove('on');mEl.setAttribute('aria-hidden','true');rotHold(false);}
+  document.getElementById('morebtn').addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();mOpen();});
+  document.getElementById('morex').addEventListener('click',function(ev){ev.stopPropagation();mClose();});
+  document.getElementById('mback').addEventListener('click',function(ev){ev.stopPropagation();mHomeShow();mBump();});
+  document.getElementById('mgrid').addEventListener('click',function(ev){var b=ev.target.closest('button[data-v]');if(b){ev.stopPropagation();mShow(b.getAttribute('data-v'));}mBump();});
+  mEl.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===mEl)mClose();else mBump();});
+  ['pointerdown','touchstart'].forEach(function(e){mEl.addEventListener(e,function(ev){ev.stopPropagation();mBump();},{passive:true});});
+  window.__more={open:mOpen,close:mClose,show:mShow};
+  var mq=/[?&]more=(\w+)/.exec(location.search);if(mq)setTimeout(function(){mOpen(mq[1]==='1'?'':mq[1]);},300);
 
   // Reloads (the only two): busy() = someone is using the page (typing on the gratitude board, a popup or panel open,
   // or a touch in the last 2 min); both wait until it is idle.
   // 1. new build: every 10 min compare data-ver with the published ver.txt (12-char hash written by build.py next to
   //    index.html); if that file is missing or odd, fall back to reading data-ver from the published page itself.
   // 2. safety net: reload once the page has been up 90 min (clears any stuck state / slow memory growth on the display).
-  var bootAt=Date.now(), lastTouch=0, BUSY='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on';
+  var bootAt=Date.now(), lastTouch=0, BUSY=POPS;
   ['pointerdown','touchstart','keydown'].forEach(function(e){document.addEventListener(e,function(){lastTouch=Date.now();},{capture:true,passive:true});});
   function busy(){return !!window.__composing||Date.now()-lastTouch<120000||!!document.querySelector(BUSY);}
   function reloadNow(){var q=location.search,k=[];if(/[?&]info\b/.test(q))k.push('info');var g=/[?&](grat=[01])/.exec(q);if(g)k.push(g[1]);

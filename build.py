@@ -533,6 +533,37 @@ def render_v3_spirit(m: Model, emoji: bool = False) -> str:
     return cfm_html + fsy_html
 
 
+def render_land_spirit(m: Model) -> str:
+    """Compact CFM + FSY cards for the wall page (landscape): kicker, this week's title and ONE overview line.
+    Tapping a card still opens its deep-dive popup (build_study.py). The 'Prayer:' rotation (and its hidden
+    long-press egg) stays on the CFM overview line. Same data as render_v3_spirit, so the Saturday refresh fills it."""
+    sp = m.data.get("spiritual", {}) or {}
+    cfm = sp.get("come_follow_me", {}) or {}
+    fsy = sp.get("strength_of_youth", {}) or {}
+    pending_cfm = cfm.get("status") == "pending" or not cfm.get("reading")
+    dates = cfm.get("dates_label") or ""
+    dates_s = f" \u00b7 {esc(dates)}" if dates else ""
+    line = (f'<span class="srd">{_em("\U0001F4DA", True)}{esc(cfm.get("reading"))}</span>' if cfm.get("reading") else "") + _v3_prayer(m, True)
+    cfm_html = (f'<div class="sc cfm mini{" pending" if pending_cfm else ""}">'
+                f'<div class="sk">{_em("\U0001F4D6", True)}Come, Follow Me{dates_s}</div>'
+                f'<div class="stt">{esc(cfm.get("title") or CFM_WAIT)}</div>'
+                f'<div class="sline">{line}</div></div>')
+    pending_fsy = fsy.get("status") == "pending" or not fsy.get("topic")
+    topic = fsy.get("topic") or "This month\u2019s chapter is on its way"
+    chap = ""
+    mo = re.match(r"^(ch(?:apter)?\.?\s*\d+)\s*:\s*(.+)$", topic, re.I)
+    if mo:
+        chap, topic = mo.group(1), mo.group(2)
+    month = re.sub(r"\s*chapter$", "", fsy.get("label") or "", flags=re.I)
+    focus = (fsy.get("focus") or "").strip() if not pending_fsy else ""
+    one = " \u00b7 ".join(x for x in (chap, focus or month) if x)
+    fsy_html = (f'<div class="sc fsy mini{" pending" if pending_fsy else ""}">'
+                f'<div class="sk">{_em("\U0001F6E1\uFE0F", True)}Strength of Youth{f" \u00b7 {esc(month)}" if month else ""}</div>'
+                f'<div class="stt">{_em(fsy_emoji(topic), not pending_fsy)}{esc(topic)}</div>'
+                + (f'<div class="sline"><span class="srd">{esc(one)}</span></div>' if one else "") + "</div>")
+    return cfm_html + fsy_html
+
+
 def v3_tile(m: Model, day: dt.date, yacts: list[dict]) -> str:
     kid_ids = [k["id"] for k in m.kids]
     flags = m.flags_on(day)
@@ -1007,7 +1038,7 @@ def build_v3(data: dict, now: dt.datetime, week_start: dt.date | None = None, te
         "SPRITE": V3_SPRITE.read_text().strip(),
         "KIDS": render_v3_kids(m),
         "PARENTS": render_v3_parents(m),
-        "SPIRIT": render_v3_spirit(m, emoji=(template == "template_landscape.html")),
+        "SPIRIT": (render_land_spirit(m) if template == "template_landscape.html" else render_v3_spirit(m)),
         "TILES": "".join(v3_tile(m, day, yacts) for day in m.days()),
         "BYU_TODAY": render_v3_byu_line(m),
         "GRADES": render_v3_grades(m),

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Tap-to-open study popups for the Come, Follow Me and For the Strength of Youth cards (live landscape only).
+The cards carry no 'tap to study' label any more (decluttered Nov 2026); the whole card is still the tap target.
 
 Content comes from data/dashboard.json:
   spiritual.come_follow_me.deep_dive    (weekly; refreshed Saturday with the rest of come_follow_me)
@@ -16,7 +17,6 @@ def esc(s) -> str:
 
 CSS = r"""
 .sc.cfm.tap,.sc.fsy.tap{cursor:pointer;position:relative}
-.sc.tap .tapme{position:absolute;right:.9rem;bottom:.7rem;font-size:max(20px,2vh);font-weight:800;background:rgba(255,255,255,.7);color:#4B3F72;border-radius:999px;padding:.22rem .7rem}
 .stp{position:fixed;inset:0;z-index:26;display:none;background:rgba(40,48,68,.42);align-items:center;justify-content:center;padding:2vh 2vw}
 .stp.on{display:flex}
 .stp .mc{position:relative;width:100%;height:100%;max-width:1800px;background:#FBFCFE;border-radius:2.2vh;box-shadow:0 2vh 6vh rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:hidden;color:#283044;font-family:inherit;font-size:clamp(16px,2vh,26px)}
@@ -55,7 +55,7 @@ function init(){
   window.__study={open:open,close:close};
   [['.sc.cfm','cfmp'],['.sc.fsy','fsyp']].forEach(function(a){
     if(!document.getElementById(a[1]))return;
-    document.querySelectorAll(a[0]).forEach(function(c){c.classList.add('tap');c.insertAdjacentHTML('beforeend','<span class="tapme">Tap to study \uD83D\uDC46</span>');
+    document.querySelectorAll(a[0]).forEach(function(c){c.classList.add('tap');
       ['pointerdown','touchstart'].forEach(function(e){c.addEventListener(e,function(ev){ev.stopPropagation()},{passive:true})});
       c.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();open(a[1]);});});
     var p=document.getElementById(a[1]);

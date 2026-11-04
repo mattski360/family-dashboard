@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Wall-page features for the live landscape page (and the landscape-mock/ preview):
-  1. Weather in the page-1 and page-2 headers (under the date/clock): now + today hi/lo + next 4 days for Highland, UT,
+  1. Weather in the "More" popup (nav-corner button; Weather panel): now + today hi/lo + next 4 days for Highland, UT,
      fetched client-side from Open-Meteo (keyless, one request renders both) every 30 min, cached in localStorage
      (wx-highland-v1), graceful fallback ("as of" time / "Weather unavailable").
-  2. Trivia + Joke of the day (page-2 bottom row): tap-to-reveal, one of each per day from data/daily_fun.json.
+  2. Trivia + Joke of the day (More popup panels): tap-to-reveal, one of each per day from data/daily_fun.json.
   3. Gratitude board: third rotating page from GRAT_FROM to GRAT_TO (Oct 30 - Nov 30). Name picker + text box,
      notes in localStorage (grat-YYYY, this device only). Composing freezes rotation and both reloads (the template's
      10-min version check and 90-min safety reload wait for window.__composing). ?grat=0 / ?grat=1 force it off / on.
@@ -19,40 +19,32 @@ def F(n):  # authored size -> calc(var(--fs)*n) like build.py's rem rewrite
     return f"calc(var(--fs) * {n})"
 
 CSS = r"""
-/* ===== weather (page-1 + page-2 headers) ===== */
-#p1 header,#p2 header{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:@1;row-gap:@.45;align-items:center}
-#p1 header .hl,#p2 header .hl{grid-column:1;grid-row:1/3} #p1 header .clk,#p2 header .clk{grid-column:2;grid-row:1;justify-content:flex-end}
-.wx{grid-column:2;grid-row:2;display:flex;gap:@.4;align-items:stretch;justify-content:flex-end}
-.wx .wd{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;column-gap:@.4;align-items:center;
-  background:#F3F7FD;border-radius:@.85;padding:@.3 @.6 @.3 @.45;text-align:left;min-width:0}
-.wx .wd .wi{grid-row:1/3;font-size:@1.9;line-height:1;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
-.wx .wd .w1{font-size:@1.02;font-weight:800;white-space:nowrap;line-height:1.15}
-.wx .wd .w1 .wdn{color:var(--muted);font-weight:800;font-size:@.78;letter-spacing:.06em;text-transform:uppercase;margin-right:@.35}
-.wx .wd .w1 .lo{color:var(--faint);font-weight:700}
-.wx .wd .w2{font-size:@.8;font-weight:700;color:var(--muted);white-space:nowrap;line-height:1.2}
-.wx .wd .w2 .pp{color:#2C62C0;margin-left:@.25}
-.wx .wd.now{background:linear-gradient(135deg,#E3EFFF,#F2F7FF);grid-template-columns:auto auto auto;padding-right:@.8}
-.wx .wd.now .wi{font-size:@2.2}
-.wx .wd.now .wbig{grid-row:1/3;grid-column:2;font-size:@2.1;font-weight:800;letter-spacing:-.03em;line-height:1;padding-right:@.15}
-.wx .wd.now .w1,.wx .wd.now .w2{grid-column:3}
-.wx .wd.wet .w2 .pp{font-weight:800}
-@media (max-width:1500px){#p1 header .hl,#p2 header .hl{grid-row:1} .wx{grid-column:1/3;justify-content:stretch} .wx .wd{flex:1 1 0} .wx .wd.now{flex:1.4 1 0}}
-.wx .wfall{font-size:@.75;font-weight:700;color:var(--faint);background:#F5F6F9;border-radius:@.8;padding:@.45 @.8}
-.wx .wage{grid-column:2;font-size:@.58;color:var(--faint);font-weight:700}
+/* ===== weather (inside the "More" popup; px/em sizes: outside the fitted pages) ===== */
+#morepop .wx{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(0,1fr));gap:14px}
+#morepop .wx .wd{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25em;text-align:center;background:#F3F7FD;border-radius:22px;padding:18px 10px;min-width:0}
+#morepop .wx .wd .wi{font-size:2.6em;line-height:1;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
+#morepop .wx .wd .w1{font-size:1.25em;font-weight:800;white-space:nowrap;line-height:1.2;display:flex;flex-direction:column;align-items:center}
+#morepop .wx .wd .w1 .wdn{color:var(--muted);font-weight:900;font-size:.72em;letter-spacing:.08em;text-transform:uppercase;margin:0 0 .15em}
+#morepop .wx .wd .w1 .lo{color:var(--faint);font-weight:700}
+#morepop .wx .wd .w2{font-size:.9em;font-weight:700;color:var(--muted);line-height:1.25}
+#morepop .wx .wd .w2 .pp{display:block;color:#2C62C0;margin-top:.15em}
+#morepop .wx .wd.now{background:linear-gradient(135deg,#E3EFFF,#F2F7FF)}
+#morepop .wx .wd.now .wi{font-size:3.2em}
+#morepop .wx .wd.now .wbig{font-size:3em;font-weight:800;letter-spacing:-.03em;line-height:1}
+#morepop .wx .wd.wet .w2 .pp{font-weight:900}
+#morepop .wx .wfall{grid-column:1/-1;font-size:1.1em;font-weight:700;color:var(--faint);background:#F5F6F9;border-radius:22px;padding:28px;text-align:center}
+#morepop .wxsub{margin-top:14px;font-size:.85em;font-weight:700;color:var(--faint)}
 
-/* ===== trivia + joke of the day (page-2 bottom row) ===== */
-#p2 .brow .ab{white-space:nowrap;flex:none}
-#p2 .brow .fun{flex:1 1 0;min-width:0;display:flex;gap:@.7;margin-right:auto}
-.fcard{flex:1 1 0;min-width:0;border-radius:@1.1;padding:@.5 @.9;display:flex;flex-direction:column;justify-content:center;gap:@.15;
-  cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden}
+/* ===== trivia + joke of the day (inside the "More" popup) ===== */
+.fcard{border-radius:26px;padding:28px 32px;display:flex;flex-direction:column;gap:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;min-height:260px;justify-content:center}
 .fcard.tr{background:linear-gradient(135deg,#EAF2FF,#F4EEFF)} .fcard.jk{background:linear-gradient(135deg,#FFF4D6,#FFE9DC)}
-.fcard .fk{font-size:@.62;font-weight:800;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:@.35}
+.fcard .fk{font-size:.85em;font-weight:900;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:.4em}
 .fcard.tr .fk{color:#5B47B0} .fcard.jk .fk{color:#B4620C}
-.fcard .fk .em{font-size:1.5em;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;letter-spacing:0}
-.fcard .fq{font-size:@.8;font-weight:800;line-height:1.22;color:var(--text)}
-.fcard .fa{font-size:@.76;font-weight:800;line-height:1.2;display:none}
+.fcard .fk .em{font-size:1.6em;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;letter-spacing:0}
+.fcard .fq{font-size:1.6em;font-weight:800;line-height:1.25;color:var(--text)}
+.fcard .fa{font-size:1.45em;font-weight:800;line-height:1.25;display:none}
 .fcard.tr .fa{color:#2C62C0} .fcard.jk .fa{color:#B4620C}
-.fcard .ftap{font-size:@.62;font-weight:800;align-self:flex-start;border-radius:99px;padding:@.12 @.6;background:#fff;color:var(--muted);box-shadow:0 1px 0 rgba(0,0,0,.05)}
+.fcard .ftap{font-size:1em;font-weight:800;align-self:flex-start;border-radius:99px;padding:12px 22px;background:#fff;color:var(--muted);box-shadow:0 1px 0 rgba(0,0,0,.05)}
 .fcard.open .fa{display:block;animation:fpop .35s ease} .fcard.open .ftap{display:none}
 @keyframes fpop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
@@ -71,13 +63,13 @@ CSS = r"""
 #p3 .gwho .gper .av{width:@1.9;height:@1.9;border-radius:99px;font-size:@.95;transform:none}
 #p3 .gwho .gper b{background:var(--c);color:#fff;border-radius:99px;padding:0 @.45;font-size:@.75;min-width:@1.4;text-align:center}
 #p3 .gwho .gtk{margin-left:auto;font-size:@1;font-weight:800;color:#8A4A12;background:#FFE3C2;border-radius:99px;padding:@.3 @.9}
-#p3 .gboard{flex:1 1 auto;min-height:0;position:relative;column-count:4;column-gap:@1.1;overflow:hidden;padding:@.3 @.2}
-#p3 .gnote{break-inside:avoid;display:block;margin:0 0 @1.1;background:var(--bg);border:2px solid var(--mid);border-radius:@1.3 @.35 @1.3 @.35;
-  padding:@.9 @1.1 @.8;position:relative;transform:rotate(var(--r,0deg));box-shadow:0 3px 10px rgba(138,74,18,.08)}
-#p3 .gnote .lf{position:absolute;right:@.55;top:@.4;font-size:@1.8;font-family:"Noto Color Emoji","Apple Color Emoji",sans-serif}
-#p3 .gnote .gtx{font-size:@1.45;font-weight:700;line-height:1.28;color:var(--text);padding-right:@1.9}
-#p3 .gnote .gby{margin-top:@.5;font-size:@.92;font-weight:800;color:var(--dk);display:flex;align-items:center;gap:@.35}
-#p3 .gnote .gby .dot{width:@.6;height:@.6;border-radius:99px;background:var(--c)}
+#p3 .gboard{flex:1 1 auto;min-height:0;position:relative;column-count:5;column-gap:@.8;overflow:hidden;padding:@.3 @.2}
+#p3 .gnote{break-inside:avoid;display:block;margin:0 0 @.75;background:var(--bg);border:2px solid var(--mid);border-radius:@1.3 @.35 @1.3 @.35;
+  padding:@.55 @.75 @.5;position:relative;transform:rotate(var(--r,0deg));box-shadow:0 3px 10px rgba(138,74,18,.08)}
+#p3 .gnote .lf{position:absolute;right:@.4;top:@.3;font-size:@1.15;font-family:"Noto Color Emoji","Apple Color Emoji",sans-serif}
+#p3 .gnote .gtx{font-size:@1.05;font-weight:700;line-height:1.24;color:var(--text);padding-right:@1.3}
+#p3 .gnote .gby{margin-top:@.3;font-size:@.74;font-weight:800;color:var(--dk);display:flex;align-items:center;gap:@.35}
+#p3 .gnote .gby .dot{width:@.45;height:@.45;border-radius:99px;background:var(--c)}
 #p3 .gnote .gby .gd{color:var(--faint);font-weight:700}
 #p3 .gnote .gdel{display:none;position:absolute;right:-@.5;top:-@.6;border:0;background:#CF4436;color:#fff;font:inherit;font-weight:800;font-size:@.7;border-radius:99px;padding:@.25 @.6}
 #p3 .gnote.sel .gdel{display:block}
@@ -139,11 +131,16 @@ CSS = re.sub(r"@(-?)(\d*\.?\d+)", lambda m: (f"calc(var(--fs) * -{m.group(2)})" 
 
 WX_HTML = '<div class="wx" id="wx"><div class="wfall">🌤️ Loading Highland weather…</div></div>'
 
-FUN_HTML = ('<div class="fun" id="fun">'
-  '<div class="fcard tr" id="ftr" role="button"><div class="fk"><span class="em">🧠</span>Trivia of the day</div>'
-  '<div class="fq"></div><div class="fa"></div><span class="ftap">👆 Tap to reveal the answer</span></div>'
-  '<div class="fcard jk" id="fjk" role="button"><div class="fk"><span class="em">😂</span>Joke of the day</div>'
-  '<div class="fq"></div><div class="fa"></div><span class="ftap">👆 Tap for the punchline</span></div></div>')
+# "More" popup (template #morepop): big buttons in #mgrid (Weekend/Evening idea buttons come from the template) and panels in #mvbody
+MORE_BTNS = ('<button class="mb-wx" type="button" data-v="weather"><span class="me">🌤️</span>Weather</button>'
+  '<button class="mb-jk" type="button" data-v="joke"><span class="me">😂</span>Joke of the day</button>'
+  '<button class="mb-tr" type="button" data-v="trivia"><span class="me">🧠</span>Trivia of the day</button>')
+MORE_VIEWS = ('<div class="mv" data-v="weather"><div class="mvh">🌤️ Highland weather</div>' + WX_HTML +
+  '<div class="wxsub">Today plus the next 4 days &middot; Open-Meteo, updated every 30 min</div></div>'
+  '<div class="mv" data-v="joke"><div class="fcard jk" id="fjk" role="button"><div class="fk"><span class="em">😂</span>Joke of the day</div>'
+  '<div class="fq"></div><div class="fa"></div><span class="ftap">👆 Tap for the punchline</span></div></div>'
+  '<div class="mv" data-v="trivia"><div class="fcard tr" id="ftr" role="button"><div class="fk"><span class="em">🧠</span>Trivia of the day</div>'
+  '<div class="fq"></div><div class="fa"></div><span class="ftap">👆 Tap to reveal the answer</span></div></div>')
 
 P3_HTML = """
 <!-- ====================== PAGE 3: GRATITUDE BOARD (Oct 30 - Nov 30, data-grat-from/to) ====================== -->
@@ -233,6 +230,9 @@ JS = r"""
     }).catch(function(){clearTimeout(to);wxRender(store(WK));});
   }
   wxLoad(); setInterval(wxLoad,30*60*1000);
+  // opening the Weather panel in the More popup refreshes it if the cached copy is over 30 min old
+  window.__moreShow=function(v){if(v==='weather'){var c=store(WK);if(!c||Date.now()-c.ts>30*60*1000)wxLoad();}
+    if(v==='joke'||v==='trivia'){var e=document.getElementById(v==='joke'?'fjk':'ftr');if(e)e.classList.remove('open');}};
   var wxDay=ymd(new Date()); setInterval(function(){var t=ymd(new Date());if(t!==wxDay){wxDay=t;wxLoad();}},60000);
 
   /* ---------- 2. trivia + joke of the day ---------- */
@@ -245,13 +245,9 @@ JS = r"""
     refit();
   }
   funDay(); var funD=ymd(new Date()); setInterval(function(){var t=ymd(new Date());if(t!==funD){funD=t;funDay();}},60000);
-  ['ftr','fjk'].forEach(function(id){var el=document.getElementById(id),t=0;
-    el.addEventListener('click',function(ev){ev.stopPropagation();
-      if(el.classList.contains('open')){el.classList.remove('open');return;}
-      el.classList.add('open');
-      // keep this page up a little longer so everyone can read the answer (rotation frozen 15 s, then resumes)
-      if(window.dashRotHold){window.dashRotHold(true);clearTimeout(t);t=setTimeout(function(){window.dashRotHold(false);},15000);}
-      setTimeout(function(){el.classList.remove('open');},90000);});});
+  // (they live in the More popup, which already freezes rotation while it is open)
+  ['ftr','fjk'].forEach(function(id){var el=document.getElementById(id);if(!el)return;
+    el.addEventListener('click',function(ev){ev.stopPropagation();el.classList.toggle('open');});});
 
   /* ---------- 3. November gratitude board ---------- */
   var P3=document.getElementById('p3');
@@ -384,13 +380,9 @@ def transform(h, fun, prod=False):
     # Android keyboard resizes the layout instead of covering the gratitude composer
     h = sub1(h, 'viewport-fit=cover">', 'viewport-fit=cover, interactive-widget=resizes-content">')
     h = sub1(h, "<body ", f'<body data-grat-from="{GRAT_FROM}" data-grat-to="{GRAT_TO}" ' + ('' if prod else 'data-grat-force="1" '))
-    # 1. weather in the page-1 header, under the date/clock
-    for pid, wid in (("p1", "wx"), ("p2", "wx2")):  # same widget on both pages; one fetch renders both
-        i = h.index(f'id="{pid}"'); j = h.index('</header>', i)
-        h = h[:j] + WX_HTML.replace('id="wx"', f'id="{wid}"') + h[j:]
-    # 2. trivia + joke on the page-2 bottom row
-    i = h.index('id="p2"'); j = h.index('<div class="brow">', i) + len('<div class="brow">')
-    h = h[:j] + FUN_HTML + h[j:]
+    # 1+2. weather (today + next 4 days), joke and trivia: buttons + panels in the template's "More" popup (off the main pages)
+    h = sub1(h, '<div class="mgrid" id="mgrid">', '<div class="mgrid" id="mgrid">' + MORE_BTNS)
+    h = sub1(h, '<div id="mvbody">', '<div id="mvbody">' + MORE_VIEWS)
     # 3. gratitude page after page 2, inside #stage; composer outside #stage
     i = h.index('<nav id="nav"'); j = h.rindex('</div>', 0, i)
     h = h[:j] + P3_HTML + h[j:]

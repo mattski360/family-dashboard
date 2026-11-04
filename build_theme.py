@@ -161,6 +161,13 @@ RULES = f"""
 {T} #gcomp .gl,{T} #gcomp .ghelp{{color:var(--Pdk)}} {T} #gcomp .gsave{{background:var(--Pdk)}}
 {T} #gcomp input{{border-color:var(--Pmid)}} {T} #gcomp input:focus{{border-color:var(--Pc);box-shadow:0 0 0 4px var(--Pbg)}}
 {T} #gcomp .gstarts button{{background:var(--Pbg);color:var(--Pdk)}} {T} #gkeys button{{box-shadow:0 2px 0 var(--Nmid)}}
+/* "More" button + popup (weather, ideas, joke, trivia) */
+{T} #morebtn{{background:var(--Pbg);color:var(--Pdk);box-shadow:inset 0 0 0 1.5px var(--Pmid)}}
+{T} .mcard{{background:var(--surf)}} {T} .mh,{T} .mvh{{color:var(--Pdk)}}
+{T} .mgrid .mb-wx,{T} #morepop .wx .wd.now{{background:linear-gradient(135deg,var(--Pbg),var(--Sbg));color:var(--Pdk);box-shadow:inset 0 0 0 2px var(--Pmid)}}
+{T} .mgrid .ab.weekend,{T} .mgrid .mb-tr{{background:var(--Sbg);color:var(--Sdk);box-shadow:inset 0 0 0 2px var(--Smid)}}
+{T} .mgrid .ab.evening,{T} .mgrid .mb-jk{{background:var(--Tbg);color:var(--Tdk);box-shadow:inset 0 0 0 2px var(--Tmid)}}
+{T} #morepop .wx .wd{{background:var(--Nbg);box-shadow:inset 0 0 0 1.5px var(--Nmid)}} {T} #morepop .wx .wd .w2 .pp{{color:var(--Sdk)}}
 /* decorations: faint emoji in the empty header space (wide screens), web corners in October */
 #thdeco{{display:none}}
 {T} #thdeco{{display:block;position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}}
