@@ -5,11 +5,11 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-05T20:09:52-07:00",
-    "school_feed_synced": "2026-11-01T20:01:14-07:00",
+    "last_updated": "2026-11-07T21:07:39-07:00",
+    "school_feed_synced": "2026-11-07T21:05:38-07:00",
     "school_feed_window": [
-      "2026-10-31",
-      "2026-11-22"
+      "2026-11-06",
+      "2026-11-28"
     ],
     "later_days": 8,
     "week_start": "2026-11-08",
@@ -446,21 +446,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261105-spirit-apparel-day",
-      "date": "2026-11-05",
-      "start": "08:30",
-      "end": "15:10",
-      "title": "Spirit apparel day",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": null,
-      "priority": "low",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "ahs-20261106-k-5-spirit-apparel-day",
       "date": "2026-11-06",
       "start": null,
@@ -493,7 +478,7 @@
     {
       "id": "ahs-20261106-dance-festival-performance",
       "date": "2026-11-06",
-      "start": "13:45",
+      "start": "14:00",
       "end": "15:10",
       "title": "Dance Festival Performance",
       "note": "",
@@ -504,6 +489,79 @@
       "priority": "normal",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "fam-trip-20261109-phx",
+      "date": "2026-11-09",
+      "end_date": "2026-11-10",
+      "start": null,
+      "end": null,
+      "title": "Phoenix",
+      "note": "Dad's work trip",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "trip",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261109-dl1447",
+      "date": "2026-11-09",
+      "end_date": null,
+      "start": "07:45",
+      "end": "09:34",
+      "title": "Dad's flight SLC → Phoenix",
+      "note": "Delta 1447",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261110-dl2525",
+      "date": "2026-11-10",
+      "end_date": null,
+      "start": "18:25",
+      "end": "20:04",
+      "title": "Dad's flight home",
+      "note": "Delta 2525 PHX → SLC · lands 8:04 PM",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "flight",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261111-veterans",
+      "date": "2026-11-11",
+      "end_date": null,
+      "title": "Veterans Day",
+      "note": "",
+      "who": [
+        "family"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
+      "id": "fam-20261111-missionary-week",
+      "date": "2026-11-11",
+      "end_date": "2026-11-15",
+      "start": null,
+      "end": null,
+      "title": "Ward missionary week",
+      "note": "Help set up appointments with the Elders",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
     },
     {
       "id": "ahs-20261113-k-5-no-school-k-5-in-service-day",
@@ -582,6 +640,21 @@
       "source": "ahs_feed"
     },
     {
+      "id": "fam-20261115-leadership",
+      "date": "2026-11-15",
+      "end_date": null,
+      "start": "20:00",
+      "end": "20:45",
+      "title": "Stake and ward leadership training",
+      "note": "Virtual · Utah Area Presidency",
+      "who": [
+        "parents"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
+    },
+    {
       "id": "ahs-20261116-early-out-ahyc-ms-and-hs",
       "date": "2026-11-16",
       "start": "14:16",
@@ -595,6 +668,22 @@
       "priority": "normal",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261116-hyc",
+      "date": "2026-11-16",
+      "end_date": null,
+      "start": "19:30",
+      "end": "20:30",
+      "title": "Luke's HYC Thanksgiving concert",
+      "note": "Salt Lake Tabernacle",
+      "who": [
+        "luke",
+        "parents"
+      ],
+      "priority": "high",
+      "kind": "event",
+      "source": "family"
     },
     {
       "id": "ahs-20261119-spelling-bee-written-qualifier-in-homero",
@@ -623,6 +712,86 @@
       ],
       "flag": null,
       "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261123-thanksgiving-holiday-break",
+      "date": "2026-11-23",
+      "start": null,
+      "end": null,
+      "title": "Thanksgiving Holiday Break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261124-thanksgiving-holiday-break",
+      "date": "2026-11-24",
+      "start": null,
+      "end": null,
+      "title": "Thanksgiving Holiday Break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261125-thanksgiving-holiday-break",
+      "date": "2026-11-25",
+      "start": null,
+      "end": null,
+      "title": "Thanksgiving Holiday Break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261126-thanksgiving-holiday-break",
+      "date": "2026-11-26",
+      "start": null,
+      "end": null,
+      "title": "Thanksgiving Holiday Break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261127-thanksgiving-holiday-break",
+      "date": "2026-11-27",
+      "start": null,
+      "end": null,
+      "title": "Thanksgiving Holiday Break",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": "no_school",
+      "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
     }
@@ -741,168 +910,168 @@
   "spiritual": {
     "come_follow_me": {
       "status": "ready",
-      "week_of": "2026-11-02",
-      "lesson": 45,
-      "dates_label": "Nov 2–8",
-      "title": "“A New Spirit Will I Put within You”",
-      "reading": "Ezekiel 1–3; 33–34; 36–37; 47",
-      "summary": "Ezekiel was a prophet in exile in Babylon. The Lord called him to be a “watchman,” taught that He wants to forgive, promised “a new heart” and “a new spirit,” showed dry bones coming back to life and two sticks (the Bible and the Book of Mormon) joined as one, and gave Ezekiel a vision of healing water flowing from the temple.",
+      "week_of": "2026-11-09",
+      "lesson": 46,
+      "dates_label": "Nov 9–15",
+      "title": "“There Is No Other God That Can Deliver”",
+      "reading": "Daniel 1–7",
+      "summary": "Daniel, Shadrach, Meshach, and Abed-nego were young men taken captive to Babylon. They kept their covenants by praying, fasting, choosing good friends, trusting God, and being a light to others—even when a king threatened a fiery furnace or a den of lions. God delivered them, showed Daniel a dream of a stone cut without hands that became a mountain and filled the earth (the Lord’s latter-day Church), and revealed the Son of Man receiving an everlasting kingdom.",
       "questions": [
-        "How is our living prophet like a watchman for us? (Ezekiel 3:17)",
-        "What does it mean to get “a new heart” and “a new spirit”? (Ezekiel 36:26)",
-        "How do the Bible and the Book of Mormon work together to bring us to Jesus Christ? (Ezekiel 37:15–23)"
+        "How can I trust the Lord when my faith is tried? (Daniel 1; 3; 6)",
+        "What does Nebuchadnezzar’s dream teach about the Lord’s Church? (Daniel 2:34–35, 44–45)",
+        "Why was praying so important to Daniel, and why does it matter to me? (Daniel 6:10)"
       ],
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/45?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/46?lang=eng",
       "previous": {
-        "show_before": "2026-11-02",
-        "lesson": 44,
-        "dates_label": "Oct 26–Nov 1",
-        "title": "“I Will Turn Their Mourning into Joy”",
-        "reading": "Jeremiah 31–33; 36–39; Lamentations 1; 3",
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/44?lang=eng"
+        "show_before": "2026-11-09",
+        "lesson": 45,
+        "dates_label": "Nov 2–8",
+        "title": "“A New Spirit Will I Put within You”",
+        "reading": "Ezekiel 1–3; 33–34; 36–37; 47",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/45?lang=eng"
       },
       "featured_question": 0,
       "daily": [
         {
           "dow": "Mon",
-          "scripture": "Ezekiel 3:17",
-          "quote": "I have made thee a watchman unto the house of Israel",
-          "thought": "A prophet is like a watchman who sees danger before we do. What has our prophet warned us about lately?"
+          "scripture": "Daniel 1:8",
+          "quote": "Daniel purposed in his heart that he would not defile himself",
+          "thought": "Daniel decided ahead of time to keep God’s standards, even in the king’s palace. What’s one standard we can decide now to keep this week?"
         },
         {
           "dow": "Tue",
-          "scripture": "Ezekiel 34:11",
-          "quote": "I, even I, will both search my sheep, and seek them out",
-          "thought": "Jesus is our Good Shepherd and never stops looking for us. Who is one “lost sheep” we could reach out to?"
+          "scripture": "Daniel 3:17",
+          "quote": "our God whom we serve is able to deliver us from the burning fiery furnace",
+          "thought": "Shadrach, Meshach, and Abed-nego knew God could save them. When has Heavenly Father helped you through something scary?"
         },
         {
           "dow": "Wed",
-          "scripture": "Ezekiel 33:11",
-          "quote": "turn ye, turn ye from your evil ways",
-          "thought": "The Lord wants to forgive, not punish. What is one thing we could turn away from today?"
+          "scripture": "Daniel 3:18",
+          "quote": "But if not, be it known unto thee, O king, that we will not serve thy gods",
+          "thought": "They would choose God even if He didn’t deliver them the way they hoped. How can we choose the right when we don’t know how things will turn out?"
         },
         {
           "dow": "Thu",
-          "scripture": "Ezekiel 36:26",
-          "quote": "A new heart also will I give you, and a new spirit will I put within you",
-          "thought": "Jesus can soften a “stony heart.” How does repenting make our hearts new?"
+          "scripture": "Daniel 2:44",
+          "quote": "the God of heaven set up a kingdom, which shall never be destroyed",
+          "thought": "The stone in the king’s dream is the Lord’s Church. What’s one way our family can help it grow?"
         },
         {
           "dow": "Fri",
-          "scripture": "Ezekiel 37:4–5",
-          "quote": "O ye dry bones, hear the word of the Lord",
-          "thought": "God brought dry bones back to life! What helps you feel spiritually alive?"
+          "scripture": "Daniel 6:10",
+          "quote": "he kneeled upon his knees three times a day, and prayed, and gave thanks before his God",
+          "thought": "A new law made prayer illegal, but Daniel prayed just as he always had. Where is one place we can remember to pray today?"
         },
         {
           "dow": "Sat",
-          "scripture": "Ezekiel 37:17",
-          "quote": "join them one to another into one stick; and they shall become one in thine hand",
-          "thought": "The Bible and the Book of Mormon work together. What's a favorite story from each?"
+          "scripture": "Daniel 2:35",
+          "quote": "the stone that smote the image became a great mountain, and filled the whole earth",
+          "thought": "God’s kingdom started small and will fill the earth. What small kind thing could we do today?"
         },
         {
           "dow": "Sun",
-          "scripture": "Ezekiel 47:9",
-          "quote": "every thing shall live whither the river cometh",
-          "thought": "Ezekiel saw a river from the temple heal the Dead Sea. How do temple blessings heal families?"
+          "scripture": "Daniel 7:14",
+          "quote": "there was given him dominion, and glory, and a kingdom",
+          "thought": "Daniel saw Jesus Christ, the Son of Man, receive an everlasting kingdom. How does that change how we feel about following Him?"
         }
       ],
       "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh.",
       "deep_dive": {
         "_comment": "Tap-to-open study popup (live landscape). Filled on the Saturday refresh from the official lesson page for week_of. Quotes must be copied verbatim (KJV / manual). See README 'Study popups'.",
-        "week_of": "2026-11-02",
-        "intro": "Ezekiel was a priest who was captured and taken to Babylon with other Israelites, far from the temple. Then he had a vision and saw “the glory of the Lord” (Ezekiel 1:28) right there among the exiles. His message is full of hope: if the people would “hear the word of the Lord” (Ezekiel 37:4), their “stony heart” could be replaced with “a new heart” (Ezekiel 36:26).",
+        "week_of": "2026-11-09",
+        "intro": "Daniel, Shadrach, Meshach, and Abed-nego were taken captive as young men by Babylon. Surrounded by a different culture, they faced great temptations to abandon their beliefs, yet they remained true by doing small and simple things—praying, fasting, choosing good friends, trusting God, and being a light to others. God worked miracles that still inspire believers today.",
         "scripture_blocks": [
           {
-            "ref": "Ezekiel 1–3",
-            "about": "Ezekiel’s vision of God’s glory and his call to be a watchman"
+            "ref": "Daniel 1",
+            "about": "Daniel and his friends refuse the king’s food and God gives them knowledge"
           },
           {
-            "ref": "Ezekiel 33–34",
-            "about": "The Lord wants to forgive; shepherds who should feed the sheep"
+            "ref": "Daniel 2",
+            "about": "Nebuchadnezzar’s dream of the statue and the stone that fills the earth"
           },
           {
-            "ref": "Ezekiel 36",
-            "about": "A new heart and a new spirit"
+            "ref": "Daniel 3",
+            "about": "Shadrach, Meshach, and Abed-nego in the fiery furnace"
           },
           {
-            "ref": "Ezekiel 37",
-            "about": "The valley of dry bones and the two sticks of Judah and Joseph"
+            "ref": "Daniel 6",
+            "about": "Daniel prays and is delivered from the lions’ den"
           },
           {
-            "ref": "Ezekiel 47",
-            "about": "Healing water flows out from the temple"
+            "ref": "Daniel 7",
+            "about": "Daniel’s vision of the Son of Man receiving an everlasting kingdom"
           }
         ],
         "principles": [
           {
-            "emoji": "🔭",
-            "title": "Prophets are like watchmen who warn us of danger.",
-            "ref": "Ezekiel 3:17; 33:1–5",
-            "explain": "A watchman stood on the city wall to spot danger coming and warn everyone. Our living prophet sees spiritual dangers we can’t see yet and warns us so we can stay safe."
+            "emoji": "🔥",
+            "title": "I can trust in the Lord when my faith is tried.",
+            "ref": "Daniel 1; 3; 6",
+            "explain": "Daniel and his friends were pressured to eat the king’s food, bow to a gold statue, and stop praying. They chose God anyway—even if He did not deliver them the way they hoped (“But if not”). Jesus will help us do what is right when it is hard."
           },
           {
-            "emoji": "🐑",
-            "title": "The Lord invites me to feed His sheep.",
-            "ref": "Ezekiel 3; 34",
-            "explain": "The Lord called leaders shepherds. Jesus is the Good Shepherd who looks for lost sheep and helps hurt ones. We can be shepherds too by ministering to friends, family, and anyone who feels left out."
+            "emoji": "🥕",
+            "title": "Heavenly Father wants me to take care of my body.",
+            "ref": "Daniel 1:1–17",
+            "explain": "Daniel asked to eat simple food (pulse and water) instead of the king’s meat and wine. After ten days they looked healthier, and God gave them knowledge and wisdom. Heavenly Father’s law of health today, the Word of Wisdom, blesses our bodies and minds too."
           },
           {
-            "emoji": "💗",
-            "title": "The Lord wants to forgive.",
-            "ref": "Ezekiel 33:10–19; 36:26–27",
-            "explain": "Repenting isn’t just saying sorry—it’s turning around. When we turn to the Lord, He doesn’t keep score of our old sins. He gives us a new heart and His Spirit to help us do better."
+            "emoji": "🪨",
+            "title": "The Church of Jesus Christ of Latter-day Saints is the kingdom of God on earth.",
+            "ref": "Daniel 2:34–35, 44–45",
+            "explain": "King Nebuchadnezzar dreamed of a huge statue smashed by a stone cut out without hands. The stone grew into a mountain that filled the whole earth. That stone is the Lord’s Church, set up by God, and it will never be destroyed. We each have a part in helping it roll forth."
           },
           {
-            "emoji": "📚",
-            "title": "The Lord is gathering His people and giving them new life.",
-            "ref": "Ezekiel 37",
-            "explain": "Ezekiel saw dry bones come back to life, and two sticks joined into one. The stick of Judah can mean the Bible and the stick of Joseph the Book of Mormon. Together they help gather people to Jesus Christ."
+            "emoji": "🌙",
+            "title": "Receiving revelation requires spiritual preparation.",
+            "ref": "Daniel 2:1–30",
+            "explain": "When the king ordered the wise men killed, Daniel asked his friends to pray for mercies from God. God revealed the dream in a night vision, and Daniel gave the credit to Heavenly Father, not himself. Revelation comes when we prepare—praying, living worthy, and being humble."
           },
           {
-            "emoji": "🏞️",
-            "title": "I can find spiritual healing in the house of the Lord.",
-            "ref": "Ezekiel 47:1–12",
-            "explain": "The Dead Sea is so salty nothing can live in it. In Ezekiel’s vision, water from the temple made it full of fish, with trees whose leaves were medicine. Temple covenants bring that kind of healing to us and our families."
+            "emoji": "🙏",
+            "title": "Heavenly Father wants me to pray often.",
+            "ref": "Daniel 6",
+            "explain": "A new law said anyone who prayed to God would be thrown to the lions. Daniel still knelt and prayed three times a day with his windows open toward Jerusalem, just as he always had. We can pray anywhere, anytime—and Heavenly Father hears us."
           }
         ],
         "key_verses": [
           {
-            "ref": "Ezekiel 3:17",
-            "text": "Son of man, I have made thee a watchman unto the house of Israel: therefore hear the word at my mouth, and give them warning from me."
+            "ref": "Daniel 1:8",
+            "text": "But Daniel purposed in his heart that he would not defile himself with the portion of the king’s meat, nor with the wine which he drank: therefore he requested of the prince of the eunuchs that he might not defile himself."
           },
           {
-            "ref": "Ezekiel 34:16",
-            "text": "I will seek that which was lost, and bring again that which was driven away, and will bind up that which was broken, and will strengthen that which was sick: but I will destroy the fat and the strong; I will feed them with judgment."
+            "ref": "Daniel 3:17–18",
+            "text": "If it be so, our God whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of thine hand, O king. But if not, be it known unto thee, O king, that we will not serve thy gods, nor worship the golden image which thou hast set up."
           },
           {
-            "ref": "Ezekiel 36:26",
-            "text": "A new heart also will I give you, and a new spirit will I put within you: and I will take away the stony heart out of your flesh, and I will give you an heart of flesh."
+            "ref": "Daniel 2:44",
+            "text": "And in the days of these kings shall the God of heaven set up a kingdom, which shall never be destroyed: and the kingdom shall not be left to other people, but it shall break in pieces and consume all these kingdoms, and it shall stand for ever."
           },
           {
-            "ref": "Ezekiel 37:16–17",
-            "text": "Moreover, thou son of man, take thee one stick, and write upon it, For Judah, and for the children of Israel his companions: then take another stick, and write upon it, For Joseph, the stick of Ephraim, and for all the house of Israel his companions: And join them one to another into one stick; and they shall become one in thine hand."
+            "ref": "Daniel 6:10",
+            "text": "Now when Daniel knew that the writing was signed, he went into his house; and his windows being open in his chamber toward Jerusalem, he kneeled upon his knees three times a day, and prayed, and gave thanks before his God, as he did aforetime."
           },
           {
-            "ref": "Ezekiel 47:9",
-            "text": "And it shall come to pass, that every thing that liveth, which moveth, whithersoever the rivers shall come, shall live: and there shall be a very great multitude of fish, because these waters shall come thither: for they shall be healed; and every thing shall live whither the river cometh."
+            "ref": "Daniel 7:13–14",
+            "text": "I saw in the night visions, and, behold, one like the Son of man came with the clouds of heaven, and came to the Ancient of days, and they brought him near before him. And there was given him dominion, and glory, and a kingdom, that all people, nations, and languages, should serve him: his dominion is an everlasting dominion, which shall not pass away, and his kingdom that which shall not be destroyed."
           }
         ],
         "quote": {
-          "text": "Despite how far the covenant people had fallen, God had not totally abandoned them.",
-          "by": "Come, Follow Me—For Home and Church: Old Testament 2026, Nov. 2–8"
+          "text": "Like Joseph in Egypt and Esther in Persia, Daniel and his friends in Babylon kept their faith in God, and God worked miracles that still inspire believers to this day.",
+          "by": "Come, Follow Me—For Home and Church: Old Testament 2026, Nov. 9–15"
         },
         "questions": [
-          "Who are the “sheep” the Lord wants you to feed? How can you follow the Savior’s example as our shepherd? (Ezekiel 34:11–31)",
-          "What do you find in Ezekiel 33:12–19 and 36:26–27 that helps you understand what it means to repent?",
-          "What is the Lord trying to accomplish through the gathering of Israel, and how is He doing it? (Ezekiel 37)",
-          "How have the Bible and the Book of Mormon worked together to help you come to Christ? (Ezekiel 37:15–23)",
-          "What might the waters in Ezekiel 47:1–12 symbolize? How have you found healing because of the temple?"
+          "When have you felt pressured to do something you knew was wrong? How has the Lord blessed you for keeping His commandments? (Daniel 1; 3; 6)",
+          "What if your faith doesn’t lead to the miracles you seek? How can Shadrach, Meshach, and Abed-nego’s example affect how you approach your trials? (Daniel 3:13–18)",
+          "How can your righteous choices lead others to greater faith in the Lord? (Daniel 2:47; 3:28–29)",
+          "What is your role in helping this prophecy come to pass—the stone that fills the earth? (Daniel 2:34–35, 44–45)",
+          "Why was praying to Heavenly Father so important to Daniel? Why is praying important to you? (Daniel 6)"
         ],
         "activity": {
-          "title": "Two sticks, one message",
-          "steps": "Find two sticks. Write For Judah (Bible) on one and For Joseph (Book of Mormon) on the other. Read Ezekiel 37:15–23 together, then hold the sticks together and take turns sharing a story or scripture from each book that helps you feel closer to the Savior. Bonus: play “watchman”—one person looks out the window and tells everyone what’s happening outside, then talk about how our prophet is a watchman for us (Ezekiel 3:17)."
+          "title": "Story pictures: choose the right",
+          "steps": "Find or draw pictures of Daniel and his friends refusing the king’s food (Daniel 1), Shadrach, Meshach, and Abed-nego in the fiery furnace (Daniel 3), and Daniel in the lions’ den (Daniel 6). Place them face down and take turns flipping one over and telling the story (see this week’s activity page or Gospel Art Book nos. 23, 25, and 26). Then talk about a time you might feel pressured to make a wrong choice, share how the Lord has blessed you for choosing the right, and sing “Choose the Right” (Hymns, no. 239). Bonus: read Daniel 2:31–35, 44–45 and draw Nebuchadnezzar’s dream of the statue and the stone that became a mountain—the stone represents The Church of Jesus Christ of Latter-day Saints."
         },
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/45?lang=eng"
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/46?lang=eng"
       }
     },
     "strength_of_youth": {
@@ -1030,7 +1199,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-11-01T20:01:15-07:00",
+    "site_synced": "2026-11-07T21:05:39-07:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -1286,8 +1455,7 @@
           "home_away": "away",
           "tv": "ESPN",
           "tv_all": [
-            "ESPN",
-            "Disney+"
+            "ESPN"
           ],
           "venue": null,
           "note": null,
@@ -1393,7 +1561,8 @@
             "FS1"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "result": "W 94-83"
         },
         {
           "id": "byu-mbb-2026-11-06-omaha",
@@ -1407,7 +1576,8 @@
             "ESPN+"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "result": "W 108-67"
         },
         {
           "id": "byu-football-2026-11-07-utah",
@@ -1422,8 +1592,7 @@
           ],
           "venue": null,
           "note": null,
-          "opp_rank": 3,
-          "opp_rank_poll": "AP"
+          "result": "L 20-28"
         },
         {
           "id": "byu-mbb-2026-11-10-queens",
@@ -1882,12 +2051,18 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-11-01T20:01:18-07:00",
+      "updated": "2026-11-07T21:05:44-07:00",
       "summary": {
         "football": {
-          "record": "7-1",
-          "standing": "2nd in Big 12",
+          "record": "7-2",
+          "standing": "3rd in Big 12",
           "polls": [
+            {
+              "poll": "CFP",
+              "rank": 9,
+              "as_of": "2026-11-03",
+              "week": "2026 NCAA Football Rankings - CFP Rankings Week 10"
+            },
             {
               "poll": "AP",
               "rank": 7,
@@ -1903,6 +2078,11 @@
           ],
           "polls_checked": [
             {
+              "poll": "CFP",
+              "as_of": "2026-11-03",
+              "week": "2026 NCAA Football Rankings - CFP Rankings Week 10"
+            },
+            {
               "poll": "AP",
               "as_of": "2026-11-01",
               "week": "2026 NCAA Football Rankings - AP Poll Week 10"
@@ -1913,10 +2093,10 @@
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 10"
             }
           ],
-          "checked": "2026-11-01T20:01:17-07:00"
+          "checked": "2026-11-07T21:05:43-07:00"
         },
         "mbb": {
-          "record": "0-0",
+          "record": "2-0",
           "standing": "1st in Big 12",
           "polls": [
             {
@@ -1944,7 +2124,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
           ],
-          "checked": "2026-11-01T20:01:18-07:00"
+          "checked": "2026-11-07T21:05:44-07:00"
         }
       },
       "fight_song": {
@@ -1959,7 +2139,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-05",
+      "as_of": "2026-11-07",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -1974,7 +2154,7 @@
         {
           "name": "History of the United States (Chancellor)",
           "short": "US History",
-          "pct": 94.66
+          "pct": 92.64
         },
         {
           "name": "Biology (Anderson)",
@@ -1988,7 +2168,7 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-04",
+        "as_of": "2026-11-05",
         "courses": [
           {
             "name": "English 9 (Coleman)",
@@ -2003,27 +2183,27 @@
           {
             "name": "History of the United States (Chancellor)",
             "short": "US History",
-            "pct": 95.83
+            "pct": 94.66
           },
           {
             "name": "Biology (Anderson)",
             "short": "Biology",
-            "pct": 94.23
+            "pct": 99.11
           },
           {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 95.26
+            "pct": 96.63
           }
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-05T20:09:52-07:00"
+      "checked_at": "2026-11-07T21:07:35-07:00"
     },
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-05",
+      "as_of": "2026-11-07",
       "courses": [
         {
           "name": "English 8 Term 2",
@@ -2038,7 +2218,7 @@
         {
           "name": "Math 8",
           "short": "Math 8",
-          "pct": 96.13
+          "pct": 96.92
         },
         {
           "name": "Science 8",
@@ -2052,12 +2232,12 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-04",
+        "as_of": "2026-11-05",
         "courses": [
           {
             "name": "English 8 Term 2",
             "short": "English 8",
-            "pct": 102.5
+            "pct": 102.47
           },
           {
             "name": "Food & Nutrition",
@@ -2067,7 +2247,7 @@
           {
             "name": "Math 8",
             "short": "Math 8",
-            "pct": 95.38
+            "pct": 96.13
           },
           {
             "name": "Science 8",
@@ -2077,12 +2257,12 @@
           {
             "name": "Utah History",
             "short": "Utah History",
-            "pct": 75.0
+            "pct": 85.82
           }
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-05T20:09:52-07:00"
+      "checked_at": "2026-11-07T21:07:35-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2145,8 +2325,9 @@
           }
         ]
       },
-      "check_status": "ok",
-      "checked_at": "2026-11-05T20:09:52-07:00"
+      "check_status": "error",
+      "checked_at": "2026-11-05T20:09:52-07:00",
+      "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
   "adventures": {
