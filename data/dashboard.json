@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-07T21:07:39-07:00",
+    "last_updated": "2026-11-08T20:07:08-07:00",
     "school_feed_synced": "2026-11-07T21:05:38-07:00",
     "school_feed_window": [
       "2026-11-06",
@@ -1455,7 +1455,8 @@
           "home_away": "away",
           "tv": "ESPN",
           "tv_all": [
-            "ESPN"
+            "ESPN",
+            "Disney+"
           ],
           "venue": null,
           "note": null,
@@ -1626,11 +1627,13 @@
           "id": "byu-football-2026-11-14-baylor",
           "sport": "football",
           "date": "2026-11-14",
-          "start": null,
+          "start": "13:30",
           "opponent": "Baylor",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FOX",
+          "tv_all": [
+            "FOX"
+          ],
           "venue": null,
           "note": null
         },
@@ -2051,49 +2054,38 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-11-07T21:05:44-07:00",
+      "updated": "2026-11-08T20:06:22-07:00",
       "summary": {
         "football": {
           "record": "7-2",
           "standing": "3rd in Big 12",
           "polls": [
             {
-              "poll": "CFP",
-              "rank": 9,
-              "as_of": "2026-11-03",
-              "week": "2026 NCAA Football Rankings - CFP Rankings Week 10"
-            },
-            {
               "poll": "AP",
-              "rank": 7,
-              "as_of": "2026-11-01",
-              "week": "2026 NCAA Football Rankings - AP Poll Week 10"
+              "rank": 12,
+              "as_of": "2026-11-08",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 11"
             },
             {
               "poll": "Coaches",
-              "rank": 8,
-              "as_of": "2026-11-01",
-              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 10"
+              "rank": 12,
+              "as_of": "2026-11-08",
+              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 11"
             }
           ],
           "polls_checked": [
             {
-              "poll": "CFP",
-              "as_of": "2026-11-03",
-              "week": "2026 NCAA Football Rankings - CFP Rankings Week 10"
-            },
-            {
               "poll": "AP",
-              "as_of": "2026-11-01",
-              "week": "2026 NCAA Football Rankings - AP Poll Week 10"
+              "as_of": "2026-11-08",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 11"
             },
             {
               "poll": "Coaches",
-              "as_of": "2026-11-01",
-              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 10"
+              "as_of": "2026-11-08",
+              "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 11"
             }
           ],
-          "checked": "2026-11-07T21:05:43-07:00"
+          "checked": "2026-11-08T20:06:21-07:00"
         },
         "mbb": {
           "record": "2-0",
@@ -2124,7 +2116,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Preseason"
             }
           ],
-          "checked": "2026-11-07T21:05:44-07:00"
+          "checked": "2026-11-08T20:06:22-07:00"
         }
       },
       "fight_song": {
