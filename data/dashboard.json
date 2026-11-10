@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-08T20:08:01-07:00",
+    "last_updated": "2026-11-09T20:11:06-07:00",
     "school_feed_synced": "2026-11-07T21:05:38-07:00",
     "school_feed_window": [
       "2026-11-06",
@@ -2131,12 +2131,12 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-07",
+      "as_of": "2026-11-09",
       "courses": [
         {
           "name": "English 9 (Coleman)",
           "short": "English 9",
-          "pct": 99.61
+          "pct": 97.81
         },
         {
           "name": "D.E.A.R.",
@@ -2146,7 +2146,7 @@
         {
           "name": "History of the United States (Chancellor)",
           "short": "US History",
-          "pct": 92.64
+          "pct": 92.95
         },
         {
           "name": "Biology (Anderson)",
@@ -2156,11 +2156,11 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 96.63
+          "pct": 96.8
         }
       ],
       "previous": {
-        "as_of": "2026-11-05",
+        "as_of": "2026-11-07",
         "courses": [
           {
             "name": "English 9 (Coleman)",
@@ -2175,7 +2175,7 @@
           {
             "name": "History of the United States (Chancellor)",
             "short": "US History",
-            "pct": 94.66
+            "pct": 92.64
           },
           {
             "name": "Biology (Anderson)",
@@ -2190,12 +2190,12 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-08T20:08:01-07:00"
+      "checked_at": "2026-11-09T20:11:06-07:00"
     },
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-08",
+      "as_of": "2026-11-09",
       "courses": [
         {
           "name": "English 8 Term 2",
@@ -2220,16 +2220,16 @@
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 85.82
+          "pct": 88.0
         }
       ],
       "previous": {
-        "as_of": "2026-11-07",
+        "as_of": "2026-11-08",
         "courses": [
           {
             "name": "English 8 Term 2",
             "short": "English 8",
-            "pct": 102.47
+            "pct": 98.38
           },
           {
             "name": "Food & Nutrition",
@@ -2254,12 +2254,12 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-08T20:08:01-07:00"
+      "checked_at": "2026-11-09T20:11:06-07:00"
     },
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-11-05",
+      "as_of": "2026-11-09",
       "courses": [
         {
           "name": "Geography",
@@ -2279,16 +2279,16 @@
         {
           "name": "Math",
           "short": "Math",
-          "pct": 95.86
+          "pct": 97.01
         },
         {
           "name": "Spelling",
           "short": "Spelling",
-          "pct": 85.0
+          "pct": 95.0
         }
       ],
       "previous": {
-        "as_of": "2026-11-04",
+        "as_of": "2026-11-05",
         "courses": [
           {
             "name": "Geography",
@@ -2308,7 +2308,7 @@
           {
             "name": "Math",
             "short": "Math",
-            "pct": 89.58
+            "pct": 95.86
           },
           {
             "name": "Spelling",
@@ -2318,7 +2318,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-08T20:08:01-07:00",
+      "checked_at": "2026-11-09T20:11:06-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
