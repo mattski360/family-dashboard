@@ -12,7 +12,7 @@ v2/index.html are static redirects to v3/ and are not touched by this script.
 Exits 3 (without writing) if any term from data/private_hide.txt appears in the rendered HTML.
 
 Usage: python3 build.py [--json data/dashboard.json] [--out v3/index.html] [--week-start YYYY-MM-DD]
-                        [--no-stamp] [--now ISO]
+                        [--no-stamp] [--now ISO] [--skip-byu-refresh]
 """
 from __future__ import annotations
 
@@ -875,7 +875,7 @@ def render_v3_adventures(m: Model) -> str:
 
 # ------------------------------------------------------------------ BYU easter-egg popup (tap the faded Y)
 # Football + men's basketball only: record / polls / standing, recent results, next games. Data: sports.byu
-# (fetch_byu.py, refreshed weekly by run.sh). Optional sports.byu.fight_song = {"src","title","credit"}: played on open
+# (fetch_byu.py, refreshed on each build.py and by run.sh). Optional sports.byu.fight_song = {"src","title","credit"}: played on open
 # and the popup stays up for the song; without it (or if play() is rejected) it auto-closes after 30 s.
 def byu_live_polls(s: dict, gs: list[dict], today: dt.date) -> list[dict]:
     """BYU's poll ranks that are still current. A rank is dropped (no number shown, never guessed) when it is more than
@@ -1095,9 +1095,22 @@ def main() -> int:
     ap.add_argument("--now", help="override build time (ISO) for testing")
     ap.add_argument("--week-start", help="Sunday (YYYY-MM-DD) that starts the calendar week; default: upcoming Sunday")
     ap.add_argument("--no-landscape", action="store_true", help="skip landscape/ (the wall-display page)")
+    ap.add_argument("--skip-byu-refresh", action="store_true",
+                    help="don't call fetch_byu.refresh (default: refresh unless --now is set)")
     args = ap.parse_args()
 
     path = Path(args.json)
+    # Pick up midweek basketball finals, Sunday AP/Coaches, and Tuesday CFP ranks. Fail soft: a network
+    # error keeps the last good sports.byu data and the page is still built. Skipped for --now so a
+    # historical/test build is not overwritten with live scores.
+    if not args.skip_byu_refresh and not args.now:
+        try:
+            import fetch_byu
+            rc = fetch_byu.refresh(path)
+            if rc:
+                print(f"[build] fetch_byu exited {rc}; building with best available BYU data", file=sys.stderr)
+        except Exception as e:  # noqa: BLE001
+            print(f"[build] BYU refresh failed ({e}); using existing sports.byu data", file=sys.stderr)
     data = json.loads(path.read_text())
     tz = ZoneInfo(data.get("meta", {}).get("timezone", "America/Denver"))
     now = dt.datetime.fromisoformat(args.now).astimezone(tz) if args.now else dt.datetime.now(tz)

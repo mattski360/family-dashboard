@@ -6,13 +6,18 @@ games can be read straight from the HTML (date/time with UTC offset, TBA flag, v
 flag, location, TV link):
   https://byucougars.com/sports/football/schedule
   https://byucougars.com/sports/mens-basketball/schedule
-Fallback: ESPN's public site API team schedule JSON (BYU = team 252), regular season + postseason:
+Fallback / results: ESPN's public site API team schedule JSON (BYU = team 252), regular season + postseason:
   https://site.api.espn.com/apis/site/v2/sports/{football/college-football|basketball/mens-college-basketball}/teams/252/schedule
-Nothing is invented: opponent, home/away, start time and TV come from the source. Games without a set time are
-stored with start=null (shown as TBA); "TV (TBA)" or no TV link is stored as tv=null.
+Completed-game scores are always merged from ESPN when that API answers, even if the official page already
+supplied the schedule (the official HTML can list a played game before the final is in the markup). Previous
+results are kept when a game is already in the file and a source has no score yet. Nothing is invented:
+opponent, home/away, start time and TV come from the source. Games without a set time are stored with
+start=null (shown as TBA); "TV (TBA)" or no TV link is stored as tv=null.
 
 Fail soft: for each sport the official page is tried first, then ESPN; if both fail (or return no games) the
-previous games for that sport are kept and the script exits 2 (run.sh carries on and still builds).
+previous games for that sport are kept and the script exits 2 (run.sh / build.py carry on and still build).
+build.py calls refresh() on each normal build so midweek basketball finals and Tuesday CFP ranks are picked
+up without waiting for the Saturday run.sh.
 
 Usage: python3 fetch_byu.py [--json data/dashboard.json] [--today YYYY-MM-DD] [--dry-run] [--source official|espn]
 ESPN details: TBA games (timeValid=false) are stored on their Eastern-time calendar date (ESPN's midnight-ET
@@ -91,15 +96,18 @@ def fetch_official(sport: str) -> list[dict]:
         links = [_txt(x) for x in re.findall(r'schedule-event-item-links__title">(.*?)</span>', b, re.S)]
         tv = [x for x in links if TV_RE.match(x) and x != "TV (TBA)"]
         loc = re.search(r'schedule-event-location">(.*?)</span>', b, re.S)
-        res = re.search(r'schedule-event-item-result__wrapper[^>]*>(.*?)</div>', b, re.S)
-        res_t = _txt(res.group(1)) if res else ""
         name = RANK_PREFIX.sub("", _txt(opp.group(1)))   # "No. 17 Kansas" -> "Kansas" (the site's rank goes stale)
         g = {"id": f"byu-{sport}-{when.date().isoformat()}-{re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')}",
              "sport": sport, "date": when.date().isoformat(), "start": None if tba else when.strftime("%H:%M"),
              "opponent": name, "home_away": ha, "tv": tv[0] if tv else None, "tv_all": tv,
              "venue": _txt(loc.group(1)) if loc else None,
              "note": "Exhibition" if "schedule-event-item__exhibition" in b else None}
-        mo = re.match(r"^([WLT])\s*(\d+\s*-\s*\d+)", res_t)
+        # Prefer the win/loss class + score (W 98-82). Fall back to text inside the result wrapper.
+        mo = re.search(r'schedule-event-item-result__(?:win|loss|tie)"[^>]*>\s*([WLT])\s*</strong>\s*(\d+\s*-\s*\d+)', b)
+        if not mo:
+            res = re.search(r'schedule-event-item-result__wrapper[^>]*>(.*?)</div>', b, re.S)
+            res_t = _txt(res.group(1)) if res else ""
+            mo = re.search(r'\b([WLT])\s*(\d+\s*-\s*\d+)', res_t)
         if mo:
             g["result"] = f"{mo.group(1)} {mo.group(2).replace(' ', '')}"
         out.append(g)
@@ -196,8 +204,11 @@ def fetch_summary(sport: str, polls: list[dict]) -> dict:
                 out["conf_record"] = f"{int(lw)}-{int(ll)}"
     if t.get("standingSummary"):
         out["standing"] = t["standingSummary"]
-    out["polls"] = [{"poll": p["poll"], "rank": p["ranks"][TEAM][0], "as_of": p["as_of"], "week": p["week"]}
-                    for p in polls if TEAM in p["ranks"]]
+    poll_order = {"AP": 0, "Coaches": 1, "CFP": 2}
+    out["polls"] = sorted(
+        [{"poll": p["poll"], "rank": p["ranks"][TEAM][0], "as_of": p["as_of"], "week": p["week"]}
+         for p in polls if TEAM in p["ranks"]],
+        key=lambda p: poll_order.get(p["poll"], 9))
     # every poll that was checked, so the page can tell "unranked this week" from "not checked"
     out["polls_checked"] = [{"poll": p["poll"], "as_of": p["as_of"], "week": p["week"]} for p in polls]
     out["checked"] = dt.datetime.now(DEN).isoformat(timespec="seconds")
@@ -221,50 +232,130 @@ def tag_opp_ranks(games: list[dict], sport: str, polls: list[dict], today: dt.da
             g["opp_rank"], g["opp_rank_poll"] = hit[0], poll["poll"]
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--json", default=str(HERE / "data" / "dashboard.json"))
-    ap.add_argument("--today", help="pretend today is YYYY-MM-DD (picks the seasons)")
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--source", choices=["official", "espn"], help="force one source (default: official, then ESPN)")
-    a = ap.parse_args()
-    today = dt.date.fromisoformat(a.today) if a.today else dt.datetime.now(DEN).date()
-    path = Path(a.json)
+def _opp_tokens(name: str) -> set[str]:
+    s = RANK_PREFIX.sub("", name or "")
+    s = re.sub(r"[^a-z0-9\s]+", " ", s.lower())
+    stop = {"university", "univ", "the", "college", "of", "at", "and"}
+    return {t for t in s.split() if t and t not in stop and len(t) > 1}
+
+
+def same_game(a: dict, b: dict) -> bool:
+    """True when two records are the same BYU game (sport + date, with opponent-token overlap)."""
+    if a.get("sport") != b.get("sport") or a.get("date") != b.get("date"):
+        return False
+    ta, tb = _opp_tokens(a.get("opponent") or ""), _opp_tokens(b.get("opponent") or "")
+    if not ta or not tb:
+        return True
+    return bool(ta & tb)
+
+
+def find_match(games: list[dict], g: dict) -> dict | None:
+    hits = [x for x in games if x is not g and same_game(x, g)]
+    return hits[0] if hits else None
+
+
+def apply_results(dest: list[dict], src: list[dict], overwrite: bool = False) -> int:
+    """Copy final scores (and missing TV/start) from src onto matching dest games. Never invents a score."""
+    n = 0
+    for g in dest:
+        s = find_match(src, g)
+        if not s:
+            continue
+        if s.get("result") and (overwrite or not g.get("result")):
+            if g.get("result") and g["result"] != s["result"]:
+                print(f"[fetch_byu] {g.get('sport')} {g.get('date')} {g.get('opponent')}: "
+                      f"result {g['result']} -> {s['result']}", file=sys.stderr)
+            g["result"] = s["result"]
+            n += 1
+        if not g.get("tv") and s.get("tv"):
+            g["tv"], g["tv_all"] = s["tv"], s.get("tv_all") or [s["tv"]]
+        if g.get("start") is None and s.get("start"):
+            g["start"] = s["start"]
+    return n
+
+
+def add_missing(dest: list[dict], src: list[dict]) -> int:
+    n = 0
+    for g in src:
+        if not find_match(dest, g):
+            dest.append(g)
+            n += 1
+    return n
+
+
+def collect_sport(sport: str, season: int, old: list[dict], source: str | None) -> tuple[list[dict], str | None, list[str]]:
+    """Official schedule when possible, always merge ESPN (and previous) final scores. Returns (games, used, errs)."""
+    official, espn, errs = None, None, []
+    tries = [("official", lambda: fetch_official(sport)), ("espn", lambda: fetch_espn(sport, season))]
+    for name, fn in tries:
+        if source and name != source:
+            continue
+        try:
+            games = fn()
+            if not games:
+                raise ValueError("no games found")
+            if name == "official":
+                official = games
+            else:
+                espn = games
+            print(f"[fetch_byu] {sport}: {len(games)} games from {name}")
+        except Exception as e:  # noqa: BLE001
+            errs.append(f"{name}: {e}")
+            print(f"[fetch_byu] {sport}: {name} failed ({e})", file=sys.stderr)
+    prev = [g for g in old if g.get("sport") == sport]
+    if official:
+        games, used = official, "official"
+        if espn:
+            n = apply_results(games, espn, overwrite=True)
+            add_missing(games, espn)
+            if n or any(g.get("result") for g in espn):
+                used = "official+espn"
+            print(f"[fetch_byu] {sport}: merged {n} ESPN result(s) into official schedule")
+    elif espn:
+        games, used = espn, "espn"
+    else:
+        return prev, None, errs
+    # keep earlier finals (and official-only exhibitions) if a source listed the game without a score
+    n = apply_results(games, prev, overwrite=False)
+    extra = add_missing(games, [g for g in prev if g.get("note") == "Exhibition" or g.get("result")])
+    if n or extra:
+        print(f"[fetch_byu] {sport}: kept {n} previous result(s) and {extra} previous-only game(s)")
+    games.sort(key=lambda g: (g["date"], g["start"] or "99"))
+    return games, used, errs
+
+
+SRC_LABEL = {
+    "official": "byucougars.com schedule page",
+    "espn": "ESPN site API team schedule (team 252)",
+    "official+espn": "byucougars.com schedule page, results from ESPN site API (team 252)",
+}
+
+
+def refresh(json_path: str | Path, today: dt.date | None = None, source: str | None = None,
+            dry_run: bool = False) -> int:
+    """Update sports.byu in dashboard.json. Returns 0, or 2 if a source failed and previous data was kept."""
+    today = today or dt.datetime.now(DEN).date()
+    path = Path(json_path)
     data = json.loads(path.read_text())
     byu = (data.setdefault("sports", {})).setdefault("byu", {})
     old = byu.get("games") or []
-    out, failed, seas = [], [], seasons(today)
-    used = {}
+    out, failed, seas, used = [], [], seasons(today), {}
     for sport, season in seas.items():
-        games, errs = [], []
-        tries = [("official", lambda: fetch_official(sport)), ("espn", lambda: fetch_espn(sport, season))]
-        for name, fn in tries:
-            if a.source and name != a.source:
-                continue
-            try:
-                games = fn()
-                if not games:
-                    raise ValueError("no games found")
-                used[sport] = name
-                print(f"[fetch_byu] {sport}: {len(games)} games from {name}")
-                break
-            except Exception as e:  # noqa: BLE001
-                errs.append(f"{name}: {e}")
-                print(f"[fetch_byu] {sport}: {name} failed ({e})", file=sys.stderr)
-        if games:
+        games, src, _errs = collect_sport(sport, season, old, source)
+        if src:
+            used[sport] = src
             out += games
         else:
-            kept = [g for g in old if g.get("sport") == sport]
-            print(f"[fetch_byu] {sport}: all sources failed; keeping {len(kept)} previous games", file=sys.stderr)
-            out += kept
+            print(f"[fetch_byu] {sport}: all sources failed; keeping {len(games)} previous games", file=sys.stderr)
+            out += games
             failed.append(sport)
     out.sort(key=lambda g: (g["date"], g["start"] or "99"))
-    if a.dry_run:
+    if dry_run:
         for g in out:
-            print(g["date"], g["start"] or "TBA ", g["sport"], g["home_away"], g["opponent"], g["tv"] or "", g.get("note") or "", g.get("result", ""))
+            print(g["date"], g["start"] or "TBA ", g["sport"], g["home_away"], g["opponent"],
+                  g["tv"] or "", g.get("note") or "", g.get("result", ""))
         return 2 if failed else 0
-    src = {"official": "byucougars.com schedule page", "espn": "ESPN site API team schedule (team 252)"}
-    byu.update({"team": "BYU Cougars", "source": {k: src[v] for k, v in used.items()} or byu.get("source"),
+    byu.update({"team": "BYU Cougars", "source": {k: SRC_LABEL[v] for k, v in used.items()} or byu.get("source"),
                 "seasons": {"football": str(seas["football"]), "mbb": f"{seas['mbb'] - 1}-{str(seas['mbb'])[2:]}"},
                 "games": out})
     summ = byu.get("summary") or {}
@@ -287,6 +378,17 @@ def main() -> int:
     tmp.replace(path)
     print(f"[fetch_byu] stored {len(out)} BYU games")
     return 2 if failed else 0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--json", default=str(HERE / "data" / "dashboard.json"))
+    ap.add_argument("--today", help="pretend today is YYYY-MM-DD (picks the seasons)")
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--source", choices=["official", "espn"], help="force one source (default: official + ESPN results)")
+    a = ap.parse_args()
+    today = dt.date.fromisoformat(a.today) if a.today else None
+    return refresh(a.json, today=today, source=a.source, dry_run=a.dry_run)
 
 
 if __name__ == "__main__":

@@ -120,8 +120,8 @@ No-school entries on weekends are skipped. When the band named in "No School K-8
 The default window is **21 days**, so a weekly run still fills the ten day tiles all week. Use `--days 14` if you want a shorter window.
 
 ## BYU games (fetch_byu.py)
-* **Source:** the official byucougars.com schedule pages (`/sports/football/schedule`, `/sports/mens-basketball/schedule`), read from the server-rendered HTML: date and time (with UTC offset, converted to America/Denver), TBA flag, vs./at, opponent, exhibition flag, location and the TV link. If a page can't be read, ESPN's public site API team schedule JSON (BYU = team 252, regular season + postseason) is used for that sport instead.
-* Runs on every `run.sh`, so the Saturday refresh picks up new kickoff/tipoff times, TV networks and added games (bowl games, tournament opponents) automatically. Nothing is invented: unset times are stored as `null` (TBA) and "TV (TBA)" as no network.
+* **Source:** the official byucougars.com schedule pages (`/sports/football/schedule`, `/sports/mens-basketball/schedule`), read from the server-rendered HTML: date and time (with UTC offset, converted to America/Denver), TBA flag, vs./at, opponent, exhibition flag, location and the TV link. Final scores are then merged from ESPN's public site API team schedule JSON (BYU = team 252, regular season + postseason) so a midweek basketball game that has already been played is stored as `W 98-82` / `L 71-86` even if the official page listed it before the result was in the markup. If a page can't be read, the ESPN schedule is used for that sport instead. Previously stored finals are kept when a source lists the game without a score.
+* Runs on every `run.sh` and, unless `--skip-byu-refresh` or `--now` is set, on every `build.py`, so midweek basketball results, Sunday AP/Coaches polls, and Tuesday College Football Playoff ranks are picked up without waiting for Saturday. Nothing is invented: unset times are stored as `null` (TBA) and "TV (TBA)" as no network.
 * **Fail soft:** if both sources fail for a sport, its previous games are kept and the script exits 2; run.sh logs it and still builds.
 * The official pages show the current season, so the dashboard rolls into the next football / basketball season on its own.
 * **Poll ranks are data-driven, never hardcoded.** Every run reads ESPN's rankings endpoint
@@ -130,8 +130,10 @@ The default window is **21 days**, so a weekly run still fills the ten day tiles
   number shown. Upcoming games get `opp_rank` / `opp_rank_poll` (opponent's current CFP-else-AP rank) and render as "No. 6 Utah";
   the "No. 17 Kansas" prefixes baked into the official schedule page go stale, so they are stripped.
 * **Stale-rank guard (build.py `byu_live_polls`):** a poll chip is hidden if the poll is more than 9 days old in season, or
-  (football) was published before BYU's latest game. The AP/Coaches polls come out Sunday, after the Saturday 8:55 PM run, so
-  any nightly update should run `python3 fetch_byu.py` before `build.py` to pick up the new poll on Sunday.
+  (football) was published before BYU's latest game. Unranked = no chip (never a guessed number). Football chips are
+  `#12 AP`, `#12 Coaches`, and `#10 CFP` when those polls have BYU; basketball shows AP (and Coaches if ranked).
+  AP/Coaches come out Sunday and CFP ranks come out Tuesday night, so a Sunday ranking run and a Tuesday or Wednesday
+  check will show the new numbers (a normal `build.py` already refreshes them).
 
 ## Young Men this week (`youth`)
 ```json
@@ -167,8 +169,8 @@ Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 12
 ## BYU easter-egg popup
 Tapping the faded BYU "Y" (nav corner, v3 / landscape) still plays the Go Cougs animation and also opens a
 BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).
-Data: `sports.byu.games` + `sports.byu.summary` + `sports.byu.updated` in data/dashboard.json, refreshed every week by
-`fetch_byu.py` (run.sh, Sat 8:55 PM). Unknown items are omitted. Auto-closes after 30 s; X or tap outside closes.
+Data: `sports.byu.games` + `sports.byu.summary` + `sports.byu.updated` in data/dashboard.json, refreshed by
+`fetch_byu.py` on each `build.py` and on `run.sh` (Sat 8:55 PM). Unknown items are omitted. Auto-closes after 30 s; X or tap outside closes.
 Optional audio: set `sports.byu.fight_song = {"src": "../assets/<file>", "credit": "..."}` to a licensed file; the popup
 then stays open for the song's length (30 s fallback if play() is rejected). None is set: "The Cougar Song" (Rise and
 Shout) is still under copyright (registered 1947, renewed 1975; held by the Sandgren family/BYU), so no copy is in the repo.
