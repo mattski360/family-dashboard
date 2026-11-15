@@ -5,14 +5,14 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-13T17:57:19-07:00",
-    "school_feed_synced": "2026-11-07T21:05:38-07:00",
+    "last_updated": "2026-11-14T21:06:07-07:00",
+    "school_feed_synced": "2026-11-14T21:05:57-07:00",
     "school_feed_window": [
-      "2026-11-06",
-      "2026-11-28"
+      "2026-11-13",
+      "2026-12-05"
     ],
     "later_days": 8,
-    "week_start": "2026-11-08",
+    "week_start": "2026-11-15",
     "motto": "We are Jensens, we are brave, we choose the right, and we always help others.",
     "prayer_rotation": {
       "anchor_sunday": "2026-10-04",
@@ -28,14 +28,16 @@
         "Welfare Square Tour",
         "Waterfall Canyon Via Ferrata",
         "Ensign Peak",
-        "Adams Canyon"
+        "Adams Canyon",
+        "Hill Aerospace Museum"
       ],
       "evening": [
         "Peaks Ice Arena Public Skate",
         "Beacon Hill Park Disc Golf",
         "Super Chix Custard Run",
         "Trail Trash Pickup",
-        "Movie & Meaning Night"
+        "Movie & Meaning Night",
+        "3-Minute Talk Night"
       ]
     }
   },
@@ -446,21 +448,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261106-k-5-spirit-apparel-day",
-      "date": "2026-11-06",
-      "start": null,
-      "end": null,
-      "title": "K-5 Spirit Apparel Day",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "low",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "fam-20261106-dl1009",
       "date": "2026-11-06",
       "end_date": null,
@@ -474,21 +461,6 @@
       "priority": "normal",
       "kind": "flight",
       "source": "family"
-    },
-    {
-      "id": "ahs-20261106-dance-festival-performance",
-      "date": "2026-11-06",
-      "start": "14:00",
-      "end": "15:10",
-      "title": "Dance Festival Performance",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "normal",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "fam-trip-20261109-phx",
@@ -794,6 +766,98 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261130-school-resumes",
+      "date": "2026-11-30",
+      "start": null,
+      "end": null,
+      "title": "School Resumes",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "high",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261203-am-assembly-schedule-curricular-christma",
+      "date": "2026-12-03",
+      "start": "08:35",
+      "end": "09:20",
+      "title": "AM Assembly Schedule Curricular Christmas Choir Concert",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261204-k-5-spirit-apparel-day",
+      "date": "2026-12-04",
+      "start": null,
+      "end": null,
+      "title": "K-5 Spirit Apparel Day",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261204-curricular-christmas-choral-concert",
+      "date": "2026-12-04",
+      "start": "17:00",
+      "end": "18:30",
+      "title": "Curricular Christmas Choral Concert",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261204-art-show",
+      "date": "2026-12-04",
+      "start": "18:30",
+      "end": "19:30",
+      "title": "Art Show",
+      "note": "",
+      "who": [
+        "luke",
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261205-choirs-sing-at-temple-square",
+      "date": "2026-12-05",
+      "start": null,
+      "end": null,
+      "title": "Choirs Sing at Temple Square",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
     }
   ],
   "todos": [
@@ -910,168 +974,166 @@
   "spiritual": {
     "come_follow_me": {
       "status": "ready",
-      "week_of": "2026-11-09",
-      "lesson": 46,
-      "dates_label": "Nov 9–15",
-      "title": "“There Is No Other God That Can Deliver”",
-      "reading": "Daniel 1–7",
-      "summary": "Daniel, Shadrach, Meshach, and Abed-nego were young men taken captive to Babylon. They kept their covenants by praying, fasting, choosing good friends, trusting God, and being a light to others—even when a king threatened a fiery furnace or a den of lions. God delivered them, showed Daniel a dream of a stone cut without hands that became a mountain and filled the earth (the Lord’s latter-day Church), and revealed the Son of Man receiving an everlasting kingdom.",
+      "week_of": "2026-11-16",
+      "lesson": 47,
+      "dates_label": "Nov 16–22",
+      "title": "“I Will Love Them Freely”",
+      "reading": "Hosea 1–6; 10–14; Joel",
+      "summary": "The Lord compared His covenant with Israel to a marriage. Israel was unfaithful, yet He said, “I will invite you back.” Hosea and Joel teach that the Lord loves us freely, wants our hearts (not just outward actions), and promises to pour out His Spirit on all who turn to Him.",
       "questions": [
-        "How can I trust the Lord when my faith is tried? (Daniel 1; 3; 6)",
-        "What does Nebuchadnezzar’s dream teach about the Lord’s Church? (Daniel 2:34–35, 44–45)",
-        "Why was praying so important to Daniel, and why does it matter to me? (Daniel 6:10)"
+        "How is making a covenant with the Lord like a marriage? What does Hosea 2:14–23 teach about His love and mercy?",
+        "What does “I will love them freely” mean to you? (Hosea 14:4)",
+        "What does it mean that the Lord desires “mercy, and not sacrifice”? (Hosea 6:6)",
+        "How is rending our hearts different from rending our garments? (Joel 2:12–13)",
+        "Why is revelation essential to your spiritual survival? (Joel 2:28–29)"
       ],
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/46?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/47?lang=eng",
       "previous": {
-        "show_before": "2026-11-09",
-        "lesson": 45,
-        "dates_label": "Nov 2–8",
-        "title": "“A New Spirit Will I Put within You”",
-        "reading": "Ezekiel 1–3; 33–34; 36–37; 47",
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/45?lang=eng"
+        "show_before": "2026-11-16",
+        "lesson": 46,
+        "dates_label": "Nov 9–15",
+        "title": "“There Is No Other God That Can Deliver”",
+        "reading": "Daniel 1–7",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/46?lang=eng"
       },
-      "featured_question": 0,
+      "featured_question": 1,
       "daily": [
         {
           "dow": "Mon",
-          "scripture": "Daniel 1:8",
-          "quote": "Daniel purposed in his heart that he would not defile himself",
-          "thought": "Daniel decided ahead of time to keep God’s standards, even in the king’s palace. What’s one standard we can decide now to keep this week?"
+          "scripture": "Hosea 2:19",
+          "quote": "I will betroth thee unto me for ever",
+          "thought": "The Lord compares His covenant with us to a promise that lasts forever. What is one way we can show Him we love Him today?"
         },
         {
           "dow": "Tue",
-          "scripture": "Daniel 3:17",
-          "quote": "our God whom we serve is able to deliver us from the burning fiery furnace",
-          "thought": "Shadrach, Meshach, and Abed-nego knew God could save them. When has Heavenly Father helped you through something scary?"
+          "scripture": "Hosea 14:4",
+          "quote": "I will heal their backsliding, I will love them freely",
+          "thought": "No matter what mistakes we make, Jesus invites us back. Who can you share that good news with?"
         },
         {
           "dow": "Wed",
-          "scripture": "Daniel 3:18",
-          "quote": "But if not, be it known unto thee, O king, that we will not serve thy gods",
-          "thought": "They would choose God even if He didn’t deliver them the way they hoped. How can we choose the right when we don’t know how things will turn out?"
+          "scripture": "Hosea 6:6",
+          "quote": "For I desired mercy, and not sacrifice",
+          "thought": "Heavenly Father cares most about what is in our hearts. How can we show mercy to someone at home today?"
         },
         {
           "dow": "Thu",
-          "scripture": "Daniel 2:44",
-          "quote": "the God of heaven set up a kingdom, which shall never be destroyed",
-          "thought": "The stone in the king’s dream is the Lord’s Church. What’s one way our family can help it grow?"
+          "scripture": "Hosea 10:12",
+          "quote": "it is time to seek the Lord",
+          "thought": "Any time is a good time to seek the Lord. What are some times in your day you could pause to pray?"
         },
         {
           "dow": "Fri",
-          "scripture": "Daniel 6:10",
-          "quote": "he kneeled upon his knees three times a day, and prayed, and gave thanks before his God",
-          "thought": "A new law made prayer illegal, but Daniel prayed just as he always had. Where is one place we can remember to pray today?"
+          "scripture": "Joel 2:13",
+          "quote": "rend your heart, and not your garments, and turn unto the Lord your God",
+          "thought": "Turning to God starts inside our hearts. What is one thing we could change to turn closer to Him?"
         },
         {
           "dow": "Sat",
-          "scripture": "Daniel 2:35",
-          "quote": "the stone that smote the image became a great mountain, and filled the whole earth",
-          "thought": "God’s kingdom started small and will fill the earth. What small kind thing could we do today?"
+          "scripture": "Hosea 13:4",
+          "quote": "there is no saviour beside me",
+          "thought": "Jesus Christ is our Savior and Redeemer. What words would you use to describe Him?"
         },
         {
           "dow": "Sun",
-          "scripture": "Daniel 7:14",
-          "quote": "there was given him dominion, and glory, and a kingdom",
-          "thought": "Daniel saw Jesus Christ, the Son of Man, receive an everlasting kingdom. How does that change how we feel about following Him?"
+          "scripture": "Joel 2:28",
+          "quote": "I will pour out my spirit upon all flesh",
+          "thought": "The Holy Ghost can guide each of us. When have you felt the Spirit help you this week?"
         }
       ],
       "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh.",
       "deep_dive": {
         "_comment": "Tap-to-open study popup (live landscape). Filled on the Saturday refresh from the official lesson page for week_of. Quotes must be copied verbatim (KJV / manual). See README 'Study popups'.",
-        "week_of": "2026-11-09",
-        "intro": "Daniel, Shadrach, Meshach, and Abed-nego were taken captive as young men by Babylon. Surrounded by a different culture, they faced great temptations to abandon their beliefs, yet they remained true by doing small and simple things—praying, fasting, choosing good friends, trusting God, and being a light to others. God worked miracles that still inspire believers today.",
+        "week_of": "2026-11-16",
+        "intro": "Israel’s covenant with the Lord was meant to be so deep that He compared it to a marriage, with eternal commitment, loyalty, and wholehearted love. Israel was not faithful, yet the Lord’s message was not “I will reject you forever” but “I will invite you back.” Hosea and Joel teach that He loves us freely and welcomes us home when we turn to Him.",
         "scripture_blocks": [
           {
-            "ref": "Daniel 1",
-            "about": "Daniel and his friends refuse the king’s food and God gives them knowledge"
+            "ref": "Hosea 1–3",
+            "about": "Hosea and Gomer: the Lord’s faithful love for His covenant people"
           },
           {
-            "ref": "Daniel 2",
-            "about": "Nebuchadnezzar’s dream of the statue and the stone that fills the earth"
+            "ref": "Hosea 6",
+            "about": "The Lord desires mercy, not just sacrifice"
           },
           {
-            "ref": "Daniel 3",
-            "about": "Shadrach, Meshach, and Abed-nego in the fiery furnace"
+            "ref": "Hosea 10–14",
+            "about": "Seek the Lord; there is no Savior beside Him; He will love them freely"
           },
           {
-            "ref": "Daniel 6",
-            "about": "Daniel prays and is delivered from the lions’ den"
-          },
-          {
-            "ref": "Daniel 7",
-            "about": "Daniel’s vision of the Son of Man receiving an everlasting kingdom"
+            "ref": "Joel 2",
+            "about": "Rend your heart, turn to the Lord, and He will pour out His Spirit"
           }
         ],
         "principles": [
           {
-            "emoji": "🔥",
-            "title": "I can trust in the Lord when my faith is tried.",
-            "ref": "Daniel 1; 3; 6",
-            "explain": "Daniel and his friends were pressured to eat the king’s food, bow to a gold statue, and stop praying. They chose God anyway—even if He did not deliver them the way they hoped (“But if not”). Jesus will help us do what is right when it is hard."
+            "emoji": "💍",
+            "title": "The Lord always invites me to return to Him.",
+            "ref": "Hosea 1–3; 14",
+            "explain": "God compared His covenant to a marriage. Even when Israel was unfaithful, He promised to welcome them back and betroth them to Him forever. No matter what we have done, Jesus invites us to come home."
           },
           {
-            "emoji": "🥕",
-            "title": "Heavenly Father wants me to take care of my body.",
-            "ref": "Daniel 1:1–17",
-            "explain": "Daniel asked to eat simple food (pulse and water) instead of the king’s meat and wine. After ten days they looked healthier, and God gave them knowledge and wisdom. Heavenly Father’s law of health today, the Word of Wisdom, blesses our bodies and minds too."
+            "emoji": "❤️",
+            "title": "The Lord loves us freely.",
+            "ref": "Hosea 14:4",
+            "explain": "“Freely” means His love is a gift, not something we have to earn. He promises to heal us and to help us grow like a lily and a strong tree with deep roots."
           },
           {
-            "emoji": "🪨",
-            "title": "The Church of Jesus Christ of Latter-day Saints is the kingdom of God on earth.",
-            "ref": "Daniel 2:34–35, 44–45",
-            "explain": "King Nebuchadnezzar dreamed of a huge statue smashed by a stone cut out without hands. The stone grew into a mountain that filled the whole earth. That stone is the Lord’s Church, set up by God, and it will never be destroyed. We each have a part in helping it roll forth."
+            "emoji": "🫀",
+            "title": "Devotion to God must be felt inwardly, not just expressed outwardly.",
+            "ref": "Hosea 6:4–7; Joel 2:12–13",
+            "explain": "The people offered sacrifices but broke more important commandments. God wants real mercy and a changed heart—not just doing the right things on the outside. “Rending” our hearts means truly feeling sorry and turning to Him."
           },
           {
-            "emoji": "🌙",
-            "title": "Receiving revelation requires spiritual preparation.",
-            "ref": "Daniel 2:1–30",
-            "explain": "When the king ordered the wise men killed, Daniel asked his friends to pray for mercies from God. God revealed the dream in a night vision, and Daniel gave the credit to Heavenly Father, not himself. Revelation comes when we prepare—praying, living worthy, and being humble."
+            "emoji": "🕊️",
+            "title": "The Lord will pour out His Spirit.",
+            "ref": "Joel 2",
+            "explain": "Joel promised the Lord would pour out His Spirit on all people. The Holy Ghost can guide us every day, usually in still, small ways that build up over time."
           },
           {
-            "emoji": "🙏",
-            "title": "Heavenly Father wants me to pray often.",
-            "ref": "Daniel 6",
-            "explain": "A new law said anyone who prayed to God would be thrown to the lions. Daniel still knelt and prayed three times a day with his windows open toward Jerusalem, just as he always had. We can pray anywhere, anytime—and Heavenly Father hears us."
+            "emoji": "✝️",
+            "title": "Jesus Christ is my Savior and Redeemer.",
+            "ref": "Hosea 13:4, 14",
+            "explain": "The Lord taught there is no Savior but Him. He promised to ransom us from the power of the grave and redeem us from death through His Atonement."
           }
         ],
         "key_verses": [
           {
-            "ref": "Daniel 1:8",
-            "text": "But Daniel purposed in his heart that he would not defile himself with the portion of the king’s meat, nor with the wine which he drank: therefore he requested of the prince of the eunuchs that he might not defile himself."
+            "ref": "Hosea 2:19",
+            "text": "And I will betroth thee unto me for ever; yea, I will betroth thee unto me in righteousness, and in judgment, and in lovingkindness, and in mercies."
           },
           {
-            "ref": "Daniel 3:17–18",
-            "text": "If it be so, our God whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of thine hand, O king. But if not, be it known unto thee, O king, that we will not serve thy gods, nor worship the golden image which thou hast set up."
+            "ref": "Hosea 6:6",
+            "text": "For I desired mercy, and not sacrifice; and the knowledge of God more than burnt offerings."
           },
           {
-            "ref": "Daniel 2:44",
-            "text": "And in the days of these kings shall the God of heaven set up a kingdom, which shall never be destroyed: and the kingdom shall not be left to other people, but it shall break in pieces and consume all these kingdoms, and it shall stand for ever."
+            "ref": "Hosea 14:4",
+            "text": "I will heal their backsliding, I will love them freely: for mine anger is turned away from him."
           },
           {
-            "ref": "Daniel 6:10",
-            "text": "Now when Daniel knew that the writing was signed, he went into his house; and his windows being open in his chamber toward Jerusalem, he kneeled upon his knees three times a day, and prayed, and gave thanks before his God, as he did aforetime."
+            "ref": "Joel 2:13",
+            "text": "And rend your heart, and not your garments, and turn unto the Lord your God: for he is gracious and merciful, slow to anger, and of great kindness, and repenteth him of the evil."
           },
           {
-            "ref": "Daniel 7:13–14",
-            "text": "I saw in the night visions, and, behold, one like the Son of man came with the clouds of heaven, and came to the Ancient of days, and they brought him near before him. And there was given him dominion, and glory, and a kingdom, that all people, nations, and languages, should serve him: his dominion is an everlasting dominion, which shall not pass away, and his kingdom that which shall not be destroyed."
+            "ref": "Joel 2:28",
+            "text": "And it shall come to pass afterward, that I will pour out my spirit upon all flesh; and your sons and your daughters shall prophesy, your old men shall dream dreams, your young men shall see visions:"
           }
         ],
         "quote": {
-          "text": "Like Joseph in Egypt and Esther in Persia, Daniel and his friends in Babylon kept their faith in God, and God worked miracles that still inspire believers to this day.",
-          "by": "Come, Follow Me—For Home and Church: Old Testament 2026, Nov. 9–15"
+          "text": "In coming days, it will not be possible to survive spiritually without the guiding, directing, comforting, and constant influence of the Holy Ghost.",
+          "by": "President Russell M. Nelson, “Revelation for the Church, Revelation for Our Lives,” Ensign or Liahona, May 2018, 96"
         },
         "questions": [
-          "When have you felt pressured to do something you knew was wrong? How has the Lord blessed you for keeping His commandments? (Daniel 1; 3; 6)",
-          "What if your faith doesn’t lead to the miracles you seek? How can Shadrach, Meshach, and Abed-nego’s example affect how you approach your trials? (Daniel 3:13–18)",
-          "How can your righteous choices lead others to greater faith in the Lord? (Daniel 2:47; 3:28–29)",
-          "What is your role in helping this prophecy come to pass—the stone that fills the earth? (Daniel 2:34–35, 44–45)",
-          "Why was praying to Heavenly Father so important to Daniel? Why is praying important to you? (Daniel 6)"
+          "How is making a covenant with the Lord like entering into a marriage? What does Hosea 2:14–23 teach you about His love and mercy?",
+          "What does the phrase “love them freely” mean to you? (Hosea 14:4)",
+          "What do you think it means that the Lord desires “mercy, and not sacrifice”? (Hosea 6:6)",
+          "How is rending our hearts different from rending our garments? (Joel 2:12–13)",
+          "Why is revelation essential to your spiritual survival? What can you do to invite the Spirit more? (Joel 2:28–29)"
         ],
         "activity": {
-          "title": "Story pictures: choose the right",
-          "steps": "Find or draw pictures of Daniel and his friends refusing the king’s food (Daniel 1), Shadrach, Meshach, and Abed-nego in the fiery furnace (Daniel 3), and Daniel in the lions’ den (Daniel 6). Place them face down and take turns flipping one over and telling the story (see this week’s activity page or Gospel Art Book nos. 23, 25, and 26). Then talk about a time you might feel pressured to make a wrong choice, share how the Lord has blessed you for choosing the right, and sing “Choose the Right” (Hymns, no. 239). Bonus: read Daniel 2:31–35, 44–45 and draw Nebuchadnezzar’s dream of the statue and the stone that became a mountain—the stone represents The Church of Jesus Christ of Latter-day Saints."
+          "title": "Seek the Lord all day",
+          "steps": "Read Hosea 10:12 together. Draw a clock and write ways your family can seek the Lord at different times of the day (morning prayer, scripture time, kindness at lunch, family prayer at night). Then act out the verse—pretend to plant seeds, pick vegetables, or stand in the rain—and share blessings the Lord has “rained” on you. Sing “Anytime, Anywhere” (Hymns for Home and Church, Gospel Library). Bonus: pour a liquid and compare a steady pour with a drip to talk about the Spirit being “poured out” (Joel 2:28–29)."
         },
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/46?lang=eng"
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/47?lang=eng"
       }
     },
     "strength_of_youth": {
@@ -1199,7 +1261,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-11-07T21:05:39-07:00",
+    "site_synced": "2026-11-14T21:05:58-07:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -1629,7 +1691,7 @@
           "id": "byu-football-2026-11-14-baylor",
           "sport": "football",
           "date": "2026-11-14",
-          "start": "13:30",
+          "start": "17:00",
           "opponent": "Baylor",
           "home_away": "home",
           "tv": "FOX",
@@ -1637,7 +1699,8 @@
             "FOX"
           ],
           "venue": null,
-          "note": null
+          "note": null,
+          "result": "W 28-7"
         },
         {
           "id": "byu-mbb-2026-11-18-northern-colorado",
@@ -1663,7 +1726,8 @@
           "tv": null,
           "tv_all": [],
           "venue": null,
-          "note": null
+          "note": null,
+          "result": "W 28-7"
         },
         {
           "id": "byu-mbb-2026-11-23-washington",
@@ -2056,10 +2120,10 @@
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-11-13T17:57:19-07:00",
+      "updated": "2026-11-14T21:06:07-07:00",
       "summary": {
         "football": {
-          "record": "7-2",
+          "record": "8-2",
           "standing": "3rd in Big 12",
           "polls": [
             {
@@ -2098,7 +2162,7 @@
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 11"
             }
           ],
-          "checked": "2026-11-13T17:57:18-07:00"
+          "checked": "2026-11-14T21:06:06-07:00"
         },
         "mbb": {
           "record": "4-0",
@@ -2129,7 +2193,7 @@
               "week": "2027 NCAA Basketball Rankings - Coaches Poll Week 2"
             }
           ],
-          "checked": "2026-11-13T17:57:19-07:00"
+          "checked": "2026-11-14T21:06:07-07:00"
         }
       },
       "fight_song": {
@@ -2347,28 +2411,28 @@
   },
   "adventures": {
     "this_week": {
-      "week_start": "2026-11-08",
+      "week_start": "2026-11-15",
       "weekend": {
-        "#": "12",
-        "Name": "Adams Canyon",
-        "Description": "4-mi RT up sandy switchbacks to a 40-ft waterfall",
-        "Location": "Layton",
+        "#": "73",
+        "Name": "Hill Aerospace Museum",
+        "Description": "100+ military aircraft, free admission",
+        "Location": "Roy (Hill AFB)",
         "Drive Time from Highland": "1 hr",
-        "Best Season(s)": "Apr-Nov",
+        "Best Season(s)": "Year-round",
         "Cost Tier": "Free",
-        "Category": "Hike",
-        "Reservation / Fee / Notes": "Sandy and hot - go early"
+        "Category": "Museum & Science",
+        "Reservation / Fee / Notes": "Closed Sundays/Mondays (check)"
       },
       "evening": {
-        "#": "78",
-        "Name": "Movie & Meaning Night",
-        "Description": "Watch a brave-themed movie and discuss",
+        "#": "68",
+        "Name": "3-Minute Talk Night",
+        "Description": "Each boy gives a short talk - practice for church",
         "Location": "Home",
         "Drive Time from Highland": "Home",
         "Best Season(s)": "Year-round",
         "Cost Tier": "Free",
-        "Category": "Game Night & At-Home",
-        "Reservation / Fee / Notes": "Tie to motto"
+        "Category": "Brave Challenge",
+        "Reservation / Fee / Notes": "Applause required"
       }
     }
   },
