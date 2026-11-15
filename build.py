@@ -916,11 +916,32 @@ def render_byu_pop(data: dict, now: dt.datetime) -> str:
     def ha(g):
         return {"home": "Home", "away": "Away", "neutral": "Neutral"}.get(g.get("home_away"), "")
 
+    def played(g):
+        # Finals only; a leftover score on a future/scheduled game is ignored.
+        try:
+            import fetch_byu
+            if fetch_byu.espn_says_final(g) is True:
+                return True
+            if fetch_byu.espn_says_final(g) is False or fetch_byu.game_is_future(g, now):
+                return False
+            return bool(g.get("result"))
+        except Exception:
+            return bool(g.get("result")) and g.get("date", "") <= today.isoformat()
+
+    def upcoming(g):
+        if played(g):
+            return False
+        try:
+            import fetch_byu
+            return fetch_byu.game_is_future(g, now)
+        except Exception:
+            return d(g["date"]) >= today
+
     cols = []
     for sp, name in (("football", "Football"), ("mbb", "Men's Basketball")):
         gs = [g for g in games if g.get("sport") == sp]
-        past = [g for g in gs if g.get("result")][-3:][::-1]
-        nxt = [g for g in gs if not g.get("result") and d(g["date"]) >= today][:4]
+        past = [g for g in gs if played(g)][-3:][::-1]
+        nxt = [g for g in gs if upcoming(g)][:4]
         s = summ.get(sp) or {}
         chips = [f'<span class="bp-chip">#{int(p["rank"])} {esc(p["poll"])}</span>' for p in byu_live_polls(s, gs, today)]
         facts = []
@@ -1114,6 +1135,18 @@ def main() -> int:
     data = json.loads(path.read_text())
     tz = ZoneInfo(data.get("meta", {}).get("timezone", "America/Denver"))
     now = dt.datetime.fromisoformat(args.now).astimezone(tz) if args.now else dt.datetime.now(tz)
+    # Fail soft: a result on a future game (or one ESPN has not marked final) is dropped so the
+    # popup never lists the next game as already played. The page still builds; we do not revert
+    # the whole sports.byu blob because a previous file may be the source of the bad score.
+    try:
+        import fetch_byu
+        dropped = fetch_byu.drop_invalid_results(((data.get("sports") or {}).get("byu") or {}).get("games") or [], now)
+        if dropped:
+            print("[build] BYU sanity: dropped result(s) on future/non-final games: "
+                  + ", ".join(f"{x.get('sport')} {x.get('date')} {x.get('opponent')} {x.get('result')} ({x.get('_drop_reason')})"
+                              for x in dropped), file=sys.stderr)
+    except Exception as e:  # noqa: BLE001
+        print(f"[build] BYU sanity check failed ({e}); continuing", file=sys.stderr)
     if args.week_start:
         week_start = dt.date.fromisoformat(args.week_start)
         if week_start.weekday() != 6:
