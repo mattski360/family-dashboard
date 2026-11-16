@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-15T11:45:12-07:00",
+    "last_updated": "2026-11-15T20:09:11-07:00",
     "school_feed_synced": "2026-11-14T21:05:57-07:00",
     "school_feed_window": [
       "2026-11-13",
@@ -2359,7 +2359,7 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-12",
+      "as_of": "2026-11-15",
       "courses": [
         {
           "name": "English 9 (Coleman)",
@@ -2369,7 +2369,7 @@
         {
           "name": "D.E.A.R.",
           "short": "D.E.A.R.",
-          "pct": 96.09
+          "pct": 96.24
         },
         {
           "name": "History of the United States (Chancellor)",
@@ -2384,7 +2384,7 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 97.39
+          "pct": 97.38
         },
         {
           "name": "Patriot Chorale (Washburn)",
@@ -2393,12 +2393,12 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-11",
+        "as_of": "2026-11-12",
         "courses": [
           {
             "name": "English 9 (Coleman)",
             "short": "English 9",
-            "pct": 97.89
+            "pct": 47.25
           },
           {
             "name": "D.E.A.R.",
@@ -2423,27 +2423,27 @@
           {
             "name": "Patriot Chorale (Washburn)",
             "short": "Patriot Chorale",
-            "pct": 86.67
+            "pct": 95.0
           }
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-12T20:07:14-07:00"
+      "checked_at": "2026-11-15T20:09:11-07:00"
     },
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-12",
+      "as_of": "2026-11-15",
       "courses": [
         {
           "name": "English 8 Term 2",
           "short": "English 8",
-          "pct": 98.99
+          "pct": 99.1
         },
         {
           "name": "Food & Nutrition",
           "short": "Food & Nutrition",
-          "pct": 100.0
+          "pct": 79.26
         },
         {
           "name": "Math 8",
@@ -2458,16 +2458,16 @@
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 88.86
+          "pct": 84.0
         }
       ],
       "previous": {
-        "as_of": "2026-11-11",
+        "as_of": "2026-11-12",
         "courses": [
           {
             "name": "English 8 Term 2",
             "short": "English 8",
-            "pct": 98.38
+            "pct": 98.99
           },
           {
             "name": "Food & Nutrition",
@@ -2477,7 +2477,7 @@
           {
             "name": "Math 8",
             "short": "Math 8",
-            "pct": 96.92
+            "pct": 97.42
           },
           {
             "name": "Science 8",
@@ -2492,7 +2492,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-12T20:07:14-07:00"
+      "checked_at": "2026-11-15T20:09:11-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2556,7 +2556,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-12T20:07:14-07:00",
+      "checked_at": "2026-11-15T20:09:11-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
