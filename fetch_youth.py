@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Best-effort FALLBACK parse of the ward site's youth activity lists ("<Month> Youth Activities" headings, or one
-"Youth Activities" heading with a sub-heading per month)
+"""Best-effort FALLBACK parse of the ward site's youth activity lists ("<Month> Youth Activities" headings, one
+"Youth Activities" heading with a sub-heading per month, or dates listed directly under "Youth Activities" before
+the first month sub-heading)
 (https://www.highland43.org/wardannouncements) into data/dashboard.json -> youth.activities.
 
 * The ward Google Sheet (entered as source "sheet"/"manual") is the primary source. Site items are
@@ -101,9 +102,11 @@ def year_for(month: int, today: dt.date) -> int:
 
 
 def month_sections(page: str) -> list[tuple[str, str]]:
-    """(month name, body html) for each month's youth-activity list. Two page layouts are understood:
+    """(month name, body html) for each month's youth-activity list. Layouts understood:
     * one heading per month: "<h2>November Youth Activities</h2> ...list..."
-    * one "<h2>Youth Activities</h2>" heading with a sub-heading per month: "<h3>November</h3> ...list..." (Oct 2026 layout)."""
+    * one "<h2>Youth Activities</h2>" heading with a sub-heading per month: "<h3>November</h3> ...list..." (Oct 2026 layout)
+    * dates listed directly under "Youth Activities" before the first month sub-heading (Nov 2026 layout:
+      "November 19th" items, then "<h3>December</h3>")."""
     heads = []
     for m in re.finditer(r"(?is)<h([1-4])[^>]*>(.*?)</h\1>", page):
         t = to_lines(m.group(2))
@@ -116,14 +119,25 @@ def month_sections(page: str) -> list[tuple[str, str]]:
             out.append((hm.group(1), page[end:body_end]))
             continue
         if re.fullmatch(r"(?i)youth activities:?", text.strip()):
-            for lvl2, text2, _s2, end2 in heads[k + 1:]:
+            first_sub = None
+            for lvl2, text2, s2, end2 in heads[k + 1:]:
                 if lvl2 <= lvl:
                     break
-                j = heads.index((lvl2, text2, _s2, end2))
+                j = heads.index((lvl2, text2, s2, end2))
                 sub_end = heads[j + 1][2] if j + 1 < len(heads) else len(page)
                 mm = re.fullmatch(r"(?i)(\w+):?", text2.strip())
                 if mm and mm.group(1).lower() in [f.lower() for f in FULL]:
+                    if first_sub is None:
+                        first_sub = s2
                     out.append((mm.group(1), page[end2:sub_end]))
+            # preamble dates with no month sub-heading, e.g. "November 19th" then <h3>December</h3>
+            preamble = page[end: first_sub if first_sub is not None else body_end]
+            for line in to_lines(preamble):
+                dm = DATE_RE.match(line)
+                if dm:
+                    mon = MONTHS[dm.group("mon").lower()[:3]]
+                    out.insert(0, (FULL[mon - 1], preamble))
+                    break
     return out
 
 
