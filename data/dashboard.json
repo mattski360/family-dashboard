@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-17T20:13:53-07:00",
+    "last_updated": "2026-11-18T20:08:46-07:00",
     "school_feed_synced": "2026-11-15T20:23:32-07:00",
     "school_feed_window": [
       "2026-11-14",
@@ -2220,12 +2220,12 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-18",
       "courses": [
         {
           "name": "English 9 (Coleman)",
           "short": "English 9",
-          "pct": 46.5
+          "pct": 45.59
         },
         {
           "name": "D.E.A.R.",
@@ -2240,12 +2240,12 @@
         {
           "name": "Biology (Anderson)",
           "short": "Biology",
-          "pct": 99.11
+          "pct": 97.75
         },
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 97.12
+          "pct": 96.71
         },
         {
           "name": "Patriot Chorale (Washburn)",
@@ -2254,12 +2254,12 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-16",
+        "as_of": "2026-11-17",
         "courses": [
           {
             "name": "English 9 (Coleman)",
             "short": "English 9",
-            "pct": 47.02
+            "pct": 46.5
           },
           {
             "name": "D.E.A.R.",
@@ -2269,7 +2269,7 @@
           {
             "name": "History of the United States (Chancellor)",
             "short": "US History",
-            "pct": 88.42
+            "pct": 88.61
           },
           {
             "name": "Biology (Anderson)",
@@ -2279,7 +2279,7 @@
           {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 97.38
+            "pct": 97.12
           },
           {
             "name": "Patriot Chorale (Washburn)",
@@ -2289,7 +2289,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-17T20:13:46-07:00"
+      "checked_at": "2026-11-18T20:08:46-07:00"
     },
     "wyatt": {
       "connected": true,
@@ -2353,7 +2353,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-17T20:13:46-07:00"
+      "checked_at": "2026-11-18T20:08:46-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2417,7 +2417,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-17T20:13:46-07:00",
+      "checked_at": "2026-11-18T20:08:46-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
