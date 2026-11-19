@@ -171,6 +171,9 @@ Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 12
 ## Drawing pad
 The **✨ More** popup includes a **🎨 Drawing pad** button. Tapping it closes More and opens a full-screen finger-drawing popup: 12 colors + eraser, three brush sizes, Clear (with confirm), and a big Close button. Pointer Events support multi-touch; the canvas is `devicePixelRatio`-scaled with `touch-action: none`. The popup freezes page rotation and counts as busy for the `ver.txt` reload wait. It auto-closes after 10 minutes idle, not while someone is drawing. The scribble is saved in `localStorage` (`dash-draw-v1`) so a reload keeps it.
 
+## Cougar Run
+The **✨ More** popup also has a **🏃 Cougar Run** button. Tapping it closes More and opens a full-screen endless runner (original art: a cute cougar in a navy collar jumping cacti, rocks, bushes and barrel cacti — not Google's dinosaur). Tap or click anywhere, Space or ArrowUp to jump; hold for a higher jump. The score and a high score (`localStorage` `dash-runner-hi`) are shown; game over offers Tap to play again, and a new high score gets a short confetti burst. A big Close button dismisses it. The popup freezes page rotation, counts as busy for the `ver.txt` reload wait, and auto-closes after 10 minutes idle. The canvas is `devicePixelRatio`-scaled and steps with `requestAnimationFrame` plus a time delta. `?run=1` opens it on load.
+
 ## BYU easter-egg popup
 Tapping the faded BYU "Y" (nav corner, v3 / landscape) still plays the Go Cougs animation and also opens a
 BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).
