@@ -168,6 +168,9 @@ Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 12
 - **Monthly colour themes (`build_theme.py`, live since Oct 30 2026, `LIVE = True`)** – 12 light pastel themes, picked in the browser by the Denver month, with `?theme=MM` to preview a month and `?theme=off` to turn them off. Set `LIVE = False` to turn them off. `build_theme_preview.py` writes a local preview copy and `shot_themes.py` saves `shots_theme/theme_01.png`..`theme_12.png`.
 - `build_nov_mockup.py` writes the MOCKUP preview to `landscape-mock/`, deployed with `deploy_mockup_preview.sh` to the `mockup` branch alias. `shot_features.py` takes screenshots and runs a fit check of all 3 pages at 1920×1080 and 1180×820.
 
+## Drawing pad
+A **Draw** nav page (last dot; not in the auto-rotation) shows a large “Drawing pad” tile. Tapping it (or anywhere on that page) opens a full-screen finger-drawing popup: 12 colors + eraser, three brush sizes, Clear (with confirm), and a big Close button. Pointer Events support multi-touch; the canvas is `devicePixelRatio`-scaled with `touch-action: none`. The popup freezes page rotation and counts as busy for the `ver.txt` reload wait. It auto-closes after 10 minutes idle, not while someone is drawing. The scribble is saved in `localStorage` (`dash-draw-v1`) so a reload keeps it.
+
 ## BYU easter-egg popup
 Tapping the faded BYU "Y" (nav corner, v3 / landscape) still plays the Go Cougs animation and also opens a
 BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).

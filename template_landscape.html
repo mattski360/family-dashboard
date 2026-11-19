@@ -430,6 +430,58 @@ header{align-items:center}
 .mback{border:0;background:#EEF0F4;color:var(--text);font:inherit;font-size:1em;font-weight:800;border-radius:99px;padding:0 22px;min-height:52px;cursor:pointer;margin-bottom:16px}
 .mv{display:none}.mv.on{display:block}
 .mvh{font-size:1.45em;font-weight:900;margin-bottom:.6em;padding-right:70px}
+
+/* ---------- Drawing pad (nav page, not in auto-rotation; tap the tile for the full-screen pad) ---------- */
+#pdraw{background:linear-gradient(160deg,var(--Pbg,#FFF3DF) 0%,var(--Sbg,#FDEBD6) 100%);gap:1rem;align-items:stretch}
+#pdraw .dintro{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 1rem 0.4rem}
+#drawtile{width:min(100%,58rem);height:min(100%,100%);min-height:12rem;border:0;cursor:pointer;border-radius:2.2rem;padding:2rem 2.4rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;text-align:center;
+  background:linear-gradient(165deg,var(--surf,#fff) 0%,var(--Pbg,#FFF6EA) 100%);color:var(--Pdk,#8A4A12);
+  box-shadow:inset 0 0 0 3px var(--Pmid,#F0C48A),0 10px 28px rgba(40,48,68,.12);font:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#drawtile:active{transform:scale(.985);filter:brightness(.97)}
+#drawtile .dem{font-size:4.6rem;line-height:1;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
+#drawtile .dttl{font-size:2.6rem;font-weight:900;letter-spacing:-.03em;line-height:1.1}
+#drawtile .dsub{font-size:1.25rem;font-weight:700;color:var(--muted,#8A6A4A)}
+#drawtile .dcrayons{display:flex;gap:.45rem;margin-top:.3rem}
+#drawtile .dcrayons i{width:1.15rem;height:3.4rem;border-radius:99px 99px 8px 8px;display:block;box-shadow:0 2px 0 rgba(40,48,68,.15)}
+#nav .dot[data-page="pdraw"].on{background:var(--Sc, #E59AA8)}
+#drawpop{position:fixed;inset:0;z-index:28;display:none;flex-direction:column;background:#3A3128;color:#fff;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);touch-action:none;-webkit-user-select:none;user-select:none}
+#drawpop.on{display:flex}
+#drawpop .dtop,#drawpop .dbot{display:flex;align-items:center;gap:12px;padding:8px 12px;flex:none;background:#2A241E}
+#drawpop .dtop{padding-top:max(8px,env(safe-area-inset-top));gap:14px}
+#drawpop .dbot{padding-bottom:max(8px,env(safe-area-inset-bottom));flex-wrap:wrap;justify-content:center}
+#drawpop .dname{font-size:clamp(18px,2.4vh,28px);font-weight:900;letter-spacing:-.02em;margin-right:auto}
+#drawpop .dact{border:0;cursor:pointer;font:inherit;font-weight:800;border-radius:99px;min-height:56px;padding:0 22px;font-size:clamp(16px,2vh,22px);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#drawx{background:#5B47B0;color:#fff;min-width:120px;min-height:60px;font-size:clamp(18px,2.2vh,24px)}
+#drawclr{background:#5A4A3A;color:#fff}
+#drawpop .dact:active{transform:scale(.97);filter:brightness(1.08)}
+#drawpaper{flex:1 1 auto;min-height:0;position:relative;margin:8px 12px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.35);touch-action:none}
+#drawcv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+#dswatches{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}
+#dswatches button{width:max(52px,6.4vh);height:max(52px,6.4vh);border-radius:50%;border:3px solid transparent;padding:0;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.25),inset 0 0 0 2px rgba(255,255,255,.25);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#dswatches button.on{border-color:#fff;box-shadow:0 0 0 3px #fff,0 0 0 6px #2A241E}
+#dswatches button.white{background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.25),inset 0 0 0 2px #D0D0D0}
+#dswatches button.eraser{background:#fff;position:relative}
+#dswatches button.eraser::after{content:"";position:absolute;inset:18%;border-radius:6px;background:repeating-linear-gradient(-45deg,#E8E8E8,#E8E8E8 4px,#fff 4px,#fff 8px);box-shadow:inset 0 0 0 2px #CF4436}
+#dsizes{display:flex;gap:8px;margin-left:10px}
+#dsizes button{width:max(52px,6.4vh);height:max(52px,6.4vh);border-radius:50%;border:3px solid transparent;background:#4A3E34;color:#fff;cursor:pointer;display:grid;place-items:center;padding:0;touch-action:manipulation}
+#dsizes button i{display:block;border-radius:50%;background:#fff}
+#dsizes button.on{border-color:#fff}
+#dsizes button[data-s="4"] i{width:8px;height:8px}
+#dsizes button[data-s="12"] i{width:16px;height:16px}
+#dsizes button[data-s="28"] i{width:28px;height:28px}
+#drawask{display:none;position:absolute;inset:0;z-index:2;align-items:center;justify-content:center;background:rgba(40,30,20,.45)}
+#drawask.on{display:flex}
+#drawask .dask{background:#fff;color:#283044;border-radius:24px;padding:28px 32px;max-width:min(520px,92vw);text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+#drawask p{font-size:clamp(20px,2.6vh,30px);font-weight:800;margin:0 0 18px}
+#drawask .daskbtns{display:flex;gap:12px;justify-content:center}
+#drawask .daskbtns button{min-height:56px;min-width:120px;border:0;border-radius:99px;font:inherit;font-weight:800;font-size:1.1em;cursor:pointer;padding:0 22px}
+#drawaskno{background:#EEF0F4;color:#283044}
+#drawaskyes{background:#CF4436;color:#fff}
+@media (max-height:700px){
+  #dswatches button,#dsizes button{width:44px;height:44px}
+  #drawpop .dact{min-height:48px}
+}
 </style>
 </head>
 <body data-ver="{{VERSION}}" data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
@@ -460,12 +512,42 @@ header{align-items:center}
   <div class="days">{{TILES}}</div>
   <div class="brow"><div class="chslot"></div></div>
 </section>
+
+<!-- ====================== PAGE: DRAWING PAD (manual nav; not in auto-rotation) ====================== -->
+<section class="page" id="pdraw" data-name="Draw" data-rotate="manual">
+  <header>
+    <div class="hl"><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
+    <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
+  </header>
+  <div class="dintro">
+    <button type="button" id="drawtile" aria-label="Open the drawing pad">
+      <span class="dem" aria-hidden="true">🖍️</span>
+      <span class="dttl">Drawing pad</span>
+      <span class="dsub">Tap to draw with your fingers</span>
+      <span class="dcrayons" aria-hidden="true"><i style="background:#E53935"></i><i style="background:#FB8C00"></i><i style="background:#F4C548"></i><i style="background:#43A047"></i><i style="background:#1E88E5"></i><i style="background:#8E24AA"></i><i style="background:#EC407A"></i></span>
+    </button>
+  </div>
+</section>
 </div>
 
-<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="morebtn" type="button" aria-label="More: weather, ideas, joke and trivia"><span class="em">✨</span>More</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
+<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><button class="dot" id="drawdot" data-page="pdraw" aria-label="Draw"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="morebtn" type="button" aria-label="More: weather, ideas, joke and trivia"><span class="em">✨</span>More</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
 <div id="morepop" aria-hidden="true"><div class="mcard" role="dialog" aria-label="More"><button class="mx" id="morex" type="button" aria-label="Close">&times;</button>
   <div class="mhome on" id="mhome"><div class="mh">✨ More for today</div><div class="mgrid" id="mgrid">{{ADVENTURES}}</div></div>
   <div class="mview" id="mview"><button class="mback" id="mback" type="button">&lsaquo; Back</button><div id="mvbody"></div></div></div></div>
+<div id="drawpop" aria-hidden="true">
+  <div class="dtop"><div class="dname">🖍️ Drawing pad</div>
+    <button class="dact" id="drawclr" type="button">Clear</button>
+    <button class="dact" id="drawx" type="button" aria-label="Close the drawing pad">Close</button></div>
+  <div id="drawpaper"><canvas id="drawcv"></canvas>
+    <div id="drawask" aria-hidden="true"><div class="dask" role="dialog" aria-label="Clear the drawing?">
+      <p>Clear the drawing?</p>
+      <div class="daskbtns"><button type="button" id="drawaskno">Keep it</button><button type="button" id="drawaskyes">Clear</button></div>
+    </div></div></div>
+  <div class="dbot"><div id="dswatches"></div><div id="dsizes">
+    <button type="button" data-s="4" aria-label="Thin brush"><i></i></button>
+    <button type="button" data-s="12" class="on" aria-label="Medium brush"><i></i></button>
+    <button type="button" data-s="28" aria-label="Thick brush"><i></i></button></div></div>
+</div>
 <div id="advpop" aria-hidden="true"><div class="acard" role="dialog" aria-label="Adventure idea"><button class="ex" id="advx" type="button" aria-label="Close">&times;</button>
   <div class="ak" id="advk"></div><div class="an2" id="advn"></div><div class="ad" id="advd"></div>
   <div class="achips" id="advc"></div><div class="anote" id="advx2"></div>
@@ -554,6 +636,29 @@ header{align-items:center}
 
   // auto-fit each page: largest base size (--fs) with no overflow; scroll only below the floor
   var pages=[document.getElementById('p1'),document.getElementById('p2')];
+  // Seasonal pages (gratitude) opt in via window.__gratOn; the drawing pad is data-rotate="manual" and is skipped by auto-rotation.
+  window.__gratOn=window.__gratOn||function(){return false;};
+  function allPages(){
+    return Array.prototype.filter.call(document.querySelectorAll('#stage .page'), function(pg){
+      if(pg.id==='p3' && !(window.__gratOn && window.__gratOn())) return false;
+      return true;
+    });
+  }
+  function rotPages(){
+    return allPages().filter(function(pg){return pg.getAttribute('data-rotate')!=='manual';});
+  }
+  function nextRot(){
+    var all=allPages(), rp=rotPages();
+    if(!rp.length)return 0;
+    var idx=rp.indexOf(all[cur]);
+    var nxt=rp[(idx<0?0:idx+1)%rp.length];
+    return all.indexOf(nxt);
+  }
+  function sizePdraw(){
+    var pg=document.getElementById('pdraw'); if(!pg)return;
+    var vv=window.visualViewport,W=vv?vv.width:innerWidth,H=Math.min(innerHeight,vv?vv.height:1e9);
+    pg.style.setProperty('--fs',(Math.min(W/1920,H/1080)*20).toFixed(2)+'px');
+  }
   function fitPage(pg,W,H){
     var scale=Math.min(W/1920,H/1080);
     // floor scales with the viewport (same physical size on a 1080p panel at any devicePixelRatio)
@@ -575,25 +680,36 @@ header{align-items:center}
     var hs=Math.min.apply(null,r.map(function(x){return parseFloat(x);}));
     pages.forEach(function(pg){pg.querySelector('header').style.setProperty('--fs',hs+'px');});
     B.setAttribute('data-fs','p1:'+r[0]+' p2:'+r[1]+' '+W+'x'+H);
+    sizePdraw();
+    if(window.__fitExtra)window.__fitExtra();
   }
 
   // rotation: crossfade every ROT seconds; a tap switches page and pauses for 2 minutes ("Paused (m:ss) · tap to resume").
   // State is kept in localStorage so the 30-minute reload resumes where it was.
   var ROT=(parseFloat(B.getAttribute('data-rotate'))||30)*1000, PAUSE=120000, KEY='dash-land-rot';
   var st=store(KEY)||{}, now0=Date.now();
-  var cur=(st.i===0||st.i===1)?st.i:0, shownAt=(typeof st.t==='number'&&st.t<=now0)?st.t:now0, pausedUntil=st.p||0;
+  var all0=allPages(), cur=0;
+  if(st.id){var ix=-1;all0.forEach(function(pg,k){if(pg.id===st.id)ix=k;});if(ix>=0)cur=ix;}
+  else if(typeof st.i==='number'&&st.i>=0&&st.i<all0.length)cur=st.i;
+  var shownAt=(typeof st.t==='number'&&st.t<=now0)?st.t:now0, pausedUntil=st.p||0;
   if(pausedUntil&&pausedUntil<=now0){shownAt=Math.max(shownAt,pausedUntil);pausedUntil=0;}
-  if(!pausedUntil&&now0-shownAt>=ROT){cur=(cur+1)%2;shownAt=now0;}
+  if(!pausedUntil&&now0-shownAt>=ROT){cur=nextRot();shownAt=now0;}
   var prog=document.getElementById('prog'), navl=document.getElementById('navl');
-  function render(i){cur=i;
-    pages.forEach(function(pg,k){pg.classList.toggle('on',k===i);if(k===i)pg.scrollTop=0;});
-    each('#nav .dot',function(d,k){d.classList.toggle('on',k===i);});
-    navl.textContent=pages[i].getAttribute('data-name');if(window.dashMealTiles)window.dashMealTiles();}
-  function save(){store(KEY,{i:cur,t:shownAt,p:pausedUntil});}
+  function render(i){
+    var all=allPages();
+    if(i<0||i>=all.length)i=0;
+    cur=i;
+    all.forEach(function(pg,k){pg.classList.toggle('on',k===i);if(k===i)pg.scrollTop=0;});
+    each('#nav .dot',function(d){
+      var pg=d.getAttribute('data-page')?document.getElementById(d.getAttribute('data-page')):all[+d.getAttribute('data-i')];
+      d.classList.toggle('on',!!pg&&all[i]===pg);
+    });
+    navl.textContent=all[i].getAttribute('data-name');if(window.dashMealTiles)window.dashMealTiles();}
+  function save(){var pg=allPages()[cur];store(KEY,{i:cur,id:pg?pg.id:undefined,t:shownAt,p:pausedUntil});}
   function show(i){render(i);shownAt=Date.now();save();}
   var holdAt=0; // rotation frozen (a popup/panel open): no page change, timer resumes where it was on release
   // every popup / panel that freezes rotation and defers reloads (also used by busy() below)
-  var POPS='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on,#morepop.on';
+  var POPS='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on,#morepop.on,#drawpop.on';
   function rotHold(on){var now=Date.now();
     if(on){if(!holdAt)holdAt=now;return;}
     // release only when no other popup is still open (they share this one hold)
@@ -608,12 +724,16 @@ header{align-items:center}
     var paused=!!pausedUntil; B.classList.toggle('paused',paused);
     if(paused){prog.style.width=(100*(pausedUntil-now)/PAUSE)+'%';var r=Math.ceil((pausedUntil-now)/1000);
       document.getElementById('pzt').textContent='('+Math.floor(r/60)+':'+('0'+r%60).slice(-2)+')';return;}
-    if(now-shownAt>=ROT){show((cur+1)%2);now=shownAt;}
+    if(now-shownAt>=ROT){show(nextRot());now=shownAt;}
     prog.style.width=Math.min(100,100*(now-shownAt)/ROT)+'%';
   }
   function userGo(i){pausedUntil=Date.now()+PAUSE;show(i);loop();}
-  document.getElementById('stage').addEventListener('click',function(){userGo((cur+1)%2);});
-  each('#nav .dot',function(d){d.addEventListener('click',function(ev){ev.stopPropagation();userGo(+d.getAttribute('data-i'));});});
+  document.getElementById('stage').addEventListener('click',function(){userGo(nextRot());});
+  each('#nav .dot',function(d){d.addEventListener('click',function(ev){ev.stopPropagation();
+    var all=allPages(), i;
+    if(d.getAttribute('data-page')){i=all.indexOf(document.getElementById(d.getAttribute('data-page')));if(i<0)return;}
+    else i=+d.getAttribute('data-i');
+    userGo(i);});});
   document.getElementById('resume').addEventListener('click',function(ev){ev.stopPropagation();pausedUntil=0;shownAt=Date.now();save();loop();});
   render(cur); save(); loop(); setInterval(loop,200);
 
@@ -647,7 +767,7 @@ header{align-items:center}
     if(gTaps.length&&now-gTaps[gTaps.length-1]>G_GAP)gTaps=[];
     gTaps.push(now);
     if(gTaps.length>=3&&now-gTaps[gTaps.length-3]<=G_TOTAL){gTaps=[];gOpen();return;}
-    gSingle=setTimeout(function(){gTaps=[];userGo((cur+1)%2);},G_GAP+20);});});
+    gSingle=setTimeout(function(){gTaps=[];userGo(nextRot());},G_GAP+20);});});
   gEl.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===gEl)gClose();});
   document.getElementById('gx').addEventListener('click',function(ev){ev.stopPropagation();gClose();});
   window.__grades={open:gOpen,close:gClose};
@@ -757,7 +877,7 @@ header{align-items:center}
   document.addEventListener('touchend',function(ev){if(!lp.touch)return;
     if(ev.touches.length)return;                         // other fingers still down
     var pending=!!lp.t;eCancel();lp.touch=false;
-    if(pending&&!lp.moved)userGo((cur+1)%2);             // released early = ordinary tap
+    if(pending&&!lp.moved)userGo(nextRot());             // released early = ordinary tap
   },{capture:true});
   document.addEventListener('touchcancel',function(ev){if(!lp.touch)return;if(ev.touches.length)return;eCancel();lp.touch=false;},{capture:true});
   document.addEventListener('pointerdown',function(ev){if(ev.pointerType==='touch'||lp.touch||ev.button>0)return;
@@ -819,6 +939,133 @@ header{align-items:center}
   window.__more={open:mOpen,close:mClose,show:mShow};
   var mq=/[?&]more=(\w+)/.exec(location.search);if(mq)setTimeout(function(){mOpen(mq[1]==='1'?'':mq[1]);},300);
 
+
+  // Drawing pad: nav "Draw" page (not auto-rotated) opens this full-screen popup. Pointer Events + multi-touch,
+  // devicePixelRatio-scaled canvas, smooth round strokes. Rotation and reloads wait while it is open (#drawpop.on
+  // is in POPS). It stays up while someone is drawing and only auto-closes after 10 min idle. The scribble is
+  // kept in localStorage (dash-draw-v1) so a reload does not wipe it.
+  var dEl=document.getElementById('drawpop'), dCv=document.getElementById('drawcv'), dPaper=document.getElementById('drawpaper');
+  var dAsk=document.getElementById('drawask'), dCtx=null, dDpr=1, dColor='#1C1C1C', dSize=12, dErase=false;
+  var dPts={}, dIdle=0, D_IDLE=10*60*1000, D_KEY='dash-draw-v1', dSaveT=0, dDirty=false;
+  var D_COLS=[['#1C1C1C','Black'],['#E53935','Red'],['#FB8C00','Orange'],['#F4C548','Yellow'],['#43A047','Green'],
+    ['#1E88E5','Blue'],['#8E24AA','Purple'],['#EC407A','Pink'],['#6D4C41','Brown'],['#00ACC1','Teal'],
+    ['#81D4FA','Sky'],['#FFFFFF','White'],['eraser','Eraser']];
+  var sw=document.getElementById('dswatches');
+  sw.innerHTML=D_COLS.map(function(c){
+    var er=c[0]==='eraser', wh=c[0]==='#FFFFFF';
+    return '<button type="button" class="'+(er?'eraser':wh?'white':'')+(c[0]==='#1C1C1C'?' on':'')+'" data-c="'+c[0]+'" aria-label="'+c[1]+'" style="'+(er||wh?'':'background:'+c[0])+'"></button>';
+  }).join('');
+  function dSelCol(c){
+    dColor=c; dErase=(c==='eraser');
+    each('#dswatches button',function(b){b.classList.toggle('on',b.getAttribute('data-c')===c);});
+  }
+  function dSelSize(s){dSize=+s;each('#dsizes button',function(b){b.classList.toggle('on',b.getAttribute('data-s')===String(s));});}
+  function dBump(){clearTimeout(dIdle);if(!dEl.classList.contains('on'))return;
+    dIdle=setTimeout(function(){if(Object.keys(dPts).length){dBump();return;}dClose();},D_IDLE);}
+  function dPos(ev){var r=dCv.getBoundingClientRect();return {x:(ev.clientX-r.left)*dDpr,y:(ev.clientY-r.top)*dDpr};}
+  function dPrepare(){
+    if(!dCtx)return false;
+    dCtx.globalCompositeOperation=dErase?'destination-out':'source-over';
+    dCtx.strokeStyle=dErase?'#000':dColor;
+    dCtx.fillStyle=dErase?'#000':dColor;
+    dCtx.lineCap='round';dCtx.lineJoin='round';dCtx.lineWidth=dSize*dDpr;
+    return true;
+  }
+  function dStroke(a,b){
+    if(!dPrepare())return;
+    dCtx.beginPath();
+    if(!b||(a.x===b.x&&a.y===b.y)){dCtx.arc(a.x,a.y,(dSize*dDpr)/2,0,Math.PI*2);dCtx.fill();}
+    else{
+      // Mid-point quadratic: start at the previous mid (or a) so each segment joins the last one.
+      var sx=(a.mx!=null)?a.mx:a.x, sy=(a.my!=null)?a.my:a.y;
+      var mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+      dCtx.moveTo(sx,sy);dCtx.quadraticCurveTo(a.x,a.y,mx,my);dCtx.stroke();
+      b.mx=mx;b.my=my;
+    }
+    dDirty=true;
+  }
+  function dFinish(o){
+    if(!o||o.mx==null||!dPrepare())return;
+    dCtx.beginPath();dCtx.moveTo(o.mx,o.my);dCtx.lineTo(o.x,o.y);dCtx.stroke();dDirty=true;
+  }
+  function dLayout(keep){
+    if(!dCv)return;
+    var r=dPaper.getBoundingClientRect(), dpr=Math.min(window.devicePixelRatio||1,2);
+    var w=Math.max(1,Math.round(r.width)), h=Math.max(1,Math.round(r.height));
+    var prev=keep&&dCv.width&&dCv.height?dCv:null, snap=null;
+    if(prev){try{snap=document.createElement('canvas');snap.width=prev.width;snap.height=prev.height;snap.getContext('2d').drawImage(prev,0,0);}catch(e){}}
+    if(dCv.width===Math.round(w*dpr)&&dCv.height===Math.round(h*dpr)&&dDpr===dpr&&dCtx)return;
+    dDpr=dpr;dCv.width=Math.round(w*dpr);dCv.height=Math.round(h*dpr);
+    dCtx=dCv.getContext('2d');
+    dCtx.lineCap='round';dCtx.lineJoin='round';
+    if(snap){dCtx.drawImage(snap,0,0,dCv.width,dCv.height);}
+    else dRestore();
+  }
+  function dSave(){
+    if(!dCtx||!dDirty)return;
+    clearTimeout(dSaveT);
+    dSaveT=setTimeout(function(){
+      try{
+        var url=dCv.toDataURL('image/png');
+        if(url.length>3500000)url=dCv.toDataURL('image/jpeg',0.85);
+        localStorage.setItem(D_KEY,url);dDirty=false;
+      }catch(e){}
+    },400);
+  }
+  function dRestore(){
+    if(!dCtx)return;
+    var url=null;try{url=localStorage.getItem(D_KEY);}catch(e){}
+    if(!url)return;
+    var img=new Image();
+    img.onload=function(){if(!dCtx)return;dCtx.drawImage(img,0,0,dCv.width,dCv.height);};
+    img.src=url;
+  }
+  function dOpen(){
+    dAsk.classList.remove('on');dAsk.setAttribute('aria-hidden','true');
+    dEl.classList.add('on');dEl.setAttribute('aria-hidden','false');
+    rotHold(true);dBump();
+    requestAnimationFrame(function(){dLayout(false);});
+  }
+  function dClose(){
+    clearTimeout(dIdle);dSave();
+    if(!dEl.classList.contains('on'))return;
+    dEl.classList.remove('on');dEl.setAttribute('aria-hidden','true');
+    dAsk.classList.remove('on');dPts={};rotHold(false);
+  }
+  function dClear(){
+    if(!dCtx)return;
+    dCtx.clearRect(0,0,dCv.width,dCv.height);
+    dDirty=true;try{localStorage.removeItem(D_KEY);}catch(e){}dSaveT&&clearTimeout(dSaveT);dDirty=false;
+    dAsk.classList.remove('on');dAsk.setAttribute('aria-hidden','true');dBump();
+  }
+  sw.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;ev.stopPropagation();dSelCol(b.getAttribute('data-c'));dBump();});
+  document.getElementById('dsizes').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;ev.stopPropagation();dSelSize(b.getAttribute('data-s'));dBump();});
+  document.getElementById('drawx').addEventListener('click',function(ev){ev.stopPropagation();dClose();});
+  document.getElementById('drawclr').addEventListener('click',function(ev){ev.stopPropagation();dAsk.classList.add('on');dAsk.setAttribute('aria-hidden','false');dBump();});
+  document.getElementById('drawaskno').addEventListener('click',function(ev){ev.stopPropagation();dAsk.classList.remove('on');dAsk.setAttribute('aria-hidden','true');dBump();});
+  document.getElementById('drawaskyes').addEventListener('click',function(ev){ev.stopPropagation();dClear();});
+  document.getElementById('pdraw').addEventListener('click',function(ev){ev.stopPropagation();dOpen();});
+  document.getElementById('drawdot').addEventListener('click',function(){/* nav handler already switches the page */});
+  dEl.addEventListener('click',function(ev){ev.stopPropagation();});
+  dEl.addEventListener('contextmenu',function(ev){ev.preventDefault();});
+  dCv.addEventListener('pointerdown',function(ev){
+    ev.preventDefault();ev.stopPropagation();
+    if(dAsk.classList.contains('on'))return;
+    try{dCv.setPointerCapture(ev.pointerId);}catch(e){}
+    var p=dPos(ev);dPts[ev.pointerId]=p;dStroke(p,p);dBump();
+  });
+  dCv.addEventListener('pointermove',function(ev){
+    if(!(ev.pointerId in dPts))return;
+    ev.preventDefault();
+    var p=dPos(ev),o=dPts[ev.pointerId];dStroke(o,p);dPts[ev.pointerId]=p;dBump();
+  });
+  function dUp(ev){if(!(ev.pointerId in dPts))return;dFinish(dPts[ev.pointerId]);delete dPts[ev.pointerId];try{dCv.releasePointerCapture(ev.pointerId);}catch(e){}dSave();dBump();}
+  dCv.addEventListener('pointerup',dUp);dCv.addEventListener('pointercancel',dUp);dCv.addEventListener('pointerleave',function(ev){if(ev.buttons)return;dUp(ev);});
+  window.addEventListener('resize',function(){if(dEl.classList.contains('on')){clearTimeout(window.__dL);window.__dL=setTimeout(function(){dLayout(true);},150);}});
+  window.__draw={open:dOpen,close:dClose};
+  var dq=/[?&]draw=1\b/.test(location.search);if(dq)setTimeout(function(){var all=allPages(),i=all.indexOf(document.getElementById('pdraw'));if(i>=0)show(i);dOpen();},300);
+
+
   // Reloads (the only two): busy() = someone is using the page (typing on the gratitude board, a popup or panel open,
   // or a touch in the last 2 min); both wait until it is idle.
   // 1. new build: every 10 min compare data-ver with the published ver.txt (12-char hash written by build.py next to
@@ -827,7 +1074,7 @@ header{align-items:center}
   var bootAt=Date.now(), lastTouch=0, BUSY=POPS;
   ['pointerdown','touchstart','keydown'].forEach(function(e){document.addEventListener(e,function(){lastTouch=Date.now();},{capture:true,passive:true});});
   function busy(){return !!window.__composing||Date.now()-lastTouch<120000||!!document.querySelector(BUSY);}
-  function reloadNow(){var q=location.search,k=[];if(/[?&]info\b/.test(q))k.push('info');var g=/[?&](grat=[01])/.exec(q);if(g)k.push(g[1]);
+  function reloadNow(){var q=location.search,k=[];if(/[?&]info\b/.test(q))k.push('info');var g=/[?&](grat=[01])/.exec(q);if(g)k.push(g[1]);if(/[?&]draw=1\b/.test(q))k.push('draw=1');
     location.replace(location.pathname+'?'+k.concat('r='+Date.now()).join('&'));}
   window.__busy=busy;
   setInterval(function(){if(!window.fetch||busy())return;var mine=B.getAttribute('data-ver');

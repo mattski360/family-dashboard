@@ -383,27 +383,22 @@ def transform(h, fun, prod=False):
     # 1+2. weather (today + next 4 days), joke and trivia: buttons + panels in the template's "More" popup (off the main pages)
     h = sub1(h, '<div class="mgrid" id="mgrid">', '<div class="mgrid" id="mgrid">' + MORE_BTNS)
     h = sub1(h, '<div id="mvbody">', '<div id="mvbody">' + MORE_VIEWS)
-    # 3. gratitude page after page 2, inside #stage; composer outside #stage
-    i = h.index('<nav id="nav"'); j = h.rindex('</div>', 0, i)
-    h = h[:j] + P3_HTML + h[j:]
-    h = sub1(h, '<span class="nl" id="navl">', '<button class="dot" data-i="2" aria-label="Gratitude"></button><span class="nl" id="navl">')
+    # 3. gratitude page after page 2, inside #stage (before the Drawing pad, so nav data-i="2" stays Gratitude)
+    # composer outside #stage
+    i = h.index('<section class="page" id="pdraw"')
+    h = h[:i] + P3_HTML + h[i:]
+    h = sub1(h, '<button class="dot" id="drawdot"', '<button class="dot" data-i="2" aria-label="Gratitude"></button><button class="dot" id="drawdot"')
     if not prod:
         h = sub1(h, '<button id="yegg"', '<span class="mockpill">MOCKUP</span><button id="yegg"')
     h = sub1(h, '<div id="prog"></div>', COMP_HTML + '<div id="prog"></div>')
-    # rotation over 2 or 3 pages (fit() still sizes p1/p2 only; p3 sizes itself)
-    h = sub1(h, "var pages=[document.getElementById('p1'),document.getElementById('p2')];",
-             "var pages=[document.getElementById('p1'),document.getElementById('p2')];"
-             "var RP=pages.slice(),P3x=document.getElementById('p3');"
+    # Rotation: the template already walks every #stage .page, skips p3 when __gratOn is false, and
+    # skips [data-rotate=manual] pages (the drawing pad) so auto-rotation stays Today / This week / Gratitude.
+    h = sub1(h, "window.__gratOn=window.__gratOn||function(){return false;};",
              "window.__gratOn=function(){var q=location.search;if(/[?&]grat=0/.test(q))return false;"
              "if(/[?&]grat=1/.test(q)||B.getAttribute('data-grat-force')==='1')return true;"
              "var md=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,month:'2-digit',day:'2-digit'}).format(new Date()).replace(/\\D/g,'-'),"
              "f=B.getAttribute('data-grat-from')||'11-01',t=B.getAttribute('data-grat-to')||'11-30';return md>=f&&md<=t;};"
-             "if(P3x&&window.__gratOn())RP.push(P3x);"
              "window.__fit=function(){fit();};")
-    h = sub1(h, "pages.forEach(function(pg,k){pg.classList.toggle('on',k===i);", "RP.forEach(function(pg,k){pg.classList.toggle('on',k===i);")
-    h = sub1(h, "navl.textContent=pages[i].getAttribute", "navl.textContent=RP[i].getAttribute")
-    h = sub1(h, "(st.i===0||st.i===1)", "(st.i>=0&&st.i<RP.length)")
-    h = sub1(h, "(cur+1)%2", "(cur+1)%RP.length", 0)
     if not prod:  # the mockup keeps its own rotation state (same origin as the live page)
         h = sub1(h, "KEY='dash-land-rot'", "KEY='dash-mock-rot'")
     fun_json = json.dumps({"trivia": fun["trivia"], "jokes": fun["jokes"]}, ensure_ascii=False).replace("</", "<\\/")
