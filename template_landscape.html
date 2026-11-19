@@ -418,7 +418,7 @@ header{align-items:center}
 .mhome,.mview{display:none}.mhome.on,.mview.on{display:block}
 .mgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .mgrid .adv{display:contents}
-.mgrid button{order:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3em;min-height:max(130px,17vh);border:0;border-radius:24px;padding:14px;
+.mgrid button{order:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3em;min-height:max(110px,14vh);border:0;border-radius:24px;padding:14px;
   font:inherit;font-size:1.25em;font-weight:800;cursor:pointer;opacity:1;background:#EEF5FF;color:#245A9E;touch-action:manipulation;-webkit-tap-highlight-color:transparent;box-shadow:inset 0 0 0 2px rgba(40,48,68,.06)}
 .mgrid button .ae,.mgrid button .me{font-size:2em;line-height:1;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
 .mgrid button:active{transform:scale(.98);filter:brightness(.95)}
@@ -427,24 +427,12 @@ header{align-items:center}
 .mgrid .ab.weekend{order:2} .mgrid .ab.evening{order:3;background:#FFEFE0;color:#B0541A}
 .mgrid .mb-jk{order:4;background:linear-gradient(135deg,#FFF4D6,#FFE9DC);color:#B4620C}
 .mgrid .mb-tr{order:5;background:linear-gradient(135deg,#EAF2FF,#F4EEFF);color:#5B47B0}
+.mgrid .mb-draw{order:6;background:linear-gradient(135deg,#FFE8F0,#FFF3DF);color:#9A3D2F}
 .mback{border:0;background:#EEF0F4;color:var(--text);font:inherit;font-size:1em;font-weight:800;border-radius:99px;padding:0 22px;min-height:52px;cursor:pointer;margin-bottom:16px}
 .mv{display:none}.mv.on{display:block}
 .mvh{font-size:1.45em;font-weight:900;margin-bottom:.6em;padding-right:70px}
 
-/* ---------- Drawing pad (nav page, not in auto-rotation; tap the tile for the full-screen pad) ---------- */
-#pdraw{background:linear-gradient(160deg,var(--Pbg,#FFF3DF) 0%,var(--Sbg,#FDEBD6) 100%);gap:1rem;align-items:stretch}
-#pdraw .dintro{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 1rem 0.4rem}
-#drawtile{width:min(100%,58rem);height:min(100%,100%);min-height:12rem;border:0;cursor:pointer;border-radius:2.2rem;padding:2rem 2.4rem;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;text-align:center;
-  background:linear-gradient(165deg,var(--surf,#fff) 0%,var(--Pbg,#FFF6EA) 100%);color:var(--Pdk,#8A4A12);
-  box-shadow:inset 0 0 0 3px var(--Pmid,#F0C48A),0 10px 28px rgba(40,48,68,.12);font:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-#drawtile:active{transform:scale(.985);filter:brightness(.97)}
-#drawtile .dem{font-size:4.6rem;line-height:1;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
-#drawtile .dttl{font-size:2.6rem;font-weight:900;letter-spacing:-.03em;line-height:1.1}
-#drawtile .dsub{font-size:1.25rem;font-weight:700;color:var(--muted,#8A6A4A)}
-#drawtile .dcrayons{display:flex;gap:.45rem;margin-top:.3rem}
-#drawtile .dcrayons i{width:1.15rem;height:3.4rem;border-radius:99px 99px 8px 8px;display:block;box-shadow:0 2px 0 rgba(40,48,68,.15)}
-#nav .dot[data-page="pdraw"].on{background:var(--Sc, #E59AA8)}
+/* ---------- Drawing pad popup (opened from the More menu) ---------- */
 #drawpop{position:fixed;inset:0;z-index:28;display:none;flex-direction:column;background:#3A3128;color:#fff;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);touch-action:none;-webkit-user-select:none;user-select:none}
 #drawpop.on{display:flex}
 #drawpop .dtop,#drawpop .dbot{display:flex;align-items:center;gap:12px;padding:8px 12px;flex:none;background:#2A241E}
@@ -513,24 +501,9 @@ header{align-items:center}
   <div class="brow"><div class="chslot"></div></div>
 </section>
 
-<!-- ====================== PAGE: DRAWING PAD (manual nav; not in auto-rotation) ====================== -->
-<section class="page" id="pdraw" data-name="Draw" data-rotate="manual">
-  <header>
-    <div class="hl"><div class="fam">{{FAMILY}}</div>{{MOTTO}}</div>
-    <div class="clk"><div class="time js-time">&nbsp;</div><div class="date js-date">&nbsp;</div></div>
-  </header>
-  <div class="dintro">
-    <button type="button" id="drawtile" aria-label="Open the drawing pad">
-      <span class="dem" aria-hidden="true">🖍️</span>
-      <span class="dttl">Drawing pad</span>
-      <span class="dsub">Tap to draw with your fingers</span>
-      <span class="dcrayons" aria-hidden="true"><i style="background:#E53935"></i><i style="background:#FB8C00"></i><i style="background:#F4C548"></i><i style="background:#43A047"></i><i style="background:#1E88E5"></i><i style="background:#8E24AA"></i><i style="background:#EC407A"></i></span>
-    </button>
-  </div>
-</section>
 </div>
 
-<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><button class="dot" id="drawdot" data-page="pdraw" aria-label="Draw"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="morebtn" type="button" aria-label="More: weather, ideas, joke and trivia"><span class="em">✨</span>More</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
+<nav id="nav" aria-label="Pages"><button class="dot on" data-i="0" aria-label="Today"></button><button class="dot" data-i="1" aria-label="This week"></button><span class="nl" id="navl">Today</span><button class="pz" id="resume" type="button">Paused <span id="pzt"></span> · tap to resume</button><button id="morebtn" type="button" aria-label="More: weather, ideas, joke, trivia and drawing pad"><span class="em">✨</span>More</button><button id="yegg" type="button" aria-label="Go Cougs"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#002E5D" d="M2 4h12v4.2h-2.6L16 15.6l4.6-7.4H18V4h12v4.2h-2.2L19.6 20v4h3v4H9.4v-4h3v-4L4.2 8.2H2z"/></svg></button></nav>
 <div id="morepop" aria-hidden="true"><div class="mcard" role="dialog" aria-label="More"><button class="mx" id="morex" type="button" aria-label="Close">&times;</button>
   <div class="mhome on" id="mhome"><div class="mh">✨ More for today</div><div class="mgrid" id="mgrid">{{ADVENTURES}}</div></div>
   <div class="mview" id="mview"><button class="mback" id="mback" type="button">&lsaquo; Back</button><div id="mvbody"></div></div></div></div>
@@ -636,7 +609,7 @@ header{align-items:center}
 
   // auto-fit each page: largest base size (--fs) with no overflow; scroll only below the floor
   var pages=[document.getElementById('p1'),document.getElementById('p2')];
-  // Seasonal pages (gratitude) opt in via window.__gratOn; the drawing pad is data-rotate="manual" and is skipped by auto-rotation.
+  // Seasonal pages (gratitude) opt in via window.__gratOn; pages with data-rotate="manual" are skipped by auto-rotation.
   window.__gratOn=window.__gratOn||function(){return false;};
   function allPages(){
     return Array.prototype.filter.call(document.querySelectorAll('#stage .page'), function(pg){
@@ -653,11 +626,6 @@ header{align-items:center}
     var idx=rp.indexOf(all[cur]);
     var nxt=rp[(idx<0?0:idx+1)%rp.length];
     return all.indexOf(nxt);
-  }
-  function sizePdraw(){
-    var pg=document.getElementById('pdraw'); if(!pg)return;
-    var vv=window.visualViewport,W=vv?vv.width:innerWidth,H=Math.min(innerHeight,vv?vv.height:1e9);
-    pg.style.setProperty('--fs',(Math.min(W/1920,H/1080)*20).toFixed(2)+'px');
   }
   function fitPage(pg,W,H){
     var scale=Math.min(W/1920,H/1080);
@@ -680,7 +648,6 @@ header{align-items:center}
     var hs=Math.min.apply(null,r.map(function(x){return parseFloat(x);}));
     pages.forEach(function(pg){pg.querySelector('header').style.setProperty('--fs',hs+'px');});
     B.setAttribute('data-fs','p1:'+r[0]+' p2:'+r[1]+' '+W+'x'+H);
-    sizePdraw();
     if(window.__fitExtra)window.__fitExtra();
   }
 
@@ -933,14 +900,19 @@ header{align-items:center}
   document.getElementById('morebtn').addEventListener('click',function(ev){ev.stopPropagation();ev.preventDefault();mOpen();});
   document.getElementById('morex').addEventListener('click',function(ev){ev.stopPropagation();mClose();});
   document.getElementById('mback').addEventListener('click',function(ev){ev.stopPropagation();mHomeShow();mBump();});
-  document.getElementById('mgrid').addEventListener('click',function(ev){var b=ev.target.closest('button[data-v]');if(b){ev.stopPropagation();mShow(b.getAttribute('data-v'));}mBump();});
+  document.getElementById('mgrid').addEventListener('click',function(ev){
+    var b=ev.target.closest('button[data-v]');if(!b){mBump();return;}
+    ev.stopPropagation();
+    var v=b.getAttribute('data-v');
+    if(v==='draw'){mClose();if(window.__draw)window.__draw.open();return;}
+    mShow(v);mBump();});
   mEl.addEventListener('click',function(ev){ev.stopPropagation();if(ev.target===mEl)mClose();else mBump();});
   ['pointerdown','touchstart'].forEach(function(e){mEl.addEventListener(e,function(ev){ev.stopPropagation();mBump();},{passive:true});});
   window.__more={open:mOpen,close:mClose,show:mShow};
   var mq=/[?&]more=(\w+)/.exec(location.search);if(mq)setTimeout(function(){mOpen(mq[1]==='1'?'':mq[1]);},300);
 
 
-  // Drawing pad: nav "Draw" page (not auto-rotated) opens this full-screen popup. Pointer Events + multi-touch,
+  // Drawing pad: opened from the More menu (🎨 Drawing pad). Pointer Events + multi-touch,
   // devicePixelRatio-scaled canvas, smooth round strokes. Rotation and reloads wait while it is open (#drawpop.on
   // is in POPS). It stays up while someone is drawing and only auto-closes after 10 min idle. The scribble is
   // kept in localStorage (dash-draw-v1) so a reload does not wipe it.
@@ -1044,8 +1016,6 @@ header{align-items:center}
   document.getElementById('drawclr').addEventListener('click',function(ev){ev.stopPropagation();dAsk.classList.add('on');dAsk.setAttribute('aria-hidden','false');dBump();});
   document.getElementById('drawaskno').addEventListener('click',function(ev){ev.stopPropagation();dAsk.classList.remove('on');dAsk.setAttribute('aria-hidden','true');dBump();});
   document.getElementById('drawaskyes').addEventListener('click',function(ev){ev.stopPropagation();dClear();});
-  document.getElementById('pdraw').addEventListener('click',function(ev){ev.stopPropagation();dOpen();});
-  document.getElementById('drawdot').addEventListener('click',function(){/* nav handler already switches the page */});
   dEl.addEventListener('click',function(ev){ev.stopPropagation();});
   dEl.addEventListener('contextmenu',function(ev){ev.preventDefault();});
   dCv.addEventListener('pointerdown',function(ev){
@@ -1063,7 +1033,7 @@ header{align-items:center}
   dCv.addEventListener('pointerup',dUp);dCv.addEventListener('pointercancel',dUp);dCv.addEventListener('pointerleave',function(ev){if(ev.buttons)return;dUp(ev);});
   window.addEventListener('resize',function(){if(dEl.classList.contains('on')){clearTimeout(window.__dL);window.__dL=setTimeout(function(){dLayout(true);},150);}});
   window.__draw={open:dOpen,close:dClose};
-  var dq=/[?&]draw=1\b/.test(location.search);if(dq)setTimeout(function(){var all=allPages(),i=all.indexOf(document.getElementById('pdraw'));if(i>=0)show(i);dOpen();},300);
+  var dq=/[?&]draw=1\b/.test(location.search);if(dq)setTimeout(function(){dOpen();},300);
 
 
   // Reloads (the only two): busy() = someone is using the page (typing on the gratitude board, a popup or panel open,

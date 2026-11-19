@@ -169,7 +169,7 @@ Auto-fits any 16:9-ish CSS viewport (1920×1080, 1920×1032 with system bars, 12
 - `build_nov_mockup.py` writes the MOCKUP preview to `landscape-mock/`, deployed with `deploy_mockup_preview.sh` to the `mockup` branch alias. `shot_features.py` takes screenshots and runs a fit check of all 3 pages at 1920×1080 and 1180×820.
 
 ## Drawing pad
-A **Draw** nav page (last dot; not in the auto-rotation) shows a large “Drawing pad” tile. Tapping it (or anywhere on that page) opens a full-screen finger-drawing popup: 12 colors + eraser, three brush sizes, Clear (with confirm), and a big Close button. Pointer Events support multi-touch; the canvas is `devicePixelRatio`-scaled with `touch-action: none`. The popup freezes page rotation and counts as busy for the `ver.txt` reload wait. It auto-closes after 10 minutes idle, not while someone is drawing. The scribble is saved in `localStorage` (`dash-draw-v1`) so a reload keeps it.
+The **✨ More** popup includes a **🎨 Drawing pad** button. Tapping it closes More and opens a full-screen finger-drawing popup: 12 colors + eraser, three brush sizes, Clear (with confirm), and a big Close button. Pointer Events support multi-touch; the canvas is `devicePixelRatio`-scaled with `touch-action: none`. The popup freezes page rotation and counts as busy for the `ver.txt` reload wait. It auto-closes after 10 minutes idle, not while someone is drawing. The scribble is saved in `localStorage` (`dash-draw-v1`) so a reload keeps it.
 
 ## BYU easter-egg popup
 Tapping the faded BYU "Y" (nav corner, v3 / landscape) still plays the Go Cougs animation and also opens a

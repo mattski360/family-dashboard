@@ -1,4 +1,4 @@
-"""Monthly colour themes for the wall pages (v3/ and landscape/), all landscape pages (Today, This week, seasonal Gratitude, and the Drawing pad).
+"""Monthly colour themes for the wall pages (v3/ and landscape/), all landscape pages (Today, This week, and seasonal Gratitude).
 
 The browser picks the theme from the current month in America/Denver, so no rebuild is needed (it re-checks every minute).
 `?theme=MM` (01-12) previews a month and `?theme=off` shows the plain colours.
@@ -167,12 +167,9 @@ RULES = f"""
 {T} .mgrid .mb-wx,{T} #morepop .wx .wd.now{{background:linear-gradient(135deg,var(--Pbg),var(--Sbg));color:var(--Pdk);box-shadow:inset 0 0 0 2px var(--Pmid)}}
 {T} .mgrid .ab.weekend,{T} .mgrid .mb-tr{{background:var(--Sbg);color:var(--Sdk);box-shadow:inset 0 0 0 2px var(--Smid)}}
 {T} .mgrid .ab.evening,{T} .mgrid .mb-jk{{background:var(--Tbg);color:var(--Tdk);box-shadow:inset 0 0 0 2px var(--Tmid)}}
+{T} .mgrid .mb-draw{{background:linear-gradient(135deg,var(--Pbg),var(--Tbg));color:var(--Pdk);box-shadow:inset 0 0 0 2px var(--Pmid)}}
 {T} #morepop .wx .wd{{background:var(--Nbg);box-shadow:inset 0 0 0 1.5px var(--Nmid)}} {T} #morepop .wx .wd .w2 .pp{{color:var(--Sdk)}}
-/* drawing pad page + popup */
-{T} #pdraw{{background:var(--th-pat) 0 0/170px 170px,linear-gradient(160deg,var(--th-bg1) 0%,var(--Sbg) 100%)}}
-{T} #drawtile{{background:linear-gradient(165deg,var(--surf),var(--Pbg));color:var(--Pdk);box-shadow:inset 0 0 0 3px var(--Pmid),0 10px 28px rgba(40,48,68,.12)}}
-{T} #drawtile .dsub{{color:var(--muted)}}
-{T} #nav .dot[data-page="pdraw"].on{{background:var(--Sc)}}
+/* drawing pad popup (opened from More) */
 {T} #drawx{{background:var(--Pdk)}} {T} #drawpop .dname{{color:#fff}}
 /* decorations: faint emoji in the empty header space (wide screens), web corners in October */
 #thdeco{{display:none}}

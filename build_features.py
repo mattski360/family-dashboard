@@ -134,7 +134,8 @@ WX_HTML = '<div class="wx" id="wx"><div class="wfall">🌤️ Loading Highland w
 # "More" popup (template #morepop): big buttons in #mgrid (Weekend/Evening idea buttons come from the template) and panels in #mvbody
 MORE_BTNS = ('<button class="mb-wx" type="button" data-v="weather"><span class="me">🌤️</span>Weather</button>'
   '<button class="mb-jk" type="button" data-v="joke"><span class="me">😂</span>Joke of the day</button>'
-  '<button class="mb-tr" type="button" data-v="trivia"><span class="me">🧠</span>Trivia of the day</button>')
+  '<button class="mb-tr" type="button" data-v="trivia"><span class="me">🧠</span>Trivia of the day</button>'
+  '<button class="mb-draw" type="button" data-v="draw"><span class="me">🎨</span>Drawing pad</button>')
 MORE_VIEWS = ('<div class="mv" data-v="weather"><div class="mvh">🌤️ Highland weather</div>' + WX_HTML +
   '<div class="wxsub">Today plus the next 4 days &middot; Open-Meteo, updated every 30 min</div></div>'
   '<div class="mv" data-v="joke"><div class="fcard jk" id="fjk" role="button"><div class="fk"><span class="em">😂</span>Joke of the day</div>'
@@ -383,16 +384,14 @@ def transform(h, fun, prod=False):
     # 1+2. weather (today + next 4 days), joke and trivia: buttons + panels in the template's "More" popup (off the main pages)
     h = sub1(h, '<div class="mgrid" id="mgrid">', '<div class="mgrid" id="mgrid">' + MORE_BTNS)
     h = sub1(h, '<div id="mvbody">', '<div id="mvbody">' + MORE_VIEWS)
-    # 3. gratitude page after page 2, inside #stage (before the Drawing pad, so nav data-i="2" stays Gratitude)
-    # composer outside #stage
-    i = h.index('<section class="page" id="pdraw"')
-    h = h[:i] + P3_HTML + h[i:]
-    h = sub1(h, '<button class="dot" id="drawdot"', '<button class="dot" data-i="2" aria-label="Gratitude"></button><button class="dot" id="drawdot"')
+    # 3. gratitude page after page 2, inside #stage; composer outside #stage
+    i = h.index('<nav id="nav"'); j = h.rindex('</div>', 0, i)
+    h = h[:j] + P3_HTML + h[j:]
+    h = sub1(h, '<span class="nl" id="navl">', '<button class="dot" data-i="2" aria-label="Gratitude"></button><span class="nl" id="navl">')
     if not prod:
         h = sub1(h, '<button id="yegg"', '<span class="mockpill">MOCKUP</span><button id="yegg"')
     h = sub1(h, '<div id="prog"></div>', COMP_HTML + '<div id="prog"></div>')
-    # Rotation: the template already walks every #stage .page, skips p3 when __gratOn is false, and
-    # skips [data-rotate=manual] pages (the drawing pad) so auto-rotation stays Today / This week / Gratitude.
+    # Rotation: the template already walks every #stage .page and skips p3 when __gratOn is false.
     h = sub1(h, "window.__gratOn=window.__gratOn||function(){return false;};",
              "window.__gratOn=function(){var q=location.search;if(/[?&]grat=0/.test(q))return false;"
              "if(/[?&]grat=1/.test(q)||B.getAttribute('data-grat-force')==='1')return true;"
