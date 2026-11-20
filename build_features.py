@@ -404,5 +404,9 @@ def transform(h, fun, prod=False):
         h = sub1(h, "KEY='dash-land-rot'", "KEY='dash-mock-rot'")
     fun_json = json.dumps({"trivia": fun["trivia"], "jokes": fun["jokes"]}, ensure_ascii=False).replace("</", "<\\/")
     h = sub1(h, "</body>", f'<script type="application/json" id="fundata">{fun_json}</script>{JS}</body>')
+    quiz_path = HERE / "data" / "game_quiz.json"
+    if quiz_path.is_file():
+        quiz_json = json.dumps(json.loads(quiz_path.read_text()), ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        h = sub1(h, "</body>", f'<script type="application/json" id="gquizdata">{quiz_json}</script></body>')
     return h
 

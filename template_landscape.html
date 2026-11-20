@@ -502,6 +502,42 @@ header{align-items:center}
 @media (max-height:700px){
   #flapx{min-height:48px}
 }
+
+/* daily game-time pill on More tiles and in the game headers */
+.gtiletm{display:block;font-size:.58em;font-weight:800;letter-spacing:.01em;margin-top:.15em;opacity:.9;font-variant-numeric:tabular-nums}
+.gtpill{font-variant-numeric:tabular-nums;font-weight:800;font-size:clamp(15px,1.9vh,20px);color:#F7E7B0;white-space:nowrap}
+.gtpill.low{color:#FFD18A}
+.gtpill.out{color:#FFB4A8}
+/* time's up + quiz overlay (covers Cougar Run / Cougar Dash) */
+#gtimepop{position:fixed;inset:0;z-index:29;display:none;align-items:center;justify-content:center;padding:2.4vh 2vw;background:rgba(10,20,36,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#gtimepop.on{display:flex}
+#gtimepop .gtcard{position:relative;width:min(920px,100%);max-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#FBFCFE;color:#283044;border-radius:28px;box-shadow:0 18px 50px rgba(15,35,64,.35);padding:28px 30px 30px;font-size:clamp(16px,2.1vh,24px)}
+#gtimepop .gth{font-size:1.55em;font-weight:900;letter-spacing:-.02em;margin:0 0 .45em;padding-right:60px}
+#gtimepop .gtmsg{margin:0 0 1.1em;font-weight:700;color:#4A5568;line-height:1.35}
+#gtimepop .gtbtns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+#gtimepop .gtbtns button,#gtimepop .gqnext{border:0;cursor:pointer;font:inherit;font-weight:800;border-radius:99px;min-height:60px;padding:0 26px;font-size:clamp(16px,2vh,22px);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#gtearn{background:#002E5D;color:#fff}
+#gtimex,#gqclose{background:#EEF0F4;color:#283044}
+#gtimepop .gtbtns button:active,#gtimepop .gqnext:active{transform:scale(.97);filter:brightness(1.05)}
+#gtimeup,#gquiz{display:none}
+#gtimeup.on,#gquiz.on{display:block}
+#gquiz .gqprog{font-weight:800;color:#5B47B0;margin-bottom:.45em}
+#gquiz .gqq{font-size:1.28em;font-weight:900;letter-spacing:-.02em;margin:0 0 .8em;line-height:1.25}
+#gqchoices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#gqchoices button{border:0;border-radius:20px;min-height:72px;padding:14px 16px;font:inherit;font-weight:800;font-size:clamp(16px,2vh,22px);text-align:center;cursor:pointer;background:#EEF4FF;color:#1E3A5F;box-shadow:inset 0 0 0 2px rgba(40,48,68,.08);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#gqchoices button:active{transform:scale(.98)}
+#gqchoices button:disabled{cursor:default}
+#gqchoices button.ok{background:#D6F5DE;color:#1B5E32;box-shadow:inset 0 0 0 3px #2E8B57}
+#gqchoices button.bad{background:#FDE2E0;color:#8A1F1A;box-shadow:inset 0 0 0 3px #D14B41}
+#gqexplain{display:none;margin-top:16px;background:#FFF6E0;border-radius:18px;padding:14px 16px;font-weight:700;line-height:1.35;color:#5A3F12}
+#gqexplain.on{display:block}
+#gqexplain .gqgot{font-weight:900;margin-bottom:.25em}
+#gquiz .gqnext{display:none;margin-top:14px;background:#5B47B0;color:#fff}
+#gquiz .gqnext.on{display:inline-flex;align-items:center}
+#gqclose{position:absolute;right:16px;top:16px;border:0;border-radius:99px;min-width:100px;min-height:48px;padding:0 18px;font:inherit;font-weight:800;font-size:clamp(15px,1.8vh,18px);cursor:pointer}
+@media (max-width:700px){
+  #gqchoices{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body data-ver="{{VERSION}}" data-rotate="{{ROTATE_SECONDS}}" data-tz="{{TZ}}" data-last="{{LAST_ISO}}" data-stale-days="{{STALE_DAYS}}" data-week-start="{{WEEK_START}}" data-build-date="{{BUILD_DATE}}">
@@ -556,16 +592,37 @@ header{align-items:center}
 
 <div id="runpop" aria-hidden="true">
   <div class="rtop"><div class="rname">🏃 Cougar Run</div>
-    <div class="rhud"><span>Score <b id="runsc">0</b></span><span>HI <b id="runhi">0</b></span></div>
+    <div class="rhud"><span class="gtpill" data-gtpill>⏱ 7:00 left</span><span>Score <b id="runsc">0</b></span><span>HI <b id="runhi">0</b></span></div>
     <button id="runx" type="button" aria-label="Close Cougar Run">Close</button></div>
   <div id="runstage"><canvas id="runcv"></canvas></div>
 </div>
 
 <div id="flappop" aria-hidden="true">
   <div class="rtop"><div class="rname">🪽 Cougar Dash</div>
-    <div class="rhud"><span>Score <b id="flapsc">0</b></span><span>HI <b id="flaphi">0</b></span></div>
+    <div class="rhud"><span class="gtpill" data-gtpill>⏱ 7:00 left</span><span>Score <b id="flapsc">0</b></span><span>HI <b id="flaphi">0</b></span></div>
     <button id="flapx" type="button" aria-label="Close Cougar Dash">Close</button></div>
   <div id="flapstage"><canvas id="flapcv"></canvas></div>
+</div>
+
+<div id="gtimepop" aria-hidden="true">
+  <div class="gtcard" role="dialog" aria-label="Game time">
+    <div id="gtimeup">
+      <div class="gth" id="gtimehd">⏱ Game time is up for today!</div>
+      <p class="gtmsg" id="gtimemsg">You can earn more minutes by answering a few questions.</p>
+      <div class="gtbtns">
+        <button type="button" id="gtearn">Earn more time</button>
+        <button type="button" id="gtimex">Close</button>
+      </div>
+    </div>
+    <div id="gquiz">
+      <button type="button" id="gqclose" aria-label="Close the quiz">Close</button>
+      <div class="gqprog" id="gqprog">Question 1 of 3</div>
+      <div class="gqq" id="gqq"></div>
+      <div id="gqchoices"></div>
+      <div id="gqexplain"></div>
+      <button type="button" class="gqnext" id="gqnext">Next</button>
+    </div>
+  </div>
 </div>
 <div id="advpop" aria-hidden="true"><div class="acard" role="dialog" aria-label="Adventure idea"><button class="ex" id="advx" type="button" aria-label="Close">&times;</button>
   <div class="ak" id="advk"></div><div class="an2" id="advn"></div><div class="ad" id="advd"></div>
@@ -722,7 +779,7 @@ header{align-items:center}
   function show(i){render(i);shownAt=Date.now();save();}
   var holdAt=0; // rotation frozen (a popup/panel open): no page change, timer resumes where it was on release
   // every popup / panel that freezes rotation and defers reloads (also used by busy() below)
-  var POPS='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on,#morepop.on,#drawpop.on,#runpop.on,#flappop.on';
+  var POPS='#egg.on,#eggwin.on,#advpop.on,#grades.on,#chp.on,#mlp.on,#cfmp.on,#fsyp.on,#byupop.on,#gcomp.on,#morepop.on,#drawpop.on,#runpop.on,#flappop.on,#gtimepop.on';
   function rotHold(on){var now=Date.now();
     if(on){if(!holdAt)holdAt=now;return;}
     // release only when no other popup is still open (they share this one hold)
@@ -938,7 +995,7 @@ header{align-items:center}
   var mEl=document.getElementById('morepop'), mHome=document.getElementById('mhome'), mView=document.getElementById('mview'), mT=0, M_IDLE=180000;
   function mBump(){clearTimeout(mT);mT=setTimeout(mClose,M_IDLE);}
   function mHomeShow(){mHome.classList.add('on');mView.classList.remove('on');each('#mvbody .mv',function(v){v.classList.remove('on');});}
-  function mOpen(v){mHomeShow();mEl.classList.add('on');mEl.setAttribute('aria-hidden','false');rotHold(true);mBump();if(v)mShow(v);}
+  function mOpen(v){mHomeShow();mEl.classList.add('on');mEl.setAttribute('aria-hidden','false');rotHold(true);mBump();if(window.__gtime)window.__gtime.paint();if(v)mShow(v);}
   function mShow(v){var el=document.querySelector('#mvbody .mv[data-v="'+v+'"]');if(!el)return;
     each('#mvbody .mv',function(x){x.classList.toggle('on',x===el);});mHome.classList.remove('on');mView.classList.add('on');
     mEl.querySelector('.mcard').scrollTop=0;if(window.__moreShow)window.__moreShow(v);}
@@ -1432,6 +1489,7 @@ header{align-items:center}
     if(!rEl.classList.contains('on')){rRaf=0;return;}
     if(!rLast)rLast=t;
     var dt=Math.min(0.05,(t-rLast)/1000);rLast=t;
+    if(window.__gtime&&window.__gtime.blocked()){rDraw();rRaf=requestAnimationFrame(rLoop);return;}
     rStep(dt);rDraw();
     rRaf=requestAnimationFrame(rLoop);
   }
@@ -1439,6 +1497,7 @@ header{align-items:center}
     rReset();
     rEl.classList.add('on');rEl.setAttribute('aria-hidden','false');
     rotHold(true);rBump();
+    if(window.__gtime)window.__gtime.onGameOpen();
     requestAnimationFrame(function(){
       rLayout();rLast=0;
       if(!rRaf)rRaf=requestAnimationFrame(rLoop);
@@ -1450,6 +1509,7 @@ header{align-items:center}
     if(!rEl.classList.contains('on'))return;
     rEl.classList.remove('on');rEl.setAttribute('aria-hidden','true');
     rHold=false;rotHold(false);
+    if(window.__gtime)window.__gtime.onGameClose();
   }
   document.getElementById('runx').addEventListener('click',function(ev){ev.stopPropagation();rClose();});
   rEl.addEventListener('click',function(ev){ev.stopPropagation();});
@@ -1457,6 +1517,7 @@ header{align-items:center}
   rStage.addEventListener('pointerdown',function(ev){
     ev.preventDefault();ev.stopPropagation();
     try{rStage.setPointerCapture(ev.pointerId);}catch(e){}
+    if(window.__gtime&&window.__gtime.blocked())return;
     rJump();
   });
   function rUp(ev){rRelease();try{rStage.releasePointerCapture(ev.pointerId);}catch(e){}}
@@ -1466,6 +1527,7 @@ header{align-items:center}
     if(ev.code==='Space'||ev.code==='ArrowUp'||ev.key===' '||ev.key==='ArrowUp'){
       ev.preventDefault();ev.stopPropagation();
       if(ev.repeat)return;
+      if(window.__gtime&&window.__gtime.blocked())return;
       rJump();
     }else if(ev.key==='Escape'){ev.preventDefault();rClose();}
   });
@@ -1837,6 +1899,7 @@ header{align-items:center}
     if(!fEl.classList.contains('on')){fRaf=0;return;}
     if(!fLast)fLast=t;
     var dt=Math.min(0.05,(t-fLast)/1000);fLast=t;
+    if(window.__gtime&&window.__gtime.blocked()){fDraw();fRaf=requestAnimationFrame(fLoop);return;}
     fStep(dt);fDraw();
     fRaf=requestAnimationFrame(fLoop);
   }
@@ -1844,6 +1907,7 @@ header{align-items:center}
     fReset();
     fEl.classList.add('on');fEl.setAttribute('aria-hidden','false');
     rotHold(true);fBump();
+    if(window.__gtime)window.__gtime.onGameOpen();
     requestAnimationFrame(function(){
       fLayout();
       // Re-seed pillars now that the canvas size is known.
@@ -1860,6 +1924,7 @@ header{align-items:center}
     if(!fEl.classList.contains('on'))return;
     fEl.classList.remove('on');fEl.setAttribute('aria-hidden','true');
     rotHold(false);
+    if(window.__gtime)window.__gtime.onGameClose();
   }
   document.getElementById('flapx').addEventListener('click',function(ev){ev.stopPropagation();fClose();});
   fEl.addEventListener('click',function(ev){ev.stopPropagation();});
@@ -1867,6 +1932,7 @@ header{align-items:center}
   fStage.addEventListener('pointerdown',function(ev){
     ev.preventDefault();ev.stopPropagation();
     try{fStage.setPointerCapture(ev.pointerId);}catch(e){}
+    if(window.__gtime&&window.__gtime.blocked())return;
     fFlap();
   });
   window.addEventListener('keydown',function(ev){
@@ -1874,6 +1940,7 @@ header{align-items:center}
     if(ev.code==='Space'||ev.code==='ArrowUp'||ev.key===' '||ev.key==='ArrowUp'){
       ev.preventDefault();ev.stopPropagation();
       if(ev.repeat)return;
+      if(window.__gtime&&window.__gtime.blocked())return;
       fFlap();
     }else if(ev.key==='Escape'){ev.preventDefault();fClose();}
   });
@@ -1890,6 +1957,254 @@ header{align-items:center}
     return {state:fState,score:F.score,hi:F.hi,y:F.y,vy:F.vy,obs:F.obs.length,dist:F.dist,beat:!!F.beat,speed:F.speed,nearest:nearest,gapMid:gapMid,gap:gap,w:fW,h:fH,canRestart:canRestart};
   }};
   var fq=/[?&]flap=1\b/.test(location.search);if(fq)setTimeout(function(){fOpen();},300);
+
+  // Shared daily game time for Cougar Run + Cougar Dash. Both games share one 7-minute
+  // pool (America/Denver local date in localStorage dash-games-day). Time counts only
+  // while a game is in the play state, the tab is visible, and the time-up / quiz overlay
+  // is not showing. Kids earn +2 minutes per correct 5th-grade multiple-choice question
+  // (3 per round), up to 15 bonus minutes a day (22 total). Drawing pad is not limited.
+  var GT_KEY='dash-games-day', GT_BASE=7*60*1000, GT_BONUS_CAP=15*60*1000, GT_PER=2*60*1000;
+  var gPop=document.getElementById('gtimepop'), gUp=document.getElementById('gtimeup'), gQuiz=document.getElementById('gquiz');
+  var gTickAt=0, gWasPlaying=false, gRound=null, gNextT=0, gQuizBank=[];
+  function gBank(){
+    if(gQuizBank&&gQuizBank.length)return gQuizBank;
+    try{gQuizBank=JSON.parse((document.getElementById('gquizdata')||{}).textContent||'[]')||[];}catch(e){gQuizBank=[];}
+    return gQuizBank;
+  }
+  function gToday(){
+    try{return new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
+    catch(e){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  }
+  function gEmpty(){return {date:gToday(),usedMs:0,bonusMs:0,usedQ:[]};}
+  function gLoad(){
+    var s=null;try{s=JSON.parse(localStorage.getItem(GT_KEY)||'');}catch(e){}
+    if(!s||typeof s!=='object')s=gEmpty();
+    if(s.date!==gToday())s=gEmpty();
+    s.usedMs=Math.max(0,+s.usedMs||0);
+    s.bonusMs=Math.max(0,Math.min(GT_BONUS_CAP,+s.bonusMs||0));
+    if(!Array.isArray(s.usedQ))s.usedQ=[];
+    return s;
+  }
+  function gSave(s){try{localStorage.setItem(GT_KEY,JSON.stringify(s));}catch(e){}}
+  function gLeft(s){s=s||gLoad();return Math.max(0,GT_BASE+s.bonusMs-s.usedMs);}
+  function gCapLeft(s){s=s||gLoad();return Math.max(0,GT_BONUS_CAP-s.bonusMs);}
+  function gFmt(ms){
+    var t=Math.max(0,Math.ceil(ms/1000)), m=Math.floor(t/60), sec=t%60;
+    return m+':'+String(sec).padStart(2,'0');
+  }
+  function gPaint(){
+    var left=gLeft(), txt='⏱ '+gFmt(left)+' left', cls='gtpill'+(left<=0?' out':left<=60*1000?' low':'');
+    each('[data-gtpill]',function(el){
+      if(el.classList.contains('gtiletm'))el.textContent=left<=0?'⏱ Time’s up':txt;
+      else{el.textContent=txt;el.className=cls;}
+    });
+  }
+  function gBlocked(){return !!(gPop&&gPop.classList.contains('on'));}
+  function gCounting(){
+    if(document.visibilityState!=='visible')return false;
+    if(gBlocked())return false;
+    if(rEl&&rEl.classList.contains('on')&&rState==='play')return true;
+    if(fEl&&fEl.classList.contains('on')&&fState==='play')return true;
+    return false;
+  }
+  function gAddUsed(ms){
+    if(ms<=0)return;
+    var s=gLoad();
+    s.usedMs=Math.min(GT_BASE+s.bonusMs,s.usedMs+ms);
+    gSave(s);
+  }
+  function gFlushTick(){
+    if(!gTickAt)return;
+    var now=Date.now(), dt=Math.min(2000,Math.max(0,now-gTickAt));
+    gTickAt=0;
+    if(dt)gAddUsed(dt);
+  }
+  function gPulse(){
+    var now=Date.now(), s=gLoad(); // load also rolls over at midnight
+    if(gCounting()){
+      if(gTickAt){
+        var dt=Math.min(2000,Math.max(0,now-gTickAt));
+        if(dt)gAddUsed(dt);
+      }
+      gTickAt=now;
+      if(gLeft()<=0)gTimesUp(true);
+    }else gTickAt=0;
+    gPaint();
+  }
+  function gShowPop(which){
+    if(!gPop)return;
+    gUp.classList.toggle('on',which==='up');
+    gQuiz.classList.toggle('on',which==='quiz');
+    gPop.classList.add('on');gPop.setAttribute('aria-hidden','false');
+    rotHold(true);
+  }
+  function gHidePop(){
+    if(!gPop||!gPop.classList.contains('on'))return;
+    gPop.classList.remove('on');gPop.setAttribute('aria-hidden','true');
+    gUp.classList.remove('on');gQuiz.classList.remove('on');
+    clearTimeout(gNextT);
+  }
+  function gTimesUp(fromPlay){
+    gFlushTick();
+    gWasPlaying=!!fromPlay;
+    var s=gLoad(), cap=gCapLeft(s), earn=document.getElementById('gtearn');
+    var hd=document.getElementById('gtimehd'), msg=document.getElementById('gtimemsg');
+    if(cap<=0){
+      hd.textContent='That’s all the game time for today, see you tomorrow!';
+      msg.textContent='You used your 7 minutes plus all 15 bonus minutes you can earn in one day.';
+      if(earn)earn.style.display='none';
+    }else{
+      hd.textContent='⏱ Game time is up for today!';
+      msg.textContent='Answer 3 questions to earn more minutes. Each correct answer adds 2 minutes.';
+      if(earn)earn.style.display='';
+    }
+    gShowPop('up');
+    if(typeof rBump==='function')rBump();
+    if(typeof fBump==='function')fBump();
+    gPaint();
+  }
+  function gOnOpen(){
+    gPaint();
+    if(gLeft()<=0)gTimesUp(false);
+  }
+  function gOnClose(){
+    gFlushTick();
+    gHidePop();
+    gRound=null;
+    gPaint();
+  }
+  function gShuffle(a){
+    var i,j,t,b=a.slice();
+    for(i=b.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=b[i];b[i]=b[j];b[j]=t;}
+    return b;
+  }
+  function gPickQuestions(){
+    var s=gLoad(), used={}, i, pool=[], fresh=[], n=3, pick;
+    for(i=0;i<(s.usedQ||[]).length;i++)used[s.usedQ[i]]=1;
+    var bank=gBank();
+    for(i=0;i<bank.length;i++){
+      pool.push(bank[i]);
+      if(!used[bank[i].id])fresh.push(bank[i]);
+    }
+    if(fresh.length>=n)pool=fresh;
+    pool=gShuffle(pool);
+    pick=pool.slice(0,n);
+    // If the bank is almost exhausted today, allow repeats only after unique ones.
+    if(pick.length<n){
+      var extra=gShuffle(gBank());
+      for(i=0;i<extra.length&&pick.length<n;i++){
+        if(pick.indexOf(extra[i])<0)pick.push(extra[i]);
+      }
+    }
+    return pick;
+  }
+  function gStartQuiz(){
+    if(gCapLeft()<=0){gTimesUp(gWasPlaying);return;}
+    var qs=gPickQuestions();
+    if(!qs.length){gTimesUp(gWasPlaying);return;}
+    gRound={i:0,qs:qs,earned:0,locked:false};
+    gShowQ();
+    gShowPop('quiz');
+    if(typeof rBump==='function')rBump();
+    if(typeof fBump==='function')fBump();
+  }
+  function gShowQ(){
+    var r=gRound, q=r.qs[r.i], box=document.getElementById('gqchoices'), ex=document.getElementById('gqexplain');
+    var nxt=document.getElementById('gqnext'), opts=gShuffle(q.choices.slice()), i,b;
+    document.getElementById('gqprog').textContent='Question '+(r.i+1)+' of '+r.qs.length;
+    document.getElementById('gqq').textContent=q.q;
+    box.innerHTML='';
+    for(i=0;i<opts.length;i++){
+      b=document.createElement('button');b.type='button';b.textContent=opts[i];
+      b.setAttribute('data-a',opts[i]);
+      box.appendChild(b);
+    }
+    ex.classList.remove('on');ex.innerHTML='';nxt.classList.remove('on');
+    r.locked=false;
+    clearTimeout(gNextT);
+  }
+  function gAnswer(choice){
+    var r=gRound;if(!r||r.locked)return;
+    r.locked=true;
+    var q=r.qs[r.i], ok=choice===q.answer, box=document.getElementById('gqchoices');
+    each('#gqchoices button',function(b){
+      b.disabled=true;
+      if(b.getAttribute('data-a')===q.answer)b.classList.add('ok');
+      else if(b.getAttribute('data-a')===choice&&!ok)b.classList.add('bad');
+    });
+    var s=gLoad(), gained=0;
+    if(s.usedQ.indexOf(q.id)<0)s.usedQ.push(q.id);
+    if(ok){
+      gained=Math.min(GT_PER,gCapLeft(s));
+      s.bonusMs=Math.min(GT_BONUS_CAP,s.bonusMs+gained);
+      r.earned+=gained;
+    }
+    gSave(s);gPaint();
+    var ex=document.getElementById('gqexplain');
+    ex.innerHTML='<div class="gqgot">'+(ok?(gained?('Nice! +'+gFmt(gained)+'.'):'You got it, and you’re at today’s bonus cap.'):'Not quite — the answer is '+q.answer+'.')+'</div>'+q.explain;
+    ex.classList.add('on');
+    var nxt=document.getElementById('gqnext');
+    nxt.textContent=r.i+1>=r.qs.length?'Done':'Next';
+    nxt.classList.add('on');
+    clearTimeout(gNextT);
+    gNextT=setTimeout(gAdvance, ok?1800:3200);
+    if(typeof rBump==='function')rBump();
+    if(typeof fBump==='function')fBump();
+  }
+  function gAdvance(){
+    clearTimeout(gNextT);
+    if(!gRound)return;
+    if(gRound.i+1<gRound.qs.length){gRound.i++;gShowQ();return;}
+    gFinishRound();
+  }
+  function gFinishRound(){
+    var earned=gRound?gRound.earned:0, s=gLoad(), cap=gCapLeft(s), left=gLeft(s);
+    gRound=null;
+    if(left>0){
+      gHidePop();
+      gPaint();
+      // If they were mid-game when time ran out, they can keep playing; otherwise Tap to start.
+      return;
+    }
+    // Still no time, or they hit the cap with no leftover play time.
+    gTimesUp(false);
+    if(cap<=0)return;
+    var msg=document.getElementById('gtimemsg');
+    if(earned<=0)msg.textContent='No extra time this round. You can try 3 new questions whenever you’re ready.';
+    else msg.textContent='You added some time, but it’s already used. Try another round to keep playing.';
+  }
+  function gCloseAll(){
+    gFlushTick();
+    gHidePop();
+    if(window.__run)window.__run.close();
+    if(window.__flap)window.__flap.close();
+  }
+
+  if(gPop){
+    gPop.addEventListener('click',function(ev){ev.stopPropagation();});
+    document.getElementById('gtearn').addEventListener('click',function(ev){ev.stopPropagation();gStartQuiz();});
+    document.getElementById('gtimex').addEventListener('click',function(ev){ev.stopPropagation();gCloseAll();});
+    document.getElementById('gqclose').addEventListener('click',function(ev){ev.stopPropagation();gCloseAll();});
+    document.getElementById('gqchoices').addEventListener('click',function(ev){
+      var b=ev.target.closest('button');if(!b)return;
+      ev.stopPropagation();gAnswer(b.getAttribute('data-a'));
+    });
+    document.getElementById('gqnext').addEventListener('click',function(ev){ev.stopPropagation();gAdvance();});
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState!=='visible')gFlushTick();});
+    setInterval(gPulse,250);
+  }
+  each('#mgrid .mb-run, #mgrid .mb-flap',function(b){
+    if(b.querySelector('.gtiletm'))return;
+    var s=document.createElement('span');s.className='gtiletm';s.setAttribute('data-gtpill','');b.appendChild(s);
+  });
+  if(/[?&]gamesreset=1\b/.test(location.search)){try{localStorage.removeItem(GT_KEY);}catch(e){}}
+  gPaint();
+  window.__gtime={
+    get:function(){var s=gLoad();return {date:s.date,usedMs:s.usedMs,bonusMs:s.bonusMs,usedQ:s.usedQ.slice(),leftMs:gLeft(s),capLeftMs:gCapLeft(s),fmt:gFmt(gLeft(s)),blocked:gBlocked(),counting:gCounting(),bank:gBank().length};},
+    set:function(p){var s=gLoad(),k;for(k in p)if(Object.prototype.hasOwnProperty.call(p,k))s[k]=p[k];gSave(s);gPaint();return window.__gtime.get();},
+    reset:function(){gSave(gEmpty());gPaint();return window.__gtime.get();},
+    blocked:gBlocked,left:gLeft,onGameOpen:gOnOpen,onGameClose:gOnClose,timesUp:function(){gTimesUp(true);},startQuiz:gStartQuiz,paint:gPaint
+  };
 
   // Reloads (the only two): busy() = someone is using the page (typing on the gratitude board, a popup or panel open,
   // or a touch in the last 2 min); both wait until it is idle.
