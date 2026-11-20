@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-19T17:15:33-07:00",
+    "last_updated": "2026-11-19T20:09:22-07:00",
     "school_feed_synced": "2026-11-15T20:23:32-07:00",
     "school_feed_window": [
       "2026-11-14",
@@ -2220,17 +2220,17 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-18",
+      "as_of": "2026-11-19",
       "courses": [
         {
           "name": "English 9 (Coleman)",
           "short": "English 9",
-          "pct": 45.59
+          "pct": 60.23
         },
         {
           "name": "D.E.A.R.",
           "short": "D.E.A.R.",
-          "pct": 96.24
+          "pct": 95.49
         },
         {
           "name": "History of the United States (Chancellor)",
@@ -2245,7 +2245,7 @@
         {
           "name": "Geometry (Lam)",
           "short": "Geometry",
-          "pct": 96.71
+          "pct": 93.77
         },
         {
           "name": "Patriot Chorale (Washburn)",
@@ -2254,12 +2254,12 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-17",
+        "as_of": "2026-11-18",
         "courses": [
           {
             "name": "English 9 (Coleman)",
             "short": "English 9",
-            "pct": 46.5
+            "pct": 45.59
           },
           {
             "name": "D.E.A.R.",
@@ -2274,12 +2274,12 @@
           {
             "name": "Biology (Anderson)",
             "short": "Biology",
-            "pct": 99.11
+            "pct": 97.75
           },
           {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 97.12
+            "pct": 96.71
           },
           {
             "name": "Patriot Chorale (Washburn)",
@@ -2289,12 +2289,12 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-18T20:08:46-07:00"
+      "checked_at": "2026-11-19T20:09:22-07:00"
     },
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-19",
       "courses": [
         {
           "name": "English 8 Term 2",
@@ -2309,21 +2309,21 @@
         {
           "name": "Math 8",
           "short": "Math 8",
-          "pct": 97.42
+          "pct": 84.1
         },
         {
           "name": "Science 8",
           "short": "Science 8",
-          "pct": 88.45
+          "pct": 89.74
         },
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 84.35
+          "pct": 84.58
         }
       ],
       "previous": {
-        "as_of": "2026-11-16",
+        "as_of": "2026-11-17",
         "courses": [
           {
             "name": "English 8 Term 2",
@@ -2348,17 +2348,17 @@
           {
             "name": "Utah History",
             "short": "Utah History",
-            "pct": 84.0
+            "pct": 84.35
           }
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-18T20:08:46-07:00"
+      "checked_at": "2026-11-19T20:09:22-07:00"
     },
     "tanner": {
       "connected": true,
       "source": "veracross",
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-19",
       "courses": [
         {
           "name": "Geography",
@@ -2378,7 +2378,7 @@
         {
           "name": "Math",
           "short": "Math",
-          "pct": 97.87
+          "pct": 97.95
         },
         {
           "name": "Spelling",
@@ -2387,12 +2387,12 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-16",
+        "as_of": "2026-11-17",
         "courses": [
           {
             "name": "Geography",
             "short": "Geography",
-            "pct": 96.88
+            "pct": 89.71
           },
           {
             "name": "History",
@@ -2407,17 +2407,17 @@
           {
             "name": "Math",
             "short": "Math",
-            "pct": 97.85
+            "pct": 97.87
           },
           {
             "name": "Spelling",
             "short": "Spelling",
-            "pct": 95.0
+            "pct": 96.67
           }
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-18T20:08:46-07:00",
+      "checked_at": "2026-11-19T20:09:22-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
