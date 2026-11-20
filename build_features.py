@@ -136,7 +136,8 @@ MORE_BTNS = ('<button class="mb-wx" type="button" data-v="weather"><span class="
   '<button class="mb-jk" type="button" data-v="joke"><span class="me">😂</span>Joke of the day</button>'
   '<button class="mb-tr" type="button" data-v="trivia"><span class="me">🧠</span>Trivia of the day</button>'
   '<button class="mb-draw" type="button" data-v="draw"><span class="me">🎨</span>Drawing pad</button>'
-  '<button class="mb-run" type="button" data-v="run"><span class="me">🏃</span>Cougar Run</button>')
+  '<button class="mb-run" type="button" data-v="run"><span class="me">🏃</span>Cougar Run</button>'
+  '<button class="mb-flap" type="button" data-v="flap"><span class="me">🪽</span>Cougar Dash</button>')
 MORE_VIEWS = ('<div class="mv" data-v="weather"><div class="mvh">🌤️ Highland weather</div>' + WX_HTML +
   '<div class="wxsub">Today plus the next 4 days &middot; Open-Meteo, updated every 30 min</div></div>'
   '<div class="mv" data-v="joke"><div class="fcard jk" id="fjk" role="button"><div class="fk"><span class="em">😂</span>Joke of the day</div>'

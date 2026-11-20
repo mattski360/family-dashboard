@@ -174,6 +174,9 @@ The **✨ More** popup includes a **🎨 Drawing pad** button. Tapping it closes
 ## Cougar Run
 The **✨ More** popup also has a **🏃 Cougar Run** button. Tapping it closes More and opens a full-screen endless runner (original art: a cute cougar in a navy collar jumping cacti, rocks, bushes and barrel cacti — not Google's dinosaur). Tap or click anywhere, Space or ArrowUp to jump; hold for a higher jump. The score and a high score (`localStorage` `dash-runner-hi`) are shown; game over offers Tap to play again, and a new high score gets a short confetti burst. A big Close button dismisses it. The popup freezes page rotation, counts as busy for the `ver.txt` reload wait, and auto-closes after 10 minutes idle. The canvas is `devicePixelRatio`-scaled and steps with `requestAnimationFrame` plus a time delta. `?run=1` opens it on load.
 
+## Cougar Dash
+The **✨ More** popup also has a **🪽 Cougar Dash** button, a Flappy-style flyer (original art: a gold cougar with little wings and a navy cape flying through red-rock pillars, pines and navy towers — not Flappy Bird's pipes). Tap or click, Space or ArrowUp to flap. The score and a high score (`localStorage` `dash-flap-hi`) are shown; game over offers Tap to play again after a short delay so a stray tap does not restart it, and a new high score gets a short confetti burst. A big Close button dismisses it. The popup freezes page rotation, counts as busy for the `ver.txt` reload wait, and auto-closes after 10 minutes idle. The canvas is `devicePixelRatio`-scaled and steps with `requestAnimationFrame` plus a time delta. `?flap=1` opens it on load.
+
 ## BYU easter-egg popup
 Tapping the faded BYU "Y" (nav corner, v3 / landscape) still plays the Go Cougs animation and also opens a
 BYU-colored popup (football + men's basketball: record, standing, AP/Coaches/CFP ranks, last 3 results, next 4 games).
