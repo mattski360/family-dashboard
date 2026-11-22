@@ -5,14 +5,14 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-20T11:13:46-07:00",
-    "school_feed_synced": "2026-11-15T20:23:32-07:00",
+    "last_updated": "2026-11-21T21:06:48-07:00",
+    "school_feed_synced": "2026-11-21T21:06:38-07:00",
     "school_feed_window": [
-      "2026-11-14",
-      "2026-12-06"
+      "2026-11-20",
+      "2026-12-12"
     ],
     "later_days": 8,
-    "week_start": "2026-11-15",
+    "week_start": "2026-11-22",
     "motto": "We are Jensens, we are brave, we choose the right, and we always help others.",
     "prayer_rotation": {
       "anchor_sunday": "2026-10-04",
@@ -29,7 +29,8 @@
         "Waterfall Canyon Via Ferrata",
         "Ensign Peak",
         "Adams Canyon",
-        "Hill Aerospace Museum"
+        "Hill Aerospace Museum",
+        "Manti Temple & Sanpete Heritage"
       ],
       "evening": [
         "Peaks Ice Arena Public Skate",
@@ -37,7 +38,8 @@
         "Super Chix Custard Run",
         "Trail Trash Pickup",
         "Movie & Meaning Night",
-        "3-Minute Talk Night"
+        "3-Minute Talk Night",
+        "Draper Utah Temple Grounds"
       ]
     }
   },
@@ -536,21 +538,6 @@
       "source": "family"
     },
     {
-      "id": "ahs-20261114-girls-choice-dance-sadie-hawkins-childho",
-      "date": "2026-11-14",
-      "start": "20:30",
-      "end": "22:30",
-      "title": "Girls' Choice Dance Sadie Hawkins: Childhood Characters",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": null,
-      "priority": "normal",
-      "kind": "school",
-      "source": "ahs_feed"
-    },
-    {
       "id": "fam-20261115-leadership",
       "date": "2026-11-15",
       "end_date": null,
@@ -564,21 +551,6 @@
       "priority": "normal",
       "kind": "event",
       "source": "family"
-    },
-    {
-      "id": "ahs-20261116-early-out-ahyc-ms-and-hs",
-      "date": "2026-11-16",
-      "start": "14:16",
-      "end": "15:10",
-      "title": "Early Out AHYC MS and HS",
-      "note": "",
-      "who": [
-        "luke"
-      ],
-      "flag": null,
-      "priority": "normal",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "fam-20261116-hyc",
@@ -595,21 +567,6 @@
       "priority": "high",
       "kind": "event",
       "source": "family"
-    },
-    {
-      "id": "ahs-20261119-spelling-bee-written-qualifier-in-homero",
-      "date": "2026-11-19",
-      "start": null,
-      "end": null,
-      "title": "Spelling Bee Written Qualifier (In Homeroom)",
-      "note": "",
-      "who": [
-        "tanner"
-      ],
-      "flag": null,
-      "priority": "normal",
-      "kind": "school",
-      "source": "ahs_feed"
     },
     {
       "id": "ahs-20261120-k-5-harvest-celebrations",
@@ -673,6 +630,19 @@
       "priority": "high",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261126-thanksgiving",
+      "date": "2026-11-26",
+      "end_date": null,
+      "title": "Thanksgiving Day",
+      "note": "No YM activity tonight",
+      "who": [
+        "family"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
     },
     {
       "id": "ahs-20261126-thanksgiving-holiday-break",
@@ -771,7 +741,7 @@
       "id": "ahs-20261204-art-show",
       "date": "2026-12-04",
       "start": "18:30",
-      "end": "19:30",
+      "end": "20:00",
       "title": "Art Show",
       "note": "",
       "who": [
@@ -797,6 +767,81 @@
       "priority": "normal",
       "kind": "school",
       "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261207-grade-4-5-curricular-christmas-choral-co",
+      "date": "2026-12-07",
+      "start": "14:15",
+      "end": "15:10",
+      "title": "Grade 4-5 Curricular Christmas Choral Concert",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261208-choosing-light-assembly-1",
+      "date": "2026-12-08",
+      "start": "11:15",
+      "end": "12:30",
+      "title": "Choosing Light Assembly 1",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261209-grade-4-5-curricular-christmas-choral-co",
+      "date": "2026-12-09",
+      "start": "14:15",
+      "end": "15:10",
+      "title": "Grade 4-5 Curricular Christmas Choral Concert",
+      "note": "",
+      "who": [
+        "tanner"
+      ],
+      "flag": null,
+      "priority": "normal",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "ahs-20261210-choosing-light-assembly-2",
+      "date": "2026-12-10",
+      "start": "11:20",
+      "end": "12:30",
+      "title": "Choosing Light Assembly 2",
+      "note": "",
+      "who": [
+        "luke"
+      ],
+      "flag": null,
+      "priority": "low",
+      "kind": "school",
+      "source": "ahs_feed"
+    },
+    {
+      "id": "fam-20261219-ward-xmas",
+      "date": "2026-12-19",
+      "end_date": null,
+      "start": "09:00",
+      "end": null,
+      "title": "Ward Christmas Party",
+      "note": "Stake Center cultural hall",
+      "who": [
+        "family"
+      ],
+      "priority": "normal",
+      "kind": "event",
+      "source": "family"
     }
   ],
   "todos": [
@@ -913,166 +958,169 @@
   "spiritual": {
     "come_follow_me": {
       "status": "ready",
-      "week_of": "2026-11-16",
-      "lesson": 47,
-      "dates_label": "Nov 16–22",
-      "title": "“I Will Love Them Freely”",
-      "reading": "Hosea 1–6; 10–14; Joel",
-      "summary": "The Lord compared His covenant with Israel to a marriage. Israel was unfaithful, yet He said, “I will invite you back.” Hosea and Joel teach that the Lord loves us freely, wants our hearts (not just outward actions), and promises to pour out His Spirit on all who turn to Him.",
+      "week_of": "2026-11-23",
+      "lesson": 48,
+      "dates_label": "Nov 23–29",
+      "title": "“Seek the Lord, and Ye Shall Live”",
+      "reading": "Amos; Obadiah; Jonah",
+      "summary": "Jonah ran the other way, yet the Lord didn’t give up on him, on Nineveh, or on us. He keeps sending prophets with this message: because of Jesus Christ, it’s not too late to change, and He will offer another chance.",
       "questions": [
-        "How is making a covenant with the Lord like a marriage? What does Hosea 2:14–23 teach about His love and mercy?",
-        "What does “I will love them freely” mean to you? (Hosea 14:4)",
-        "What does it mean that the Lord desires “mercy, and not sacrifice”? (Hosea 6:6)",
-        "How is rending our hearts different from rending our garments? (Joel 2:12–13)",
-        "Why is revelation essential to your spiritual survival? (Joel 2:28–29)"
+        "What conclusions can we draw when a prophet prophesies? (Amos 3:1–8)",
+        "How has seeking the Lord brought you life? (Amos 5:4, 14–15)",
+        "How do you know when you are spiritually hungry? (Amos 8:11–12)",
+        "What do you learn from Jonah that can help you be more merciful? (Jonah 3–4)"
       ],
-      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/47?lang=eng",
+      "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/48?lang=eng",
       "previous": {
-        "show_before": "2026-11-16",
-        "lesson": 46,
-        "dates_label": "Nov 9–15",
-        "title": "“There Is No Other God That Can Deliver”",
-        "reading": "Daniel 1–7",
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/46?lang=eng"
+        "show_before": "2026-11-23",
+        "lesson": 47,
+        "dates_label": "Nov 16–22",
+        "title": "“I Will Love Them Freely”",
+        "reading": "Hosea 1–6; 10–14; Joel",
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/47?lang=eng"
       },
-      "featured_question": 1,
+      "featured_question": 0,
       "daily": [
         {
           "dow": "Mon",
-          "scripture": "Hosea 2:19",
-          "quote": "I will betroth thee unto me for ever",
-          "thought": "The Lord compares His covenant with us to a promise that lasts forever. What is one way we can show Him we love Him today?"
+          "scripture": "Amos 3:7",
+          "quote": "the Lord God will do nothing, but he revealeth his secret unto his servants the prophets",
+          "thought": "God shows His love by sending prophets. What is something a prophet has taught that has helped you?"
         },
         {
           "dow": "Tue",
-          "scripture": "Hosea 14:4",
-          "quote": "I will heal their backsliding, I will love them freely",
-          "thought": "No matter what mistakes we make, Jesus invites us back. Who can you share that good news with?"
+          "scripture": "Amos 5:4",
+          "quote": "Seek ye me, and ye shall live",
+          "thought": "Seeking the Lord brings life and joy. What is one way you can seek Him today?"
         },
         {
           "dow": "Wed",
-          "scripture": "Hosea 6:6",
-          "quote": "For I desired mercy, and not sacrifice",
-          "thought": "Heavenly Father cares most about what is in our hearts. How can we show mercy to someone at home today?"
+          "scripture": "Amos 8:11",
+          "quote": "a famine in the land, not a famine of bread, nor a thirst for water, but of hearing the words of the Lord",
+          "thought": "We need God’s word like we need food. When do you feel most hungry for it?"
         },
         {
           "dow": "Thu",
-          "scripture": "Hosea 10:12",
-          "quote": "it is time to seek the Lord",
-          "thought": "Any time is a good time to seek the Lord. What are some times in your day you could pause to pray?"
+          "scripture": "Obadiah 1:21",
+          "quote": "saviours shall come up on mount Zion",
+          "thought": "Doing temple work for others is a small way to help like the Savior. How could our family take part?"
         },
         {
           "dow": "Fri",
-          "scripture": "Joel 2:13",
-          "quote": "rend your heart, and not your garments, and turn unto the Lord your God",
-          "thought": "Turning to God starts inside our hearts. What is one thing we could change to turn closer to Him?"
+          "scripture": "Jonah 3:10",
+          "quote": "God saw their works, that they turned from their evil way",
+          "thought": "The Lord is merciful to all who turn to Him. Who can you show mercy to this weekend?"
         },
         {
           "dow": "Sat",
-          "scripture": "Hosea 13:4",
-          "quote": "there is no saviour beside me",
-          "thought": "Jesus Christ is our Savior and Redeemer. What words would you use to describe Him?"
+          "scripture": "Jonah 4:2",
+          "quote": "thou art a gracious God, and merciful, slow to anger, and of great kindness",
+          "thought": "Jonah knew who God really is. What words would you use to describe His mercy?"
         },
         {
           "dow": "Sun",
-          "scripture": "Joel 2:28",
-          "quote": "I will pour out my spirit upon all flesh",
-          "thought": "The Holy Ghost can guide each of us. When have you felt the Spirit help you this week?"
+          "scripture": "Amos 5:14",
+          "quote": "Seek good, and not evil, that ye may live",
+          "thought": "Choosing good leads to life. What good choice can you make this week?"
         }
       ],
       "daily_note": "Mon–Sun queue for the CFM week (week_of); the v3 dashboard shows the item whose dow matches the iPad's date. Replace on the Saturday refresh.",
       "deep_dive": {
         "_comment": "Tap-to-open study popup (live landscape). Filled on the Saturday refresh from the official lesson page for week_of. Quotes must be copied verbatim (KJV / manual). See README 'Study popups'.",
-        "week_of": "2026-11-16",
-        "intro": "Israel’s covenant with the Lord was meant to be so deep that He compared it to a marriage, with eternal commitment, loyalty, and wholehearted love. Israel was not faithful, yet the Lord’s message was not “I will reject you forever” but “I will invite you back.” Hosea and Joel teach that He loves us freely and welcomes us home when we turn to Him.",
+        "week_of": "2026-11-23",
+        "intro": "Jonah sailed away from the job God gave him, and a great storm followed. But the Lord hadn’t given up on Jonah, on the people of Nineveh, or on any of us. He keeps sending prophets with this message: if we repent, we will not be cast off forever, because of Jesus Christ it’s not too late to change.",
         "scripture_blocks": [
           {
-            "ref": "Hosea 1–3",
-            "about": "Hosea and Gomer: the Lord’s faithful love for His covenant people"
+            "ref": "Amos 3; 7",
+            "about": "The Lord reveals truth through His prophets"
           },
           {
-            "ref": "Hosea 6",
-            "about": "The Lord desires mercy, not just sacrifice"
+            "ref": "Amos 4–5",
+            "about": "Seek the Lord, and ye shall live"
           },
           {
-            "ref": "Hosea 10–14",
-            "about": "Seek the Lord; there is no Savior beside Him; He will love them freely"
+            "ref": "Amos 8",
+            "about": "A famine of hearing the words of the Lord"
           },
           {
-            "ref": "Joel 2",
-            "about": "Rend your heart, turn to the Lord, and He will pour out His Spirit"
+            "ref": "Obadiah 1",
+            "about": "Saviours on mount Zion"
+          },
+          {
+            "ref": "Jonah 1–4",
+            "about": "The Lord is merciful to all who turn to Him"
           }
         ],
         "principles": [
           {
-            "emoji": "💍",
-            "title": "The Lord always invites me to return to Him.",
-            "ref": "Hosea 1–3; 14",
-            "explain": "God compared His covenant to a marriage. Even when Israel was unfaithful, He promised to welcome them back and betroth them to Him forever. No matter what we have done, Jesus invites us to come home."
+            "emoji": "📣",
+            "title": "The Lord reveals truth through His prophets.",
+            "ref": "Amos 3:1–8; 7:10–15",
+            "explain": "Just like a roaring lion means there is prey nearby, a prophet speaking means God has spoken. Having prophets is a way God shows He loves us and tells us what we need to know."
           },
           {
-            "emoji": "❤️",
-            "title": "The Lord loves us freely.",
-            "ref": "Hosea 14:4",
-            "explain": "“Freely” means His love is a gift, not something we have to earn. He promises to heal us and to help us grow like a lily and a strong tree with deep roots."
+            "emoji": "🌱",
+            "title": "“Seek the Lord, and ye shall live.”",
+            "ref": "Amos 4:6–13; 5:4, 14–15",
+            "explain": "When hard things happen, God hopes we will turn to Him. Looking for Him in our daily lives brings real joy and life."
           },
           {
-            "emoji": "🫀",
-            "title": "Devotion to God must be felt inwardly, not just expressed outwardly.",
-            "ref": "Hosea 6:4–7; Joel 2:12–13",
-            "explain": "The people offered sacrifices but broke more important commandments. God wants real mercy and a changed heart—not just doing the right things on the outside. “Rending” our hearts means truly feeling sorry and turning to Him."
+            "emoji": "🍞",
+            "title": "The word of the Lord can satisfy spiritual hunger and thirst.",
+            "ref": "Amos 8:11–12",
+            "explain": "Without God’s word, we’d feel spiritually hungry, like having no food. The Restoration of the gospel ended that famine, and reading the scriptures fills us up."
           },
           {
-            "emoji": "🕊️",
-            "title": "The Lord will pour out His Spirit.",
-            "ref": "Joel 2",
-            "explain": "Joel promised the Lord would pour out His Spirit on all people. The Holy Ghost can guide us every day, usually in still, small ways that build up over time."
+            "emoji": "🏛️",
+            "title": "Who are the “saviours … on mount Zion”?",
+            "ref": "Obadiah 1:21",
+            "explain": "When we do temple work for people who have died, we help them in a small way like the Savior helps us."
           },
           {
-            "emoji": "✝️",
-            "title": "Jesus Christ is my Savior and Redeemer.",
-            "ref": "Hosea 13:4, 14",
-            "explain": "The Lord taught there is no Savior but Him. He promised to ransom us from the power of the grave and redeem us from death through His Atonement."
+            "emoji": "🐋",
+            "title": "The Lord is merciful to all who turn to Him.",
+            "ref": "Jonah 1–4",
+            "explain": "Jonah ran away, was swallowed by a great fish, and then obeyed. The people of Nineveh turned to God and He forgave them. Jonah was upset, but God wanted him to learn mercy too."
           }
         ],
         "key_verses": [
           {
-            "ref": "Hosea 2:19",
-            "text": "And I will betroth thee unto me for ever; yea, I will betroth thee unto me in righteousness, and in judgment, and in lovingkindness, and in mercies."
+            "ref": "Amos 3:7",
+            "text": "Surely the Lord God will do nothing, but he revealeth his secret unto his servants the prophets."
           },
           {
-            "ref": "Hosea 6:6",
-            "text": "For I desired mercy, and not sacrifice; and the knowledge of God more than burnt offerings."
+            "ref": "Amos 5:4",
+            "text": "For thus saith the Lord unto the house of Israel, Seek ye me, and ye shall live:"
           },
           {
-            "ref": "Hosea 14:4",
-            "text": "I will heal their backsliding, I will love them freely: for mine anger is turned away from him."
+            "ref": "Amos 8:11",
+            "text": "Behold, the days come, saith the Lord God, that I will send a famine in the land, not a famine of bread, nor a thirst for water, but of hearing the words of the Lord:"
           },
           {
-            "ref": "Joel 2:13",
-            "text": "And rend your heart, and not your garments, and turn unto the Lord your God: for he is gracious and merciful, slow to anger, and of great kindness, and repenteth him of the evil."
+            "ref": "Jonah 3:10",
+            "text": "And God saw their works, that they turned from their evil way; and God repented of the evil, that he had said that he would do unto them; and he did it not."
           },
           {
-            "ref": "Joel 2:28",
-            "text": "And it shall come to pass afterward, that I will pour out my spirit upon all flesh; and your sons and your daughters shall prophesy, your old men shall dream dreams, your young men shall see visions:"
+            "ref": "Jonah 4:2",
+            "text": "And he prayed unto the Lord, and said, I pray thee, O Lord, was not this my saying, when I was yet in my country? Therefore I fled before unto Tarshish: for I knew that thou art a gracious God, and merciful, slow to anger, and of great kindness, and repentest thee of the evil."
           }
         ],
         "quote": {
-          "text": "In coming days, it will not be possible to survive spiritually without the guiding, directing, comforting, and constant influence of the Holy Ghost.",
-          "by": "President Russell M. Nelson, “Revelation for the Church, Revelation for Our Lives,” Ensign or Liahona, May 2018, 96"
+          "text": "having prophets is a sign of God’s love",
+          "by": "Elder Ulisses Soares, “Prophets Speak by the Power of the Holy Spirit,” Ensign or Liahona, May 2018, 99"
         },
         "questions": [
-          "How is making a covenant with the Lord like entering into a marriage? What does Hosea 2:14–23 teach you about His love and mercy?",
-          "What does the phrase “love them freely” mean to you? (Hosea 14:4)",
-          "What do you think it means that the Lord desires “mercy, and not sacrifice”? (Hosea 6:6)",
-          "How is rending our hearts different from rending our garments? (Joel 2:12–13)",
-          "Why is revelation essential to your spiritual survival? What can you do to invite the Spirit more? (Joel 2:28–29)"
+          "What conclusions can we draw when a prophet prophesies? What else do you learn about prophets from Amos 7:10–15?",
+          "What has the Lord revealed to you through His prophets?",
+          "How has seeking the Lord brought you life? (Amos 5:4, 14–15)",
+          "How do you know when you are spiritually hungry? (Amos 8:11–12)",
+          "What do you learn from Jonah that can help you be more merciful?"
         ],
         "activity": {
-          "title": "Seek the Lord all day",
-          "steps": "Read Hosea 10:12 together. Draw a clock and write ways your family can seek the Lord at different times of the day (morning prayer, scripture time, kindness at lunch, family prayer at night). Then act out the verse—pretend to plant seeds, pick vegetables, or stand in the rain—and share blessings the Lord has “rained” on you. Sing “Anytime, Anywhere” (Hymns for Home and Church, Gospel Library). Bonus: pour a liquid and compare a steady pour with a drip to talk about the Spirit being “poured out” (Joel 2:28–29)."
+          "title": "Prophets are messengers",
+          "steps": "Whisper a simple message to one person and ask them to pass it to the others. How is the messenger like a prophet? Why does the Lord give us prophets? Then sing “Follow the Prophet” (Children’s Songbook, 110–11), and share why you choose to follow God’s prophet. Bonus: write out Amos 3:7, then cover a few words at a time until everyone can say it from memory."
         },
-        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/47?lang=eng"
+        "source_url": "https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/48?lang=eng"
       }
     },
     "strength_of_youth": {
@@ -1200,7 +1248,7 @@
     "source": "H43 YW + YM Activities 2025 (Google Sheet, 2026 tab)",
     "source_url": "",
     "fallback_source_url": "https://www.highland43.org/wardannouncements",
-    "site_synced": "2026-11-15T20:25:27-07:00",
+    "site_synced": "2026-11-21T21:06:39-07:00",
     "note": "From the ward youth activities sheet; times/locations usually come by ward email/WhatsApp.",
     "youth_night": "Thu",
     "quorums": {
@@ -1664,9 +1712,10 @@
           ],
           "venue": null,
           "note": null,
+          "result": "W 98-54",
           "espn_id": "401921742",
-          "status": "STATUS_SCHEDULED",
-          "completed": false
+          "status": "STATUS_FINAL",
+          "completed": true
         },
         {
           "id": "byu-football-2026-11-21-kansas",
@@ -1681,9 +1730,10 @@
           ],
           "venue": null,
           "note": null,
+          "result": "W 31-29",
           "espn_id": "401856866",
-          "status": "STATUS_SCHEDULED",
-          "completed": false
+          "status": "STATUS_FINAL",
+          "completed": true
         },
         {
           "id": "byu-mbb-2026-11-23-washington",
@@ -1730,11 +1780,13 @@
           "id": "byu-football-2026-11-28-cincinnati",
           "sport": "football",
           "date": "2026-11-28",
-          "start": null,
+          "start": "13:30",
           "opponent": "Cincinnati",
           "home_away": "home",
-          "tv": null,
-          "tv_all": [],
+          "tv": "FOX",
+          "tv_all": [
+            "FOX"
+          ],
           "venue": null,
           "note": null,
           "espn_id": "401856876",
@@ -1893,7 +1945,7 @@
           "espn_id": "401922788",
           "status": "STATUS_SCHEDULED",
           "completed": false,
-          "opp_rank": 15,
+          "opp_rank": 11,
           "opp_rank_poll": "AP"
         },
         {
@@ -2150,62 +2202,84 @@
           "espn_id": "401921746",
           "status": "STATUS_SCHEDULED",
           "completed": false,
-          "opp_rank": 16,
+          "opp_rank": 9,
           "opp_rank_poll": "AP"
         }
       ],
-      "updated": "2026-11-15T20:23:40-07:00",
+      "updated": "2026-11-21T21:06:48-07:00",
       "summary": {
         "football": {
-          "record": "8-2",
+          "record": "9-2",
           "standing": "3rd in Big 12",
           "polls": [
+            {
+              "poll": "AP",
+              "rank": 12,
+              "as_of": "2026-11-16",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 12"
+            },
             {
               "poll": "Coaches",
               "rank": 12,
               "as_of": "2026-11-15",
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 12"
+            },
+            {
+              "poll": "CFP",
+              "rank": 10,
+              "as_of": "2026-11-17",
+              "week": "2026 NCAA Football Rankings - CFP Rankings Week 12"
             }
           ],
           "polls_checked": [
+            {
+              "poll": "CFP",
+              "as_of": "2026-11-17",
+              "week": "2026 NCAA Football Rankings - CFP Rankings Week 12"
+            },
+            {
+              "poll": "AP",
+              "as_of": "2026-11-16",
+              "week": "2026 NCAA Football Rankings - AP Poll Week 12"
+            },
             {
               "poll": "Coaches",
               "as_of": "2026-11-15",
               "week": "2026 NCAA Football Rankings - AFCA Coaches Poll Week 12"
             }
           ],
-          "checked": "2026-11-15T20:23:39-07:00"
+          "checked": "2026-11-21T21:06:46-07:00"
         },
         "mbb": {
-          "record": "4-0",
+          "record": "5-0",
           "standing": "1st in Big 12",
           "polls": [
             {
               "poll": "AP",
-              "rank": 23,
-              "as_of": "2026-11-09",
-              "week": "2027 NCAA Basketball Rankings - AP Top 25 Week 2"
+              "rank": 21,
+              "as_of": "2026-11-16",
+              "week": "2027 NCAA Basketball Rankings - AP Top 25 Week 3"
             },
             {
               "poll": "Coaches",
-              "rank": 25,
-              "as_of": "2026-11-09",
-              "week": "2027 NCAA Basketball Rankings - Coaches Poll Week 2"
+              "rank": 24,
+              "as_of": "2026-11-16",
+              "week": "2027 NCAA Basketball Rankings - Coaches Poll Week 3"
             }
           ],
           "polls_checked": [
             {
               "poll": "AP",
-              "as_of": "2026-11-09",
-              "week": "2027 NCAA Basketball Rankings - AP Top 25 Week 2"
+              "as_of": "2026-11-16",
+              "week": "2027 NCAA Basketball Rankings - AP Top 25 Week 3"
             },
             {
               "poll": "Coaches",
-              "as_of": "2026-11-09",
-              "week": "2027 NCAA Basketball Rankings - Coaches Poll Week 2"
+              "as_of": "2026-11-16",
+              "week": "2027 NCAA Basketball Rankings - Coaches Poll Week 3"
             }
           ],
-          "checked": "2026-11-15T20:23:40-07:00"
+          "checked": "2026-11-21T21:06:48-07:00"
         }
       },
       "fight_song": {
@@ -2423,28 +2497,28 @@
   },
   "adventures": {
     "this_week": {
-      "week_start": "2026-11-15",
+      "week_start": "2026-11-22",
       "weekend": {
-        "#": "73",
-        "Name": "Hill Aerospace Museum",
-        "Description": "100+ military aircraft, free admission",
-        "Location": "Roy (Hill AFB)",
-        "Drive Time from Highland": "1 hr",
+        "#": "92",
+        "Name": "Manti Temple & Sanpete Heritage",
+        "Description": "See the hilltop pioneer temple and historic Manti",
+        "Location": "Manti",
+        "Drive Time from Highland": "1 hr 30 min",
         "Best Season(s)": "Year-round",
         "Cost Tier": "Free",
-        "Category": "Museum & Science",
-        "Reservation / Fee / Notes": "Closed Sundays/Mondays (check)"
+        "Category": "Church History",
+        "Reservation / Fee / Notes": "Sunday-friendly grounds walk"
       },
       "evening": {
-        "#": "68",
-        "Name": "3-Minute Talk Night",
-        "Description": "Each boy gives a short talk - practice for church",
-        "Location": "Home",
-        "Drive Time from Highland": "Home",
+        "#": "86",
+        "Name": "Draper Utah Temple Grounds",
+        "Description": "Hilltop temple with valley views",
+        "Location": "Draper",
+        "Drive Time from Highland": "20 min",
         "Best Season(s)": "Year-round",
         "Cost Tier": "Free",
-        "Category": "Brave Challenge",
-        "Reservation / Fee / Notes": "Applause required"
+        "Category": "Spiritual & Temple",
+        "Reservation / Fee / Notes": "Sunday-friendly"
       }
     }
   },

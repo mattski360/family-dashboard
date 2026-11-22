@@ -313,11 +313,12 @@ def apply_results(dest: list[dict], src: list[dict], overwrite: bool = False, no
             continue
         if s.get("espn_id"):
             g["espn_id"] = s["espn_id"]
-        if s.get("status"):
-            g["status"] = s["status"]
-        if "completed" in s:
-            g["completed"] = s["completed"]
-        src_final = espn_says_final(s)
+        if overwrite:                       # only fresh sources set status; stored (previous) data must not override it
+            if s.get("status"):
+                g["status"] = s["status"]
+            if "completed" in s:
+                g["completed"] = s["completed"]
+        src_final = espn_says_final(s) if overwrite else None
         if src_final is False:
             if g.get("result"):
                 print(f"[fetch_byu] {g.get('sport')} {g.get('date')} {g.get('opponent')}: "
