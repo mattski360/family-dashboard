@@ -178,23 +178,75 @@ def fetch_espn(sport: str, season: int) -> list[dict]:
 
 RANK_API = "https://site.api.espn.com/apis/site/v2/sports/{path}/rankings"
 TEAM_API = "https://site.api.espn.com/apis/site/v2/sports/{path}/teams/" + TEAM
+# CFP often lags a week behind AP/Coaches, so the default site rankings payload omits it; pull it from here.
+CORE_RANK_API = ("https://sports.core.api.espn.com/v2/sports/{sport}/leagues/{league}/seasons/{season}"
+                 "/types/{stype}/weeks/{week}/rankings/{rid}")
+TEAM_REF = re.compile(r"/teams/(\d+)")
+
+
+def _poll_label(nm: str) -> str | None:
+    if not any(k in nm for k in ("AP", "Coaches", "Playoff", "CFP")) or "FCS" in nm or "Div" in nm:
+        return None
+    return "CFP" if ("Playoff" in nm or "CFP" in nm) else ("AP" if "AP" in nm else "Coaches")
+
+
+def _ranks_from_site(r: dict) -> dict:
+    ranks = {}
+    for x in r.get("ranks") or []:
+        t, cur = x.get("team") or {}, x.get("current")
+        if t.get("id") and isinstance(cur, int) and 0 < cur <= 25:      # 0/99/missing = unranked
+            names = {t.get(k, "").lower() for k in ("location", "nickname", "shortDisplayName", "displayName") if t.get(k)}
+            ranks[t["id"]] = (cur, names)
+    return ranks
+
+
+def _ranks_from_core(r: dict) -> dict:
+    ranks = {}
+    for x in r.get("ranks") or []:
+        cur, ref = x.get("current"), (x.get("team") or {}).get("$ref") or ""
+        m = TEAM_REF.search(ref)
+        if m and isinstance(cur, int) and 0 < cur <= 25:
+            ranks[m.group(1)] = (cur, set())
+    return ranks
 
 
 def fetch_polls(sport: str) -> list[dict]:
-    """Current AP / Coaches / CFP polls from ESPN's rankings endpoint: [{poll, as_of, week, ranks:{team_id: (rank, names)}}]."""
+    """Current AP / Coaches / CFP polls from ESPN: [{poll, as_of, week, ranks:{team_id: (rank, names)}}]."""
+    path = SPORTS[sport]["path"]
+    data = get(RANK_API.format(path=path))
     out = []
-    for r in get(RANK_API.format(path=SPORTS[sport]["path"])).get("rankings") or []:
-        nm = r.get("shortName") or r.get("name") or ""
-        if not any(k in nm for k in ("AP", "Coaches", "Playoff", "CFP")) or "FCS" in nm or "Div" in nm:
+    for r in data.get("rankings") or []:
+        label = _poll_label(r.get("shortName") or r.get("name") or "")
+        if not label:
             continue
-        label = "CFP" if ("Playoff" in nm or "CFP" in nm) else ("AP" if "AP" in nm else "Coaches")
-        ranks = {}
-        for x in r.get("ranks") or []:
-            t, cur = x.get("team") or {}, x.get("current")
-            if t.get("id") and isinstance(cur, int) and 0 < cur <= 25:      # 0/99/missing = unranked
-                names = {t.get(k, "").lower() for k in ("location", "nickname", "shortDisplayName", "displayName") if t.get(k)}
-                ranks[t["id"]] = (cur, names)
-        out.append({"poll": label, "as_of": (r.get("date") or "")[:10], "week": r.get("headline"), "ranks": ranks})
+        out.append({"poll": label, "as_of": (r.get("date") or "")[:10], "week": r.get("headline"),
+                    "ranks": _ranks_from_site(r)})
+    have = {p["poll"] for p in out}
+    # When AP/Coaches have rolled to a new week, CFP stays on last Tuesday until the next release.
+    season = (data.get("latestSeason") or data.get("requestedSeason") or {}).get("year")
+    sport_name, _, league = path.partition("/")
+    for av in data.get("availableRankings") or []:
+        label = _poll_label(av.get("shortName") or av.get("name") or "")
+        week, stype, rid = av.get("week"), av.get("seasonType"), av.get("id")
+        if not label or label in have or not (season and week and stype and rid):
+            continue
+        try:
+            core = get(CORE_RANK_API.format(sport=sport_name, league=league, season=season,
+                                            stype=stype, week=week, rid=rid))
+        except Exception as e:  # noqa: BLE001
+            print(f"[fetch_byu] {sport}: {label} core poll fetch failed ({e})", file=sys.stderr)
+            continue
+        out.append({"poll": label, "as_of": (core.get("date") or "")[:10], "week": core.get("headline"),
+                    "ranks": _ranks_from_core(core)})
+        have.add(label)
+    # Core API ranks are IDs only; copy names from polls that included them (for upcoming opp_rank tags).
+    id_names: dict[str, set] = {}
+    for p in out:
+        for tid, (_rk, names) in p["ranks"].items():
+            if names:
+                id_names.setdefault(tid, set()).update(names)
+    for p in out:
+        p["ranks"] = {tid: (rk, names or id_names.get(tid, set())) for tid, (rk, names) in p["ranks"].items()}
     return out
 
 

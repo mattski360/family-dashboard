@@ -890,7 +890,9 @@ def byu_live_polls(s: dict, gs: list[dict], today: dt.date) -> list[dict]:
         if not isinstance(rk, int) or not 0 < rk <= 25:
             continue
         asof = p.get("as_of") or ""
-        if football and last and (not asof or asof <= last):
+        # AP/Coaches update the day after a game; hide last week's number until then. CFP is weekly on
+        # Tuesdays and stays the official rank until the next release, even if a game has been played since.
+        if football and p.get("poll") != "CFP" and last and (not asof or asof <= last):
             continue
         if last and asof and (today - d(asof)).days > 9:
             continue
