@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-22T20:19:49-07:00",
+    "last_updated": "2026-11-23T20:12:26-07:00",
     "school_feed_synced": "2026-11-22T20:19:38-07:00",
     "school_feed_window": [
       "2026-11-21",
@@ -2279,12 +2279,12 @@
     "luke": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-22",
+      "as_of": "2026-11-23",
       "courses": [
         {
           "name": "English 9 (Coleman)",
           "short": "English 9",
-          "pct": 77.81
+          "pct": 81.97
         },
         {
           "name": "D.E.A.R.",
@@ -2313,12 +2313,12 @@
         }
       ],
       "previous": {
-        "as_of": "2026-11-19",
+        "as_of": "2026-11-22",
         "courses": [
           {
             "name": "English 9 (Coleman)",
             "short": "English 9",
-            "pct": 60.23
+            "pct": 77.81
           },
           {
             "name": "D.E.A.R.",
@@ -2328,7 +2328,7 @@
           {
             "name": "History of the United States (Chancellor)",
             "short": "US History",
-            "pct": 88.61
+            "pct": 90.03
           },
           {
             "name": "Biology (Anderson)",
@@ -2338,7 +2338,7 @@
           {
             "name": "Geometry (Lam)",
             "short": "Geometry",
-            "pct": 93.77
+            "pct": 91.23
           },
           {
             "name": "Patriot Chorale (Washburn)",
@@ -2348,7 +2348,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-22T20:15:48-07:00"
+      "checked_at": "2026-11-23T20:12:07-07:00"
     },
     "wyatt": {
       "connected": true,
@@ -2412,7 +2412,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-22T20:15:48-07:00"
+      "checked_at": "2026-11-23T20:12:07-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2476,7 +2476,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-22T20:15:48-07:00",
+      "checked_at": "2026-11-23T20:12:07-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
