@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-23T20:12:26-07:00",
+    "last_updated": "2026-11-24T20:14:48-07:00",
     "school_feed_synced": "2026-11-22T20:19:38-07:00",
     "school_feed_window": [
       "2026-11-21",
@@ -2348,12 +2348,12 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-23T20:12:07-07:00"
+      "checked_at": "2026-11-24T20:14:48-07:00"
     },
     "wyatt": {
       "connected": true,
       "source": "canvas",
-      "as_of": "2026-11-22",
+      "as_of": "2026-11-24",
       "courses": [
         {
           "name": "English 8 Term 2",
@@ -2373,26 +2373,26 @@
         {
           "name": "Science 8",
           "short": "Science 8",
-          "pct": 91.04
+          "pct": 90.73
         },
         {
           "name": "Utah History",
           "short": "Utah History",
-          "pct": 84.58
+          "pct": 85.32
         }
       ],
       "previous": {
-        "as_of": "2026-11-19",
+        "as_of": "2026-11-22",
         "courses": [
           {
             "name": "English 8 Term 2",
             "short": "English 8",
-            "pct": 97.52
+            "pct": 97.77
           },
           {
             "name": "Food & Nutrition",
             "short": "Food & Nutrition",
-            "pct": 79.26
+            "pct": 61.03
           },
           {
             "name": "Math 8",
@@ -2402,7 +2402,7 @@
           {
             "name": "Science 8",
             "short": "Science 8",
-            "pct": 89.74
+            "pct": 91.04
           },
           {
             "name": "Utah History",
@@ -2412,7 +2412,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-23T20:12:07-07:00"
+      "checked_at": "2026-11-24T20:14:48-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2476,7 +2476,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-23T20:12:07-07:00",
+      "checked_at": "2026-11-24T20:14:48-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
