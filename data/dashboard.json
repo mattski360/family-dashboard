@@ -5,7 +5,7 @@
     "tz_label": "MT",
     "theme": "light",
     "stale_after_days": 8,
-    "last_updated": "2026-11-25T20:08:36-07:00",
+    "last_updated": "2026-11-26T20:15:36-07:00",
     "school_feed_synced": "2026-11-22T20:19:38-07:00",
     "school_feed_window": [
       "2026-11-21",
@@ -2348,7 +2348,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-25T20:08:36-07:00"
+      "checked_at": "2026-11-26T20:12:30-07:00"
     },
     "wyatt": {
       "connected": true,
@@ -2412,7 +2412,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-25T20:08:36-07:00"
+      "checked_at": "2026-11-26T20:12:30-07:00"
     },
     "tanner": {
       "connected": true,
@@ -2476,7 +2476,7 @@
         ]
       },
       "check_status": "ok",
-      "checked_at": "2026-11-25T20:08:36-07:00",
+      "checked_at": "2026-11-26T20:12:30-07:00",
       "check_failed_at": "2026-11-07T21:07:35-07:00"
     }
   },
